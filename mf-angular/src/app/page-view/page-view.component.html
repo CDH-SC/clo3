@@ -1,0 +1,168 @@
+<!-- Title + Metadata -->
+<div class="container">
+  <div class="row">
+    <!-- Date + Folio num -->
+    <h5>{{ diary.date }}: {{ diary.page[page-1].folio_num }}</h5>
+  </div>
+  <!-- Metadata -->
+  <div class="metadata">
+    <!-- First row -->
+    <div class="d-flex">
+      <div class="p-2">Year: {{ diary.date }}</div>
+      <div class="p-2">Hand: {{ diary.page[page-1].hand }}</div>
+      <div class="p-2">Diary Num: {{ diary.volume_num }}</div>
+    </div>
+    <!-- Second row -->
+    <div class="d-flex">
+      <div class="p-2">Folio Num: {{ diary.page[page-1].folio_num }}</div>
+      <div class="p-2">Manuscript Num: Add MS {{ diary.ms_num }}</div>
+    </div>
+    <!-- Third row -->
+    <div class="d-flex">
+      <div class="p-2">Transcription Status: xx</div>
+      <div class="p-2">Transcriber: {{ diary.page[page-1].transcriber }}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Super search bar -->
+<div class="d-flex justify-content-center">
+  <i class="fa fa-search" aria-hidden="true"></i>
+  <input type="text" name="search" placeholder="Search..">
+</div>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-4">
+      <div class="input-group">
+          <input type="text" id="folioNum" class="form-control" placeholder="Go to Folio..." #jump1>
+          <span class="input-group-btn">
+            <button id="jumpBtn" type="button" class="btn btn-default" (click)="onClick(jump1.value)"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+          </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination bar -->
+<div class="container">
+  <ngb-pagination class="d-flex justify-content-center"
+    [collectionSize]="diary.page.length"
+    [(page)]="page"
+    [maxSize]="10"
+    [pageSize]="1"
+    [ellipses]="false"
+    size="sm"
+    [rotate]="true"
+  ></ngb-pagination>
+</div>
+
+<!-- Viewer boxes manuscript/transciption -->
+<div class="container">
+  <div class="row justify-content-center">
+    <!-- Manuscript -->
+    <div class="col-sm">
+      <div class="viewer-box">
+        <img src="assets{{ diary.notebook_url }}{{ diary.page[page-1].image }}"/>
+      </div>
+    </div>
+    <!-- Transcription -->
+    <div class="col-sm">
+      <div class="viewer-box">
+        <div [innerHTML]="diary.page[page-1].content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pagination bar -->
+<div class="container">
+  <ngb-pagination class="d-flex justify-content-center"
+    [collectionSize]="diary.page.length"
+    [(page)]="page"
+    [maxSize]="10"
+    [pageSize]="1"
+    [ellipses]="false"
+    size="sm"
+    [rotate]="true"
+  ></ngb-pagination>
+</div>
+
+<!-- Go To Page bar -->
+<!--
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-4">
+      <div class="input-group">
+        <form name="jumpTo" onsubmit="jump($event)">
+          <input type="number" min="1" max="{{diary.page.length}}" id="pgNum" placeholder="Page">
+          <input type="submit" value="Go" method="get">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-sm-4">
+      <div class="input-group">
+          <input type="text" id="folioNum" class="form-control" placeholder="Go to Folio..." #jump2>
+          <span class="input-group-btn">
+            <button id="jumpBtn" type="button" class="btn btn-default" (click)="onClick(jump2.value)"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+          </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="folio-group">
+  <div class="row justify-content-center">
+    <div class="col-md-1" (click)="group(1)"><a>Cover</a></div>
+    <div class="col-md-1" (click)="group(39)"><a>21r</a></div>
+    <div class="col-md-1" (click)="group(79)"><a>41r</a></div>
+    <div class="col-md-1" (click)="group(119)"><a>61r</a></div>
+    <div class="col-md-1" (click)="group(159)"><a>81r</a></div>
+    <div class="col-md-1" (click)="group(199)"><a>101r</a></div>
+    <div class="col-md-1" (click)="group(239)"><a>121r</a></div>
+    <div class="col-md-1">141r</div>
+    <div class="col-md-1">161r</div>
+    <div class="col-md-1">181r</div>
+    <div class="col-md-1">201r</div>
+    <div class="col-md-1">221r</div>
+  </div>
+</div>
+
+
+<!-- Pagination bar (old) -->
+<!--
+<div class="container">
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center pagination-sm">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">4</a></li>
+      <li class="page-item"><a class="page-link" href="#">5</a></li>
+      <li class="page-item"><a class="page-link" href="#">6</a></li>
+      <li class="page-item"><a class="page-link" href="#">7</a></li>
+      <li class="page-item"><a class="page-link" href="#">8</a></li>
+      <li class="page-item"><a class="page-link" href="#">9</a></li>
+      <li class="page-item"><a class="page-link" href="#">10</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+-->

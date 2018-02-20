@@ -1,0 +1,47 @@
+$primary-color: #47525e;
+$font-stack: Cardo, 'Times New Roman', Times, serif;
+$secondary-color: #f24c30;
+
+#nav_menu {
+    padding-top: 3px;
+    white-space: nowrap;
+
+    li {
+        display: inline;
+        font: 17px normal;
+        padding-left: 40px;
+        padding-right: 40px;
+        z-index: 1;
+    }
+
+    a:link, a:visited {
+        color: $primary_color;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $secondary_color;
+        text-decoration: underline;
+    }
+}
+
+hr.flare {
+
+  height: 50px;
+  border-style: ridge;
+  border-color: rgba(111, 113, 117,0.5);
+  border-width: 2px 0 0 0;
+  border-radius: 45px;
+}
+
+hr.flare:before {
+
+  display: block;
+  content: "";
+  height: 50px;
+  margin-top: -51px;
+  border-style: ridge;
+  border-color: rgba(111, 113, 117,0.5);
+  border-width: 0 0 2px 0;
+  border-radius: 45px;
+}

@@ -1,0 +1,19 @@
+$primary-color: #47525e;
+$font-stack: Cardo, 'Times New Roman', Times, serif;
+$secondary-color: #f24c30;
+
+.navigation {
+    a:link, a:visited {
+        color: $primary-color;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $secondary-color;
+        text-decoration: underline;
+    }
+
+    li {
+        padding: 10px;
+    }
+}

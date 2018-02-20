@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/font-awesome/css/font-awesome.css';
+
+$primary-color: #47525e;
+$font-stack: Cardo, 'Times New Roman', Times, serif;
+$secondary-color: #f24c30;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 12px $font-stack;
+    color: $primary-color;
+    background-image: url(/assets/WebBackground.jpg);
+    background-color: linen;
+    background-repeat: repeat;
+    background-position: 50%;
+    margin-left: 0 !important; margin-left: 1px;
+    zoom: 100%;
+}
