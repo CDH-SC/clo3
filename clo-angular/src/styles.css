@@ -1,7 +1,4 @@
-/* Import for Bootstrap 4 */
-@import 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css';
-
-html {
+html, body {
   height: 100%;
 }
 
@@ -11,14 +8,13 @@ Body Styles
 =================================================
 */
 body {
-  font-family: 'Georgia', 'Times New Roman', Times, serif;
-  font-size: 12px;
-  color: #344c5c;
+  font-family: 'Georgia', 'Times New Roman', Times, serif !important;
+  font-size: 12px !important;
+  color: #344c5c !important;
   background-image: url('./assets/duke_background.jpg');
   background-color: #ebdac2;
   background-repeat: repeat;
   background-position: 50% 130px;
-  zoom: 100%;
 }
 
 body > a {
@@ -33,15 +29,15 @@ Basic Styles
 */
 .error {
   font-weight: bold;
-  color: #8b2c32;
+  color: #8b2c32 !important;
 }
 
 a:link, a:visited {
-  color: #c17953;
+  color: #c17953 !important;
 }
 
 a:hover, a:active, a:focus {
-  color: #a59657;
+  color: #a59657 !important;
 }
 
 .orange-border-bottom {
@@ -49,7 +45,7 @@ a:hover, a:active, a:focus {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #5c8c48;
+  color: #5c8c48 !important;
 }
 
 img {

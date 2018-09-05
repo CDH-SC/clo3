@@ -3,9 +3,9 @@
 }
 
 #nav-links {
+  font-size: 17px !important;
   width: 70%;
   max-width: 1440px;
-  font-size: 17px;
 }
 
 #nav-links a {

@@ -10,7 +10,7 @@
 }
 
 #footer_links {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Verdana, 'Geneva', Tahoma, sans-serif;
   font-size: 12px;
   margin: 0;
   padding: 10px 0;
@@ -22,11 +22,11 @@
 }
 
 #footer_links a:link, #footer_links a:visited {
-  color: #517b89;
+  color: #517b89 !important;
 }
 
 #footer_links a:hover, #footer_links a:active, #footer_links a:focus {
-  color: #8b2c32;
+  color: #8b2c32 !important;
 }
 
 #footer_logos a {
