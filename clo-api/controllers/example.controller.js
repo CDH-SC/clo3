@@ -22,7 +22,7 @@ exports.getExamples = async function(req, res, next){
 
         // Return the examples list with the appropriate HTTP Status Code and Message.
 
-        return res.status(200).json({status: 200, data: examples, message: "Succesfully Examples Recieved"});
+        return res.status(200).json({status: 200, data: examples, message: "Succesfully Recieved Examples"});
 
     }catch(e){
 
@@ -90,7 +90,7 @@ exports.removeExample = async function(req, res, next){
 
     try{
         var deleted = await ExampleService.deleteExample(id)
-        return res.status(204).json({status:204, message: "Succesfully Example Deleted"})
+        return res.status(204).json({status:204, message: "Succesfully Deleted Example"})
     }catch(e){
         return res.status(400).json({status: 400, message: e.message})
     }
