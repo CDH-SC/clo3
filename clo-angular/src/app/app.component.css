@@ -1,0 +1,6 @@
+#foot {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 2px dotted #c17953;
+}

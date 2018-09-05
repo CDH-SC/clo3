@@ -1,0 +1,34 @@
+#footer_wrapper {
+  height: 75px;
+  width: 60%;
+  max-width: 1440px;
+  margin-top: auto;
+}
+
+#footer p {
+  color: #517b89;
+}
+
+#footer_links {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 12px;
+  margin: 0;
+  padding: 10px 0;
+}
+
+#footer_links a {
+  padding: 0 5px;
+  text-decoration: none;
+}
+
+#footer_links a:link, #footer_links a:visited {
+  color: #517b89;
+}
+
+#footer_links a:hover, #footer_links a:active, #footer_links a:focus {
+  color: #8b2c32;
+}
+
+#footer_logos a {
+  padding: 0 10px;
+}

@@ -1,0 +1,13 @@
+#nav {
+  background: #21596f;
+}
+
+#nav-links {
+  width: 70%;
+  max-width: 1440px;
+  font-size: 17px;
+}
+
+#nav-links a {
+  text-decoration: none;
+}
