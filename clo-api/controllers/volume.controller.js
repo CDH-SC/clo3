@@ -30,7 +30,7 @@ exports.getVolumesById = async function(req, res){
     var volumes = await VolumeService.getVolumesById(id)
 
     //Return volumes list with appropriate HTTP status code and message
-    return res.status(200).json({status: 200, data: volumes, message: "Successfully recieved volumes"});
+    return res.status(200).json({status: 200, data: volumes, message: "Successfully recieved volumes by id"});
 
   }catch(e){
     //Return error response with code and error message
