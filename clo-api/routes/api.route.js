@@ -7,6 +7,6 @@ var volumes = require('./api/volume.route')
 
 //add route modules here
 router.use('/examples', examples);
-router.use('/volume', volumes);
+router.use('/volumes', volumes);
 
 module.exports = router;
