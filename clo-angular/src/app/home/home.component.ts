@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { $ } from 'protractor';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +34,9 @@ export class HomeComponent implements OnInit {
         this.document.getElementById('footer').style.position = 'relative';
       }
     };
+
+    // Loading Twitter widget
+    twttr.widgets.load();
   }
 
 }
