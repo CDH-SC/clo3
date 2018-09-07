@@ -7,3 +7,8 @@
 p {
   font-size: 14px;
 }
+
+#search {
+  width: 50%;
+  height: 250px;
+}
