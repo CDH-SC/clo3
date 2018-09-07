@@ -34,9 +34,6 @@ export class HomeComponent implements OnInit {
         this.document.getElementById('footer').style.position = 'relative';
       }
     };
-
-    // Loading Twitter widget
-    twttr.widgets.load();
   }
 
 }
