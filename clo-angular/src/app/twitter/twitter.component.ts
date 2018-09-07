@@ -10,6 +10,8 @@ export class TwitterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // Loads twitter widget when navigated to
+    // twttr.widgets.load();
   }
 
 }
