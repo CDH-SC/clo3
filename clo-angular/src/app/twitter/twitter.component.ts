@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, AfterViewInit,  } from '@angular/core';
 
 @Component({
   selector: 'app-twitter',
   templateUrl: './twitter.component.html',
   styleUrls: ['./twitter.component.css']
 })
-export class TwitterComponent implements OnInit {
+export class TwitterComponent implements AfterViewInit {
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-    // Loads twitter widget when navigated to
-    twttr.widgets.load();
+  ngAfterViewInit() {
+    if ((<any>window).twttr.ready()) {
+      (<any>window).twttr.widgets.load();
+    }
   }
-
 }
