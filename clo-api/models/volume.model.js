@@ -5,7 +5,7 @@ var mongoosePaginate = require('mongoose-paginate')
 var Schema = mongoose.Schema;
 //Define schema
 var volumeSchema = new Schema({
-  _id:        Schema.Types.ObjectId,
+  _id:        String,
   xml_id:     String,
   volume_id:  Number,
   docDate:    String,

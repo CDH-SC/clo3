@@ -5,11 +5,16 @@ var Volume = require('../models/volume.model')
 _this = this
 
 //Async function to get the Volume list
-exports.getVolumes = async function(){
+exports.getVolumes = async function(query, page, limit){
+
+  var options = {
+    page,
+    limit
+  }
 
   //Try Catch the awaited promise to handle the error
   try {
-    var volumes = await Volume.find({})
+    var volumes = await Volume.paginate(query, options)
 
     return volumes;
 
