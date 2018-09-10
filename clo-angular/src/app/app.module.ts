@@ -16,6 +16,7 @@ import { BrowseRecipientComponent } from './browse-recipient/browse-recipient.co
 import { BrowseSubjectComponent } from './browse-subject/browse-subject.component';
 import { AboutComponent } from './about/about.component';
 import { TwitterComponent } from './twitter/twitter.component';
+import { VolumeService } from './_shared/_services/volumes.service';
 
 const appRoutes: Routes = [
   {
@@ -52,7 +53,9 @@ const appRoutes: Routes = [
       appRoutes,
     ),
   ],
-  providers: [],
+  providers: [
+    VolumeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
