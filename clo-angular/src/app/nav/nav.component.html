@@ -5,6 +5,24 @@
     <a routerLink="/photo-album" routerLinkActive="active">Carlyle Family Photograph Albums</a>
     <a routerLink="/browse-recipient" routerLinkActive="active">Browse by Recipient</a>
     <a routerLink="/browse-subject" routerLinkActive="active">Browse by Subject</a>
-    <a routerLink="/about" routerLinkActive="active">About CLO</a> <!-- Needs to be dropdown-->
+    <div class="d-inline-block" ngbDropdown #aboutDrop="ngbDropdown">
+      <button class="btn btn-link"
+      role="button"
+      id="aboutDropdown" ngbDropdownAnchor
+      (mouseenter)="aboutDrop.open()">About CLO</button>
+      <div ngbDropdownMenu aria-labelledby="aboutDropdown" id="aboutDropdownList"
+      (mouseleave)="aboutDrop.close()">
+        <a routerLink="/about-carlyles" routerLinkActive="active"
+        class="dropdown-item">The Carlyles</a>
+        <a routerLink="/about-project" routerLinkActive="active"
+        class="dropdown-item">Online Project</a>
+        <a routerLink="/about-photoAlbums" routerLinkActive="active"
+        class="dropdown-item">Photo Albums</a>
+        <a routerLink="/about-printedEdition" routerLinkActive="active" class="dropdown-item">Printed Edition</a>
+        <a routerLink="/about-citing" routerLinkActive="active" class="dropdown-item">Citing/Textual Note</a>
+        <a routerLink="/about-editors" routerLinkActive="active" class="dropdown-item">Editors</a>
+        <a routerLink="/about-acknowledgments" routerLinkActive="active" class="dropdown-item">Acknowledgments</a>
+      </div>
+    </div>
   </div>
 </div>

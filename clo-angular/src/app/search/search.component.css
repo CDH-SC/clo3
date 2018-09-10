@@ -1,0 +1,60 @@
+#searchWrap {
+  margin: 20px 0 5px 0;
+  float: right;
+
+  font-family: Verdana, 'Geneva', Tahoma, sans-serif;
+  font-size: 12px;
+  text-align: left;
+
+  border: 1px solid #cbc29d;
+  border-radius: 5px;
+  background-color: #d2e0dc;
+}
+
+#searchButton {
+  position: relative;
+  float: right;
+  padding: 0 60px 0 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#formButton {
+  position: absolute;
+  z-index: 1;
+  padding: 10px 0 0 0;
+}
+
+#searchInput {
+  text-align: left;
+  margin: 0;
+}
+
+#searchInput a:link, #searchInput a:visited {
+  color: #21596f;
+  font-size: 9px;
+  text-decoration: none;
+}
+
+#searchInput a:hover, #searchInput a:active, #searchInput a:focus {
+  color: #a59657;
+  text-decoration: none;
+}
+
+#formField {
+  float: left;
+  margin: 0;
+  width: 100%;
+}
+
+.formsA {
+  color: #666d77;
+  background-color: #f8f1e5;
+  border: 1px solid #9db993;
+  border-radius: 5px;
+}
+
+#wholeWordLabel {
+  font-size: 9px;
+  color: #34576c;
+}

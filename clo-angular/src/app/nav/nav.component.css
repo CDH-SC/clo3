@@ -11,3 +11,20 @@
 #nav-links a {
   text-decoration: none;
 }
+
+#aboutDropdown {
+  color: #c17953;
+  text-decoration: none;
+}
+
+#aboutDropdownList {
+  background-color: #f8f1e5;
+}
+
+#aboutDropdownList a:hover {
+  background-color: #f8f1e5;
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
