@@ -16,9 +16,6 @@ export class HomeComponent implements OnInit {
     const offset = 200;
     const pageHeight = headerHeight + divHeight + offset;
 
-    console.log(windowHeight);
-    console.log(pageHeight);
-
     // Initial Footer Placement
     if (windowHeight > pageHeight) {
       document.getElementById('footer').style.position = 'absolute';
