@@ -15,6 +15,7 @@ import { PhotoAlbumComponent } from './photo-album/photo-album.component';
 import { BrowseRecipientComponent } from './browse-recipient/browse-recipient.component';
 import { BrowseSubjectComponent } from './browse-subject/browse-subject.component';
 import { AboutComponent } from './about/about.component';
+import { VolumeService } from './_shared/_services/volumes.service';
 
 const appRoutes: Routes = [
   {
@@ -51,7 +52,9 @@ const appRoutes: Routes = [
       { enableTracing: true }
     ),
   ],
-  providers: [],
+  providers: [
+    VolumeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
