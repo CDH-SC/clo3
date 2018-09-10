@@ -46,6 +46,7 @@ a:hover, a:active, a:focus {
 
 h1, h2, h3, h4, h5, h6 {
   color: #5c8c48 !important;
+  font-weight: bold !important;
 }
 
 img {

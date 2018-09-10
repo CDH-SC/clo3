@@ -14,8 +14,17 @@ import { BrowseVolumeComponent } from './browse-volume/browse-volume.component';
 import { PhotoAlbumComponent } from './photo-album/photo-album.component';
 import { BrowseRecipientComponent } from './browse-recipient/browse-recipient.component';
 import { BrowseSubjectComponent } from './browse-subject/browse-subject.component';
-import { AboutComponent } from './about/about.component';
 import { TwitterComponent } from './twitter/twitter.component';
+import { SearchComponent } from './search/search.component';
+import { AboutCarlylesComponent } from './about/about-carlyles/about-carlyles.component';
+import { AboutProjectComponent } from './about/about-project/about-project.component';
+import { AboutPhotosComponent } from './about/about-photos/about-photos.component';
+import { AboutPrintedComponent } from './about/about-printed/about-printed.component';
+import { AboutCitingComponent } from './about/about-citing/about-citing.component';
+import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
+import { AboutAckComponent } from './about/about-ack/about-ack.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VolumeService } from './_shared/_services/volumes.service';
 
 const appRoutes: Routes = [
@@ -29,7 +38,13 @@ const appRoutes: Routes = [
   { path: 'photo-album', component: PhotoAlbumComponent },
   { path: 'browse-recipient', component: BrowseRecipientComponent },
   { path: 'browse-subject', component: BrowseSubjectComponent },
-  { path: 'about', component: AboutComponent }
+  { path: 'about-carlyles', component: AboutCarlylesComponent },
+  { path: 'about-project', component: AboutProjectComponent },
+  { path: 'about-photoAlbums', component: AboutPhotosComponent },
+  { path: 'about-printedEdition', component: AboutPrintedComponent },
+  { path: 'about-citing', component: AboutCitingComponent },
+  { path: 'about-editors', component: AboutEditorsComponent },
+  { path: 'about-acknowledgments', component: AboutAckComponent },
 ];
 
 @NgModule({
@@ -43,8 +58,15 @@ const appRoutes: Routes = [
     PhotoAlbumComponent,
     BrowseRecipientComponent,
     BrowseSubjectComponent,
-    AboutComponent,
-    TwitterComponent
+    TwitterComponent,
+    SearchComponent,
+    AboutCarlylesComponent,
+    AboutProjectComponent,
+    AboutPhotosComponent,
+    AboutPrintedComponent,
+    AboutCitingComponent,
+    AboutEditorsComponent,
+    AboutAckComponent
   ],
   imports: [
     BrowserModule,
@@ -52,6 +74,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
+    NgbModule,
   ],
   providers: [
     VolumeService
