@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { RouterModule, Routes } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -23,6 +25,7 @@ import { AboutEditorsComponent } from './about/about-editors/about-editors.compo
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { VolumeService } from './_shared/_services/volumes.service';
 
 const appRoutes: Routes = [
   {
@@ -31,7 +34,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
-  { path: 'browse-volume', component: BrowseVolumeComponent },
+  { path: 'browse-volume/:id', component: BrowseVolumeComponent },
   { path: 'photo-album', component: PhotoAlbumComponent },
   { path: 'browse-recipient', component: BrowseRecipientComponent },
   { path: 'browse-subject', component: BrowseSubjectComponent },
@@ -67,12 +70,15 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
     ),
     NgbModule,
   ],
-  providers: [],
+  providers: [
+    VolumeService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
