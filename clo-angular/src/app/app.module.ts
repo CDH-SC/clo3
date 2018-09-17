@@ -34,7 +34,7 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   { path: 'home', component: HomeComponent },
-  { path: 'browse-volume/:id', component: BrowseVolumeComponent },
+  { path: 'browse-volume', component: BrowseVolumeComponent },
   { path: 'photo-album', component: PhotoAlbumComponent },
   { path: 'browse-recipient', component: BrowseRecipientComponent },
   { path: 'browse-subject', component: BrowseSubjectComponent },
