@@ -34,9 +34,8 @@ export class BrowseVolumeComponent implements OnInit {
     };
 
     const collapseMenus = document.getElementsByClassName('collapse');
-    for (var i = 0; i < collapseMenus.length; i++) {
+    for (let i = 0; i < collapseMenus.length; i++) {
       collapseMenus[i].addEventListener('transitionend', function () {
-        console.log(windowHeight);
         const updatedDivHeight = document.getElementById('content').clientHeight;
         const updatedPageHeight = headerHeight + updatedDivHeight + offset;
         if (window.innerHeight > updatedPageHeight) {

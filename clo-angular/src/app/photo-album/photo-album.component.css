@@ -1,0 +1,20 @@
+#content {
+  margin: auto;
+  width: 80%;
+  max-width: 1000px;
+}
+
+.photoLink {
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  color: #c17953 !important;
+}
+
+.photoLink:link, .photoLink:visited {
+  color: #c17953 !important;
+}
+
+.photoLink:hover, .photoLink:active, .photoLink:focus {
+  color: #a59657 !important;
+}
