@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -47,11 +48,11 @@ app.use('/users', users);
 app.use('/api', api);
 
 // Angular DIST output folder
-app.use(express.static('../mf-angular/dist'))
+app.use(express.static('../clo-angular/dist'))
 
 // Set all other requests to the Angular app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../mf-angular/dist/index.html'));
+  res.sendFile(path.join(__dirname, '../clo-angular/dist/index.html'));
 });
 
 // catch 404 and forward to error handler
