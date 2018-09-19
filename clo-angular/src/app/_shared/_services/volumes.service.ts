@@ -1,6 +1,6 @@
 import Volume from '../models/volume';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { Injectable } from '@angular/core';

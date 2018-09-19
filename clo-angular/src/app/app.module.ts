@@ -26,6 +26,7 @@ import { AboutAckComponent } from './about/about-ack/about-ack.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VolumeService } from './_shared/_services/volumes.service';
+import { VolumeContentComponent } from './volume-content/volume-content.component';
 
 const appRoutes: Routes = [
   {
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
+  { path: 'browse-volume/volume-content', component: VolumeContentComponent },
 ];
 
 @NgModule({
@@ -66,7 +68,8 @@ const appRoutes: Routes = [
     AboutPrintedComponent,
     AboutCitingComponent,
     AboutEditorsComponent,
-    AboutAckComponent
+    AboutAckComponent,
+    VolumeContentComponent
   ],
   imports: [
     BrowserModule,
