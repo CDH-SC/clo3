@@ -72,7 +72,7 @@ const appRoutes: Routes = [
     AboutEditorsComponent,
     AboutAckComponent,
     VolumeContentComponent,
-    LetterComponent
+    LetterComponent,
   ],
   imports: [
     BrowserModule,
