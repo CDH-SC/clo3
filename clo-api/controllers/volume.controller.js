@@ -8,14 +8,11 @@ _this = this
 //Async Controller fuction to get volume list
 exports.getVolumes = async function(req, res, next){
 
-  var page = req.query.page ? req.query.page : 1
-  var limit = req.query.limit ? req.query.limit : 10;
-
   try {
-    var volumes = await VolumeService.getVolumes({}, page, limit)
+    var volume_1 = await VolumeService.getVolumes({})
 
     //Return volumes list with appropriate HTTP status code and message
-    return res.status(200).json({status: 200, data: volumes, message: "Successfully recieved volumes"});
+    return res.status(200).json({status: 200, data: volume_1, message: "Successfully recieved volumes"});
 
   }catch(e){
     //Return error response with code and error message
@@ -30,10 +27,10 @@ exports.getVolumesById = async function(req, res){
   var id = req.params.id;
 
   try {
-    var volumes = await VolumeService.getVolumesById(id)
+    var volume_1 = await VolumeService.getVolumesById(id)
 
     //Return volumes list with appropriate HTTP status code and message
-    return res.status(200).json({status: 200, data: volumes, message: "Successfully recieved volumes by id"});
+    return res.status(200).json({status: 200, data: volume_1, message: "Successfully recieved volumes by id"});
 
   }catch(e){
     //Return error response with code and error message
