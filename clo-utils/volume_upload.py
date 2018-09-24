@@ -38,8 +38,10 @@ def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
         if filename.endswith(".xml"):
-            volume_id = int(filter(str.isdigit, filename))
             print filename
+            file = open(os.path.join(directory, filename), "r")
+            content = file.read()
+            
 
 
 if __name__ == '__main__':
