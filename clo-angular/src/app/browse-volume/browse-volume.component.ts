@@ -11,7 +11,6 @@ export class BrowseVolumeComponent implements OnInit {
 
   ngOnInit() {
     const windowHeight = window.innerHeight;
-    console.log(windowHeight);
     const headerHeight = document.getElementById('header').clientHeight;
     const divHeight = document.getElementById('content').clientHeight;
     const offset = 125;
