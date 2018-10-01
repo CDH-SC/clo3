@@ -24,12 +24,21 @@ db = client.clo
 # pages from an xml file #
 # into mongodb.             #
 #############################
-def upload_volume(volumeID, acknowledgements, introduction):
+def upload_volume(volumeID, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology,):
     db.volumes.insert_one(
     {"_id":str(volumeID),
      "acknowledgements":str(acknowledgements),
-     "introduction":str(introduction)
-    })
+     "introduction":str(introduction),
+     "letters_to_carlyles":str(letters_to_carlyles),
+     "key_to_references":str(key_to_references),
+     "chronology":str(chronology)}
+    )
+
+def update_volume(volumeID, lettersArray):
+    db.volumes.update_one(
+    {"_id":str(volumeID)},
+    {"$set": {"letters":lettersArray}}
+    )
 
 ###################################
 # iterates through an xml file   #
@@ -52,7 +61,6 @@ def main():
             ####$
             # get acknowledgements section
             acknowledgements = re.findall("<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            #print acknowledgements
             # get introduction
             introduction = re.findall("<div1 type=\"section\" id=\"ed-%s-introduction\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             #print introduction
@@ -67,6 +75,7 @@ def main():
             #####
 
             lettersMatch = re.findall("<div3 type=\"letter\">(.*?)</div3>", content, re.DOTALL)
+            upload_volume(volumeID, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology)
             print "found "+str(len(lettersMatch))+" letters for this volume: "+filename
 
             try:
@@ -74,6 +83,28 @@ def main():
                 for letterContent in lettersMatch:
                     xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
                     docDate = re.findall("<docDate value=.+>(.*?)</docDate>", letterContent)
+                    firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
+                    lastPage = re.findall("<idno type=\"lastpage\">(.*?)</idno>", letterContent)
+                    docAuthor = re.findall("<docAuthor>(?:.*?)<name type=\"first\">(.*?)</name>(?:.*?)<name type=\"last\">(.*?)</name>\n</docAuthor>", letterContent, re.DOTALL)
+                    sender = re.findall("<person type=\"sender\">(.*?)</person>", letterContent)
+                    recipient = re.findall("<person type=\"addressee\">(.*?)</person>", letterContent)
+                    sourceNote = re.findall("<sourceNote>(.*?)</sourceNote>", letterContent, re.DOTALL)
+                    head = re.findall("<head>(.*?)</head>", letterContent)
+                    docBody = re.findall("<docBody>(.*?)</docBody>", letterContent, re.DOTALL)
+
+                    lettersArray.append({
+                    "xml_id":str(xml_id),
+                    "docDate": str(docDate),
+                    "firstPage": str(firstPage),
+                    "lastPage": str(lastPage),
+                    "docAuthor": str(docAuthor),
+                    "sender": str(sender),
+                    "recipient": str(recipient),
+                    "sourceNote": str(sourceNote),
+                    "docBody": str(docBody)
+                    })
+
+                    update_volume(volumeID, lettersArray)
 
             except Exception as e:
                 print str(e)
