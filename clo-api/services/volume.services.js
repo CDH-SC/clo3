@@ -34,6 +34,17 @@ exports.getVolumesById = async function(id){
   }
 }
 
+exports.getVolumesByXML = async function(xml_id){
+  try {
+    var volume = await Volume.findOne({letters: {xml_id: xml_id}});
+
+    return volume;
+
+  } catch(e) {
+    throw Error(e.message, "Error while Paginating volumes")
+  }
+}
+
 exports.createVolume = async function(volume){
   //Creating a new mongoose object by using the new keyword
   var newVolume = new Volume({

@@ -48,7 +48,7 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume-content', component: VolumeContentComponent },
-  { path: 'browse-volume/volume-content/letter/:id', component: LetterComponent },
+  { path: 'browse-volume/letter/:id/:xml_id', component: LetterComponent },
 ];
 
 @NgModule({
