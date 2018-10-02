@@ -21,6 +21,7 @@ import { Injectable } from '@angular/core';
       sender: string;
       recipient: string;
       sourceNote: string;
+      head: string;
       docBody: string;
       footnotes: [string];
     }];

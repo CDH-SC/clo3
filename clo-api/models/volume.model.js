@@ -21,6 +21,7 @@ var volumeSchema = new Schema({
     sender: String,
     recipient: String,
     sourceNote: String,
+    head: String,
     docBody: String,
     footnotes: [String],
   }],
