@@ -50,7 +50,7 @@ def upload_letters(volumeID, lettersArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith("01-P5--bek.xml"):
+        if filename.endswith("P5--bek.xml"):
             print filename
             volumeID = ''.join(re.findall("\d{2}", filename)) # get volume id from filename
             file = open(os.path.join(directory, filename), "r")
@@ -62,40 +62,69 @@ def main():
             # volume-wide sections here
             ####$
             # get acknowledgements section
-            acknowledgements = re.findall("<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            acknowledgementsMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            if acknowledgementsMatch:
+                acknowledgements = acknowledgementsMatch[0]
+            else:
+                acknowledgements = ''
             # get introduction
-            introduction = re.findall("<div1 type=\"section\" id=\"ed-%s-introduction\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            introductionMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-introduction\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            if introductionMatch:
+                introduction = introductionMatch[0]
+            else:
+                introduction = ''
             # get key-to-references
-            key_to_references = re.findall("<div1 type=\"section\" id=\"ed-%s-key-to-references\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            key_to_referencesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-key-to-references\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            if key_to_referencesMatch:
+                key_to_references = key_to_referencesMatch[0]
+            else:
+                key_to_references = ''
             # get letters-to-carlyles
-            letters_to_carlyles = re.findall("<div1 type=\"section\" id=\"ed-%s-letters-to-the-carlyles\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            letters_to_carlylesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-letters-to-the-carlyles\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            if letters_to_carlylesMatch:
+                letters_to_carlyles = letters_to_carlylesMatch[0]
+            else:
+                letters_to_carlyles = ''
             # get chronology
-            chronology = re.findall("<div1 type=\"section\" id=\"ed-%s-chronology\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            chronologyMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-chronology\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            if chronologyMatch:
+                chronology = chronologyMatch[0]
+            else:
+                chronology = ''
 
             # remove new line characters
-            acknowledgements[0] = acknowledgements[0].replace('\n', '')
-            introduction[0] = introduction[0].replace('\n', '')
-            key_to_references[0] = key_to_references[0].replace('\n', '')
-            letters_to_carlyles[0] = letters_to_carlyles[0].replace('\n', '')
-            chronology[0] = chronology[0].replace('\n', '')
+            acknowledgements = acknowledgements.replace('\n', '')
+            introduction = introduction.replace('\n', '')
+            key_to_references = key_to_references.replace('\n', '')
+            letters_to_carlyles = letters_to_carlyles.replace('\n', '')
+            chronology = chronology.replace('\n', '')
 
             lettersMatch = re.findall("<div3 type=\"letter\">(.*?)</div3>", content, re.DOTALL)
             # create the volume document
-            upload_volume(volumeID, acknowledgements[0], introduction[0], letters_to_carlyles[0], key_to_references[0], chronology[0])
+            upload_volume(volumeID, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology)
             print "found "+str(len(lettersMatch))+" letters for this volume: "+filename
+            print "\n"
 
             try:
                 # loop through each letter inside lettersMatch
                 for letterContent in lettersMatch:
                     xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
-                    docDate = re.findall("<docDate value=.+>(.*?)</docDate>", letterContent)
+                    docDate = re.findall("<docDate value=(?:.|\n)*?>(?:.|\n)*?(.*?)</docDate>", letterContent)
                     firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
                     lastPage = re.findall("<idno type=\"lastpage\">(.*?)</idno>", letterContent)
-                    docAuthor = re.findall("<docAuthor>(?:\n.*)<name type=\"first\">(.*?)</name>(?:\n.*)<name type=\"last\">(.*?)</name>", letterContent)
-                    docAuthor[0] = " ".join(docAuthor[0])
+
+                    # check if there is a docAuthor
+                    ### volume 5, lt-18310400-TCAO-FMA-01 has two docAuthors
+                    authorMatch = re.findall("<docAuthor>(?:\n.*)<name type=\"first\">(.*?)</name>(?:\n.*)<name type=\"last\">(.*?)</name>", letterContent)
+                    if authorMatch:
+                        docAuthor = " ".join(authorMatch[0])
+                    else:
+                        docAuthor = ''
+
                     sender = re.findall("<person type=\"sender\">(.*?)</person>", letterContent)
                     recipient = re.findall("<person type=\"addressee\">(.*?)</person>", letterContent)
                     sourceNote = re.findall("<sourceNote>(.*?)</sourceNote>", letterContent, re.DOTALL)
+                    docBody = re.findall("<docBody>(.*?)</docBody>", letterContent, re.DOTALL)
 
                     # check if head exists
                     headMatch = re.findall("<head>((?:.|\n)*?)</head>", letterContent, re.DOTALL)
@@ -104,22 +133,38 @@ def main():
                     else:
                         head = ''
 
-                    docBody = re.findall("<docBody>(.*?)</docBody>", letterContent, re.DOTALL)
+                    # pull footnotes from docBody
+                    footnotes = re.findall("<note.*?>(.*?)</note>", letterContent)
 
                     lettersArray.append({
                     "xml_id": xml_id[0],
                     "docDate": docDate[0],
                     "firstPage": firstPage[0],
                     "lastPage": lastPage[0],
-                    "docAuthor": docAuthor[0],
+                    "docAuthor": docAuthor,
                     "sender": sender[0],
                     "recipient": recipient[0],
                     "sourceNote": sourceNote[0],
                     "docBody": docBody[0],
                     "head": head,
+                    "footnotes": footnotes,
                     })
 
                     upload_letters(volumeID, lettersArray) # uploads the letters
+
+                    '''
+                    print xml_id
+                    print docDate
+                    print firstPage
+                    print lastPage
+                    print docAuthor
+                    print sender
+                    print recipient
+                    # print sourceNote
+                    # print docBody
+                    print head
+                    print footnotes
+                    '''
 
             except Exception as e:
                 print str(e)

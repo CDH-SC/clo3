@@ -38,6 +38,19 @@ exports.getVolumesById = async function(req, res){
   }
 }
 
+exports.getVolumesByXML = async function(req, res){
+  var xml_id = req.params.xml_id;
+
+  try {
+    var volume = await VolumeService.getVolumesByXML(xml_id)
+
+    return res.status(200).json({status: 200, data: volume, message: "Successfully recieved volumes by xml_id"});
+
+  }catch(e){
+    return res.status(400),json({status: 400, message: e.message});
+  }
+}
+
 //Async controller function to create volume
 exports.createVolume = async function(req, res){
 

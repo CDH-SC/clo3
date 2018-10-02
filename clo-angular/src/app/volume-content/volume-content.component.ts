@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 })
 export class VolumeContentComponent implements OnInit {
 
-  volume : [Volume];
+  volume : Volume;
 
   constructor(
     private volumeService: VolumeService,
