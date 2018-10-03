@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-browse-recipient',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrowseRecipientComponent implements OnInit {
 
-  constructor() { }
+  constructor(private footer: FooterService) { }
 
   ngOnInit() {
+    this.footer.positionFooter();
   }
 
 }

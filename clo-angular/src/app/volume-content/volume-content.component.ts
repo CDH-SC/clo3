@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 })
 export class VolumeContentComponent implements OnInit {
 
-  volumes : [Volume];
+  volumes: [Volume];
 
   constructor(
     private volumeService: VolumeService,
@@ -19,7 +19,7 @@ export class VolumeContentComponent implements OnInit {
   ngOnInit() {
     this.volumeService.getAllVolumes<Volume[]>()
     .subscribe(data => {
-      this.volumes = data["data"];
+      this.volumes = data['data'];
 
       console.log(data);
     });

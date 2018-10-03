@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-browse-volume',
@@ -7,43 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BrowseVolumeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private footer: FooterService) { }
 
   ngOnInit() {
-    const windowHeight = window.innerHeight;
-    const headerHeight = document.getElementById('header').clientHeight;
-    const divHeight = document.getElementById('content').clientHeight;
-    const offset = 125;
-    const pageHeight = headerHeight + divHeight + offset;
+    this.footer.positionFooter();
 
-    // Initial Footer Placement
-    if (windowHeight > pageHeight) {
-      document.getElementById('footer').style.position = 'absolute';
-    } else {
-      document.getElementById('footer').style.position = 'relative';
-    }
-
-    // Adjusts footer position based on window resize
-    window.onresize = function () {
-      if (this.window.innerHeight > (pageHeight)) {
-        this.document.getElementById('footer').style.position = 'absolute';
-      } else {
-        this.document.getElementById('footer').style.position = 'relative';
-      }
-    };
-
-    const collapseMenus = document.getElementsByClassName('collapse');
-    for (let i = 0; i < collapseMenus.length; i++) {
-      collapseMenus[i].addEventListener('transitionend', function () {
-        const updatedDivHeight = document.getElementById('content').clientHeight;
-        const updatedPageHeight = headerHeight + updatedDivHeight + offset;
-        if (window.innerHeight > updatedPageHeight) {
-          document.getElementById('footer').style.position = 'absolute';
-        } else {
-          document.getElementById('footer').style.position = 'relative';
-        }
+    const volumeButtons = document.getElementsByClassName('collapse');
+    for (let i = 0; i < volumeButtons.length; i++) {
+      volumeButtons[i].addEventListener('transitionend', () => {
+        this.footer.positionFooter();
       });
     }
   }
-
 }

@@ -1,10 +1,7 @@
-<p>
-  volume-content works!
-</p>
-  <ul class="navigation">
-    <li *ngFor="let letters of volumes">
-      <a routerLink="/browse-volume/volume-content/letter/{{letters._id}}" routerLinkActive="active">
-        Letter date: {{ letters.docDate }}, Letter id: {{ letters._id }}
-      </a>
-    </li>
-  </ul>
+<ul class="navigation">
+  <li *ngFor="let letters of volumes">
+    <a routerLink="/browse-volume/volume-content/letter/{{letters._id}}" routerLinkActive="active">
+      Letter date: {{ letters.docDate }}, Letter id: {{ letters._id }}
+    </a>
+  </li>
+</ul>
