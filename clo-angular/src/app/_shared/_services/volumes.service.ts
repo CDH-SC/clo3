@@ -21,15 +21,7 @@ export class VolumeService {
   public getVolumeById<T>(id: string): Observable<T> {
     return this.http.get<T>(this.volumeUrl + id);
   }
-
-  // Read volume
-  // public getVolumes(): Observable<Volume[]> {
-  //   return this.http.get(this.volumeUrl)
-  //   .map(res => {
-  //     return res["data"].docs as Volume[];
-  //   })
-  // }
-
+  
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);

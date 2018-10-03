@@ -9,10 +9,10 @@ _this = this
 exports.getVolumes = async function(req, res, next){
 
   try {
-    var volume_1 = await VolumeService.getVolumes({})
+    var volume = await VolumeService.getVolumes({})
 
     //Return volumes list with appropriate HTTP status code and message
-    return res.status(200).json({status: 200, data: volume_1, message: "Successfully recieved volumes"});
+    return res.status(200).json({status: 200, data: volume, message: "Successfully recieved volumes"});
 
   }catch(e){
     //Return error response with code and error message
@@ -27,14 +27,27 @@ exports.getVolumesById = async function(req, res){
   var id = req.params.id;
 
   try {
-    var volume_1 = await VolumeService.getVolumesById(id)
+    var volume = await VolumeService.getVolumesById(id)
 
     //Return volumes list with appropriate HTTP status code and message
-    return res.status(200).json({status: 200, data: volume_1, message: "Successfully recieved volumes by id"});
+    return res.status(200).json({status: 200, data: volume, message: "Successfully recieved volumes by id"});
 
   }catch(e){
     //Return error response with code and error message
     return res.status(400).json({status: 400, message: e.message});
+  }
+}
+
+exports.getVolumesByXML = async function(req, res){
+  var xml_id = req.params.xml_id;
+
+  try {
+    var volume = await VolumeService.getVolumesByXML(xml_id)
+
+    return res.status(200).json({status: 200, data: volume, message: "Successfully recieved volumes by xml_id"});
+
+  }catch(e){
+    return res.status(400),json({status: 400, message: e.message});
   }
 }
 

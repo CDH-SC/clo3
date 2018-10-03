@@ -10,23 +10,17 @@ import 'rxjs/add/operator/map';
 })
 export class VolumeContentComponent implements OnInit {
 
-  volumes: [Volume];
+  volume : Volume;
 
   constructor(
     private volumeService: VolumeService,
   ) { }
 
   ngOnInit() {
-    this.volumeService.getAllVolumes<Volume[]>()
+    this.volumeService.getVolumeById<Volume[]>("01")
     .subscribe(data => {
-      this.volumes = data['data'];
-
+      this.volume = data["data"];
       console.log(data);
     });
   }
-
-  filterBy(prop: string) {
-    return this.volumes.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
-  }
-
 }
