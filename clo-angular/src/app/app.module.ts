@@ -28,6 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { LetterComponent } from './letter/letter.component';
+import { FooterService } from './_shared/_services/footer.service';
 
 const appRoutes: Routes = [
   {
@@ -83,7 +84,8 @@ const appRoutes: Routes = [
     NgbModule,
   ],
   providers: [
-    VolumeService
+    VolumeService,
+    FooterService
   ],
   bootstrap: [AppComponent]
 })

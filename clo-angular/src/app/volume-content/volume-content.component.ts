@@ -20,7 +20,6 @@ export class VolumeContentComponent implements OnInit {
     this.volumeService.getVolumeById<Volume[]>("01")
     .subscribe(data => {
       this.volume = data["data"];
-
       console.log(data);
     });
   }

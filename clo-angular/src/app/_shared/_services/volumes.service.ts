@@ -7,21 +7,21 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class VolumeService {
   api_url = 'http://localhost:3000';
-  volume_num = '1'
+  volume_num = '1';
   volumeUrl = `${this.api_url}/api/volume/`;
 
   constructor(
     private http: HttpClient,
   ) {}
 
-public getAllVolumes<T>(): Observable<T> {
-  return this.http.get<T>(this.volumeUrl);
-}
+  public getAllVolumes<T>(): Observable<T> {
+    return this.http.get<T>(this.volumeUrl);
+  }
 
-public getVolumeById<T>(id: string): Observable<T> {
-  return this.http.get<T>(this.volumeUrl + id);
-}
-
+  public getVolumeById<T>(id: string): Observable<T> {
+    return this.http.get<T>(this.volumeUrl + id);
+  }
+  
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
