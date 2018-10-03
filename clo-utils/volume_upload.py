@@ -24,17 +24,17 @@ db = client.clo
 # pages from an xml file #
 # into mongodb.             #
 #############################
-def upload_volume(volumeID, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology):
-    if db.volumes.find({'_id':str(volumeID)}).count > 0:
-        db.volumes.update_one(
-        {"_id":str(volumeID)},
-        {"$set": {
-         "acknowledgements":str(acknowledgements),
-         "introduction":str(introduction),
-         "letters_to_carlyles":str(letters_to_carlyles),
-         "key_to_references":str(key_to_references),
-         "chronology":str(chronology)}},
-        upsert=True)
+def upload_volume(volumeID, volume_dates, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology):
+    db.volumes.update_one(
+    {"_id":str(volumeID)},
+    {"$set": {
+     "volume_dates":str(volume_dates),
+     "acknowledgements":str(acknowledgements),
+     "introduction":str(introduction),
+     "letters_to_carlyles":str(letters_to_carlyles),
+     "key_to_references":str(key_to_references),
+     "chronology":str(chronology)}},
+    upsert=True)
 
 def upload_letters(volumeID, lettersArray):
     db.volumes.update_one(
@@ -50,7 +50,7 @@ def upload_letters(volumeID, lettersArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith("P5--bek.xml"):
+        if filename.endswith("-P5--bek.xml"):
             print filename
             volumeID = ''.join(re.findall("\d{2}", filename)) # get volume id from filename
             file = open(os.path.join(directory, filename), "r")
@@ -60,7 +60,14 @@ def main():
 
             #####
             # volume-wide sections here
-            ####$
+            #####
+            # get volume_dates
+            volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?<p><date when=.*?>(.*?)</date>.*<date when=.*?>(.*?)</date></p>", content)
+            #volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?<p><date when=.*?>(.*?)<.*<date when=.*?>(.*?)<|<publicationStmt>(?:.|\n)*?<p><date when=.*?>(.*?)<", content)
+            if volume_datesMatch:
+                volume_dates = " ".join(volume_datesMatch[0])
+            else:
+                volume_dates = ''
             # get acknowledgements section
             acknowledgementsMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if acknowledgementsMatch:
@@ -99,11 +106,13 @@ def main():
             letters_to_carlyles = letters_to_carlyles.replace('\n', '')
             chronology = chronology.replace('\n', '')
 
+            print volume_dates
+
             lettersMatch = re.findall("<div3 type=\"letter\">(.*?)</div3>", content, re.DOTALL)
             # create the volume document
-            upload_volume(volumeID, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology)
+            upload_volume(volumeID, volume_dates, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology)
             print "found "+str(len(lettersMatch))+" letters for this volume: "+filename
-            print "\n"
+            print "processing letters for this volume: "+filename
 
             try:
                 # loop through each letter inside lettersMatch
@@ -121,9 +130,27 @@ def main():
                     else:
                         docAuthor = ''
 
-                    sender = re.findall("<person type=\"sender\">(.*?)</person>", letterContent)
-                    recipient = re.findall("<person type=\"addressee\">(.*?)</person>", letterContent)
-                    sourceNote = re.findall("<sourceNote>(.*?)</sourceNote>", letterContent, re.DOTALL)
+                    # check if sender exists
+                    senderMatch = re.findall("<person type=\"sender\">(.*?)</person>", letterContent)
+                    if senderMatch:
+                        sender = senderMatch[0]
+                    else:
+                        sender = ''
+
+                    # check if there is a recipient
+                    recipientMatch = re.findall("<person type=\"addressee\">(.*?)</person>", letterContent)
+                    if recipientMatch:
+                        recipient = recipientMatch[0]
+                    else:
+                        recipient = ''
+
+                    # check if there is a sourcenote
+                    sourceNoteMatch = re.findall("<sourceNote>(.*?)</sourceNote>", letterContent, re.DOTALL)
+                    if sourceNoteMatch:
+                        sourceNote = sourceNoteMatch[0]
+                    else:
+                        sourceNote = ''
+
                     docBody = re.findall("<docBody>(.*?)</docBody>", letterContent, re.DOTALL)
 
                     # check if head exists
@@ -133,18 +160,24 @@ def main():
                     else:
                         head = ''
 
-                    # pull footnotes from docBody
-                    footnotes = re.findall("<note.*?>(.*?)</note>", letterContent)
+                    # check if there are any footnotes
+                    footnotesMatch = re.findall("<note.*?>(.*?)</note>", letterContent)
+                    if footnotesMatch:
+                        # pull footnotes from docBody
+                        footnotes = footnotesMatch
+                    else:
+                        footnotes = ''
 
+                    # add all found content to end of letters array
                     lettersArray.append({
                     "xml_id": xml_id[0],
                     "docDate": docDate[0],
                     "firstPage": firstPage[0],
                     "lastPage": lastPage[0],
                     "docAuthor": docAuthor,
-                    "sender": sender[0],
-                    "recipient": recipient[0],
-                    "sourceNote": sourceNote[0],
+                    "sender": sender,
+                    "recipient": recipient,
+                    "sourceNote": sourceNote,
                     "docBody": docBody[0],
                     "head": head,
                     "footnotes": footnotes,
@@ -152,20 +185,21 @@ def main():
 
                     upload_letters(volumeID, lettersArray) # uploads the letters
 
-                    '''
-                    print xml_id
-                    print docDate
-                    print firstPage
-                    print lastPage
-                    print docAuthor
-                    print sender
-                    print recipient
-                    # print sourceNote
-                    # print docBody
-                    print head
-                    print footnotes
-                    '''
 
+                    # print xml_id
+                    # print docDate
+                    # print firstPage
+                    # print lastPage
+                    # print docAuthor
+                    # print sender
+                    # print recipient
+                    # # print sourceNote
+                    # # print docBody
+                    # print head
+                    # print footnotes
+
+
+                print "Records successfully updated\n"
             except Exception as e:
                 print str(e)
 

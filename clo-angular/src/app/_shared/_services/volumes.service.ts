@@ -22,11 +22,16 @@ public getVolumeById<T>(id: string): Observable<T> {
   return this.http.get<T>(this.volumeUrl + id);
 }
 
+public getLetterById<T>(id: string, xml_id: string): Observable<T> {
+  return this.http.get<T>(this.volumeUrl + id +"/"+ xml_id);
+}
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
 }
+
 
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
