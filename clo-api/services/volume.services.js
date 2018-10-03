@@ -36,7 +36,7 @@ exports.getVolumesById = async function(id){
 
 exports.getVolumesByXML = async function(xml_id){
   try {
-    var volume = await Volume.findOne({letters: {xml_id: xml_id}});
+    var volume = await Volume.findOne({"letters.xml_id": xml_id}, {"letters.$": 1});
 
     return volume;
 

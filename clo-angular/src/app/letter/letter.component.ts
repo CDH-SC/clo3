@@ -20,8 +20,9 @@ export class LetterComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
+    const xml_id = this.route.snapshot.paramMap.get('xml_id');
 
-    this.volumeService.getVolumeById<Volume[]>(id)
+    this.volumeService.getLetterById<Volume[]>(id, xml_id)
     .subscribe(data => {
       this.volume = data["data"];
 
