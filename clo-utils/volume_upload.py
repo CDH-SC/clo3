@@ -62,36 +62,43 @@ def main():
             # volume-wide sections here
             #####
             # get volume_dates
-            volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?<p><date when=.*?>(.*?)</date>.*<date when=.*?>(.*?)</date></p>", content)
-            #volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?<p><date when=.*?>(.*?)<.*<date when=.*?>(.*?)<|<publicationStmt>(?:.|\n)*?<p><date when=.*?>(.*?)<", content)
+            volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?<p>.*?<date when=.*?>(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>)?", content)
             if volume_datesMatch:
-                volume_dates = " ".join(volume_datesMatch[0])
+                volume_dates = " - ".join(volume_datesMatch[0]) # join date range together
+                volume_dates = str.join("", volume_dates.splitlines()) # join multiple lines
+                if volume_dates.endswith(' - '): # if only one date then remove the "-"
+                    volume_dates = volume_dates[:-len(' - ')]
             else:
                 volume_dates = ''
+
             # get acknowledgements section
             acknowledgementsMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if acknowledgementsMatch:
                 acknowledgements = acknowledgementsMatch[0]
             else:
                 acknowledgements = ''
+
             # get introduction
             introductionMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-introduction\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if introductionMatch:
                 introduction = introductionMatch[0]
             else:
                 introduction = ''
+
             # get key-to-references
             key_to_referencesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-key-to-references\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if key_to_referencesMatch:
                 key_to_references = key_to_referencesMatch[0]
             else:
                 key_to_references = ''
+
             # get letters-to-carlyles
             letters_to_carlylesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-letters-to-the-carlyles\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if letters_to_carlylesMatch:
                 letters_to_carlyles = letters_to_carlylesMatch[0]
             else:
                 letters_to_carlyles = ''
+
             # get chronology
             chronologyMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-chronology\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if chronologyMatch:
@@ -106,9 +113,15 @@ def main():
             letters_to_carlyles = letters_to_carlyles.replace('\n', '')
             chronology = chronology.replace('\n', '')
 
+            ### remove comments for debugging purposes ###
             print volume_dates
+            # print acknowledgements
+            # print introduction
+            # print key_to_references
+            # print letters_to_carlyles
+            # print chronology
 
-            lettersMatch = re.findall("<div3 type=\"letter\">(.*?)</div3>", content, re.DOTALL)
+            lettersMatch = re.findall("<div3 type=\"letter\">(.*?)</div3>", content, re.DOTALL) # find all letters in a volume
             # create the volume document
             upload_volume(volumeID, volume_dates, acknowledgements, introduction, letters_to_carlyles, key_to_references, chronology)
             print "found "+str(len(lettersMatch))+" letters for this volume: "+filename
@@ -118,7 +131,7 @@ def main():
                 # loop through each letter inside lettersMatch
                 for letterContent in lettersMatch:
                     xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
-                    docDate = re.findall("<docDate value=(?:.|\n)*?>(?:.|\n)*?(.*?)</docDate>", letterContent)
+                    docDate = re.findall("<docDate value=(?:.|\n)*?>(?:.*>)?\n?(.*?)</docDate>", letterContent)
                     firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
                     lastPage = re.findall("<idno type=\"lastpage\">(.*?)</idno>", letterContent)
 
@@ -168,7 +181,7 @@ def main():
                     else:
                         footnotes = ''
 
-                    # add all found content to end of letters array
+                    # add all content to end of letters array
                     lettersArray.append({
                     "xml_id": xml_id[0],
                     "docDate": docDate[0],

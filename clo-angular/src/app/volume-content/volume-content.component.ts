@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class VolumeContentComponent implements OnInit {
 
-  volume : Volume;
+  volume : [Volume];
 
   constructor(
     private volumeService: VolumeService,
