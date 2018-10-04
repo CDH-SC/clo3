@@ -2,7 +2,7 @@
   <div class="d-flex flex-column p-2">
     <ul>
       <li *ngFor="let v of volume.letters">
-        <a routerLink="/browse-volume/letter/01/{{v.xml_id}}" routerLinkActive="active">
+        <a routerLink="/browse-volume/letter/{{volume._id}}/{{v.xml_id}}" routerLinkActive="active">
           <p>
             Date: {{v.docDate}}<br>
             xml: {{v.xml_id}}
