@@ -1,22 +1,24 @@
-<div class="d-flex flex-row p-2">
-  <div class="d-flex flex-column p-2">
-    <ul>
-      <li *ngFor="let v of volume.letters">
-        <a routerLink="/browse-volume/letter/01/{{v.xml_id}}" routerLinkActive="active">
-          <p>
-            Date: {{v.docDate}}<br>
-            xml: {{v.xml_id}}
-          </p>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="d-flex flex-column p-2">
-    <div class="viewer-box">
-      <div id="introduction" [innerHTML]="volume.introduction"></div>
+<div *ngIf="volume">
+  <div class="d-flex flex-row p-2">
+    <div class="d-flex flex-column p-2">
+      <ul>
+        <li *ngFor="let v of volume.letters">
+          <a routerLink="/browse-volume/letter/{{volume._id}}/{{v.xml_id}}" routerLinkActive="active">
+            <p>
+              Date: {{v.docDate}}<br>
+              xml: {{v.xml_id}}
+            </p>
+          </a>
+        </li>
+      </ul>
     </div>
-    <div class="viewer-box">
-      <div id="acknowledgements" [innerHTML]="volume.acknowledgements"></div>
+    <div class="d-flex flex-column p-2">
+      <div class="viewer-box">
+        <div id="introduction" [innerHTML]="volume.introduction"></div>
+      </div>
+      <div class="viewer-box">
+        <div id="acknowledgements" [innerHTML]="volume.acknowledgements"></div>
+      </div>
     </div>
   </div>
 </div>

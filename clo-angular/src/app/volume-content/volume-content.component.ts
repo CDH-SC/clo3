@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { Volume } from '../_shared/models/volume';
 import 'rxjs/add/operator/map';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-volume-content',
@@ -10,14 +11,17 @@ import 'rxjs/add/operator/map';
 })
 export class VolumeContentComponent implements OnInit {
 
-  volume : Volume;
+  volume : [Volume];
 
   constructor(
     private volumeService: VolumeService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    this.volumeService.getVolumeById<Volume[]>("01")
+    const id = this.route.snapshot.paramMap.get('id');
+
+    this.volumeService.getVolumeById<Volume[]>(id)
     .subscribe(data => {
       this.volume = data["data"];
       console.log(data);

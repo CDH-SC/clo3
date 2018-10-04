@@ -48,7 +48,7 @@ const appRoutes: Routes = [
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
-  { path: 'browse-volume/volume-content', component: VolumeContentComponent },
+  { path: 'browse-volume/volume-content/:id', component: VolumeContentComponent },
   { path: 'browse-volume/letter/:id/:xml_id', component: LetterComponent },
 ];
 

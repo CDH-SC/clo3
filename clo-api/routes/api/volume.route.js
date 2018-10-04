@@ -8,7 +8,7 @@ var volumeController = require('../../controllers/volume.controller')
 //Map each API to the controller functions
 router.get('/', volumeController.getVolumes)
 router.get('/:id', volumeController.getVolumesById)
-router.get('/:xml_id', volumeController.getVolumesByXML)
+router.get('/:id/:xml_id', volumeController.getVolumesByXML)
 router.post('/', volumeController.createVolume)
 router.put('/', volumeController.updateVolume)
 router.delete('/:id', volumeController.removeVolume)
