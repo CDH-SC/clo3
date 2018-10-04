@@ -28,7 +28,14 @@ public getLetterById<T>(id: string, xml_id: string): Observable<T> {
   return this.http.get<T>(this.volumeUrl + id +"/"+ xml_id);
 }
 
+<<<<<<< HEAD
 >>>>>>> added find by xml to api, displaying letter xml for vol 1, further additions to volume upload script
+=======
+public getLetterById<T>(id: string, xml_id: string): Observable<T> {
+  return this.http.get<T>(this.volumeUrl + id +"/"+ xml_id);
+}
+
+>>>>>>> eaabc7345f4e61122c2c99d7e738f068c2af448b
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
