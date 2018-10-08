@@ -13,7 +13,7 @@ from datetime import datetime # measure the speed of script
 from pprint import pprint # pprint library is used to make the output look pretty
 
 startTime = datetime.now()
-directory = "../col_xml_archive/completed/"
+directory = "../col_xml_archive/" # defines working directory
 
 # Connect to Mongodb
 client = MongoClient('mongodb://localhost:27017/')
@@ -50,7 +50,7 @@ def upload_letters(volumeID, lettersArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith("-P5--bek.xml"):
+        if filename.endswith("space.xml"):
             print filename
             volumeID = ''.join(re.findall("\d{2}", filename)) # get volume id from filename
             file = open(os.path.join(directory, filename), "r")
@@ -62,7 +62,9 @@ def main():
             # volume-wide sections here
             #####
             # get volume_dates
-            volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?<p>.*?<date when=.*?>(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>)?", content)
+            volume_datesMatch = re.findall("<publicationStmt>(?:\n.*<p>.*)(?:\n.*)*?(?:.*?<date when=.*?>|\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>|\n.*</p>)", content)
+            #volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?(?:<p>.*?<date when=.*?>|<p>\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>|\n.*</p>)?", content)
+            print volume_datesMatch
             if volume_datesMatch:
                 volume_dates = " - ".join(volume_datesMatch[0]) # join date range together
                 volume_dates = str.join("", volume_dates.splitlines()) # join multiple lines
@@ -131,7 +133,10 @@ def main():
                 # loop through each letter inside lettersMatch
                 for letterContent in lettersMatch:
                     xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
-                    docDate = re.findall("<docDate value=(?:.|\n)*?>(?:.*>)?\n?(.*?)</docDate>", letterContent)
+
+                    docDate = re.findall("<docDate value=(?:.|\n)*?>(.*?|.*\n.*)</docDate>", letterContent)
+                    docDate = "".join(docDate[0]).replace('\r\n', '').lstrip() # join dates together, remove new line characters, and strip leading whitespace
+
                     firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
                     lastPage = re.findall("<idno type=\"lastpage\">(.*?)</idno>", letterContent)
 
@@ -184,7 +189,7 @@ def main():
                     # add all content to end of letters array
                     lettersArray.append({
                     "xml_id": xml_id[0],
-                    "docDate": docDate[0],
+                    "docDate": docDate,
                     "firstPage": firstPage[0],
                     "lastPage": lastPage[0],
                     "docAuthor": docAuthor,
@@ -210,6 +215,7 @@ def main():
                     # # print docBody
                     # print head
                     # print footnotes
+                    # print "\n"
 
 
                 print "Records successfully updated\n"
