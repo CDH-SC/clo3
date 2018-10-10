@@ -11,7 +11,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class VolumeContentComponent implements OnInit {
 
-  volume : [Volume];
+  objectKeys = Object.keys;
+  volume: [Volume];
 
   constructor(
     private volumeService: VolumeService,
@@ -22,9 +23,9 @@ export class VolumeContentComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
 
     this.volumeService.getVolumeById<Volume[]>(id)
-    .subscribe(data => {
-      this.volume = data["data"];
-      console.log(data);
-    });
+      .subscribe(data => {
+        this.volume = data['data'];
+        console.log(data);
+      });
   }
 }
