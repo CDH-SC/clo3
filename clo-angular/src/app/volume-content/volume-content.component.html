@@ -1,34 +1,3 @@
-<!-- <div *ngIf="volume">
-  <div class="d-flex flex-row p-2">
-    <div class="d-flex flex-column p-2">
-      <ul>
-        <li *ngFor="let v of volume.letters">
-          <a routerLink="/browse-volume/letter/{{volume._id}}/{{v.xml_id}}" routerLinkActive="active">
-            <p>
-              Date: {{v.docDate}}<br>
-              xml: {{v.xml_id}}
-            </p>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="d-flex flex-column p-2">
-      <div class="viewer-box">
-        <div id="introduction" [innerHTML]="volume.introduction.introText"></div>
-      </div>
-      <div class="viewer-box">
-        <div id="acknowledgements" [innerHTML]="volume.acknowledgements"></div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-<div *ngIf="volume" id="content">
-  <p>Volumes exist!</p>
-  <p>{{ volume._id }}</p>
-  <div class="d-flex flex-column">
-    <a *ngFor="let k of objectKeys(volume)">
-      {{ k }}
-    </a>
-  </div>
+<div id="content">
+  <app-volume-toc></app-volume-toc>
 </div>

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LetterComponent } from './letter.component';
+import { VolumeViewerComponent } from './volume-viewer.component';
 
-describe('LetterComponent', () => {
-  let component: LetterComponent;
-  let fixture: ComponentFixture<LetterComponent>;
+describe('VolumeViewerComponent', () => {
+  let component: VolumeViewerComponent;
+  let fixture: ComponentFixture<VolumeViewerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LetterComponent ]
+      declarations: [ VolumeViewerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LetterComponent);
+    fixture = TestBed.createComponent(VolumeViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
