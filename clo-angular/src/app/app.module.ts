@@ -23,11 +23,13 @@ import { AboutPrintedComponent } from './about/about-printed/about-printed.compo
 import { AboutCitingComponent } from './about/about-citing/about-citing.component';
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
+import { VolumeContentComponent } from './volume-content/volume-content.component';
+import { VolumeTocComponent } from './volume-toc/volume-toc.component';
+import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { VolumeService } from './_shared/_services/volumes.service';
-import { VolumeContentComponent } from './volume-content/volume-content.component';
-import { LetterComponent } from './letter/letter.component';
 import { FooterService } from './_shared/_services/footer.service';
 
 const appRoutes: Routes = [
@@ -49,7 +51,6 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume-content/:id', component: VolumeContentComponent },
-  { path: 'browse-volume/letter/:id/:xml_id', component: LetterComponent },
 ];
 
 @NgModule({
@@ -73,7 +74,8 @@ const appRoutes: Routes = [
     AboutEditorsComponent,
     AboutAckComponent,
     VolumeContentComponent,
-    LetterComponent,
+    VolumeTocComponent,
+    VolumeViewerComponent,
   ],
   imports: [
     BrowserModule,
