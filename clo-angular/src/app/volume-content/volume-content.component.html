@@ -1,4 +1,4 @@
-<div *ngIf="volume">
+<!-- <div *ngIf="volume">
   <div class="d-flex flex-row p-2">
     <div class="d-flex flex-column p-2">
       <ul>
@@ -20,5 +20,15 @@
         <div id="acknowledgements" [innerHTML]="volume.acknowledgements"></div>
       </div>
     </div>
+  </div>
+</div> -->
+
+<div *ngIf="volume" id="content">
+  <p>Volumes exist!</p>
+  <p>{{ volume._id }}</p>
+  <div class="d-flex flex-column">
+    <a *ngFor="let k of objectKeys(volume)">
+      {{ k }}
+    </a>
   </div>
 </div>
