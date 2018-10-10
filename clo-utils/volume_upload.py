@@ -10,7 +10,6 @@ import sys
 import re
 from pymongo import MongoClient
 from datetime import datetime # measure the speed of script
-from pprint import pprint # pprint library is used to make the output look pretty
 
 startTime = datetime.now()
 directory = "../col_xml_archive/" # defines working directory
@@ -149,10 +148,6 @@ def main():
             # check if geraldine-jewsbury-to-froude exists and if so add to volume
             geraldineJewsburyMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-geraldine-jewsbury-to-froude\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if geraldineJewsburyMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"geraldineJewsbury":str(geraldineJewsburyMatch[0])}})
-
-            # check if ellen-twisleton-account-of-life-at-craigenputtoch exists and if so add to volume
-            ellenTwisletonMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-ellen-twisleton-account-of-life-at-craigenputtoch\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if ellenTwisletonMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"ellenTwisleton":str(ellenTwisletonMatch[0])}})
 
             # check if ellen-twisleton-account-of-life-at-craigenputtoch exists and if so add to volume
             ellenTwisletonMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-ellen-twisleton-account-of-life-at-craigenputtoch\">(.*?)</div1>" % volumeID, content, re.DOTALL)
