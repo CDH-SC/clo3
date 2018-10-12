@@ -24,8 +24,6 @@ import { AboutCitingComponent } from './about/about-citing/about-citing.componen
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
-import { VolumeTocComponent } from './volume-toc/volume-toc.component';
-import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -74,8 +72,6 @@ const appRoutes: Routes = [
     AboutEditorsComponent,
     AboutAckComponent,
     VolumeContentComponent,
-    VolumeTocComponent,
-    VolumeViewerComponent,
   ],
   imports: [
     BrowserModule,
