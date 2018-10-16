@@ -24,6 +24,12 @@ import { AboutCitingComponent } from './about/about-citing/about-citing.componen
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
+<<<<<<< HEAD
+=======
+import { VolumeTocComponent } from './volume-toc/volume-toc.component';
+import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
+import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
+>>>>>>> started work on image viewer for photo album
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -49,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume-content/:id', component: VolumeContentComponent },
+  { path: 'album-viewer/:id', component: AlbumViewerComponent },
 ];
 
 @NgModule({
@@ -72,6 +79,12 @@ const appRoutes: Routes = [
     AboutEditorsComponent,
     AboutAckComponent,
     VolumeContentComponent,
+<<<<<<< HEAD
+=======
+    VolumeTocComponent,
+    VolumeViewerComponent,
+    AlbumViewerComponent,
+>>>>>>> started work on image viewer for photo album
   ],
   imports: [
     BrowserModule,
