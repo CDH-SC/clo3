@@ -26,6 +26,7 @@ import { AboutAckComponent } from './about/about-ack/about-ack.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
 import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
+import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -51,6 +52,7 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume-content/:id', component: VolumeContentComponent },
+  { path: 'album-viewer/:id', component: AlbumViewerComponent },
 ];
 
 @NgModule({
@@ -76,6 +78,7 @@ const appRoutes: Routes = [
     VolumeContentComponent,
     VolumeTocComponent,
     VolumeViewerComponent,
+    AlbumViewerComponent,
   ],
   imports: [
     BrowserModule,
