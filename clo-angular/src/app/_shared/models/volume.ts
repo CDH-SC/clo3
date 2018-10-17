@@ -51,6 +51,10 @@ import { Injectable } from '@angular/core';
       docBody: string;
       footnotes: [string];
     }];
+    frontice_piece: {
+      imageUrl: string;
+      imageCaption: string;
+    };
   }
 
 export default Volume;

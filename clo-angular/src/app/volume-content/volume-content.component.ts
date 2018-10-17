@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-volume-content',
@@ -16,13 +17,16 @@ export class VolumeContentComponent implements OnInit {
   volumeId: string;
 
   objectKeys = Object.keys;
-  tocKeys: string[] = [];
+  tocKeys: Object[] = [];
   prevId: string = null;
   nextId: string = null;
 
+  viewContent: SafeHtml;
+
   constructor(
     private volumeService: VolumeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -35,8 +39,8 @@ export class VolumeContentComponent implements OnInit {
         this.setKeys();
         this.prevId = this.setVolumeId(this.volumeId, 'prev');
         this.nextId = this.setVolumeId(this.volumeId, 'next');
-        console.log(this.prevId);
-        console.log(this.nextId);
+        this.setPage('chronology');
+        console.log(this.volume);
       });
   }
 
@@ -44,74 +48,104 @@ export class VolumeContentComponent implements OnInit {
     for (const k in this.volume) {
       if (this.volume.hasOwnProperty(k)) {
         switch (k) {
-          case '_id': {
+          case '_id':
             break;
-          }
-          case 'volume_dates': {
+          case 'volume_dates':
             break;
-          }
-          case 'letters_to_carlyles': {
-            this.tocKeys.push('Letters to the Carlyles');
+          case 'frontice_piece':
             break;
-          }
-          case 'key_to_references': {
-            this.tocKeys.push('Key to References');
+          case 'letters_to_carlyles':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Letters to the Carlyles'
+            });
             break;
-          }
-          case 'rival_brothers': {
-            this.tocKeys.push('The Rival Brothers: Fragment of a Play by Jane Baillie Welsh');
+          case 'key_to_references':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Key to References'
+            });
             break;
-          }
-          case 'biographicalNote': {
-            this.tocKeys.push('Biographical Notes');
+          case 'rival_brothers':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'The Rival Brothers: Fragment of a Play by Jane Baillie Welsh'
+            });
             break;
-          }
-          case 'inMemoriam': {
-            this.tocKeys.push('In Memoriam');
+          case 'biographicalNote':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Biographical Notes'
+            });
             break;
-          }
-          case 'JWCbyTait': {
-            this.tocKeys.push('JWC by Robert Scott Tait');
+          case 'inMemoriam':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'In Memoriam'
+            });
             break;
-          }
-          case 'janeNotebook': {
-            this.tocKeys.push('Jane Carlyle Notebook');
+          case 'JWCbyTait':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'JWC by Robert Scott Tait'
+            });
             break;
-          }
-          case 'simpleStory': {
-            this.tocKeys.push('Simple Story of My Own First Love');
+          case 'janeNotebook':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Jane Carlyle Notebook'
+            });
             break;
-          }
-          case 'janeJournal': {
-            this.tocKeys.push('Jane Welsh Carlyle Journal');
+          case 'simpleStory':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Simple Story of My Own First Love'
+            });
             break;
-          }
-          case 'geraldineJewsbury': {
-            this.tocKeys.push('Geraldine Jewsbury to Froude');
+          case 'janeJournal':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Jane Welsh Carlyle Journal'
+            });
             break;
-          }
-          case 'ellenTwisleton': {
-            this.tocKeys.push('Ellen Twisleton Account of Life at Craigenputtoch');
+          case 'geraldineJewsbury':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Geraldine Jewsbury to Froude'
+            });
             break;
-          }
-          case 'auroraComments': {
-            this.tocKeys.push('Comments on Aurora Leigh');
+          case 'ellenTwisleton':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Ellen Twisleton Account of Life at Craigenputtoch'
+            });
             break;
-          }
-          case 'athanaeumAdvertisements': {
-            this.tocKeys.push('Athanaeum Advertisements');
+          case 'auroraComments':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Comments on Aurora Leigh'
+            });
             break;
-          }
-          case 'accounts': {
+          case 'athanaeumAdvertisements':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Athanaeum Advertisements'
+            });
+            break;
+          case 'accounts':
             if (this.volume['accounts'].length > 0) {
-              this.tocKeys.push('Account\'s of JWC\'s Death');
+              this.tocKeys.push({
+                'key': k,
+                'title': 'Account\'s of JWC\'s Death'
+              });
             }
             break;
-          }
-          default: {
-            this.tocKeys.push(k);
+          default:
+            this.tocKeys.push({
+              'key': k,
+              'title': k
+            });
             break;
-          }
         }
       }
     }
@@ -139,6 +173,10 @@ export class VolumeContentComponent implements OnInit {
         }
       }
     }
+  }
+
+  setPage(key: string) {
+    this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
   }
 
   goToVolume(volId: string) {

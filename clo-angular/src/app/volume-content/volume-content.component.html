@@ -16,7 +16,7 @@
     <!-- END Volume Navigation -->
     <!-- Volume TOC -->
     <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let k of tocKeys">
-      <a class="pl-2">{{ k.toUpperCase() }}</a>
+      <a class="pl-2">{{ k['title'].toUpperCase() }}</a>
     </div>
     <!-- END Volume TOC -->
   </div>
@@ -24,7 +24,7 @@
 
   <!-- Viewer -->
   <div class="d-flex flex-column justify-content-start align-items-center" id="viewer">
-
+    <div id="fronticeContent" [innerHTML]="viewContent"></div>
   </div>
   <!-- END Viewer -->
 
