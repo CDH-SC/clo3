@@ -29,6 +29,10 @@ Live Version: Under Construction
 
 * Create a local database
 
+* Create the environment variable
+    * ```cd clo-api/```
+        * ```echo "DB_HOST=mongodb://127.0.0.1:27017/clo" >> .env```
+
 #### Git LFS
 
 ### Deployment
