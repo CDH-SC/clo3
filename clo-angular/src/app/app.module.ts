@@ -29,7 +29,10 @@ import { VolumeContentComponent } from './volume-content/volume-content.componen
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
 import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
+<<<<<<< HEAD
 >>>>>>> started work on image viewer for photo album
+=======
+>>>>>>> 2368f5ac40e2b4e6bcbedc9a8de17aecf5517eea
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -84,7 +87,10 @@ const appRoutes: Routes = [
     VolumeTocComponent,
     VolumeViewerComponent,
     AlbumViewerComponent,
+<<<<<<< HEAD
 >>>>>>> started work on image viewer for photo album
+=======
+>>>>>>> 2368f5ac40e2b4e6bcbedc9a8de17aecf5517eea
   ],
   imports: [
     BrowserModule,
