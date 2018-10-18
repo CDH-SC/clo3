@@ -23,7 +23,7 @@ export class VolumeService {
   }
 
   public getLetterById<T>(id: string, xml_id: string): Observable<T> {
-    return this.http.get<T>(this.volumeUrl + id +"/"+ xml_id);
+    return this.http.get<T>(this.volumeUrl + id + '/' + xml_id);
   }
 
   private handleError(error: any): Promise<any> {

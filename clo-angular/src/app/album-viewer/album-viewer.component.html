@@ -1,11 +1,13 @@
-<p>
-  album-viewer works!
-</p>
+<div class="box flex">
+  <h2 id="orange-border-bottom">Album: {{ album._id }}</h2>
+</div>
 
-<div class="d-flex row align-items-between p-2">
-  <div class="d-flex column align-items-between p-2">
-    <img src="assets/album-images/Fig02.jpg">
-    <img src="assets/album-images/Fig04.jpg">
-    <img src="assets/album-images/Fig05.jpg">
+<div *ngIf="album">
+  <div class="box flex">
+  <div class="row" id="imageGrid">
+    <div *ngFor="let image of _albums; let i=index" id="grid">
+      <img [src]="image.thumb" (click)="open(i)" />
+    </div>
   </div>
+</div>
 </div>
