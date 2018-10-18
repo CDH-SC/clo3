@@ -24,11 +24,12 @@ import { AboutCitingComponent } from './about/about-citing/about-citing.componen
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
-import { VolumeTocComponent } from './volume-toc/volume-toc.component';
-import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
+import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LightboxModule } from 'ngx-lightbox';
 
+import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { FooterService } from './_shared/_services/footer.service';
 
@@ -51,6 +52,7 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume-content/:id', component: VolumeContentComponent },
+  { path: 'album-viewer/:id', component: AlbumViewerComponent },
 ];
 
 @NgModule({
@@ -74,8 +76,7 @@ const appRoutes: Routes = [
     AboutEditorsComponent,
     AboutAckComponent,
     VolumeContentComponent,
-    VolumeTocComponent,
-    VolumeViewerComponent,
+    AlbumViewerComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,9 +85,11 @@ const appRoutes: Routes = [
       appRoutes,
     ),
     NgbModule,
+    LightboxModule,
   ],
   providers: [
     VolumeService,
+    AlbumService,
     FooterService
   ],
   bootstrap: [AppComponent]

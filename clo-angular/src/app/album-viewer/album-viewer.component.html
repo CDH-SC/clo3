@@ -1,0 +1,13 @@
+<div class="box flex">
+  <h2 id="orange-border-bottom">Album: {{ album._id }}</h2>
+</div>
+
+<div *ngIf="album">
+  <div class="box flex">
+  <div class="row" id="imageGrid">
+    <div *ngFor="let image of _albums; let i=index" id="grid">
+      <img [src]="image.thumb" (click)="open(i)" />
+    </div>
+  </div>
+</div>
+</div>

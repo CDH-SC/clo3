@@ -1,3 +1,36 @@
-<div id="content">
-  <app-volume-toc></app-volume-toc>
+<div class="d-flex flex-row justify-content-between align-items-start p-2" id="content">
+  <!-- TOC -->
+  <div class="d-flex flex-column justify-content-start align-items-start" id="tocBox" *ngIf="volume">
+    <!-- Volume Information -->
+    <div class="w-100 orange-border-bottom" id="volInfo">
+      <span class="pl-2">Volume {{ volumeId }}</span>
+      <br>
+      <span class="pl-2">{{ volume.volume_dates }}</span>
+    </div>
+    <!-- END Volume Information -->
+    <!-- Volume Navigation -->
+    <div class="d-flex flex-row align-items-center w-100" id="volNav" *ngIf="prevId || nextId">
+      <a class="mr-auto" *ngIf="prevId" (click)="goToVolume(prevId)">PREV VOLUME</a>
+      <a class="ml-auto" *ngIf="nextId" (click)="goToVolume(nextId)">NEXT VOLUME</a>
+    </div>
+    <!-- END Volume Navigation -->
+    <!-- Volume TOC -->
+    <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let k of tocKeys">
+      <a class="pl-2">{{ k.toUpperCase() }}</a>
+    </div>
+    <!-- END Volume TOC -->
+  </div>
+  <!-- END TOC -->
+
+  <!-- Viewer -->
+  <div class="d-flex flex-column justify-content-start align-items-center" id="viewer">
+
+  </div>
+  <!-- END Viewer -->
+
+  <!-- Search Bar -->
+  <div class="d-flex flex-column justify-content-start align-items-end">
+    <app-search></app-search>
+  </div>
+  <!-- END Search Bar -->
 </div>

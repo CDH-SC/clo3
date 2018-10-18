@@ -1,0 +1,38 @@
+#grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+img {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 3px;
+  width: 180px;
+  height: 200px;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+#imageGrid {
+  width: 50%;
+  justify-content: center;
+}
+
+.box.flex {
+  display: flex;
+  justify-content: center;
+}
+
+#orange-border-bottom {
+  font-size: 17px;
+  border-bottom-color: rgb(193, 117, 35);
+  border-bottom-style: dotted;
+  border-bottom-width: 2px;
+  text-align: left;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  width: 50%;
+}

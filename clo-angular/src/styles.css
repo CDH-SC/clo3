@@ -17,7 +17,7 @@ body {
   background-position: 50% 130px;
 }
 
-body > a {
+body a {
   text-decoration: none;
   cursor: pointer;
 }
