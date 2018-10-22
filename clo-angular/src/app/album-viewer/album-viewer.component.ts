@@ -25,13 +25,13 @@ export class AlbumViewerComponent implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
 
-    this.albumService.getAlbumById<Album[]>(id)
+    this.albumService.getAlbumById<Album[]>(+id)
       .subscribe(data => {
         this.album = data['data'];
         console.log(this.album);
 
-        for (let i = 1; i <= this.album.image.length; i++) {
-          const src = this.album.album_url + this.album.image[i].imageUrl;
+        for (let i = 1; i <= this.album.images.length; i++) {
+          const src = this.album.albumUrl + this.album.images[i].imageUrl;
           const thumb = src;
           const album = {
             src: src,

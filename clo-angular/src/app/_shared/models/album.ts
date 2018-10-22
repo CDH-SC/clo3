@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
   */
   @Injectable()
   export class Album {
-    _id: string;
-    album_url: string;
-    image: {
+    _id: number;
+    albumUrl: string;
+    images: [{
       imageUrl: string;
-    };
+    }];
   }
 
 export default Album;

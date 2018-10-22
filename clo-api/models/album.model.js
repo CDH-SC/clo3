@@ -6,8 +6,8 @@ var Schema = mongoose.Schema;
 //Define schema
 var albumSchema = new Schema({
   _id: Number,
-  album_url: String,
-  image: [{
+  albumUrl: String,
+  images: [{
     imageUrl: String,
   }],
 }, { collection: 'albums' })
