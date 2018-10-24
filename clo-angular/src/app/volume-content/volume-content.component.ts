@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-volume-content',
@@ -16,16 +18,24 @@ export class VolumeContentComponent implements OnInit {
   volumeId: string;
 
   objectKeys = Object.keys;
-  tocKeys: string[] = [];
+  tocKeys: Object[] = [];
   prevId: string = null;
   nextId: string = null;
 
+  viewContent: SafeHtml;
+  fronticePiece: Object;
+  letters: Object[];
+
   constructor(
     private volumeService: VolumeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private footerService: FooterService
   ) {}
 
   ngOnInit() {
+    this.footerService.positionFooter();
+
     const id = this.route.snapshot.paramMap.get('id');
     this.volumeId = id;
 
@@ -33,10 +43,13 @@ export class VolumeContentComponent implements OnInit {
       .subscribe(data => {
         this.volume = data['data'];
         this.setKeys();
+        // Setting next and previous volume ids for navigation between volumes
         this.prevId = this.setVolumeId(this.volumeId, 'prev');
         this.nextId = this.setVolumeId(this.volumeId, 'next');
-        console.log(this.prevId);
-        console.log(this.nextId);
+        // Get frontice piece object
+        this.fronticePiece = this.volume['frontice_piece'];
+        // Get letters object
+        this.letters = this.volume['letters'];
       });
   }
 
@@ -44,74 +57,107 @@ export class VolumeContentComponent implements OnInit {
     for (const k in this.volume) {
       if (this.volume.hasOwnProperty(k)) {
         switch (k) {
-          case '_id': {
+          case '_id':
             break;
-          }
-          case 'volume_dates': {
+          case 'volume_dates':
             break;
-          }
-          case 'letters_to_carlyles': {
-            this.tocKeys.push('Letters to the Carlyles');
+          // The frontice piece and letters are objects that will be handled separately
+          case 'frontice_piece':
             break;
-          }
-          case 'key_to_references': {
-            this.tocKeys.push('Key to References');
+          case 'letters':
             break;
-          }
-          case 'rival_brothers': {
-            this.tocKeys.push('The Rival Brothers: Fragment of a Play by Jane Baillie Welsh');
+          case 'letters_to_carlyles':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Letters to the Carlyles'
+            });
             break;
-          }
-          case 'biographicalNote': {
-            this.tocKeys.push('Biographical Notes');
+          case 'key_to_references':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Key to References'
+            });
             break;
-          }
-          case 'inMemoriam': {
-            this.tocKeys.push('In Memoriam');
+          case 'rival_brothers':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'The Rival Brothers: Fragment of a Play by Jane Baillie Welsh'
+            });
             break;
-          }
-          case 'JWCbyTait': {
-            this.tocKeys.push('JWC by Robert Scott Tait');
+          case 'biographicalNote':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Biographical Notes'
+            });
             break;
-          }
-          case 'janeNotebook': {
-            this.tocKeys.push('Jane Carlyle Notebook');
+          case 'inMemoriam':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'In Memoriam'
+            });
             break;
-          }
-          case 'simpleStory': {
-            this.tocKeys.push('Simple Story of My Own First Love');
+          case 'JWCbyTait':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'JWC by Robert Scott Tait'
+            });
             break;
-          }
-          case 'janeJournal': {
-            this.tocKeys.push('Jane Welsh Carlyle Journal');
+          case 'janeNotebook':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Jane Carlyle Notebook'
+            });
             break;
-          }
-          case 'geraldineJewsbury': {
-            this.tocKeys.push('Geraldine Jewsbury to Froude');
+          case 'simpleStory':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Simple Story of My Own First Love'
+            });
             break;
-          }
-          case 'ellenTwisleton': {
-            this.tocKeys.push('Ellen Twisleton Account of Life at Craigenputtoch');
+          case 'janeJournal':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Jane Welsh Carlyle Journal'
+            });
             break;
-          }
-          case 'auroraComments': {
-            this.tocKeys.push('Comments on Aurora Leigh');
+          case 'geraldineJewsbury':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Geraldine Jewsbury to Froude'
+            });
             break;
-          }
-          case 'athanaeumAdvertisements': {
-            this.tocKeys.push('Athanaeum Advertisements');
+          case 'ellenTwisleton':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Ellen Twisleton Account of Life at Craigenputtoch'
+            });
             break;
-          }
-          case 'accounts': {
+          case 'auroraComments':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Comments on Aurora Leigh'
+            });
+            break;
+          case 'athanaeumAdvertisements':
+            this.tocKeys.push({
+              'key': k,
+              'title': 'Athanaeum Advertisements'
+            });
+            break;
+          case 'accounts':
             if (this.volume['accounts'].length > 0) {
-              this.tocKeys.push('Account\'s of JWC\'s Death');
+              this.tocKeys.push({
+                'key': k,
+                'title': 'Account\'s of JWC\'s Death'
+              });
             }
             break;
-          }
-          default: {
-            this.tocKeys.push(k);
+          default:
+            this.tocKeys.push({
+              'key': k,
+              'title': k
+            });
             break;
-          }
         }
       }
     }
@@ -141,7 +187,20 @@ export class VolumeContentComponent implements OnInit {
     }
   }
 
+  setPage(key: string) {
+    this.fronticePiece = null;
+    this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
+  }
+
   goToVolume(volId: string) {
     console.log(volId);
+  }
+
+  getLetter(xml_id: string) {
+    this.volumeService.getLetterById(this.volumeId, xml_id)
+      .subscribe(data => {
+        const letter = data['data']['letters'][0];
+        console.log(letter);
+      });
   }
 }
