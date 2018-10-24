@@ -52,3 +52,31 @@ h1, h2, h3, h4, h5, h6 {
 img {
   border: 0;
 }
+
+/*
+=================================================
+Custom metadata modal
+=================================================
+*/
+
+.metadataModal .modal-dialog {
+  position: absolute;
+  margin: auto;
+  width: 230px;
+  -webkit-transform: translate3d(0%, 0, 0);
+		    -ms-transform: translate3d(0%, 0, 0);
+		     -o-transform: translate3d(0%, 0, 0);
+		        transform: translate3d(0%, 0, 0);
+}
+
+.metadataModal .modal-content{
+  background-color: #D2E0DC;
+}
+
+.metadataBackdrop {
+  background-color: #FFFFFF;
+}
+
+.lightboxOverlay {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
