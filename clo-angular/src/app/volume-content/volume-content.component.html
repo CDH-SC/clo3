@@ -16,15 +16,37 @@
     <!-- END Volume Navigation -->
     <!-- Volume TOC -->
     <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let k of tocKeys">
-      <a class="pl-2">{{ k['title'].toUpperCase() }}</a>
+      <a class="pl-2" (click)="setPage(k['key'])">{{ k['title'].toUpperCase() }}</a>
+    </div>
+
+    <div class="w-100" *ngIf="letters">
+      <div class="d-flex align-items-center w-100 expand" id="tocItem">
+        <a class="pl-2" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">LETTERS</a>
+      </div>
+      <div class="collapse" id="letters">
+        <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let l of letters">
+          <a class="pl-4" (click)="getLetter(l['xml_id'])">
+            <span style="font-size: 14px; font-weight: bold; color: #c17953;">{{ l.docDate }}</span>
+            <br>
+            <span class="pl-2">{{ l.sender }} TO {{ l.recipient }}</span>
+          </a>
+        </div>
+      </div>
     </div>
     <!-- END Volume TOC -->
   </div>
   <!-- END TOC -->
 
+  <!-- Frontice Piece Viewer -->
+  <div class="d-flex flex-column justify-content-start align-items-center" id="viewer" *ngIf="fronticePiece">
+    <img src="{{ fronticePiece['imageUrl'] }}">
+    <div id="viewerContent" [innerHTML]="fronticePiece['imageCaption']"></div>
+  </div>
+  <!-- END Frontice Piece Viewer-->
+
   <!-- Viewer -->
-  <div class="d-flex flex-column justify-content-start align-items-center" id="viewer">
-    <div id="fronticeContent" [innerHTML]="viewContent"></div>
+  <div class="d-flex flex-column justify-content-start align-items-center" id="viewer" *ngIf="viewContent">
+    <div id="viewerContent" [innerHTML]="viewContent"></div>
   </div>
   <!-- END Viewer -->
 

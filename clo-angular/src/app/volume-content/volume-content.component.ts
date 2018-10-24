@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-volume-content',
@@ -22,14 +23,19 @@ export class VolumeContentComponent implements OnInit {
   nextId: string = null;
 
   viewContent: SafeHtml;
+  fronticePiece: Object;
+  letters: Object[];
 
   constructor(
     private volumeService: VolumeService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private footerService: FooterService
   ) {}
 
   ngOnInit() {
+    this.footerService.positionFooter();
+
     const id = this.route.snapshot.paramMap.get('id');
     this.volumeId = id;
 
@@ -37,10 +43,13 @@ export class VolumeContentComponent implements OnInit {
       .subscribe(data => {
         this.volume = data['data'];
         this.setKeys();
+        // Setting next and previous volume ids for navigation between volumes
         this.prevId = this.setVolumeId(this.volumeId, 'prev');
         this.nextId = this.setVolumeId(this.volumeId, 'next');
-        this.setPage('chronology');
-        console.log(this.volume);
+        // Get frontice piece object
+        this.fronticePiece = this.volume['frontice_piece'];
+        // Get letters object
+        this.letters = this.volume['letters'];
       });
   }
 
@@ -52,7 +61,10 @@ export class VolumeContentComponent implements OnInit {
             break;
           case 'volume_dates':
             break;
+          // The frontice piece and letters are objects that will be handled separately
           case 'frontice_piece':
+            break;
+          case 'letters':
             break;
           case 'letters_to_carlyles':
             this.tocKeys.push({
@@ -176,10 +188,19 @@ export class VolumeContentComponent implements OnInit {
   }
 
   setPage(key: string) {
+    this.fronticePiece = null;
     this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
   }
 
   goToVolume(volId: string) {
     console.log(volId);
+  }
+
+  getLetter(xml_id: string) {
+    this.volumeService.getLetterById(this.volumeId, xml_id)
+      .subscribe(data => {
+        const letter = data['data']['letters'][0];
+        console.log(letter);
+      });
   }
 }
