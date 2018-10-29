@@ -30,6 +30,7 @@
     "ngx-twitter-timeline": "^0.1.4",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.3.2",
+    "viewerjs": "^1.2.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
