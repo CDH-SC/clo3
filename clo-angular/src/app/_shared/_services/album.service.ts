@@ -17,7 +17,7 @@ export class AlbumService {
     return this.http.get<T>(this.albumUrl);
   }
 
-  public getAlbumById<T>(id: string): Observable<T> {
+  public getAlbumById<T>(id: number): Observable<T> {
     return this.http.get<T>(this.albumUrl + id);
   }
 

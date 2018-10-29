@@ -1,13 +1,23 @@
-<div class="box flex">
-  <h2 id="orange-border-bottom">Album: {{ album._id }}</h2>
+<div class="box flex" *ngIf="album">
+  <h2 class="orange-border-bottom">Album: {{ album._id }}</h2>
+  <button class="btn" (click)="openModal(content)">open modal</button>
 </div>
+
 
 <div *ngIf="album">
   <div class="box flex">
-  <div class="row" id="imageGrid">
-    <div *ngFor="let image of _albums; let i=index" id="grid">
-      <img [src]="image.thumb" (click)="open(i)" />
+    <div class="row imageGrid">
+      <div *ngFor="let image of _albums; let i=index" class="grid">
+        <img [src]="image.src" (click)="open(i)" />
+      </div>
     </div>
   </div>
 </div>
-</div>
+
+<ng-template #content let-modal>
+  <div class="modal-body">
+    <p>Date: </p>
+    <p>Caption: </p>
+    <p>Title: </p>
+  </div>
+</ng-template>
