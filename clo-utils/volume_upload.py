@@ -72,7 +72,6 @@ def main():
             # get volume_dates
             volume_datesMatch = re.findall("<publicationStmt>(?:\n.*<p>.*)(?:\n.*)*?(?:.*?<date when=.*?>|\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:.*</p>|\n.*</p>)", content)
             #volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?(?:<p>.*?<date when=.*?>|<p>\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>|\n.*</p>)?", content)
-            print volume_datesMatch
             if volume_datesMatch:
                 volume_dates = " - ".join(volume_datesMatch[0]) # join date range together
                 volume_dates = str.join("", volume_dates.splitlines()) # join multiple lines
@@ -201,7 +200,7 @@ def main():
                 for letterContent in lettersMatch:
                     xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
 
-                    docDate = re.findall("<docDate value=(?:.|\n)*?>(.*?|.*\n.*)</docDate>", letterContent)
+                    docDate = re.findall("<docDate value=(?:.|\n)*?>(?:(?:.*|\n.*)<pb id=.*?/>)?(\n.*?|.*?)(?:</docDate>|\n.*</docDate>)", letterContent)
                     docDate = "".join(docDate[0]).replace('\r\n', '').lstrip() # join dates together, remove new line characters, and strip leading whitespace
 
                     firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
@@ -272,7 +271,7 @@ def main():
 
 
                     # print xml_id
-                    # print docDate
+                    print docDate
                     # print firstPage
                     # print lastPage
                     # print docAuthor
@@ -300,7 +299,7 @@ def main():
                     for letterContent in accountMatch:
                         xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
 
-                        docDate = re.findall("<docDate value=(?:.|\n)*?>(.*?|.*\n.*)</docDate>", letterContent)
+                        docDate = re.findall("<docDate value=(?:.|\n)*?>(?:(?:.*|\n.*)<pb id=.*?/>)?(\n.*?|.*?)(?:</docDate>|\n.*</docDate>)", letterContent)
                         docDate = "".join(docDate[0]).replace('\r\n', '').lstrip() # join dates together, remove new line characters, and strip leading whitespace
 
                         firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
