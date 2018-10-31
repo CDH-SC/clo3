@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"clo.auth_user_groups"}]}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"clo.auth_user_groups"}],"uuid":"5edb4b35a43b4313aca1c03c23b7cd1e"}

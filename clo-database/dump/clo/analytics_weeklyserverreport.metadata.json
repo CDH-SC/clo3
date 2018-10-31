@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":1,"key":{"_id":1},"name":"_id_","ns":"clo.analytics_weeklyserverreport"}]}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"clo.analytics_weeklyserverreport"}],"uuid":"28ae09abe8ac41198dd78b7ee2d5d05b"}
