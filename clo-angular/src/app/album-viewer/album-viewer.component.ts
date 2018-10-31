@@ -35,7 +35,7 @@ export class AlbumViewerComponent implements OnInit {
         this.album = data['data'];
         console.log(this.album);
 
-        for (let i = 1; i <= this.album.images.length; i++) {
+        for (let i = 0; i <= this.album.images.length; i++) {
           const src = this.album.albumUrl + this.album.images[i].imageUrl;
           const album = { src: src, num: i };
           this._albums.push(album);
@@ -47,7 +47,6 @@ export class AlbumViewerComponent implements OnInit {
   open(index: number): void {
     this._subscription = this._lightboxEvent.lightboxEvent$.subscribe(event => this._onReceivedEvent(event));
     this._lightbox.open(this._albums, index);
-    this.openModal('num: ' + index);
   }
   close(): void {
     this._lightbox.close();
@@ -58,7 +57,7 @@ export class AlbumViewerComponent implements OnInit {
     this.modalService.open(content, { windowClass: 'metadataModal', centered: true });
   }
 
-  // Open metadata when image is viewed
+  // Watch for any events related to lightbox
   _onReceivedEvent(event: any): void {
     if (event.id === LIGHTBOX_EVENT.CLOSE) {
       this._subscription.unsubscribe();
