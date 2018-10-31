@@ -39,8 +39,8 @@
 
   <!-- Frontice Piece Viewer -->
   <div class="d-flex flex-column justify-content-start align-items-center" id="viewer" *ngIf="fronticePiece">
-    <img src="{{ fronticePiece['imageUrl'] }}">
-    <div id="viewerContent" [innerHTML]="fronticePiece['imageCaption']"></div>
+    <img id="fronticeImage" src="assets/{{ fronticePiece['imageUrl'] }}">
+    <div id="fronticeContent" [innerHTML]="fronticePiece['imageCaption']"></div>
   </div>
   <!-- END Frontice Piece Viewer-->
 
