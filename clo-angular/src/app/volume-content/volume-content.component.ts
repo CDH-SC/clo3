@@ -34,7 +34,7 @@ export class VolumeContentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.footerService.positionFooter();
+    document.getElementById('footer').style.position = 'relative';
 
     const id = this.route.snapshot.paramMap.get('id');
     this.volumeId = id;
