@@ -2,35 +2,46 @@
 
 import os
 import sys
+import re
 from pymongo import MongoClient
 from datetime import datetime
 
 startTime = datetime.now()
-directory = "../clo-angular/src/assets/albums/album_02/"
+directory = "../clo-angular/src/assets/albums/"
 
 # connect to Mongodb
 client = MongoClient('mongodb://localhost:27017/')
 db = client.clo
 
-def upload_album(imageArray):
+def upload_album(imageArray, albumID):
     db.albums.update_one(
-    {"_id": 02},
+    {"_id": int(albumID)},
     {"$set": {
-    "albumUrl": "assets/albums/album_02/",
+    "albumUrl": "assets/albums/album_"+str(albumID)+"/",
     "images": imageArray
     }},
     upsert=True)
 
 def main():
-    imageArray = []
-    for filename in sorted(os.listdir(directory)):
-        print filename
+    for subdir, dirs, files in os.walk(directory):
+        imageArray = []
+        albumIDMatch = re.findall("(\d{2})", subdir)
+        if albumIDMatch:
+            albumID = albumIDMatch[0]
+        else:
+            albumID = None
+        print "albumID: "+str(albumID)
+        print "subdirs: "+str(subdir)
 
-        imageArray.append({
-        "imageUrl": str(filename)
-        })
+        for filename in sorted(os.listdir(subdir)):
+            imageArray.append({
+            "imageUrl": str(filename)
+            })
 
-        upload_album(imageArray)
+            if albumID == None:
+                print "Invalid album"
+            else:
+                upload_album(imageArray, albumID)
 
 if __name__ == '__main__':
     main()
