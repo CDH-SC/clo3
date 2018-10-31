@@ -34,23 +34,23 @@ export class VolumeContentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.footerService.positionFooter();
-
     const id = this.route.snapshot.paramMap.get('id');
     this.volumeId = id;
 
     this.volumeService.getVolumeById<Volume[]>(id)
-      .subscribe(data => {
-        this.volume = data['data'];
-        this.setKeys();
-        // Setting next and previous volume ids for navigation between volumes
-        this.prevId = this.setVolumeId(this.volumeId, 'prev');
-        this.nextId = this.setVolumeId(this.volumeId, 'next');
-        // Get frontice piece object
-        this.fronticePiece = this.volume['frontice_piece'];
-        // Get letters object
-        this.letters = this.volume['letters'];
-      });
+    .subscribe(data => {
+      this.volume = data['data'];
+      this.setKeys();
+      // Setting next and previous volume ids for navigation between volumes
+      this.prevId = this.setVolumeId(this.volumeId, 'prev');
+      this.nextId = this.setVolumeId(this.volumeId, 'next');
+      // Get frontice piece object
+      this.fronticePiece = this.volume['frontice_piece'];
+      // Get letters object
+      this.letters = this.volume['letters'];
+    });
+
+    this.footerService.positionFooter();
   }
 
   setKeys() {
@@ -189,7 +189,11 @@ export class VolumeContentComponent implements OnInit {
 
   setPage(key: string) {
     this.fronticePiece = null;
-    this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
+    if (key === 'introduction') {
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key].introText);
+    } else {
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
+    }
   }
 
   goToVolume(volId: string) {
@@ -197,10 +201,12 @@ export class VolumeContentComponent implements OnInit {
   }
 
   getLetter(xml_id: string) {
+    this.fronticePiece = null;
     this.volumeService.getLetterById(this.volumeId, xml_id)
       .subscribe(data => {
         const letter = data['data']['letters'][0];
         console.log(letter);
+        this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
       });
   }
 }
