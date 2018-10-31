@@ -189,7 +189,11 @@ export class VolumeContentComponent implements OnInit {
 
   setPage(key: string) {
     this.fronticePiece = null;
-    this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
+    if (key === 'introduction') {
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key].introText);
+    } else {
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
+    }
   }
 
   goToVolume(volId: string) {
@@ -197,9 +201,11 @@ export class VolumeContentComponent implements OnInit {
   }
 
   getLetter(xml_id: string) {
+    this.fronticePiece = null;
     this.volumeService.getLetterById(this.volumeId, xml_id)
       .subscribe(data => {
         const letter = data['data']['letters'][0];
+        this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
         console.log(letter);
       });
   }
