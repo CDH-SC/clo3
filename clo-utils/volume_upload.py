@@ -56,7 +56,7 @@ def upload_accounts(volumeID, accountsArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith(".xml"):
+        if filename.endswith("01-P5.xml"):
             print filename
             volumeID = ''.join(re.findall("\d{2}", filename)) # get volume id from filename
             file = open(os.path.join(directory, filename), "r")
@@ -252,6 +252,10 @@ def main():
                     else:
                         footnotes = ''
 
+                    header = "<p><strong>" + sender + " TO " + recipient + "</strong></p>"
+                    docBodyHeader = header + docBody[0]
+                    docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
+
                     # add all content to end of letters array
                     lettersArray.append({
                     "xml_id": xml_id[0],
@@ -262,7 +266,7 @@ def main():
                     "sender": sender,
                     "recipient": recipient,
                     "sourceNote": sourceNote,
-                    "docBody": docBody[0],
+                    "docBody": docBody,
                     "head": head,
                     "footnotes": footnotes,
                     })
@@ -271,7 +275,7 @@ def main():
 
 
                     # print xml_id
-                    print docDate
+                    # print docDate
                     # print firstPage
                     # print lastPage
                     # print docAuthor
