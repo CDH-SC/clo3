@@ -206,7 +206,12 @@ export class VolumeContentComponent implements OnInit {
       .subscribe(data => {
         const letter = data['data']['letters'][0];
         this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
-        console.log(letter);
+        // console.log(letter);
       });
+  }
+
+  goToFront() {
+    this.fronticePiece = this.volume['frontice_piece'];
+    this.viewContent = null;
   }
 }

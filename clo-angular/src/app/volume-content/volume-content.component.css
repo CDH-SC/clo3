@@ -1,6 +1,6 @@
 #content {
   margin: auto;
-  width: 80%;
+  width: 100%;
 }
 
 #tocBox {
@@ -27,6 +27,7 @@
   background: #21596f;
   border-radius: 10px 10px 0 0;
   color: #5c8c48;
+  cursor: pointer;
 }
 
 #volNav {
@@ -36,7 +37,8 @@
 }
 
 #viewer {
-  width: 50%;
+  margin: 0px 40px;
+  width: 35%;
   height: 750px;
   border: 1px solid #21596f;
   border-radius: 10px;
