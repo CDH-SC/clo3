@@ -3,10 +3,26 @@
   width: 80%;
 }
 
+.rotate {
+  -moz-transition: all .2s linear;
+  -webkit-transition: all .2s linear;
+  transition: all .2s linear;
+}
+
+.rotate.down {
+  -moz-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
 .volumeButton, .volumeLink {
   font-weight: bold;
   text-decoration: none;
   cursor: pointer;
+}
+
+.volumeButton fa-icon {
+  transform: rotate(90deg);
 }
 
 .volumeLink {

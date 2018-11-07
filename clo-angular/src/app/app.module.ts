@@ -29,6 +29,8 @@ import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LightboxModule } from 'ngx-lightbox';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { FooterService } from './_shared/_services/footer.service';
@@ -51,9 +53,8 @@ const appRoutes: Routes = [
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
-  { path: 'browse-volume/volume-content/:id', component: VolumeContentComponent },
-  { path: 'album-viewer/:id', component: AlbumViewerComponent },
-];
+  { path: 'browse-volume/volume/:id', component: VolumeContentComponent },
+  { path: 'album-viewer/:id', component: AlbumViewerComponent }
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ const appRoutes: Routes = [
     ),
     NgbModule,
     LightboxModule,
+    FontAwesomeModule
   ],
   providers: [
     VolumeService,
