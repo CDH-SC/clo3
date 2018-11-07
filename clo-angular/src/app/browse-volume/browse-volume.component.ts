@@ -10,7 +10,7 @@ import * as $ from 'jquery';
 })
 export class BrowseVolumeComponent implements OnInit {
 
-  faIcon = faPlus;
+  faIcons = [];
 
   constructor(private footer: FooterService) { }
 
@@ -21,7 +21,20 @@ export class BrowseVolumeComponent implements OnInit {
     for (let i = 0; i < collapseMenus.length; i++) {
       collapseMenus[i].addEventListener('transitionend', () => {
         this.footer.positionFooter();
+        this.toggleIcon(i);
       });
+    }
+
+    for (let i = 0; i < 4; i++) {
+      this.faIcons.push(faPlus);
+    }
+  }
+
+  toggleIcon(index) {
+    if (this.faIcons[index] === faPlus) {
+      this.faIcons[index] = faMinus;
+    } else {
+      this.faIcons[index] = faPlus;
     }
   }
 }
