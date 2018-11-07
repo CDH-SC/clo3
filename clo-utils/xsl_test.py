@@ -1,7 +1,6 @@
 import os
 import sys
 import re
-import StringIO
 from pymongo import MongoClient
 from lxml import etree
 from datetime import datetime
@@ -12,6 +11,10 @@ directory = "../col_xml_archive/completed"
 # Connect to Mongodb
 client = MongoClient('mongodb://localhost:27017/')
 db = client.clo
+
+# Set variables for lxml
+xsltDoc = etree.parse("xml_styling.xslt") # import xsl stylesheet
+xsltTransformer = etree.XSLT(xsltDoc) # define xml transformation function
 
 def upload_letters(volumeID, lettersArray):
     db.volumes.update_one(
@@ -35,11 +38,8 @@ def main():
                 letters_to_carlyles = letters_to_carlylesMatch[0]
                 letters_to_carlyles = "<body>%s</body>" % letters_to_carlyles
 
-                xsltDoc = etree.parse("xml_styling.xslt")
-                xsltTransformer = etree.XSLT(xsltDoc)
-
-                sourceDoc = etree.fromstring(letters_to_carlyles)
-                outputDoc = xsltTransformer(sourceDoc)
+                sourceDoc = etree.fromstring(letters_to_carlyles) # get string to be transformed
+                letters_to_carlyles = xsltTransformer(sourceDoc) # transform xml
 
                 db.volumes.update_one({"_id":str(volumeID)},{"$set": {"letters_to_carlyles":str(letters_to_carlyles)}})
             else:
@@ -108,17 +108,15 @@ def main():
                     else:
                         footnotes = ''
 
-                    header = "<p><strong>" + sender + " TO " + recipient + "</strong></p>"
-                    docBodyHeader = header + docBody[0]
-                    docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
-                    docBody = "<docBody>%s</docBody>" % docBody
-                    print docBody
-
-                    xsltDoc = etree.parse("xml_styling.xslt")
-                    xsltTransformer = etree.XSLT(xsltDoc)
+                    header = "<p><strong>" + sender + " TO " + recipient + "</strong></p>" # Create header for the top of each letter
+                    docBody = header + docBody[0] # Combine the header with the rest of the letter
+                    # docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
+                    docBody = "<docBody>%s</docBody>" % docBody # Enclose each letter inside <docBody> tag for the lxml parsing
 
                     sourceDoc = etree.fromstring(docBody)
-                    outputDoc = xsltTransformer(sourceDoc)
+                    docBody = str(xsltTransformer(sourceDoc))
+                    print docBody
+
                     # print "\n"+str(outputDoc)
                     # add all content to end of letters array
                     lettersArray.append({

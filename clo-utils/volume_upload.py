@@ -9,14 +9,19 @@ import os
 import sys
 import re
 from pymongo import MongoClient
+from lxml import etree
 from datetime import datetime # measure the speed of script
 
 startTime = datetime.now()
-directory = "../col_xml_archive/" # defines working directory
+directory = "../col_xml_archive/completed" # defines working directory
 
 # Connect to Mongodb
 client = MongoClient('mongodb://localhost:27017/')
 db = client.clo
+
+# Set variables for lxml
+xsltDoc = etree.parse("xml_styling.xslt") # import xsl stylesheet
+xsltTransformer = etree.XSLT(xsltDoc) # define xml transformation function
 
 #############################
 # Uploads the processed     #
@@ -56,7 +61,7 @@ def upload_accounts(volumeID, accountsArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith("01-P5.xml"):
+        if filename.endswith(".xml"):
             print filename
             volumeID = ''.join(re.findall("\d{2}", filename)) # get volume id from filename
             file = open(os.path.join(directory, filename), "r")
@@ -84,6 +89,11 @@ def main():
             acknowledgementsMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if acknowledgementsMatch:
                 acknowledgements = acknowledgementsMatch[0]
+                xmlString = "<body>%s</body>" % acknowledgements
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                acknowledgements = str(xmlString)
             else:
                 acknowledgements = ''
 
@@ -91,6 +101,11 @@ def main():
             introductionMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-introduction\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if introductionMatch:
                 introText = introductionMatch[0]
+                xmlString = "<body>%s</body>" % introText
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                introText = str(xmlString)
                 # if footnotes exist add as array to introduction
                 introFootnotes = re.findall("<note.*?>(.*?)</note>", introductionMatch[0], re.DOTALL)
                 if introFootnotes:
@@ -102,6 +117,11 @@ def main():
             key_to_referencesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-key-to-references\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if key_to_referencesMatch:
                 key_to_references = key_to_referencesMatch[0]
+                xmlString = "<body>%s</body>" % key_to_references
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                key_to_references = str(xmlString)
             else:
                 key_to_references = ''
 
@@ -109,6 +129,11 @@ def main():
             letters_to_carlylesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-letters-to-the-carlyles\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if letters_to_carlylesMatch:
                 letters_to_carlyles = letters_to_carlylesMatch[0]
+                xmlString = "<body>%s</body>" % letters_to_carlyles
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                letters_to_carlyles = str(xmlString)
             else:
                 letters_to_carlyles = ''
 
@@ -116,61 +141,170 @@ def main():
             chronologyMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-chronology\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if chronologyMatch:
                 chronology = chronologyMatch[0]
+                xmlString = "<body>%s</body>" % chronology
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                chronology = str(xmlString)
             else:
                 chronology = ''
 
             ### Checks for special volume sections ###
             # check if rival_brothers exists and if so add to volume
             rival_brothersMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-The-Rival-Brothers:-Fragment-Of-A-Play-By-Jane-Baillie-Welsh\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if rival_brothersMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"rival_brothers":str(rival_brothersMatch[0])}})
+            if rival_brothersMatch:
+                rival_brothers = rival_brothersMatch[0]
+                xmlString = "<body>%s</body>" % rival_brothers
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                rival_brothers = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"rival_brothers":rival_brothers}})
 
             # check if biographical-notes exists and if so add to volume
             biographicalNotesMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-biographical-notes\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if biographicalNotesMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"biographicalNotes":str(biographicalNotesMatch[0])}})
+            if biographicalNotesMatch:
+                biographicalNotes = biographicalNotesMatch[0]
+                xmlString = "<body>%s</body>" % biographicalNotes
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                biographicalNotes = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"biographicalNotes":biographicalNotes}})
 
             # check if in-memoriam exists and if so add to volume
             inMemoriamMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-in-memoriam\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if inMemoriamMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"inMemoriam":str(inMemoriamMatch[0])}})
+            if inMemoriamMatch:
+                    inMemoriam = inMemoriamMatch[0]
+                    xmlString = "<body>%s</body>" % inMemoriam
+
+                    sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                    xmlString = xsltTransformer(sourceDoc) # transform xml
+                    inMemoriam = str(xmlString)
+
+                    db.volumes.update_one({"_id":str(volumeID)},{"$set": {"inMemoriam":inMemoriam}})
 
             # check if jane-carlyle-notebook exists and if so add to volume
             janeNotebookMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-jane-carlyle-notebook\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if janeNotebookMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"janeNotebook":str(janeNotebookMatch[0])}})
+            if janeNotebookMatch:
+                janeNotebook = janeNotebookMatch[0]
+                xmlString = "<body>%s</body>" % janeNotebook
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                janeNotebook = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"janeNotebook":janeNotebook}})
 
             # check if simple-story-of-my-own-love exists and if so add to volume
             simpleStoryMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-simple-story-of-my-own-love\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if simpleStoryMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"simpleStory":str(simpleStoryMatch[0])}})
+            if simpleStoryMatch:
+                simpleStory = simpleStoryMatch[0]
+                xmlString = "<body>%s</body>" % simpleStory
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                simpleStory = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"simpleStory":simpleStory}})
 
             # check if jane-welsh-carlyle-journal exists and if so add to volume
             janeJournalMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-jane-welsh-carlyle-journal\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if janeJournalMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"janeJournal":str(janeJournalMatch[0])}})
+            if janeJournalMatch:
+                janeJournal = janeJournalMatch[0]
+                xmlString = "<body>%s</body>" % janeJournal
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                janeJournal = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"janeJournal":janeJournal}})
 
             # check if geraldine-jewsbury-to-froude exists and if so add to volume
             geraldineJewsburyMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-geraldine-jewsbury-to-froude\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if geraldineJewsburyMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"geraldineJewsbury":str(geraldineJewsburyMatch[0])}})
+            if geraldineJewsburyMatch:
+                geraldineJewsbury = geraldineJewsburyMatch[0]
+                xmlString = "<body>%s</body>" % geraldineJewsbury
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                geraldineJewsbury = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"geraldineJewsbury":geraldineJewsbury}})
 
             # check if ellen-twisleton-account-of-life-at-craigenputtoch exists and if so add to volume
             ellenTwisletonMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-ellen-twisleton-account-of-life-at-craigenputtoch\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if ellenTwisletonMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"ellenTwisleton":str(ellenTwisletonMatch[0])}})
+            if ellenTwisletonMatch:
+                ellenTwisleton = ellenTwisletonMatch[0]
+                xmlString = "<body>%s</body>" % ellenTwisleton
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                ellenTwisleton = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"ellenTwisleton":ellenTwisleton}})
 
             # check if athanaeum-advertisements exists and if so add to volume
             athanaeumAdvertisementsMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-athanaeum-advertisements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if athanaeumAdvertisementsMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"athanaeumAdvertisements":str(athanaeumAdvertisementsMatch[0])}})
+            if athanaeumAdvertisementsMatch:
+                athanaeumAdvertisements = athanaeumAdvertisementsMatch[0]
+                xmlString = "<body>%s</body>" % athanaeumAdvertisements
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                athanaeumAdvertisements = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"athanaeumAdvertisements":athanaeumAdvertisements}})
 
             # check if comments-on-aurora-leigh exists and if so add to volume
             auroraCommentsMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-comments-on-aurora-leigh\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if auroraCommentsMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"auroraComments":str(auroraCommentsMatch[0])}})
+            if auroraCommentsMatch:
+                auroraComments = auroraCommentsMatch[0]
+                xmlString = "<body>%s</body>" % auroraComments
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                auroraComments = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"auroraComments":auroraComments}})
 
             # check if appendix exists and if so add to volume
             appendixMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-appendix\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if appendixMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"appendix":str(appendixMatch[0])}})
+            if appendixMatch:
+                appendix = appendixMatch[0]
+                xmlString = "<body>%s</body>" % appendix
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                appendix = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"appendix":appendix}})
 
             # check if JWC-by-Robert-Scott-Tait exists and if so add to volume
             JWCbyTaitMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-JWC-by-Robert-Scott-Tait\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if JWCbyTaitMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"JWCbyTait":str(JWCbyTaitMatch[0])}})
+            if JWCbyTaitMatch:
+                JWCbyTait = JWCbyTaitMatch[0]
+                xmlString = "<body>%s</body>" % JWCbyTait
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                JWCbyTait = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"JWCbyTait":JWCbyTait}})
 
             # check if TC-by-Robert-Scott-Tait exists and if so add to volume
             TCbyTaitMatch = re.findall("<div1 type=\"section\" id=\"ed-%s-TC-by-Robert-Scott-Tait\">(.*?)</div1>" % volumeID, content, re.DOTALL)
-            if TCbyTaitMatch: db.volumes.update_one({"_id":str(volumeID)},{"$set": {"TCbyTait":str(TCbyTaitMatch[0])}})
+            if TCbyTaitMatch:
+                TCbyTait = TCbyTaitMatch[0]
+                xmlString = "<body>%s</body>" % TCbyTait
+
+                sourceDoc = etree.fromstring(xmlString) # get string to be transformed
+                xmlString = xsltTransformer(sourceDoc) # transform xml
+                TCbyTait = str(xmlString)
+
+                db.volumes.update_one({"_id":str(volumeID)},{"$set": {"TCbyTait":TCbyTait}})
 
             # remove new line characters
             acknowledgements = acknowledgements.replace('\n', '')
@@ -252,9 +386,14 @@ def main():
                     else:
                         footnotes = ''
 
-                    header = "<p><strong>" + sender + " TO " + recipient + "</strong></p>"
-                    docBodyHeader = header + docBody[0]
-                    docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
+                    header = "<p><strong>" + sender + " TO " + recipient + "</strong></p>" # Create header for the top of each letter
+                    docBody = header + docBody[0] # Combine the header with the rest of the letter
+                    # docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
+                    docBody = "<docBody>%s</docBody>" % docBody # Enclose each letter inside <docBody> tag for the lxml parsing
+
+                    sourceDoc = etree.fromstring(docBody)
+                    docBody = str(xsltTransformer(sourceDoc))
+                    # print docBody
 
                     # add all content to end of letters array
                     lettersArray.append({
@@ -354,6 +493,15 @@ def main():
                             footnotes = footnotesMatch
                         else:
                             footnotes = ''
+
+                        header = "<p><strong>" + sender + " TO " + recipient + "</strong></p>" # Create header for the top of each letter
+                        docBody = header + docBody[0] # Combine the header with the rest of the letter
+                        # docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
+                        docBody = "<docBody>%s</docBody>" % docBody # Enclose each letter inside <docBody> tag for the lxml parsing
+
+                        sourceDoc = etree.fromstring(docBody)
+                        docBody = str(xsltTransformer(sourceDoc))
+                        # print docBody
 
                         # add all content to end of letters array
                         accountsArray.append({
