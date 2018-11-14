@@ -168,7 +168,7 @@ export class VolumeContentComponent implements OnInit {
       if (parseInt(volId, 10) <= 1) {
         return null;
       } else {
-        if (parseInt(volId, 10) < 10) {
+        if (parseInt(volId, 10) <= 10) {
           return '0' + (parseInt(volId, 10) - 1);
         } else {
           return (parseInt(volId, 10) - 1).toString();
@@ -197,7 +197,20 @@ export class VolumeContentComponent implements OnInit {
   }
 
   goToVolume(volId: string) {
-    console.log(volId);
+    this.volumeId = volId;
+    this.tocKeys = [];
+    this.volumeService.getVolumeById<Volume[]>(volId)
+      .subscribe(data => {
+        this.volume = data['data'];
+        this.setKeys();
+        // Setting next and previous volume ids for navigation between volumes
+        this.prevId = this.setVolumeId(this.volumeId, 'prev');
+        this.nextId = this.setVolumeId(this.volumeId, 'next');
+        // Get frontice piece object
+        this.fronticePiece = this.volume['frontice_piece'];
+        // Get letters object
+        this.letters = this.volume['letters'];
+      });
   }
 
   getLetter(xml_id: string) {

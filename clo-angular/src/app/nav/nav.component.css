@@ -31,3 +31,25 @@
 .dropdown-item:visited {
   background-color: #21596f;
 }
+
+@media screen and (min-width: 1601px) {
+  #nav-links, #aboutDropdown, #aboutDropdownList {
+    font-size: 17px !important;
+  }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1600px) {
+  #nav-links, #aboutDropdown, #aboutDropdownList {
+    font-size: 14px !important;
+  }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1199px) {
+  #nav-links, #aboutDropdown, #aboutDropdownList {
+    font-size: 12px !important;
+  }
+}
+
+@media screen and (max-width: 999px) {
+
+}

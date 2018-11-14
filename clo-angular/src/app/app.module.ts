@@ -55,6 +55,7 @@ const appRoutes: Routes = [
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume/:id', component: VolumeContentComponent },
   { path: 'album-viewer/:id', component: AlbumViewerComponent }
+];
 
 @NgModule({
   declarations: [
