@@ -40,6 +40,7 @@ var volumeSchema = new Schema({
     head: String,
     docBody: String,
     footnotes: [String],
+    // manuscript: [String],
   }],
   accounts: [{
     _id: String,

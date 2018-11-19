@@ -26,6 +26,9 @@ export class VolumeContentComponent implements OnInit {
   fronticePiece: Object;
   letters: Object[];
 
+  hasManuscript: boolean = false;
+  manuscriptUrl: Object[] = [];
+
   constructor(
     private volumeService: VolumeService,
     private route: ActivatedRoute,
@@ -220,6 +223,16 @@ export class VolumeContentComponent implements OnInit {
         const letter = data['data']['letters'][0];
         this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
         // console.log(letter);
+        // Check if the letter has a manuscript
+        if (letter.hasOwnProperty('manuscript')) {
+          this.hasManuscript = true;
+          for (let i = 0; i < letter.manuscript.length; i++) {
+            this.manuscriptUrl[i] = `assets/manuscripts/${letter.xml_id}/${letter.manuscript[i]}`;
+          }
+          console.log(this.manuscriptUrl);
+        } else {
+          this.hasManuscript = false;
+        }
       });
   }
 
