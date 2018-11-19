@@ -37,6 +37,7 @@ import { Injectable } from '@angular/core';
       head: string;
       docBody: string;
       footnotes: [string];
+      // manuscript: [string];
     }];
     accounts: [{
       _id: string;

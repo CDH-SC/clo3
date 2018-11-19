@@ -45,6 +45,11 @@
   <!-- END Frontice Piece Viewer-->
 
   <!-- Viewer -->
+  <div class="d-flex flex-column justify=content-start align-items-center" id="viewer" *ngIf="hasManuscript">
+    <div class="d-flex" *ngFor="let m of manuscriptUrl">
+      <img src="{{m}}" id="manuscript" />
+    </div>
+  </div>
   <div class="d-flex flex-column justify-content-start align-items-center" id="viewer" *ngIf="viewContent">
     <div id="viewerContent" [innerHTML]="viewContent"></div>
   </div>
