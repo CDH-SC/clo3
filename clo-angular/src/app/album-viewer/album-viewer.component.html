@@ -7,8 +7,9 @@
   <div class="box flex">
     <div class="row imageGrid">
       <div *ngFor="let image of _albums; let i=index" class="grid">
-        <img [src]="image.src" (click)="open(i); openModal(content)" />
-        <ng-template #content let-modal>
+        <img [src]="image.src" routerLink="/photo-viewer/{{album._id}}/{{i}}">
+        <!-- <img [src]="image.src" (click)="open(i); openModal(content)" /> -->
+        <!-- <ng-template #content let-modal>
           <div class="modal-body">
             <p>Date: </p>
             <p>Caption: </p>
@@ -25,7 +26,7 @@
             <p>Time Period: </p>
             <p>Location: </p>
           </div>
-        </ng-template>
+        </ng-template> -->
       </div>
     </div>
   </div>

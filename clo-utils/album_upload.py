@@ -30,12 +30,16 @@ def main():
             albumID = albumIDMatch[0]
         else:
             albumID = None
-        print "albumID: "+str(albumID)
-        print "subdirs: "+str(subdir)
+        print "albumID: " +str(albumID)
+        print "subdirs: " +str(subdir)
 
         for filename in sorted(os.listdir(subdir)):
             imageArray.append({
-            "imageUrl": str(filename)
+            "imageUrl": str(filename),
+            "date": "",
+            "caption": "",
+            "title": "",
+            "creator": ""
             })
 
             if albumID == None:

@@ -9,6 +9,10 @@ var albumSchema = new Schema({
   albumUrl: String,
   images: [{
     imageUrl: String,
+    date: String,
+    caption: String,
+    title: String,
+    creator: String,
   }],
 }, { collection: 'albums' })
 

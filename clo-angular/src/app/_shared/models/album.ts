@@ -9,6 +9,10 @@ import { Injectable } from '@angular/core';
     albumUrl: string;
     images: [{
       imageUrl: string;
+      date: string;
+      caption: string;
+      title: string;
+      creator: string;
     }];
   }
 

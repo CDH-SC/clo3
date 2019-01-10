@@ -34,6 +34,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { FooterService } from './_shared/_services/footer.service';
+import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 
 const appRoutes: Routes = [
   {
@@ -54,7 +55,8 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume/:id', component: VolumeContentComponent },
-  { path: 'album-viewer/:id', component: AlbumViewerComponent }
+  { path: 'album-viewer/:id', component: AlbumViewerComponent },
+  { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent }
 ];
 
 @NgModule({
@@ -79,6 +81,7 @@ const appRoutes: Routes = [
     AboutAckComponent,
     VolumeContentComponent,
     AlbumViewerComponent,
+    PhotoViewerComponent,
   ],
   imports: [
     BrowserModule,
