@@ -6,9 +6,14 @@ import { Injectable } from '@angular/core';
   @Injectable()
   export class Album {
     _id: number;
-    albumUrl: string;
+    thumbnailUrl: string;
+    fullsizeUrl: string;
     images: [{
       imageUrl: string;
+      date: string;
+      caption: string;
+      title: string;
+      creator: string;
     }];
   }
 

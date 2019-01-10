@@ -28,12 +28,15 @@ import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LightboxModule } from 'ngx-lightbox';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { FooterService } from './_shared/_services/footer.service';
+import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 
 const appRoutes: Routes = [
   {
@@ -54,7 +57,8 @@ const appRoutes: Routes = [
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'browse-volume/volume/:id', component: VolumeContentComponent },
-  { path: 'album-viewer/:id', component: AlbumViewerComponent }
+  { path: 'album-viewer/:id', component: AlbumViewerComponent },
+  { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent }
 ];
 
 @NgModule({
@@ -79,6 +83,7 @@ const appRoutes: Routes = [
     AboutAckComponent,
     VolumeContentComponent,
     AlbumViewerComponent,
+    PhotoViewerComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +93,9 @@ const appRoutes: Routes = [
     ),
     NgbModule,
     LightboxModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AngularFontAwesomeModule,
+    NgxImageZoomModule,
   ],
   providers: [
     VolumeService,
