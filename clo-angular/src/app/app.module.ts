@@ -28,8 +28,10 @@ import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LightboxModule } from 'ngx-lightbox';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
@@ -91,7 +93,9 @@ const appRoutes: Routes = [
     ),
     NgbModule,
     LightboxModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    AngularFontAwesomeModule,
+    NgxImageZoomModule,
   ],
   providers: [
     VolumeService,
