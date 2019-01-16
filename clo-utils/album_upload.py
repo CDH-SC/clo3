@@ -17,7 +17,8 @@ def upload_album(imageArray, albumID):
     db.albums.update_one(
     {"_id": int(albumID)},
     {"$set": {
-    "albumUrl": "assets/albums/album_"+str(albumID)+"/",
+    "thumbnailUrl": "assets/albums/thumbnails/album_"+str(albumID)+"/",
+    "fullsizeUrl": "assets/albums/fullsize/album_"+str(albumID)+"/",
     "images": imageArray
     }},
     upsert=True)
