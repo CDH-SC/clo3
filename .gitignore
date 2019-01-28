@@ -1,6 +1,3 @@
-# Environment Variables
-*.env
-
 # Logs
 logs
 *.log
@@ -56,9 +53,6 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
-
-# dotenv environment variables file
-.env
 
 # XML Files
 *.xml
