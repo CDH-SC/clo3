@@ -37,21 +37,15 @@
   </div>
   <!-- END TOC -->
 
-  <!-- Frontice Piece Viewer -->
-  <div class="d-flex flex-column justify-content-start align-items-center" id="viewer" *ngIf="fronticePiece">
-    <img id="fronticeImage" src="assets/{{ fronticePiece['imageUrl'] }}">
-    <div id="fronticeContent" [innerHTML]="fronticePiece['imageCaption']"></div>
-  </div>
-  <!-- END Frontice Piece Viewer-->
-
   <!-- Viewer -->
-  <div class="d-flex flex-column justify=content-start align-items-center" id="viewer" *ngIf="hasManuscript">
-    <div class="d-flex" *ngFor="let m of manuscriptUrl">
-      <img src="{{m}}" id="manuscript" />
+  <div class="column justify-content-start align-items-center" id="viewer">
+    <div *ngIf="fronticePiece" style="width: 100%; height: 100%;">
+      <img id="fronticeImage" src="assets/{{ fronticePiece['imageUrl'] }}">
+      <div id="fronticeContent" [innerHTML]="fronticePiece['imageCaption']"></div>
     </div>
-  </div>
-  <div class="d-flex flex-column justify-content-start align-items-center" id="viewer" *ngIf="viewContent">
-    <div id="viewerContent" [innerHTML]="viewContent"></div>
+    <div *ngIf="viewContent" style="width: 100%; height: 100%;">
+      <div id="viewerContent" [innerHTML]="viewContent"></div>
+    </div>
   </div>
   <!-- END Viewer -->
 
