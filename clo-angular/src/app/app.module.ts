@@ -56,7 +56,7 @@ const appRoutes: Routes = [
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-acknowledgments', component: AboutAckComponent },
-  { path: 'browse-volume/volume/:id', component: VolumeContentComponent },
+  { path: 'volume/:id', component: VolumeContentComponent },
   { path: 'album-viewer/:id', component: AlbumViewerComponent },
   { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent }
 ];
