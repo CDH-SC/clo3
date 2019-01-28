@@ -1,29 +1,33 @@
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
-import { HttpClient, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Response } from '@angular/http';
+import {
+  HttpClient,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { environment } from '../../../environments/environment';
+
+const BACKEND_URL = environment.apiUrl + '/api/volume/';
 
 @Injectable()
 export class VolumeService {
-  api_url = 'http://localhost:3000';
-  volume_num = '1';
-  volumeUrl = `${this.api_url}/api/volume/`;
 
-  constructor(
-    private http: HttpClient,
-  ) {}
+  constructor(private http: HttpClient) {}
 
   public getAllVolumes<T>(): Observable<T> {
-    return this.http.get<T>(this.volumeUrl);
+    return this.http.get<T>(BACKEND_URL);
   }
 
   public getVolumeById<T>(id: string): Observable<T> {
-    return this.http.get<T>(this.volumeUrl + id);
+    return this.http.get<T>(BACKEND_URL + id);
   }
 
   public getLetterById<T>(id: string, xml_id: string): Observable<T> {
-    return this.http.get<T>(this.volumeUrl + id + '/' + xml_id);
+    return this.http.get<T>(BACKEND_URL + id + '/' + xml_id);
   }
 
   private handleError(error: any): Promise<any> {
@@ -32,10 +36,8 @@ export class VolumeService {
   }
 }
 
-
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
-
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!req.headers.has('Content-Type')) {
       req = req.clone({ headers: req.headers.set('Content-Type', 'application/json') });

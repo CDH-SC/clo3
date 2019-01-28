@@ -10,27 +10,37 @@ var expressOasGenerator = require('express-oas-generator');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
-var bluebird = require('bluebird')
+var bluebird = require('bluebird');
 
 require('dotenv').config();
 
 // Get the API route
-var api = require('./routes/api.route')
+var api = require('./routes/api.route');
 
 var app = express();
 
 // Use mongoose to connect to mongodb
-var mongoose = require('mongoose')
-mongoose.Promise = bluebird
-mongoose.connect(process.env.DB_HOST, { useMongoClient: true})
-.then(()=> { console.log(`Succesfully Connected to the Mongodb Database  at URL : mongodb://127.0.0.1:27017/clo`)})
-.catch(()=> { console.log(`Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/clo`)})
+var mongoose = require('mongoose');
+mongoose.Promise = bluebird;
+mongoose
+  .connect(
+    process.env.DB_HOST,
+    { useMongoClient: true }
+  )
+  .then(() => {
+    console.log(
+      `Succesfully Connected to the Mongodb Database  at URL : mongodb://127.0.0.1:27017/clo`
+    );
+  })
+  .catch(() => {
+    console.log(`Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/clo`);
+  });
 
 // CORS config
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   next();
 });
 
@@ -51,7 +61,7 @@ app.use('/users', users);
 app.use('/api', api);
 
 // Angular DIST output folder
-app.use(express.static('../clo-angular/dist'))
+app.use(express.static('../clo-angular/dist'));
 
 // Set all other requests to the Angular app
 app.get('*', (req, res) => {
