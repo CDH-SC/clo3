@@ -31,8 +31,7 @@ export class VolumeContentComponent implements OnInit {
   constructor(
     private volumeService: VolumeService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-    private footerService: FooterService
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -50,7 +49,9 @@ export class VolumeContentComponent implements OnInit {
       // Get frontice piece object
       this.fronticePiece = this.volume['frontice_piece'];
       // Get letters object
+      // this.letters = this.sortLetters(this.volume['letters']);
       this.letters = this.volume['letters'];
+      this.sortLetters(this.letters);
     });
   }
 
@@ -238,5 +239,39 @@ export class VolumeContentComponent implements OnInit {
   goToFront() {
     this.fronticePiece = this.volume['frontice_piece'];
     this.viewContent = null;
+  }
+
+  /**
+   * This function will parse through the letters attribute "docDate" and sort
+   * first by year and then by month.
+   * It will then return a list of months and years with the certain letters
+   * contained in those months and dates.
+   * @param letters
+   */
+  sortLetters(letters) {
+    letters.sort((a, b) => {
+      const x = a.docDate;
+      const y = b.docDate;
+      return parseInt(x.substring(x.lastIndexOf(' ')), 10) - parseInt(y.substring(y.lastIndexOf(' ')), 10);
+    });
+
+    let date = '';
+    let year = '';
+    let month = '';
+    const reformattedLetters = [];
+    for (let i = 0; i < letters.length; i++) {
+      date = letters[i].docDate;
+      year = date.substring(date.lastIndexOf(' ')).trim();
+      month = date.substring(
+        (date.indexOf(' ') > 2) ? 0 : date.indexOf(' '),
+        date.lastIndexOf(' ')
+      ).trim();
+      // console.log(month + ' ' + year);
+      // console.log(reformattedLetters[month + ' ' + year] == null);
+      if (reformattedLetters[month + ' ' + year] == null) {
+        reformattedLetters[month + ' ' + year] = {};
+      }
+    }
+    console.log(reformattedLetters);
   }
 }
