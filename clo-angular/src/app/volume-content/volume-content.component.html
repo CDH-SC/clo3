@@ -19,30 +19,24 @@
       <a class="pl-2" (click)="setPage(k['key'])">{{ k['title'].toUpperCase() }}</a>
     </div>
 
-    <div class="w-100" *ngIf="letters">
-      <div class="d-flex align-items-center w-100 expand" id="tocItem">
-        <a class="pl-2" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">LETTERS</a>
-      </div>
-      <div class="collapse" id="letters">
-        <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let l of letters">
-          <a class="pl-4" (click)="getLetter(l['xml_id'])">
-            <span style="font-size: 14px; font-weight: bold; color: #c17953;">{{ l.docDate }}</span>
-            <br>
-            <span class="pl-2">{{ l.sender }} TO {{ l.recipient }}</span>
-          </a>
-        </div>
-      </div>
-    </div>
     <!-- <div class="w-100" *ngIf="letters">
       <div class="d-flex align-items-center w-100 expand" id="tocItem">
         <a class="pl-2" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">LETTERS</a>
       </div>
       <div class="collapse" id="letters">
-        <div class="d-flex align-items-center w-100" id="tocItem" >
-          <span>Something will go here</span>
+        <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let l of objectKeys(letters); index as i">
+          <div class="d-flex align-items-center w-100 expand" id="tocItem">
+            <a class="pl-4" data-toggle="collapse" href="#{{i}}" aria-expanded="false" [attr.aria-controls]="i">{{ l }}</a>
+          </div>
+          <div class="collapse" id="{{i}}">
+            <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let o of letters[l]">
+              <a class="pl-2">{{ o.sender }} TO {{ o.recipient }}</a>
+            </div>
+          </div>
         </div>
       </div>
     </div> -->
+
     <!-- END Volume TOC -->
   </div>
   <!-- END TOC -->

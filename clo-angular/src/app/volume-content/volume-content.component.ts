@@ -23,7 +23,7 @@ export class VolumeContentComponent implements OnInit {
 
   viewContent: SafeHtml;
   fronticePiece: Object;
-  letters: Object[];
+  letters: any;
 
   hasManuscript = false;
   manuscriptUrl: Object[] = [];
@@ -49,9 +49,9 @@ export class VolumeContentComponent implements OnInit {
       // Get frontice piece object
       this.fronticePiece = this.volume['frontice_piece'];
       // Get letters object
-      // this.letters = this.sortLetters(this.volume['letters']);
-      this.letters = this.volume['letters'];
-      this.sortLetters(this.letters);
+      this.letters = this.sortLetters(this.volume['letters']);
+      // this.letters = this.volume['letters'];
+      // this.sortLetters(this.letters);
     });
   }
 
@@ -258,7 +258,7 @@ export class VolumeContentComponent implements OnInit {
     let date = '';
     let year = '';
     let month = '';
-    const reformattedLetters = [];
+    const reformattedLetters = {};
     for (let i = 0; i < letters.length; i++) {
       date = letters[i].docDate;
       year = date.substring(date.lastIndexOf(' ')).trim();
@@ -266,12 +266,14 @@ export class VolumeContentComponent implements OnInit {
         (date.indexOf(' ') > 2) ? 0 : date.indexOf(' '),
         date.lastIndexOf(' ')
       ).trim();
-      // console.log(month + ' ' + year);
-      // console.log(reformattedLetters[month + ' ' + year] == null);
       if (reformattedLetters[month + ' ' + year] == null) {
-        reformattedLetters[month + ' ' + year] = {};
+        reformattedLetters[month + ' ' + year] = [];
+        reformattedLetters[month + ' ' + year].push(letters[i]);
+      } else {
+        reformattedLetters[month + ' ' + year].push(letters[i]);
       }
     }
-    console.log(reformattedLetters);
+    // console.log(reformattedLetters);
+    return reformattedLetters;
   }
 }
