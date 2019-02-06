@@ -273,7 +273,7 @@ export class VolumeContentComponent implements OnInit {
         reformattedLetters[month + ' ' + year].push(letters[i]);
       }
     }
-    // console.log(reformattedLetters);
+    console.log(reformattedLetters);
     return reformattedLetters;
   }
 }
