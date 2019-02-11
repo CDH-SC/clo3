@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-volume-content',
@@ -35,11 +34,11 @@ export class VolumeContentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    document.getElementById('footer').style.position = 'relative';
-
+    console.log(this.route.snapshot.paramMap);
     const id = this.route.snapshot.paramMap.get('id');
+    const content = this.route.snapshot.paramMap.get('content');
+    console.log(content);
     this.volumeId = id;
-
     this.volumeService.getVolumeById<Volume[]>(id).subscribe(data => {
       this.volume = data['data'];
       this.setKeys();
@@ -271,7 +270,6 @@ export class VolumeContentComponent implements OnInit {
         reformattedLetters[month + ' ' + year].push(letters[i]);
       }
     }
-    console.log(reformattedLetters);
     return reformattedLetters;
   }
 }
