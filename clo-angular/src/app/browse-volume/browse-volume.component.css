@@ -9,8 +9,11 @@
   cursor: pointer;
 }
 
-.volumeButton fa-icon {
-  transform: rotate(90deg);
+.volumeButton::before {
+  font-family: FontAwesome;
+  content: '\f0da';
+  font-size: 16px;
+  margin-right: 5px;
 }
 
 .volumeLink {
