@@ -50,8 +50,6 @@ export class VolumeContentComponent implements OnInit {
       this.fronticePiece = this.volume['frontice_piece'];
       // Get letters object
       this.letters = this.sortLetters(this.volume['letters']);
-      // this.letters = this.volume['letters'];
-      // this.sortLetters(this.letters);
     });
   }
 

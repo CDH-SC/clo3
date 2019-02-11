@@ -12,10 +12,10 @@ export class BrowseVolumeComponent implements OnInit {
 
   faIcons = [];
 
-  constructor(private footer: FooterService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.footer.positionFooter();
+    // this.footer.positionFooter();
 
     const collapseMenus = document.getElementsByClassName('collapse');
     for (let i = 0; i < collapseMenus.length; i++) {

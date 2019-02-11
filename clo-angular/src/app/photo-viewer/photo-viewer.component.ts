@@ -30,8 +30,7 @@ export class PhotoViewerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private albumService: AlbumService,
-    private footerService: FooterService
+    private albumService: AlbumService
   ) { }
 
   ngOnInit() {
@@ -48,7 +47,7 @@ export class PhotoViewerComponent implements OnInit {
       this.prevId = this.setPrevId(this.imageId);
       this.nextId = this.setNextId(this.imageId);
     });
-    this.footerService.positionFooter();
+    // this.footerService.positionFooter();
   }
 
   goToImage(id: string) {

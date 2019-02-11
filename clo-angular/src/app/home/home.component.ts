@@ -9,7 +9,7 @@ import { FooterService } from '../_shared/_services/footer.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router, private footer: FooterService) {
+  constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         (<any>window).ga('set', 'page', event.urlAfterRedirects);
@@ -19,6 +19,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.footer.positionFooter();
+    // this.footer.positionFooter();
   }
 }

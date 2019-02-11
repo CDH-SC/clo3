@@ -8,10 +8,10 @@ import { FooterService } from '../_shared/_services/footer.service';
 })
 export class BrowseSubjectComponent implements OnInit {
 
-  constructor(private footer: FooterService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.footer.positionFooter();
+    // this.footer.positionFooter();
   }
 
 }
