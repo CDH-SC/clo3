@@ -61,3 +61,16 @@
   height: 750px;
   width: auto;
 }
+
+#letters {
+  width: 100%;
+}
+
+.drop::before {
+  font-family: FontAwesome;
+  content: '\f0da';
+  font-size: 12px;
+  color: #777;
+  float: left;
+  margin-right: 5px;
+}

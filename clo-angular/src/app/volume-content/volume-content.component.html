@@ -19,30 +19,27 @@
       <a class="pl-2" (click)="setPage(k['key'])">{{ k['title'].toUpperCase() }}</a>
     </div>
 
-    <div class="row align-items-center" *ngIf="letters">
-      <div class="col-12" id="tocItem">
-        <a data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">
-          LETTERS
+    <div class="row w-100 m-auto align-items-center" id="tocItem" *ngIf="letters">
+      <a class="pl-2 drop" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">
+        LETTERS
+      </a>
+    </div>
+    <div class="collapse" id="letters">
+      <div class="row w-100 m-auto align-items-center" id="tocItem" *ngFor="let l of objectKeys(letters); index as i">
+        <a class="pl-4 drop" data-toggle="collapse" href="#dates{{i}}" aria-expanded="false" [attr.aria-controls]="'dates' + i">
+          {{ l }}
         </a>
-      </div>
-      <div class="col-12">
-        <div class="collapse" id="letters">
-          <div class="col-12" id="tocItem" *ngFor="let l of objectKeys(letters); index as i">
-            <a data-toggle="collapse" href="#dates{{i}}" aria-expanded="false" [attr.aria-controls]="'dates' + i">
-              {{ l }}
-            </a>
-            <div class="col-12">
-              <div class="collapse" id="dates{{i}}">
-                <div class="col-12" *ngFor="let o of letters[l]">
-                  <div class="row">
-                    <span><strong>{{ o.docDate }}</strong></span>
-                  </div>
-                  <div class="row">
-                    <a (click)="getLetter(o.xml_id)">
-                      {{ o.sender }} TO {{ o.recipient }}
-                    </a>
-                  </div>
-                </div>
+        <div class="row w-100">
+          <div class="collapse" id="dates{{i}}">
+            <div class="row w-100 m-auto pl-4 align-items-center" *ngFor="let o of letters[l]">
+              <div class="row pl-4">
+                <span class="pl-4"><strong>{{ o.docDate }}</strong></span>
+              </div>
+              <div class="w-100"></div>
+              <div class="row pl-4">
+                <a class="pl-4" (click)="getLetter(o.xml_id)">
+                  {{ o.sender }} TO {{ o.recipient }}
+                </a>
               </div>
             </div>
           </div>
