@@ -35,7 +35,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
-import { FooterService } from './_shared/_services/footer.service';
+
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 
 const appRoutes: Routes = [
@@ -99,8 +99,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     VolumeService,
-    AlbumService,
-    FooterService
+    AlbumService
   ],
   bootstrap: [AppComponent]
 })
