@@ -4,7 +4,7 @@
 
 #nav-links {
   font-size: 17px !important;
-  width: 80%;
+  width: 90%;
 }
 
 #nav-links a {
@@ -34,22 +34,24 @@
 
 @media screen and (min-width: 1601px) {
   #nav-links, #aboutDropdown, #aboutDropdownList {
-    font-size: 17px !important;
+    font-size: 18px !important;
   }
 }
 
 @media screen and (min-width: 1200px) and (max-width: 1600px) {
   #nav-links, #aboutDropdown, #aboutDropdownList {
-    font-size: 14px !important;
+    font-size: 16px !important;
   }
 }
 
 @media screen and (min-width: 1000px) and (max-width: 1199px) {
   #nav-links, #aboutDropdown, #aboutDropdownList {
-    font-size: 12px !important;
+    font-size: 14px !important;
   }
 }
 
 @media screen and (max-width: 999px) {
-
+  #nav-links, #aboutDropdown, #aboutDropdownList {
+    font-size: 14px !important;
+  }
 }

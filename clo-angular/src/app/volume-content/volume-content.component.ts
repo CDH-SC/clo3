@@ -1,11 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-volume-content',
@@ -31,16 +30,91 @@ export class VolumeContentComponent implements OnInit {
   constructor(
     private volumeService: VolumeService,
     private route: ActivatedRoute,
+    private router: Router,
     private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
-    document.getElementById('footer').style.position = 'relative';
-
-    const id = this.route.snapshot.paramMap.get('id');
+    // Getting data information from url
+    const id = this.route.snapshot.paramMap.get('id'); // volume Id
+    const content = this.route.snapshot.paramMap.get('content'); // page content section
     this.volumeId = id;
-
+    // Setting the page content to null
+    this.viewContent = null;
+    this.fronticePiece = null;
+    // Fetching volume data
     this.volumeService.getVolumeById<Volume[]>(id).subscribe(data => {
+      this.volume = data['data'];
+      // Set the keys for the current volume
+      this.setKeys();
+      // Setting next and previous volume ids for navigation between volumes
+      this.prevId = this.setVolumeId(this.volumeId, 'prev');
+      this.nextId = this.setVolumeId(this.volumeId, 'next');
+      // Set the frontice piece object if the page content section is
+      // 'frontice_piece'
+      if (content === 'frontice_piece') {
+        this.fronticePiece = this.volume['frontice_piece'];
+      }
+      // Set the page to the current content section if it is contained
+      // within the keys for the volume
+      this.tocKeys.forEach((object) => {
+        if (object['key'] === content) {
+          this.setPage(content);
+        }
+      });
+      // If content is still null after the above checks, we must have a letter
+      // xml id, so we should get that letter
+      if (this.fronticePiece === null && this.viewContent === null) {
+        this.getLetter(content);
+      }
+      // Get letters object
+      this.letters = this.sortLetters(this.volume['letters']);
+    });
+  }
+
+  setVolumeId(volId: string, nextOrPrev: string) {
+    if (nextOrPrev.toLowerCase() === 'prev') {
+      if (parseInt(volId, 10) <= 1) {
+        return null;
+      } else {
+        if (parseInt(volId, 10) <= 10) {
+          return '0' + (parseInt(volId, 10) - 1);
+        } else {
+          return (parseInt(volId, 10) - 1).toString();
+        }
+      }
+    } else if (nextOrPrev.toLowerCase() === 'next') {
+      if (parseInt(volId, 10) >= 44) {
+        return null;
+      } else {
+        if (parseInt(volId, 10) < 9) {
+          return '0' + (parseInt(volId, 10) + 1);
+        } else {
+          return (parseInt(volId, 10) + 1).toString();
+        }
+      }
+    }
+  }
+
+  setPage(key: string) {
+    // Update url to reflect current section
+    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + key);
+    this.fronticePiece = null;
+    if (key === 'introduction') {
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key].introText);
+    } else {
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
+    }
+  }
+
+  goToVolume(volId: string) {
+    // Update url to reflect we are at the frontice piece of the volume
+    this.router.navigateByUrl('/volume/' + volId + '/frontice_piece');
+    this.fronticePiece = null;
+    this.viewContent = null;
+    this.volumeId = volId;
+    this.tocKeys = [];
+    this.volumeService.getVolumeById<Volume[]>(volId).subscribe(data => {
       this.volume = data['data'];
       this.setKeys();
       // Setting next and previous volume ids for navigation between volumes
@@ -50,9 +124,71 @@ export class VolumeContentComponent implements OnInit {
       this.fronticePiece = this.volume['frontice_piece'];
       // Get letters object
       this.letters = this.sortLetters(this.volume['letters']);
-      // this.letters = this.volume['letters'];
-      // this.sortLetters(this.letters);
     });
+  }
+
+  getLetter(xml_id: string) {
+    // Update the url to display the current xml id of the letter
+    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
+    this.fronticePiece = null;
+    this.viewContent = null;
+    this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
+      const letter = data['data']['letters'][0];
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
+      // console.log(letter);
+      // Check if the letter has a manuscript
+      if (letter.hasOwnProperty('manuscript')) {
+        this.hasManuscript = true;
+        for (let i = 0; i < letter.manuscript.length; i++) {
+          this.manuscriptUrl[i] = `assets/manuscripts/${letter.xml_id}/${letter.manuscript[i]}`;
+        }
+        console.log(this.manuscriptUrl);
+      } else {
+        this.hasManuscript = false;
+      }
+    });
+  }
+
+  goToFront() {
+    // Update the url to show we are at the frontice piece of the volume
+    this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
+    this.fronticePiece = this.volume['frontice_piece'];
+    this.viewContent = null;
+  }
+
+  /**
+   * This function will parse through the letters attribute "docDate" and sort
+   * first by year and then by month.
+   * It will then return a list of months and years with the certain letters
+   * contained in those months and dates.
+   * @param letters
+   */
+  sortLetters(letters) {
+    letters.sort((a, b) => {
+      const x = a.docDate;
+      const y = b.docDate;
+      return parseInt(x.substring(x.lastIndexOf(' ')), 10) - parseInt(y.substring(y.lastIndexOf(' ')), 10);
+    });
+
+    let date = '';
+    let year = '';
+    let month = '';
+    const reformattedLetters = {};
+    for (let i = 0; i < letters.length; i++) {
+      date = letters[i].docDate;
+      year = date.substring(date.lastIndexOf(' ')).trim();
+      month = date.substring(
+        (date.indexOf(' ') > 2) ? 0 : date.indexOf(' '),
+        date.lastIndexOf(' ')
+      ).trim();
+      if (reformattedLetters[month + ' ' + year] == null) {
+        reformattedLetters[month + ' ' + year] = [];
+        reformattedLetters[month + ' ' + year].push(letters[i]);
+      } else {
+        reformattedLetters[month + ' ' + year].push(letters[i]);
+      }
+    }
+    return reformattedLetters;
   }
 
   setKeys() {
@@ -163,117 +299,5 @@ export class VolumeContentComponent implements OnInit {
         }
       }
     }
-  }
-
-  setVolumeId(volId: string, nextOrPrev: string) {
-    if (nextOrPrev.toLowerCase() === 'prev') {
-      if (parseInt(volId, 10) <= 1) {
-        return null;
-      } else {
-        if (parseInt(volId, 10) <= 10) {
-          return '0' + (parseInt(volId, 10) - 1);
-        } else {
-          return (parseInt(volId, 10) - 1).toString();
-        }
-      }
-    } else if (nextOrPrev.toLowerCase() === 'next') {
-      if (parseInt(volId, 10) >= 44) {
-        return null;
-      } else {
-        if (parseInt(volId, 10) < 9) {
-          return '0' + (parseInt(volId, 10) + 1);
-        } else {
-          return (parseInt(volId, 10) + 1).toString();
-        }
-      }
-    }
-  }
-
-  setPage(key: string) {
-    this.fronticePiece = null;
-    if (key === 'introduction') {
-      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key].introText);
-    } else {
-      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(this.volume[key]);
-    }
-  }
-
-  goToVolume(volId: string) {
-    this.fronticePiece = null;
-    this.viewContent = null;
-    this.volumeId = volId;
-    this.tocKeys = [];
-    this.volumeService.getVolumeById<Volume[]>(volId).subscribe(data => {
-      this.volume = data['data'];
-      this.setKeys();
-      // Setting next and previous volume ids for navigation between volumes
-      this.prevId = this.setVolumeId(this.volumeId, 'prev');
-      this.nextId = this.setVolumeId(this.volumeId, 'next');
-      // Get frontice piece object
-      this.fronticePiece = this.volume['frontice_piece'];
-      // Get letters object
-      this.letters = this.volume['letters'];
-    });
-  }
-
-  getLetter(xml_id: string) {
-    this.fronticePiece = null;
-    this.viewContent = null;
-    this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
-      const letter = data['data']['letters'][0];
-      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
-      // console.log(letter);
-      // Check if the letter has a manuscript
-      if (letter.hasOwnProperty('manuscript')) {
-        this.hasManuscript = true;
-        for (let i = 0; i < letter.manuscript.length; i++) {
-          this.manuscriptUrl[i] = `assets/manuscripts/${letter.xml_id}/${letter.manuscript[i]}`;
-        }
-        console.log(this.manuscriptUrl);
-      } else {
-        this.hasManuscript = false;
-      }
-    });
-  }
-
-  goToFront() {
-    this.fronticePiece = this.volume['frontice_piece'];
-    this.viewContent = null;
-  }
-
-  /**
-   * This function will parse through the letters attribute "docDate" and sort
-   * first by year and then by month.
-   * It will then return a list of months and years with the certain letters
-   * contained in those months and dates.
-   * @param letters
-   */
-  sortLetters(letters) {
-    letters.sort((a, b) => {
-      const x = a.docDate;
-      const y = b.docDate;
-      return parseInt(x.substring(x.lastIndexOf(' ')), 10) - parseInt(y.substring(y.lastIndexOf(' ')), 10);
-    });
-
-    let date = '';
-    let year = '';
-    let month = '';
-    const reformattedLetters = {};
-    for (let i = 0; i < letters.length; i++) {
-      date = letters[i].docDate;
-      year = date.substring(date.lastIndexOf(' ')).trim();
-      month = date.substring(
-        (date.indexOf(' ') > 2) ? 0 : date.indexOf(' '),
-        date.lastIndexOf(' ')
-      ).trim();
-      if (reformattedLetters[month + ' ' + year] == null) {
-        reformattedLetters[month + ' ' + year] = [];
-        reformattedLetters[month + ' ' + year].push(letters[i]);
-      } else {
-        reformattedLetters[month + ' ' + year].push(letters[i]);
-      }
-    }
-    console.log(reformattedLetters);
-    return reformattedLetters;
   }
 }

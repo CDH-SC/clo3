@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FooterService } from '../../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-about-ack',
@@ -8,10 +7,9 @@ import { FooterService } from '../../_shared/_services/footer.service';
 })
 export class AboutAckComponent implements OnInit {
 
-  constructor(private footer: FooterService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.footer.positionFooter();
   }
 
 }

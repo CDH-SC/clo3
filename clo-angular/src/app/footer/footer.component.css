@@ -1,12 +1,13 @@
 #footer_wrapper {
   height: 75px;
-  width: 60%;
   max-width: 1440px;
+  width: 90%;
   margin-top: auto;
 }
 
-#footer p {
+#footer span {
   color: #517b89;
+  text-align: center;
 }
 
 #footer_links {
@@ -31,4 +32,5 @@
 
 #footer_logos a {
   padding: 0 10px;
+  margin: 10px;
 }

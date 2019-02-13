@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../_shared/_services/album.service';
 import Album from '../_shared/models/album';
-import { FooterService } from '../_shared/_services/footer.service';
 
 import { faAngleLeft, faAngleRight, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -30,8 +29,7 @@ export class PhotoViewerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private albumService: AlbumService,
-    private footerService: FooterService
+    private albumService: AlbumService
   ) { }
 
   ngOnInit() {
@@ -48,7 +46,7 @@ export class PhotoViewerComponent implements OnInit {
       this.prevId = this.setPrevId(this.imageId);
       this.nextId = this.setNextId(this.imageId);
     });
-    this.footerService.positionFooter();
+    // this.footerService.positionFooter();
   }
 
   goToImage(id: string) {
