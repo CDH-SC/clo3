@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { FooterService } from '../_shared/_services/footer.service';
 
 @Component({
   selector: 'app-home',
