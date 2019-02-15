@@ -1,0 +1,38 @@
+img {
+  display: block;
+  margin: auto;
+  max-height: 500px;
+  width: auto;
+  height: auto;
+}
+
+fa-icon {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+#viewer {
+  max-width: 1200px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+#metadata {
+  max-width: 1200px;
+}
+
+#metadataCollapse > a {
+  font-size: 20px !important;
+  text-decoration: none;
+}
+
+#metadataCollapse > a::after {
+  font-family: FontAwesome;
+  content: '\f0dd';
+  font-size: 18px;
+  color: #777;
+  margin-left: 5px;
+}

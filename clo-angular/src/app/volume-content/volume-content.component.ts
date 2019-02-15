@@ -128,6 +128,15 @@ export class VolumeContentComponent implements OnInit {
   }
 
   getLetter(xml_id: string) {
+    // scroll to the top of the page when clicked
+    const scrollToTop = window.setInterval(() => {
+      const pos = window.pageYOffset;
+      if (pos > 0) {
+        window.scrollTo(0, pos - 20);
+      } else {
+        window.clearInterval(scrollToTop);
+      }
+    }, 2);
     // Update the url to display the current xml id of the letter
     this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
     this.fronticePiece = null;
