@@ -299,6 +299,14 @@ export class VolumeContentComponent implements OnInit {
               });
             }
             break;
+          case 'introduction':
+            if (this.volume['introduction'].introText !== '') {
+              this.tocKeys.push({
+                key: k,
+                title: k
+              });
+            }
+            break;
           default:
             this.tocKeys.push({
               key: k,
