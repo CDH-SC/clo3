@@ -5,6 +5,8 @@ import Album from '../_shared/models/album';
 
 import { faAngleLeft, faAngleRight, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
+import Viewer from 'viewerjs';
+
 @Component({
   selector: 'app-photo-viewer',
   templateUrl: './photo-viewer.component.html',
@@ -18,6 +20,7 @@ export class PhotoViewerComponent implements OnInit {
   faAngleDoubleRight = faAngleDoubleRight;
 
   album: Album;
+  albumId: string;
   image: any;
 
   imageId: string;
@@ -33,11 +36,10 @@ export class PhotoViewerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const albumId = this.route.snapshot.paramMap.get('album');
+    this.albumId = this.route.snapshot.paramMap.get('album');
     this.imageId = this.route.snapshot.paramMap.get('id');
-    console.log(albumId + '/' + this.imageId);
 
-    this.albumService.getAlbumById<Album[]>(+albumId)
+    this.albumService.getAlbumById<Album[]>(+this.albumId)
     .subscribe(data => {
       this.album = data['data'];
       this.image = this.album.images[this.imageId];
@@ -46,7 +48,15 @@ export class PhotoViewerComponent implements OnInit {
       this.prevId = this.setPrevId(this.imageId);
       this.nextId = this.setNextId(this.imageId);
     });
-    // this.footerService.positionFooter();
+
+    const viewer = new Viewer(document.getElementById('image'), {
+      viewed() {
+        viewer.zoomTo(0.5);
+      },
+      toolbar: false,
+      title: false,
+      navbar: false,
+    });
   }
 
   goToImage(id: string) {

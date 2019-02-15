@@ -1,36 +1,26 @@
 <div class="container-fluid">
-  <div class="row justify-content-start ml-4 w-75">
-    <h4 class="orange-border-bottom">Album: {{album._id}}, Image: {{imageId}}</h4>
+  <div class="row justify-content-start m-auto w-75">
+    <h4 class="orange-border-bottom">Album: {{ albumId }}, Image: {{imageId}}</h4>
   </div>
-  <div class="row justify-content-center align-items-center" style="height: 500px;">
-    <div class="col-2 align-self-center" style="text-align: center;">
+  <div class="row justify-content-center align-items-center" style="height: 100%; margin-bottom: 25px;">
+    <div class="col align-self-center" id="viewer">
       <fa-icon [icon]="faAngleDoubleLeft" size="2x" (click)="goToStart()"></fa-icon>
+      <fa-icon [icon]="faAngleLeft" size="2x" (click)="goToImage(prevId)"></fa-icon>
+      <img id="image" src="{{ fullsizeUrl }}">
+      <fa-icon [icon]="faAngleRight" size="2x" (click)="goToImage(nextId)"></fa-icon>
+      <fa-icon [icon]="faAngleDoubleRight" size="2x" (click)="goToEnd()"></fa-icon>
     </div>
-    <div class="col-2 align-self-center" style="text-align: center;">
-      <fa-icon [icon]="faAngleLeft" size="2x" (click)="goToImage(prevId)" *ngIf="prevId"></fa-icon>
-    </div>
-    <div class="col-4 align-self-center">
-      <ngx-image-zoom
-        [thumbImage]=thumbnailUrl
-        [fullImage]=fullsizeUrl
-        zoomMode=click
-        enableScrollZoom=true
-        maxZoomRatio=3
-      ></ngx-image-zoom>
-    </div>
-    <div class="col-2 align-self-center" style="text-align: center;">
-      <fa-icon [icon]="faAngleRight" size="2x" (click)="goToImage(nextId)" *ngIf="nextId"></fa-icon>
-    </div>
-    <div class="col-2 align-self-center" style="text-align: center;">
-        <fa-icon [icon]="faAngleDoubleRight" size="2x" (click)="goToEnd()"></fa-icon>
+    <div class="w-100"></div>
+    <div class="col align-self-center" id="metadata">
+      <p id="metadataCollapse">
+        <a class="orange-border-bottom" data-toggle="collapse" href="#metadataContent" aria-expanded="false" aria-controls="metadataContent">Image Metadata</a>
+      </p>
+      <div class="collapse" id="metadataContent">
+        <p><strong>Date:</strong> {{this.image.date}}</p>
+        <p><strong>Title:</strong> {{this.image.title}}</p>
+        <p><strong>Caption:</strong> {{this.image.caption}}</p>
+        <p><strong>Creator:</strong> {{this.image.creator}}</p>
       </div>
-  </div>
-  <div class="row justify-content-center">
-    <div class="col-4 align-self-center">
-      <p><strong>Date:</strong> {{this.image.date}}</p>
-      <p><strong>Title:</strong> {{this.image.title}}</p>
-      <p><strong>Caption:</strong> {{this.image.caption}}</p>
-      <p><strong>Creator:</strong> {{this.image.creator}}</p>
     </div>
   </div>
 </div>
