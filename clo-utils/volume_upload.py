@@ -13,7 +13,7 @@ from lxml import etree
 from datetime import datetime # measure the speed of script
 
 startTime = datetime.now()
-directory = "../col_xml_archive/completed" # defines working directory
+directory = "../clo_xml_archive/col_xml_archive/completed" # defines working directory
 
 # Connect to Mongodb
 client = MongoClient('mongodb://localhost:27017/')
@@ -334,8 +334,7 @@ def main():
                 for letterContent in lettersMatch:
                     xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
 
-                    docDate = re.findall("<docDate value=(?:.|\n)*?>(?:(?:.*|\n.*)<pb id=.*?/>)?(\n.*?|.*?)(?:</docDate>|\n.*</docDate>)", letterContent)
-                    docDate = "".join(docDate[0]).replace('\r\n', '').lstrip() # join dates together, remove new line characters, and strip leading whitespace
+                    docDate = re.findall("<docDate value=\"(.*?)\"", letterContent)
 
                     firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
                     lastPage = re.findall("<idno type=\"lastpage\">(.*?)</idno>", letterContent)
@@ -398,7 +397,7 @@ def main():
                     # add all content to end of letters array
                     lettersArray.append({
                     "xml_id": xml_id[0],
-                    "docDate": docDate,
+                    "docDate": docDate[0].strip(),
                     "firstPage": firstPage[0],
                     "lastPage": lastPage[0],
                     "docAuthor": docAuthor,
@@ -442,8 +441,7 @@ def main():
                     for letterContent in accountMatch:
                         xml_id = re.findall("<bibl xml:id=\"(.*?)\">", letterContent)
 
-                        docDate = re.findall("<docDate value=(?:.|\n)*?>(?:(?:.*|\n.*)<pb id=.*?/>)?(\n.*?|.*?)(?:</docDate>|\n.*</docDate>)", letterContent)
-                        docDate = "".join(docDate[0]).replace('\r\n', '').lstrip() # join dates together, remove new line characters, and strip leading whitespace
+                        docDate = re.findall("<docDate value=\"(.*?)\"", letterContent)
 
                         firstPage = re.findall("<idno type=\"firstpage\">(.*?)</idno>", letterContent)
                         lastPage = re.findall("<idno type=\"lastpage\">(.*?)</idno>", letterContent)
@@ -506,7 +504,7 @@ def main():
                         # add all content to end of letters array
                         accountsArray.append({
                         "xml_id": xml_id[0],
-                        "docDate": docDate,
+                        "docDate": docDate[0].strip(),
                         "firstPage": firstPage[0],
                         "lastPage": lastPage[0],
                         "docAuthor": docAuthor,
