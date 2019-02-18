@@ -173,23 +173,34 @@ export class VolumeContentComponent implements OnInit {
    * @param letters
    */
   sortLetters(letters) {
+    // Sort by month
     letters.sort((a, b) => {
       const x = a.docDate;
       const y = b.docDate;
-      return parseInt(x.substring(x.lastIndexOf(' ')), 10) - parseInt(y.substring(y.lastIndexOf(' ')), 10);
+      return parseInt(y.substring(y.indexOf('-'), y.lastIndexOf('-')), 10) - parseInt(x.substring(x.indexOf('-'), x.lastIndexOf('-')), 10);
     });
 
-    let date = '';
+    // Sort by year
+    letters.sort((a, b) => {
+      const x = a.docDate;
+      const y = b.docDate;
+      return parseInt(x.substring(0, x.indexOf('-')), 10) - parseInt(y.substring(0, y.indexOf('-')), 10);
+    });
+
     let year = '';
     let month = '';
+    let dateString = '';
+
     const reformattedLetters = {};
     for (let i = 0; i < letters.length; i++) {
-      date = letters[i].docDate;
-      year = date.substring(date.lastIndexOf(' ')).trim();
-      month = date.substring(
-        (date.indexOf(' ') > 2) ? 0 : date.indexOf(' '),
-        date.lastIndexOf(' ')
-      ).trim();
+      const date = letters[i].docDate.split('-');
+
+      year = date[0];
+      month = this.getMonth(date[1]);
+      // Creating and setting our own unique dateString to the docDate of the current letter
+      dateString = date[2] + ' ' + month + ' ' + year;
+      letters[i].docDate = dateString;
+
       if (reformattedLetters[month + ' ' + year] == null) {
         reformattedLetters[month + ' ' + year] = [];
         reformattedLetters[month + ' ' + year].push(letters[i]);
@@ -197,7 +208,55 @@ export class VolumeContentComponent implements OnInit {
         reformattedLetters[month + ' ' + year].push(letters[i]);
       }
     }
+
+    const keys = Object.keys(reformattedLetters);
+    for (let i = 0; i < keys.length; i++) {
+      // Sort by day
+      reformattedLetters[keys[i]].sort((a, b) => {
+        const x = a.docDate;
+        const y = b.docDate;
+        return parseInt(x.substring(0, x.indexOf(' ')), 10) - parseInt(y.substring(0, y.indexOf(' ')), 10);
+      });
+    }
+
     return reformattedLetters;
+  }
+
+  /**
+   * HELPER Method for sortLetters()
+   * This method returns the month as a string value
+   *
+   * Ex: 01 --> January
+   * INPUT: Month as string (01-12)
+   * OUTPUT: Month as string
+   */
+  getMonth(month: string) {
+    switch (month) {
+      case '01':
+        return 'January';
+      case '02':
+        return 'February';
+      case '03':
+        return 'March';
+      case '04':
+        return 'April';
+      case '05':
+        return 'May';
+      case '06':
+        return 'June';
+      case '07':
+        return 'July';
+      case '08':
+        return 'August';
+      case '09':
+        return 'September';
+      case '10':
+        return 'October';
+      case '11':
+        return 'November';
+      case '12':
+        return 'December';
+    }
   }
 
   setKeys() {
