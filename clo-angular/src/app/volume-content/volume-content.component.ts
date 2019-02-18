@@ -256,6 +256,8 @@ export class VolumeContentComponent implements OnInit {
         return 'November';
       case '12':
         return 'December';
+      default:
+        return 'Unknown';
     }
   }
 
