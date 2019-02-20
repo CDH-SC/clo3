@@ -1,6 +1,6 @@
 # Project: The Diaries of Michael Field
 # Description: A collection of works by Katharine Bradley and Edith Cooper who
-#              went by the pseudoname Michael Field
+#              went by the pseudonym Michael Field
 # Technology Stack:
 # - MongoDB
 # - Express JS server
@@ -20,8 +20,6 @@ services:
     environment:
       VIRTUAL_HOST: clo.dev.cdhsc.org
     container_name: clo_web
-    #    volumes:
-    #     - "./src/clo-angular/src/images:/clo-angular/dist/images"
 
   # The mongodb
   database:
