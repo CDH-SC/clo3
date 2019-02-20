@@ -2,7 +2,7 @@
 # Label this stage as 'builder'
 FROM node:latest
 ENV a /clo-angular
-ENV b /clo-api
+ENV e /clo-api
 ENV PORT 80
 
 COPY .${a}/package.json ./
