@@ -16,7 +16,7 @@ RUN rm /package.json
 WORKDIR ${a}
 
 # Bring in the source code
-COPY .${a}
+COPY .${a} .
 RUN $(npm bin)/ng --version
 RUN $(npm bin)/ng build
 RUN mv ${a}/dist/clo/* ${a}/dist/
