@@ -34,8 +34,8 @@
     "ngx-image-zoom": "^0.3.3",
     "ngx-lightbox": "^1.1.0",
     "ngx-twitter-timeline": "^0.1.4",
-    "rxjs": "^6.0.0",
-    "rxjs-compat": "^6.3.2",
+    "rxjs": "6.3.2",
+    "rxjs-compat": "6.3.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
