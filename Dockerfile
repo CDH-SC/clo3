@@ -2,7 +2,7 @@
 # Label this stage as 'builder'
 FROM node:latest
 ENV a /clo-angular
-ENV b /clo-api
+ENV e /clo-api
 ENV PORT 80
 
 COPY .${a}/package.json ./
@@ -18,7 +18,7 @@ WORKDIR ${a}
 # Bring in the source code
 COPY .${a} .
 RUN $(npm bin)/ng --version
-RUN $(npm bin)/ng build
+RUN $(npm bin)/ng build --prod
 RUN mv ${a}/dist/clo/* ${a}/dist/
 RUN ls -lah
 
