@@ -19,6 +19,7 @@ services:
       - database
     environment:
       VIRTUAL_HOST: clo.dev.cdhsc.org
+      DB_HOST: mongodb://database:27017/clo
     container_name: clo_web
 
   # The mongodb

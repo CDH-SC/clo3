@@ -34,5 +34,6 @@ WORKDIR ${e}
 
 # Server source code
 COPY .${e} .
+RUN echo "$DB_HOST" > ${e}/.env
 
 CMD ["npm","start"]
