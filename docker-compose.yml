@@ -3,25 +3,28 @@
 #              went by the pseudonym Michael Field
 # Technology Stack:
 # - MongoDB
-# - Express.js server
-# - Angular 6 frontend
-# - Node.js
+# - Express JS server
+# - Angular 4 frontend
+# - Node JS
 # - AKA MEAN stack
+
 version: '3.6'
 services:
   # The angular frontend and express js server
   angular:
     build: .
     ports:
-      - "127.0.0.1:8090:80"
+            - "127.0.0.1:8090:80"
     links:
       - database
     environment:
       VIRTUAL_HOST: clo.dev.cdhsc.org
+      DB_HOST: mongodb://database:27017/clo
     container_name: clo_web
+
   # The mongodb
   database:
     build: ./clo-database
     expose:
-      - "27017"
+            - 27017
     container_name: clo_db
