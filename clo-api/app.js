@@ -32,8 +32,8 @@ mongoose
       'Connected to MongoDB at URL:', process.env.DB_HOST
     );
   })
-  .catch(() => {
-    console.log('Error connecting to MongoDB at URL:', process.env.DB_HOST);
+  .catch((err) => {
+    console.log(err);
   });
 
 // CORS config
