@@ -52,14 +52,12 @@ Live Version: Under Construction
 
 ### Deployment
 ---
-* 3 Terminal Setup
-* Terminal 1 : Runs the mongo database
-    * ```mongod``` or ```sudo mongod```
-* Terminal 2 : Runs the Express server
+* 2 Terminal Setup
+* Terminal 1 : Runs the Express server
     * ```cd <path>/clo/clo-api/```
     * ```npm start```
     * If it cannot find module: ```npm install --save <module>```
-* Terminal 3 : Builds the webapp for development
+* Terminal 2 : Builds the webapp for development
     * ```cd <path>/clo/clo-angular/```
     * ```ng serve```
 * The Carlyle Letters Online application should now be available at http://localhost:4200/
@@ -92,6 +90,26 @@ Note: Be sure to merge the latest from "upstream" before making a pull request!
 * **IF YOU DON'T KNOW WHERE SOMETHING GOES, ASK**
 
 * ```npm install [packages] --save``` or ```--save-dev``` for development only
+
+### Extended Contributing (Database Changes)
+#### Albums
+If you have received a new album metadata file, take the following steps to make changes to the albums collection:
+1. **RENAME** the file so it has the following format :
+    * `Volume<albumId>.xlsx` 
+    * Example : `Volume2.xlsx`
+2. **COPY** the file into the correct albums folder :
+    * Each albums folder can be found at : `clo-angular/src/assets/albums/fullsize/`
+3. **DROP** the current albums collection from the database :
+    * In MongoDB Compass :
+        * Click on the clo database in the sidenav
+        * Next to the albums collection in the sidenav, click the trash can icon and follow prompts
+    * In Mongo Shell (`mongo` or `sudo mongo`):
+        * Switch to clo database : `use clo`
+        * List the current collections : `show collections`
+        * Drop the albums collection : `db.albums.drop()`
+        * To confirm the drop : `show collections`
+4. **RUN** the album_upload.py script
+    * `python album_upload.py`
 
 ### Versioning
 

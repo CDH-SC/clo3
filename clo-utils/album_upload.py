@@ -1,3 +1,7 @@
+"""
+Author: Jerrod Mathis
+"""
+
 import xlrd
 import os
 import sys
