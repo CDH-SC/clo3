@@ -6,13 +6,23 @@ var Schema = mongoose.Schema;
 //Define schema
 var albumSchema = new Schema({
   _id: Number,
-  albumUrl: String,
+  imagesFolder: String,
   images: [{
     imageUrl: String,
-    date: String,
-    caption: String,
-    title: String,
-    creator: String,
+    metadata: {
+      title: String,
+      description: String,
+      subjects: [String],
+      authors: [String],
+      date: String,
+      genre: String,
+      other_titles: String,
+      notes: String,
+      reproduction_note: String,
+      copyright_information: String,
+      language_note: String,
+      format: String,
+    },
   }],
 }, { collection: 'albums' })
 

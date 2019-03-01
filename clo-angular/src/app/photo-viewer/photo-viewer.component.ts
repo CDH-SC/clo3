@@ -21,14 +21,15 @@ export class PhotoViewerComponent implements OnInit {
 
   album: Album;
   albumId: string;
-  image: any;
 
+  image: any;
+  imageUrl: string;
   imageId: string;
   prevId: string;
   nextId: string;
+  imageMetadata: any;
 
-  thumbnailUrl: string;
-  fullsizeUrl: string;
+  dropdownHidden = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,10 +44,10 @@ export class PhotoViewerComponent implements OnInit {
     .subscribe(data => {
       this.album = data['data'];
       this.image = this.album.images[this.imageId];
-      this.thumbnailUrl = this.album.thumbnailUrl + this.image.imageUrl;
-      this.fullsizeUrl = this.album.fullsizeUrl + this.image.imageUrl;
+      this.imageUrl = this.album.imagesFolder + this.image.imageUrl;
       this.prevId = this.setPrevId(this.imageId);
       this.nextId = this.setNextId(this.imageId);
+      this.imageMetadata = this.image.metadata;
     });
 
     const viewer = new Viewer(document.getElementById('image'), {
@@ -62,10 +63,10 @@ export class PhotoViewerComponent implements OnInit {
   goToImage(id: string) {
     this.imageId = id;
     this.image = this.album.images[this.imageId];
-    this.thumbnailUrl = this.album.thumbnailUrl + this.image.imageUrl;
-    this.fullsizeUrl = this.album.fullsizeUrl + this.image.imageUrl;
+    this.imageUrl = this.album.imagesFolder + this.image.imageUrl;
     this.prevId = this.setPrevId(this.imageId);
     this.nextId = this.setNextId(this.imageId);
+    this.imageMetadata = this.image.metadata;
   }
 
   goToStart() {
