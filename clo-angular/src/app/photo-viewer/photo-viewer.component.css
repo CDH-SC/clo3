@@ -6,6 +6,24 @@ img {
   height: auto;
 }
 
+table {
+  width: 100%;
+  margin-top: 25px;
+  font-size: 16px;
+}
+
+td {
+  padding: 10px;
+}
+
+p {
+  margin: 0;
+}
+
+#metadataDropdown > table {
+  margin-top: 0;
+}
+
 .imageViewer {
   margin-top: 25px;
   display: block;
@@ -46,14 +64,6 @@ img {
   font-size: 16px;
 }
 
-table {
-  margin-top: 25px;
-  font-size: 16px;
-}
-
-td {
-  padding: 10px;
-}
 
 .col1 {
   width: 10%;
@@ -67,13 +77,12 @@ td {
 }
 
 .dropdown {
-  cursor: pointer;
+  text-decoration: none;
 }
 
 .dropdown::after {
   font-family: FontAwesome;
   content: '\f0da';
-  font-size: 14px;
-  margin-left: 5px;
+  font-size: 12px;
 }
 
