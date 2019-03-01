@@ -65,56 +65,64 @@
         </td>
       </tr>
       <tr>
-        <td class="col1 dropdown">
-          <a data-toggle="collapse" href="#metadataCollapse" role="button" aria-expanded="false" aria-controls="metadataDropdown">
-            More Metadata:
+        <td class="col1">
+          <a
+          class="dropdown"
+          data-toggle="collapse"
+          href="#metadataDropdown"
+          role="button"
+          aria-expanded="false"
+          aria-controls="metadataDropdown">
+            More Metadata
           </a>
         </td>
         <td></td>
       </tr>
     </table>
-    <table>
-      <tr *ngIf="imageMetadata.date !== ''" class="dropdownInfo">
-        <td class="col1">Date:</td>
-        <td class="col2">{{ imageMetadata.date }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.authors.length > 0" class="dropdownInfo">
-        <td class="col1">Authors:</td>
-        <td class="col2">
-          <p *ngFor="let author of imageMetadata.authors">
-            {{ author }}
-          </p>
-        </td>
-      </tr>
-      <tr *ngIf="imageMetadata.genre !== ''" class="dropdownInfo">
-        <td class="col1">Genre:</td>
-        <td class="col2">{{ imageMetadata.genre }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.other_titles !== ''" class="dropdownInfo">
-        <td class="col1">Other Titles:</td>
-        <td class="col2">{{ imageMetadata.other_titles }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.notes !== ''" class="dropdownInfo">
-        <td class="col1">Notes:</td>
-        <td class="col2">{{ imageMetadata.notes }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.reproduction_note !== ''" class="dropdownInfo">
-        <td class="col1">Reproduction Note:</td>
-        <td class="col2">{{ imageMetadata.reproduction_note }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.copyright_information !== ''" class="dropdownInfo">
-        <td class="col1">Copyright Information:</td>
-        <td class="col2">{{ imageMetadata.copyright_information }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.language_note !== ''" class="dropdownInfo">
-        <td class="col1">Language Note:</td>
-        <td class="col2">{{ imageMetadata.language_note }}</td>
-      </tr>
-      <tr *ngIf="imageMetadata.format !== ''" class="dropdownInfo">
-        <td class="col1">Format</td>
-        <td class="col2">{{ imageMetadata.format }}</td>
-      </tr>
-    </table>
+    <div class="collapse" id="metadataDropdown">
+      <table>
+        <tr *ngIf="imageMetadata.date !== ''" class="dropdownInfo">
+          <td class="col1">Date:</td>
+          <td class="col2">{{ imageMetadata.date }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.authors.length > 0" class="dropdownInfo">
+          <td class="col1">Authors:</td>
+          <td class="col2">
+            <p *ngFor="let author of imageMetadata.authors">
+              {{ author }}
+            </p>
+          </td>
+        </tr>
+        <tr *ngIf="imageMetadata.genre !== ''" class="dropdownInfo">
+          <td class="col1">Genre:</td>
+          <td class="col2">{{ imageMetadata.genre }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.other_titles !== ''" class="dropdownInfo">
+          <td class="col1">Other Titles:</td>
+          <td class="col2">{{ imageMetadata.other_titles }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.notes !== ''" class="dropdownInfo">
+          <td class="col1">Notes:</td>
+          <td class="col2">{{ imageMetadata.notes }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.reproduction_note !== ''" class="dropdownInfo">
+          <td class="col1">Reproduction Note:</td>
+          <td class="col2">{{ imageMetadata.reproduction_note }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.copyright_information !== ''" class="dropdownInfo">
+          <td class="col1">Copyright Information:</td>
+          <td class="col2">{{ imageMetadata.copyright_information }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.language_note !== ''" class="dropdownInfo">
+          <td class="col1">Language Note:</td>
+          <td class="col2">{{ imageMetadata.language_note }}</td>
+        </tr>
+        <tr *ngIf="imageMetadata.format !== ''" class="dropdownInfo">
+          <td class="col1">Format:</td>
+          <td class="col2">{{ imageMetadata.format }}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </div>
 
