@@ -92,7 +92,13 @@ Note: Be sure to merge the latest from "upstream" before making a pull request!
 * ```npm install [packages] --save``` or ```--save-dev``` for development only
 
 ### Extended Contributing (Database Changes)
-#### Albums
+#### Useful Commands
+These commands are useful for [backing up and restoring a database.](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)
+* [mongodump](https://docs.mongodb.com/manual/reference/program/mongodump/#bin.mongodump)\
+`sudo mongodump --db clo --out <path>/clo-database/current`
+* [mongorestore](https://docs.mongodb.com/manual/reference/program/mongorestore/#bin.mongorestore)\
+`sudo mongorestore <path>/clo-database/current`
+#### Adding Albums
 If you have received a new album metadata file, take the following steps to make changes to the albums collection:
 1. **RENAME** the file so it has the following format :
     * `Volume<albumId>.xlsx` 
