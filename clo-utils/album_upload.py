@@ -25,6 +25,7 @@ This is a helper function that uploads a certain album (id) to the current
 database (db).
 It takes in an array of objects (images) and an album id (id).
 A single image in the images array should look like
+THIS IS AN OLD FORMAT BUT GOING TO BE USED IN CASE THEY WANT TO GO BACK TO THIS
 image = {
     imageUrl: string (this is the path to the image)
     metadata: {
@@ -40,6 +41,26 @@ image = {
         copyright_information: string
         language_note: string
         format: string
+    }
+}
+THIS IS THE CURRENT FORMAT THAT WILL BE USED
+image = {
+    imageUrl: string
+    metadata: {
+        title: string
+        description: string
+        subjects: string[]
+        creators: string[]
+        date: string
+        media_type: string
+        note: string
+        source: string
+        digital_specs: string
+        date_digital: string
+        rights: string
+        language: string
+        format: string
+        publisher: string
     }
 }
 """
@@ -72,32 +93,64 @@ def main():
                 # We start at index 1 because index 0 is just
                 # the table headers, which we do not need
                 for i in range(1, sheet.nrows):
-                    subjects = []
-                    authors = []
-                    # Subjects are between indexes 4 and 7
-                    for x in range(4,8):
-                        if sheet.cell_value(i,x) == xlrd.empty_cell.value:
-                            continue
-                        subjects.append(sheet.cell_value(i,x).encode("ascii"))
-                    # Authors are between indexes 8 and 10
-                    for x in range(8,11):
-                        if sheet.cell_value(i,x) == xlrd.empty_cell.value:
-                            continue
-                        authors.append(sheet.cell_value(i,x).encode("ascii"))
+                    # OLD FORMAT
+                    # subjects = []
+                    # authors = []
+                    # # Subjects are between indexes 4 and 7
+                    # for x in range(4,8):
+                    #     if sheet.cell_value(i,x) == xlrd.empty_cell.value:
+                    #         continue
+                    #     subjects.append(sheet.cell_value(i,x).encode("ascii"))
+                    # # Authors are between indexes 8 and 10
+                    # for x in range(8,11):
+                    #     if sheet.cell_value(i,x) == xlrd.empty_cell.value:
+                    #         continue
+                    #     authors.append(sheet.cell_value(i,x).encode("ascii"))
                     
+                    # metadata.append({
+                    #     "title": sheet.cell_value(i, 2).encode("ascii"),
+                    #     "description": sheet.cell_value(i, 3).encode("ascii"),
+                    #     "subjects": subjects,
+                    #     "authors": authors,
+                    #     "date": str(sheet.cell_value(i, 11)).split('.')[0],
+                    #     "genre": sheet.cell_value(i, 12).encode("ascii"),
+                    #     "other_titles": sheet.cell_value(i, 13).encode("ascii"),
+                    #     "notes": sheet.cell_value(i, 14).encode("ascii"),
+                    #     "reproduction_note": sheet.cell_value(i, 15).encode("ascii"),
+                    #     "copyright_information": sheet.cell_value(i, 16).encode("ascii"),
+                    #     "language_note": sheet.cell_value(i, 17).encode("ascii"),
+                    #     "format": sheet.cell_value(i, 18).encode("ascii")
+                    # })
+
+                    # NEW FORMAT
+                    subjects = []
+                    creators = []
+                    # Subjects are between indexes 4 and 7
+                    for x in range(4, 8):
+                        if sheet.cell_value(i,x) == xlrd.empty_cell.value:
+                            continue
+                        subjects.append(sheet.cell_value(i,x))
+                    # Creators are between indexes 8 and 10
+                    for x in range(8, 11):
+                        if sheet.cell_value(i,x) == xlrd.empty_cell.value:
+                            continue
+                        creators.append(sheet.cell_value(i,x))
+
                     metadata.append({
-                        "title": sheet.cell_value(i, 2).encode("ascii"),
-                        "description": sheet.cell_value(i, 3).encode("ascii"),
+                        "title": sheet.cell_value(i,2),
+                        "description": sheet.cell_value(i,3),
                         "subjects": subjects,
-                        "authors": authors,
-                        "date": str(sheet.cell_value(i, 11)).split('.')[0],
-                        "genre": sheet.cell_value(i, 12).encode("ascii"),
-                        "other_titles": sheet.cell_value(i, 13).encode("ascii"),
-                        "notes": sheet.cell_value(i, 14).encode("ascii"),
-                        "reproduction_note": sheet.cell_value(i, 15).encode("ascii"),
-                        "copyright_information": sheet.cell_value(i, 16).encode("ascii"),
-                        "language_note": sheet.cell_value(i, 17).encode("ascii"),
-                        "format": sheet.cell_value(i, 18).encode("ascii")
+                        "creators": creators,
+                        "date": str(sheet.cell_value(i,11)).split('.')[0],
+                        "media_type": sheet.cell_value(i,12),
+                        "note": sheet.cell_value(i,13),
+                        "source": sheet.cell_value(i,14),
+                        "digital_specs": sheet.cell_value(i,15),
+                        "date_digital": str(sheet.cell_value(i,16)).split('.')[0],
+                        "rights": sheet.cell_value(i,17),
+                        "language_note": sheet.cell_value(i,18),
+                        "format": sheet.cell_value(i,19),
+                        "publisher": sheet.cell_value(i,20)
                     })
             
             # Now that we have the metadata for the album,
