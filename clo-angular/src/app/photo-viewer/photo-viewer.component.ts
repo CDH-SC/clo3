@@ -50,14 +50,20 @@ export class PhotoViewerComponent implements OnInit {
       this.imageMetadata = this.image.metadata;
     });
 
-    const viewer = new Viewer(document.getElementById('image'), {
-      viewed() {
-        viewer.zoomTo(0.5);
-      },
-      toolbar: false,
-      title: false,
-      navbar: false,
-    });
+    const image = document.getElementById('image');
+    if (image) {
+      const viewer = new Viewer(image, {
+        navbar: false,
+        title: false,
+        toolbar: false,
+        ready() {
+          console.log('ready');
+        },
+        viewed() {
+          viewer.zoomTo(0.5);
+        }
+      });
+    }
   }
 
   goToImage(id: string) {
