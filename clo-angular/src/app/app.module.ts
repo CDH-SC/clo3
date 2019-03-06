@@ -95,7 +95,7 @@ const appRoutes: Routes = [
     LightboxModule,
     FontAwesomeModule,
     AngularFontAwesomeModule,
-    NgxImageZoomModule,
+    NgxImageZoomModule.forRoot(),
   ],
   providers: [
     VolumeService,
