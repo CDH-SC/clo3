@@ -14,15 +14,17 @@ import { Injectable } from '@angular/core';
           title: string,
           description: string,
           subjects: string[],
-          authors: string[],
+          creators: string[],
           date: string,
-          genre: string,
-          other_titles: string,
-          notes: string,
-          reproduction_note: string,
-          copyright_information: string,
+          media_type: string,
+          note: string,
+          source: string,
+          digital_specs: string,
+          date_digital: string,
+          rights: string,
           language_note: string,
-          format: string
+          format: string,
+          publisher: string,
         }
       }
     ]
