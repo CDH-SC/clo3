@@ -43,11 +43,7 @@ export class PhotoViewerComponent implements OnInit {
     this.albumService.getAlbumById<Album[]>(+this.albumId)
     .subscribe(data => {
       this.album = data['data'];
-      this.image = this.album.images[this.imageId];
-      this.imageUrl = this.album.imagesFolder + this.image.imageUrl;
-      this.prevId = this.setPrevId(this.imageId);
-      this.nextId = this.setNextId(this.imageId);
-      this.imageMetadata = this.image.metadata;
+      this.goToImage(this.imageId);
     });
 
     const image = document.getElementById('image');
