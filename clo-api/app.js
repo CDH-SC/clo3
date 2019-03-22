@@ -29,11 +29,11 @@ mongoose
   )
   .then(() => {
     console.log(
-      `Succesfully Connected to the Mongodb Database  at URL : mongodb://127.0.0.1:27017/clo`
+      'Connected to MongoDB at URL:', process.env.DB_HOST
     );
   })
-  .catch(() => {
-    console.log(`Error Connecting to the Mongodb Database at URL : mongodb://127.0.0.1:27017/clo`);
+  .catch((err) => {
+    console.log(err);
   });
 
 // CORS config

@@ -21,14 +21,15 @@ export class PhotoViewerComponent implements OnInit {
 
   album: Album;
   albumId: string;
-  image: any;
 
+  image: any;
+  imageUrl: string;
   imageId: string;
   prevId: string;
   nextId: string;
+  imageMetadata: any;
 
-  thumbnailUrl: string;
-  fullsizeUrl: string;
+  dropdownHidden = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,30 +43,32 @@ export class PhotoViewerComponent implements OnInit {
     this.albumService.getAlbumById<Album[]>(+this.albumId)
     .subscribe(data => {
       this.album = data['data'];
-      this.image = this.album.images[this.imageId];
-      this.thumbnailUrl = this.album.thumbnailUrl + this.image.imageUrl;
-      this.fullsizeUrl = this.album.fullsizeUrl + this.image.imageUrl;
-      this.prevId = this.setPrevId(this.imageId);
-      this.nextId = this.setNextId(this.imageId);
+      this.goToImage(this.imageId);
     });
 
-    const viewer = new Viewer(document.getElementById('image'), {
-      viewed() {
-        viewer.zoomTo(0.5);
-      },
-      toolbar: false,
-      title: false,
-      navbar: false,
-    });
+    const image = document.getElementById('image');
+    if (image) {
+      const viewer = new Viewer(image, {
+        navbar: false,
+        title: false,
+        toolbar: false,
+        ready() {
+          console.log('ready');
+        },
+        viewed() {
+          viewer.zoomTo(0.5);
+        }
+      });
+    }
   }
 
   goToImage(id: string) {
     this.imageId = id;
     this.image = this.album.images[this.imageId];
-    this.thumbnailUrl = this.album.thumbnailUrl + this.image.imageUrl;
-    this.fullsizeUrl = this.album.fullsizeUrl + this.image.imageUrl;
+    this.imageUrl = this.album.imagesFolder + this.image.imageUrl;
     this.prevId = this.setPrevId(this.imageId);
     this.nextId = this.setNextId(this.imageId);
+    this.imageMetadata = this.image.metadata;
   }
 
   goToStart() {
