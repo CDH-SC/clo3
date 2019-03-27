@@ -14,6 +14,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class VolumeContentComponent implements OnInit {
   volume: [Volume];
   volumeId: string;
+  volumeDates: string;
+  currentKey: string;
 
   objectKeys = Object.keys;
   tocKeys: Object[] = [];
@@ -37,7 +39,7 @@ export class VolumeContentComponent implements OnInit {
   ngOnInit() {
     // Getting data information from url
     const id = this.route.snapshot.paramMap.get('id'); // volume Id
-    const content = this.route.snapshot.paramMap.get('content'); // page content section
+    this.currentKey = this.route.snapshot.paramMap.get('content'); // page content section
     this.volumeId = id;
     // Setting the page content to null
     this.viewContent = null;
@@ -45,6 +47,7 @@ export class VolumeContentComponent implements OnInit {
     // Fetching volume data
     this.volumeService.getVolumeById<Volume[]>(id).subscribe(data => {
       this.volume = data['data'];
+      this.volumeDates = this.volume['volume_dates'];
       // Set the keys for the current volume
       this.setKeys();
       // Setting next and previous volume ids for navigation between volumes
@@ -52,20 +55,20 @@ export class VolumeContentComponent implements OnInit {
       this.nextId = this.setVolumeId(this.volumeId, 'next');
       // Set the frontice piece object if the page content section is
       // 'frontice_piece'
-      if (content === 'frontice_piece') {
+      if (this.currentKey === 'frontice_piece') {
         this.fronticePiece = this.volume['frontice_piece'];
       }
       // Set the page to the current content section if it is contained
       // within the keys for the volume
       this.tocKeys.forEach((object) => {
-        if (object['key'] === content) {
-          this.setPage(content);
+        if (object['key'] === this.currentKey) {
+          this.setPage(this.currentKey);
         }
       });
       // If content is still null after the above checks, we must have a letter
       // xml id, so we should get that letter
       if (this.fronticePiece === null && this.viewContent === null) {
-        this.getLetter(content);
+        this.getLetter(this.currentKey);
       }
       // Get letters object
       this.letters = this.sortLetters(this.volume['letters']);
@@ -158,11 +161,13 @@ export class VolumeContentComponent implements OnInit {
     });
   }
 
-  goToFront() {
+  goToFront(clicked: boolean) {
     // Update the url to show we are at the frontice piece of the volume
-    this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
-    this.fronticePiece = this.volume['frontice_piece'];
-    this.viewContent = null;
+    if (clicked) {
+      this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
+      this.fronticePiece = this.volume['frontice_piece'];
+      this.viewContent = null;
+    }
   }
 
   /**

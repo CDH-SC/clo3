@@ -1,47 +1,32 @@
-<!-- <div class="container-fluid">
-  <div class="row justify-content-start m-auto w-75">
-    <h4 class="orange-border-bottom">Album: {{ albumId }}, Image: {{imageId}}</h4>
-  </div>
-  <div class="row justify-content-center align-items-center" style="height: 100%; margin-bottom: 25px;">
-    <div class="col align-self-center" id="viewer">
-      <fa-icon [icon]="faAngleDoubleLeft" size="2x" (click)="goToStart()"></fa-icon>
-      <fa-icon [icon]="faAngleLeft" size="2x" (click)="goToImage(prevId)"></fa-icon>
-      <img id="image" src="{{ imageUrl }}">
-      <fa-icon [icon]="faAngleRight" size="2x" (click)="goToImage(nextId)"></fa-icon>
-      <fa-icon [icon]="faAngleDoubleRight" size="2x" (click)="goToEnd()"></fa-icon>
-    </div>
-    <div class="w-100"></div>
-    <div class="col align-self-center" id="metadata">
-      <p id="metadataCollapse">
-        <a class="orange-border-bottom" data-toggle="collapse" href="#metadataContent" aria-expanded="false" aria-controls="metadataContent">Image Metadata</a>
-      </p>
-      <div class="collapse" id="metadataContent">
-        <p><strong>Date:</strong> {{this.image.date}}</p>
-        <p><strong>Title:</strong> {{this.image.title}}</p>
-        <p><strong>Caption:</strong> {{this.image.caption}}</p>
-        <p><strong>Creator:</strong> {{this.image.creator}}</p>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="container-fluid">
   <div class="row justify-content-start m-auto w-75">
-    <h4 class="orange-border-bottom" *ngIf="imageMetadata">{{ imageMetadata.title }}</h4>
+    <h4 class="orange-border-bottom" *ngIf="imageMetadata">
+      {{ imageMetadata.title }}
+    </h4>
   </div>
   <div class="row justify-content-center">
     <div class="imageViewer">
       <div class="image">
-        <img id="image" src="{{imageUrl}}">
+        <img id="image" src="{{ imageUrl }}" />
       </div>
       <div class="actionBar">
         <button type="button" class="actionButton" (click)="goToStart()">
           <fa-icon [icon]="faAngleDoubleLeft"></fa-icon>
         </button>
-        <button type="button" class="actionButton" (click)="goToImage(prevId)" [disabled]="!prevId">
+        <button
+          type="button"
+          class="actionButton"
+          (click)="goToImage(prevId)"
+          [disabled]="!prevId"
+        >
           <fa-icon [icon]="faAngleLeft"></fa-icon>
         </button>
-        <button type="button" class="actionButton" (click)="goToImage(nextId)" [disabled]="!nextId">
+        <button
+          type="button"
+          class="actionButton"
+          (click)="goToImage(nextId)"
+          [disabled]="!nextId"
+        >
           <fa-icon [icon]="faAngleRight"></fa-icon>
         </button>
         <button type="button" class="actionButton" (click)="goToEnd()">
@@ -50,79 +35,90 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-start m-auto w-50" *ngIf="imageMetadata">
-    <table>
-      <tr>
-        <td class="col1">Description:</td>
-        <td class="col2">{{ imageMetadata.description }}</td>
-      </tr>
-      <tr>
-        <td class="col1">Subjects:</td>
-        <td class="col2">
-          <p *ngFor="let subject of imageMetadata.subjects">
-            {{ subject }}
-          </p>
-        </td>
-      </tr>
-      <tr>
-        <td class="col1">
-          <a
-          class="dropdown"
-          data-toggle="collapse"
-          href="#metadataDropdown"
-          role="button"
-          aria-expanded="false"
-          aria-controls="metadataDropdown">
-            More Metadata
-          </a>
-        </td>
-        <td></td>
-      </tr>
-    </table>
-    <div class="collapse" id="metadataDropdown">
+  <div class="row justify-content-center" *ngIf="imageMetadata">
+    <div class="metadataViewer">
       <table>
-        <tr *ngIf="imageMetadata.date !== ''" class="dropdownInfo">
-          <td class="col1">Date:</td>
-          <td class="col2">{{ imageMetadata.date }}</td>
+        <tr *ngIf="imageMetadata.description">
+          <td class="col1">Description:</td>
+          <td class="col2">{{ imageMetadata.description }}</td>
         </tr>
-        <tr *ngIf="imageMetadata.authors.length > 0" class="dropdownInfo">
-          <td class="col1">Authors:</td>
+        <tr *ngIf="imageMetadata.subjects">
+          <td class="col1">Subjects:</td>
           <td class="col2">
-            <p *ngFor="let author of imageMetadata.authors">
-              {{ author }}
+            <p *ngFor="let subject of imageMetadata.subjects">
+              {{ subject }}
             </p>
           </td>
         </tr>
-        <tr *ngIf="imageMetadata.genre !== ''" class="dropdownInfo">
-          <td class="col1">Genre:</td>
-          <td class="col2">{{ imageMetadata.genre }}</td>
-        </tr>
-        <tr *ngIf="imageMetadata.other_titles !== ''" class="dropdownInfo">
-          <td class="col1">Other Titles:</td>
-          <td class="col2">{{ imageMetadata.other_titles }}</td>
-        </tr>
-        <tr *ngIf="imageMetadata.notes !== ''" class="dropdownInfo">
-          <td class="col1">Notes:</td>
-          <td class="col2">{{ imageMetadata.notes }}</td>
-        </tr>
-        <tr *ngIf="imageMetadata.reproduction_note !== ''" class="dropdownInfo">
-          <td class="col1">Reproduction Note:</td>
-          <td class="col2">{{ imageMetadata.reproduction_note }}</td>
-        </tr>
-        <tr *ngIf="imageMetadata.copyright_information !== ''" class="dropdownInfo">
-          <td class="col1">Copyright Information:</td>
-          <td class="col2">{{ imageMetadata.copyright_information }}</td>
-        </tr>
-        <tr *ngIf="imageMetadata.language_note !== ''" class="dropdownInfo">
-          <td class="col1">Language Note:</td>
-          <td class="col2">{{ imageMetadata.language_note }}</td>
-        </tr>
-        <tr *ngIf="imageMetadata.format !== ''" class="dropdownInfo">
-          <td class="col1">Format:</td>
-          <td class="col2">{{ imageMetadata.format }}</td>
+        <tr>
+          <td class="col1">
+            <a
+              class="dropdown"
+              data-toggle="collapse"
+              href="#metadataDropdown"
+              role="button"
+              aria-expanded="false"
+              aria-controls="metadataDropdown"
+            >
+              More Metadata
+            </a>
+          </td>
+          <td></td>
         </tr>
       </table>
+
+      <div class="collapse" id="metadataDropdown">
+        <table>
+          <tr *ngIf="imageMetadata.date !== ''" class="dropdownInfo">
+            <td class="col1">Date:</td>
+            <td class="col2">{{ imageMetadata.date }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.creators" class="dropdownInfo">
+            <td class="col1">Creators:</td>
+            <td class="col2">
+              <p *ngFor="let creator of imageMetadata.creators">
+                {{ creator }}
+              </p>
+            </td>
+          </tr>
+          <tr *ngIf="imageMetadata.media_type !== ''" class="dropdownInfo">
+            <td class="col1">Media Type:</td>
+            <td class="col2">{{ imageMetadata.media_type }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.note !== ''" class="dropdownInfo">
+            <td class="col1">Note:</td>
+            <td class="col2">{{ imageMetadata.note }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.source !== ''" class="dropdownInfo">
+            <td class="col1">Source:</td>
+            <td class="col2">{{ imageMetadata.source }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.digital_specs !== ''" class="dropdownInfo">
+            <td class="col1">Digital Specifications:</td>
+            <td class="col2">{{ imageMetadata.digital_specs }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.date_digital !== ''" class="dropdownInfo">
+            <td class="col1">Date Digital:</td>
+            <td class="col2">{{ imageMetadata.date_digital }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.rights !== ''" class="dropdownInfo">
+            <td class="col1">Rights:</td>
+            <td class="col2">{{ imageMetadata.rights }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.language_note !== ''" class="dropdownInfo">
+            <td class="col1">Language Note:</td>
+            <td class="col2">{{ imageMetadata.language_note }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.format !== ''" class="dropdownInfo">
+            <td class="col1">Format:</td>
+            <td class="col2">{{ imageMetadata.format }}</td>
+          </tr>
+          <tr *ngIf="imageMetadata.publisher !== ''" class="dropdownInfo">
+            <td class="col1">Publisher:</td>
+            <td class="col2">{{ imageMetadata.publisher }}</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-
