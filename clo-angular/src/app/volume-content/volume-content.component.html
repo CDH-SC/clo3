@@ -2,10 +2,10 @@
     <app-volume-toc
     *ngIf="letters"
     [volId]="volumeId"
-    [prevId]="prevId"
-    [nextId]="nextId"
+    [prevId]="prevVolumeId"
+    [nextId]="nextVolumeId"
     [volumeDates]="volumeDates"
-    [keys]="tocKeys"
+    [keys]="volumeKeys"
     [letters]="letters"
     (fronticeClicked)="goToFront($event)"
     (idChanged)="goToVolume($event)"
@@ -31,5 +31,11 @@
   </div>
   <!-- END Search Bar -->
 </div>
+
+<app-volume-viewer *ngIf="volume"
+  [viewContent]="viewContent"
+  [sourceNote]="sourceNote"
+  [footnotes]="footnotes"
+></app-volume-viewer>
 
 

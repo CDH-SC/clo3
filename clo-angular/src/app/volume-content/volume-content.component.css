@@ -10,7 +10,7 @@
   border: 1px solid #21596f;
   border-radius: 10px;
   background: #F5ECDC;
-  padding: 20px;
+  padding: 0 15px;
   font-size: 16px;
   color: #21596f;
   overflow: auto;
@@ -25,13 +25,21 @@
   justify-content: center;
 }
 
-#fronticeImg {
-  margin: auto;
-  text-align: center;
-}
-
 #fronticeContent {
   padding: 10px;
+}
+
+#viewerContent {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+#fronticeCaption {
+  margin-top: 20px;
 }
 
 #manuscript {
