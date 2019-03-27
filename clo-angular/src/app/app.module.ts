@@ -38,6 +38,7 @@ import { VolumeService } from './_shared/_services/volumes.service';
 
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
+import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 
 const appRoutes: Routes = [
   {
@@ -86,6 +87,7 @@ const appRoutes: Routes = [
     AlbumViewerComponent,
     PhotoViewerComponent,
     VolumeTocComponent,
+    VolumeViewerComponent,
   ],
   imports: [
     BrowserModule,
