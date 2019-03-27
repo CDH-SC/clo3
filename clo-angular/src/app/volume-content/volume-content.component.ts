@@ -89,7 +89,11 @@ export class VolumeContentComponent implements OnInit {
     // Update url to reflect current section
     this.router.navigateByUrl('/volume/' + this.volumeId + '/' + key);
     if (key === 'introduction') {
-      this.footnotes = this.volume[key].introFootnotes;
+      this.volume[key].introFootnotes.forEach(footnote => {
+        this.footnotes.push(this.sanitizer.bypassSecurityTrustHtml(
+          footnote
+        ));
+      });
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
         this.volume[key].introText
       );
@@ -120,6 +124,8 @@ export class VolumeContentComponent implements OnInit {
   }
 
   getLetter(xml_id: string) {
+    this.sourceNote = null;
+    this.footnotes = [];
     // scroll to the top of the page when clicked
     const scrollToTop = window.setInterval(() => {
       const pos = window.pageYOffset;
@@ -155,11 +161,12 @@ export class VolumeContentComponent implements OnInit {
   }
 
   goToFront(clicked: boolean) {
+    this.sourceNote = null;
+    this.footnotes = [];
     // Update the url to show we are at the frontice piece of the volume
     if (clicked) {
       this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
-      this.fronticePiece = this.volume['frontice_piece'];
-      this.viewContent = null;
+      this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
     }
   }
 
