@@ -1,0 +1,41 @@
+<div class="toc-container">
+  <div class="w-100 orange-border-bottom" (click)="frontice(true)" id="volInfo">
+    <span class="pl-2">Volume {{ volId }}</span>
+    <br>
+    <span class="pl-2">{{ volumeDates }}</span>
+  </div>
+  <div class="w-100" id="volNav">
+    <a class="mr-auto" (click)="prev(prevId)" *ngIf="prevId">PREV VOLUME</a>
+    <a class="ml-auto" (click)="next(nextId)" *ngIf="nextId">NEXT VOLUME</a>
+  </div>
+  <div class="w-100" id="tocItem" *ngFor="let key of keys">
+    <a class="pl-2" (click)="sectionClicked(key['key'])">{{ key['title'].toUpperCase() }}</a>
+  </div>
+  <div class="w-100 m-auto" id="tocItem" *ngIf="letters">
+    <a class="drop" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">
+      LETTERS
+    </a>
+  </div>
+  <div class="collapse" id="letters">
+    <div class="pl-4 w-100 m-auto" id="tocItem" *ngFor="let l of objectKeys(letters); index as i">
+      <a class="drop" data-toggle="collapse" href="#dates{{i}}" aria-expanded="false" [attr.aria-controls]="'dates' + i">
+        {{ l }}
+      </a>
+      <div class="w-100">
+        <div class="collapse" id="dates{{i}}">
+          <div class="w-100 m-auto pl-4" *ngFor="let o of letters[l]">
+            <div>
+              <span><strong>{{ o.docDate }}</strong></span>
+            </div>
+            <div class="w-100"></div>
+            <div>
+              <a (click)="letterClicked(o.xml_id)">
+                {{ o.sender }} TO {{ o.recipient }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
