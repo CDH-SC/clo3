@@ -1,0 +1,44 @@
+<div class="viewerContainer" *ngIf="viewContent">
+  <div
+    class="fronticeViewer"
+    [innerHtml]="viewContent"
+    *ngIf="isFrontice"
+  ></div>
+  <div
+    class="volumeViewer"
+    [innerHtml]="viewContent"
+    *ngIf="!isFrontice"
+  ></div>
+
+  <div class="sourceNote" *ngIf="sourceNote">
+    <a
+      class="drop"
+      data-toggle="collapse"
+      href="#sourceNoteContent"
+      aria-expanded="false"
+      aria-controls="sourceNoteContent"
+    >
+      Sourcenote
+    </a>
+  </div>
+  <div
+    class="collapse"
+    id="sourceNoteContent"
+    *ngIf="sourceNote"
+    [innerHtml]="sourceNote"
+  ></div>
+
+  <div class="footnotes" *ngIf="footnotes.length > 0">
+    <a class="drop" data-toggle="collapse" href="#footnotesContent" aria-expanded="false" aria-controls="footnotesContent">
+      Footnotes
+    </a>
+  </div>
+  <div class="collapse" id="footnotesContent" *ngIf="footnotes.length > 0">
+    <div *ngFor="let footnote of footnotes; index as i">
+      <p>
+        <a class="footnoteId" id="FN{{ i + 1 }}">{{ i + 1 }}</a>
+        <span [innerHtml]="footnote"></span>
+      </p>
+    </div>
+  </div>
+</div>

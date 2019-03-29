@@ -1,66 +1,25 @@
 <div class="d-flex flex-row justify-content-center align-items-start p-2" id="content">
-  <!-- TOC -->
-  <div class="d-flex flex-column justify-content-start align-items-start" id="tocBox" *ngIf="volume">
-    <!-- Volume Information -->
-    <div class="w-100 orange-border-bottom" id="volInfo" (click)="goToFront()">
-      <span class="pl-2">Volume {{ volumeId }}</span>
-      <br>
-      <span class="pl-2">{{ volume.volume_dates }}</span>
-    </div>
-    <!-- END Volume Information -->
-    <!-- Volume Navigation -->
-    <div class="d-flex flex-row align-items-center w-100" id="volNav" *ngIf="prevId || nextId">
-      <a class="mr-auto" *ngIf="prevId" (click)="goToVolume(prevId)">PREV VOLUME</a>
-      <a class="ml-auto" *ngIf="nextId" (click)="goToVolume(nextId)">NEXT VOLUME</a>
-    </div>
-    <!-- END Volume Navigation -->
-    <!-- Volume TOC -->
-    <div class="d-flex align-items-center w-100" id="tocItem" *ngFor="let k of tocKeys">
-      <a class="pl-2" (click)="setPage(k['key'])">{{ k['title'].toUpperCase() }}</a>
-    </div>
-
-    <div class="row w-100 m-auto align-items-center" id="tocItem" *ngIf="letters">
-      <a class="drop" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">
-        LETTERS
-      </a>
-    </div>
-    <div class="collapse" id="letters">
-      <div class="row w-100 m-auto align-items-center" id="tocItem" *ngFor="let l of objectKeys(letters); index as i">
-        <a class="pl-4 drop" data-toggle="collapse" href="#dates{{i}}" aria-expanded="false" [attr.aria-controls]="'dates' + i">
-          {{ l }}
-        </a>
-        <div class="row w-100">
-          <div class="collapse" id="dates{{i}}">
-            <div class="row w-100 m-auto pl-4 align-items-center" *ngFor="let o of letters[l]">
-              <div class="row pl-4">
-                <span class="pl-4"><strong>{{ o.docDate }}</strong></span>
-              </div>
-              <div class="w-100"></div>
-              <div class="row pl-4">
-                <a class="pl-4" (click)="getLetter(o.xml_id)">
-                  {{ o.sender }} TO {{ o.recipient }}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- END Volume TOC -->
-  </div>
-  <!-- END TOC -->
+    <app-volume-toc
+    *ngIf="letters"
+    [volId]="volumeId"
+    [prevId]="prevVolumeId"
+    [nextId]="nextVolumeId"
+    [volumeDates]="volumeDates"
+    [keys]="volumeKeys"
+    [letters]="letters"
+    (fronticeClicked)="goToFront($event)"
+    (idChanged)="goToVolume($event)"
+    (contentChanged)="setPage($event)"
+    (letterChanged)="getLetter($event)"
+  ></app-volume-toc>
 
   <!-- Viewer -->
-  <div class="row justify-content-center align-items-center" id="viewer">
-    <div *ngIf="fronticePiece" id="fronticePiece">
-      <img id="fronticeImage" src="assets/{{ fronticePiece['imageUrl'] }}">
-      <div id="fronticeContent" [innerHTML]="fronticePiece['imageCaption']"></div>
-    </div>
-    <div *ngIf="viewContent" style="width: 100%; height: 100%;">
-      <div id="viewerContent" [innerHTML]="viewContent"></div>
-    </div>
-  </div>
+  <app-volume-viewer *ngIf="volume"
+    [viewContent]="viewContent"
+    [isFrontice]="isFrontice"
+    [sourceNote]="sourceNote"
+    [footnotes]="footnotes"
+  ></app-volume-viewer>
   <!-- END Viewer -->
 
   <!-- Search Bar -->
@@ -69,3 +28,7 @@
   </div>
   <!-- END Search Bar -->
 </div>
+
+
+
+
