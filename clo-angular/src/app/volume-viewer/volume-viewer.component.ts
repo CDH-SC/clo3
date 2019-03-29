@@ -7,6 +7,7 @@ import { Component, Input, Output, OnChanges } from '@angular/core';
 })
 export class VolumeViewerComponent implements OnChanges {
   @Input() viewContent;
+  @Input() isFrontice;
   @Input() sourceNote;
   @Input() footnotes;
 
@@ -19,10 +20,6 @@ export class VolumeViewerComponent implements OnChanges {
     this.footnoteReferences.forEach(footnote => {
       footnote.onclick = null; // removing previous onclick event
     });
-
-    console.log(this.viewContent);
-    console.log(this.sourceNote);
-    console.log(this.footnotes);
   }
 
 }
