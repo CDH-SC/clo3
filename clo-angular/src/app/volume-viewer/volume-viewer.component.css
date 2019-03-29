@@ -1,0 +1,97 @@
+.viewerContainer {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+.fronticeViewer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 700px;
+  overflow: auto;
+  padding: 25px;
+  align-items: center;
+  justify-content: start;
+  border: 1px solid #21596f;
+  border-radius: 5px;
+  background: #f5ebdc;
+}
+
+.volumeViewer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 700px;
+  overflow: auto;
+  padding: 25px;
+  align-items: center;
+  justify-content: start;
+  border: 1px solid #21596f;
+  border-radius: 5px;
+  background: #f5ebdc;
+}
+
+.sourceNote {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  margin-top: 5px;
+  background: #d2e0dc;
+  border: 1px solid #21596f;
+  border-radius: 5px 5px 0 0;
+}
+
+#sourceNoteContent {
+  width: 100%;
+  background: #f5ebdc;
+  font-size: 12px;
+  border: 1px solid #21596f;
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+}
+
+.drop::before {
+  float: left;
+  font-family: FontAwesome;
+  font-size: 12px;
+  content: '\f0da';
+  color: #21596f;
+  background: #9db993;
+  border-radius: 2.5px;
+  text-align: center;
+  width: 20px;
+  margin-right: 5px;
+}
+
+.footnotes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  padding: 5px;
+  margin-top: 5px;
+  background: #d2e0dc;
+  border: 1px solid #21596f;
+  border-radius: 5px 5px 0 0;
+}
+
+#footnotesContent {
+  width: 100%;
+  background: #f5ebdc;
+  font-size: 12px;
+  border: 1px solid #21596f;
+  border-radius: 0 0 5px 5px;
+  padding: 10px;
+}
+
+.footnoteId {
+  text-decoration: underline !important;
+  font-weight: bold !important;
+  font-size: 14px;
+  margin-right: 5px;
+}
