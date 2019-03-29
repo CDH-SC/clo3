@@ -25,7 +25,7 @@
   height: 700px;
   overflow: auto;
   padding: 25px;
-  align-items: center;
+  align-items: start;
   justify-content: start;
   border: 1px solid #21596f;
   border-radius: 5px;
