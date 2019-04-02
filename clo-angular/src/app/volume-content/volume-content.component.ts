@@ -24,12 +24,13 @@ export class VolumeContentComponent implements OnInit {
   volumeKeys: Object[] = [];
   currentKey: string;
 
+  isFrontice = false;
   viewContent: SafeHtml;
 
   letters: any;
 
   sourceNote: SafeHtml;
-  footnotes: SafeHtml[] = [];
+  footnotes: any = [];
 
   hasManuscript = false;
   manuscriptUrl: Object[] = [];
@@ -60,15 +61,18 @@ export class VolumeContentComponent implements OnInit {
         this.viewContent = null;
         // If the current key is a frontice piece, we need to create that object
         if (this.currentKey === 'frontice_piece') {
+          this.isFrontice = true;
           this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
         }
         this.volumeKeys.forEach(key => {
           if (this.currentKey === key['key']) {
+            this.isFrontice = false;
             this.setPage(this.currentKey);
           }
         });
         // If the viewContent is still null at this step, we have a xml_id as a key
         if (this.viewContent === null) {
+          this.isFrontice = false;
           this.getLetter(this.currentKey);
         }
       });
@@ -78,8 +82,10 @@ export class VolumeContentComponent implements OnInit {
     const fronticeImage = fronticeObject['imageUrl'];
     const fronticeCaption = fronticeObject['imageCaption'];
     const fronticeHtml = '\
-    <img id="fronticeImage" src="assets/' + fronticeImage + '">\n\
-    <p id="fronticeCaption">' + fronticeCaption + '</p>\n';
+    <img src="assets/' + fronticeImage + '" style="max-width: 100%; max-height: 500px;">\n\
+    <br>\n\
+    <br>\n\
+    <p style="margin: 0;">' + fronticeCaption + '</p>\n';
     return this.sanitizer.bypassSecurityTrustHtml(fronticeHtml);
   }
 
@@ -88,11 +94,10 @@ export class VolumeContentComponent implements OnInit {
     this.footnotes = [];
     // Update url to reflect current section
     this.router.navigateByUrl('/volume/' + this.volumeId + '/' + key);
+    this.isFrontice = false;
     if (key === 'introduction') {
       this.volume[key].introFootnotes.forEach(footnote => {
-        this.footnotes.push(this.sanitizer.bypassSecurityTrustHtml(
-          footnote
-        ));
+        this.footnotes.push(footnote);
       });
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
         this.volume[key].introText
@@ -117,6 +122,7 @@ export class VolumeContentComponent implements OnInit {
       this.prevVolumeId = this.setVolumeId(this.volumeId, 'prev');
       this.nextVolumeId = this.setVolumeId(this.volumeId, 'next');
       // Get frontice piece object
+      this.isFrontice = true;
       this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
       // Get letters object
       this.letters = this.volumeService.sortLetters(this.volume['letters']);
@@ -140,10 +146,11 @@ export class VolumeContentComponent implements OnInit {
     this.viewContent = null;
     this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
       const letter = data['data']['letters'][0];
+      this.isFrontice = false;
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
       this.sourceNote = this.sanitizer.bypassSecurityTrustHtml(letter.sourceNote);
       letter.footnotes.forEach(footnote => {
-        this.footnotes.push(this.sanitizer.bypassSecurityTrustHtml(footnote));
+        this.footnotes.push(footnote);
         // console.log(footnote);
       });
       // console.log(letter);
@@ -166,6 +173,7 @@ export class VolumeContentComponent implements OnInit {
     // Update the url to show we are at the frontice piece of the volume
     if (clicked) {
       this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
+      this.isFrontice = true;
       this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
     }
   }
