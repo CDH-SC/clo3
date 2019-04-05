@@ -81,7 +81,8 @@ def main():
         if idMatch:
             albumId = idMatch[0]
             print "Working on Album:", albumId
-            albumFiles = sorted(os.listdir(subdir))
+            albumFiles = sorted(os.listdir(subdir), key=lambda f: int(filter(str.isdigit, f)))
+            print albumFiles[0]
             metadataFile = subdir + '/' + albumFiles[0] if re.match('Volume.\.xlsx', albumFiles[0]) is not None else None
             if metadataFile:
                 print "\tExtracting metadata from:", metadataFile
@@ -156,13 +157,14 @@ def main():
             # Now that we have the metadata for the album,
             # we go in and assign each image the appropriate
             # metadata.
-            for i, filename in enumerate(albumFiles[1:]):
-                if metadataFile:
+            if metadataFile:
+                for i, filename in enumerate(albumFiles[1:]):
                     images.append({
                         "imageUrl": str(filename),
                         "metadata": metadata[i]
                     })
-                else:
+            else:
+                for i, filename in enumerate(albumFiles[0:]):
                     images.append({
                         "imageUrl": str(filename),
                         "metadata": []
