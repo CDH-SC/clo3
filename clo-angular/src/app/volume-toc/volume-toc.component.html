@@ -8,7 +8,7 @@
     <a class="mr-auto" (click)="prev(prevId)" *ngIf="prevId">PREV VOLUME</a>
     <a class="ml-auto" (click)="next(nextId)" *ngIf="nextId">NEXT VOLUME</a>
   </div>
-  <div class="w-100" id="tocItem" *ngFor="let key of keys">
+  <div class="w-100" id="tocItem" *ngFor="let key of keys.slice().reverse()">
     <a class="pl-2" (click)="sectionClicked(key['key'])">{{ key['title'].toUpperCase() }}</a>
   </div>
   <div class="w-100 m-auto" id="tocItem" *ngIf="letters">

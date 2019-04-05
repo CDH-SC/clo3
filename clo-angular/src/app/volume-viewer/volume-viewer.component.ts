@@ -19,16 +19,15 @@ export class VolumeViewerComponent implements AfterViewChecked {
     const container = document.querySelector('.viewerContainer');
     try {
       this.footnoteReferences = container.querySelectorAll('[id$=REF]');
-      this.footnoteReferences.forEach(footnote => {
-        footnote.onclick = this.scrollToFootnotes;
-      });
+      for (let i = 0; i < this.footnoteReferences.length; i++) {
+        this.footnoteReferences[i].onclick = () => {
+          const footnote = document.getElementById('FN' + (i + 1));
+          const footnotesContent = document.getElementById('footnotesContent');
+          footnotesContent.classList.add('show');
+          footnote.scrollIntoView({behavior: 'smooth', block: 'center'});
+        };
+      }
     } catch {}
-  }
-
-  scrollToFootnotes() {
-    const footnotesContent = document.getElementById('footnotesContent');
-    footnotesContent.classList.add('show');
-    document.getElementById('footnotesCollapse').scrollIntoView({behavior: 'smooth', block: 'center'});
   }
 
 }
