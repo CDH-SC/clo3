@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
@@ -39,6 +40,7 @@ import { VolumeService } from './_shared/_services/volumes.service';
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
 import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 const appRoutes: Routes = [
   {
@@ -60,7 +62,8 @@ const appRoutes: Routes = [
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'volume/:id/:content', component: VolumeContentComponent },
   { path: 'album-viewer/:id', component: AlbumViewerComponent },
-  { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent }
+  { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
+  { path: 'search-results/:search', component: SearchResultsComponent },
 ];
 
 @NgModule({
@@ -88,9 +91,11 @@ const appRoutes: Routes = [
     PhotoViewerComponent,
     VolumeTocComponent,
     VolumeViewerComponent,
+    SearchResultsComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     RouterModule.forRoot(
       appRoutes,

@@ -5,8 +5,13 @@
   </div>
   <div id="searchInput">
     <div id="formField">
-      <input type="text"
-      size="27" value="" class="formsA">
+      <input
+        type="text"
+        class="formsA"
+        aria-label="Search"
+        (keyup.enter)="onEnter(route)"
+        [(ngModel)]="route"
+        size="27">
     </div>
     <br>
     <br>
