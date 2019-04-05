@@ -1,4 +1,4 @@
-<div class="d-flex flex-row justify-content-center align-items-start p-2" id="content">
+<!-- <div class="d-flex flex-row justify-content-around align-items-start p-2" id="content">
     <app-volume-toc
     *ngIf="letters"
     [volId]="volumeId"
@@ -13,20 +13,47 @@
     (letterChanged)="getLetter($event)"
   ></app-volume-toc>
 
-  <!-- Viewer -->
   <app-volume-viewer *ngIf="volume"
     [viewContent]="viewContent"
     [isFrontice]="isFrontice"
     [sourceNote]="sourceNote"
     [footnotes]="footnotes"
   ></app-volume-viewer>
-  <!-- END Viewer -->
 
-  <!-- Search Bar -->
   <div class="d-flex flex-column justify-content-start align-items-end">
     <app-search></app-search>
   </div>
-  <!-- END Search Bar -->
+</div> -->
+
+<div class="container" id="content">
+  <div class="row m-2 justify-content-start">
+    <div class="col-12">
+      <div class="row justify-content-around">
+        <app-volume-toc
+          *ngIf="letters"
+          [volId]="volumeId"
+          [prevId]="prevVolumeId"
+          [nextId]="nextVolumeId"
+          [volumeDates]="volumeDates"
+          [keys]="volumeKeys"
+          [letters]="letters"
+          (fronticeClicked)="goToFront($event)"
+          (idChanged)="goToVolume($event)"
+          (contentChanged)="setPage($event)"
+          (letterChanged)="getLetter($event)"
+        ></app-volume-toc>
+
+        <app-volume-viewer *ngIf="volume"
+          [viewContent]="viewContent"
+          [isFrontice]="isFrontice"
+          [sourceNote]="sourceNote"
+          [footnotes]="footnotes"
+        ></app-volume-viewer>
+
+        <app-search></app-search>
+      </div>
+    </div>
+  </div>
 </div>
 
 

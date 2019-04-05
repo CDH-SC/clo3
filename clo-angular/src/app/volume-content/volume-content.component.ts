@@ -110,6 +110,8 @@ export class VolumeContentComponent implements OnInit {
   }
 
   goToVolume(volId: string) {
+    this.sourceNote = null;
+    this.footnotes = [];
     // Update url to reflect we are at the frontice piece of the volume
     this.router.navigateByUrl('/volume/' + volId + '/frontice_piece');
     this.viewContent = null;
