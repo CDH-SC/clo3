@@ -62,7 +62,8 @@ const appRoutes: Routes = [
   { path: 'about-acknowledgments', component: AboutAckComponent },
   { path: 'volume/:id/:content', component: VolumeContentComponent },
   { path: 'album-viewer/:id', component: AlbumViewerComponent },
-  { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent }
+  { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
+  { path: 'search-results/:search', component: SearchResultsComponent },
 ];
 
 @NgModule({

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SearchResult } from '../_shared/models/searchResult';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-results',
@@ -7,9 +11,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchResultsComponent implements OnInit {
 
-  constructor() { }
+  searchTerm: string;
+  // searchResults: SearchResult;
+  searchResults: Observable<Object>;
+
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    // Get search term from router
+    this.searchTerm = this.route.snapshot.paramMap.get('search');
+
+    // Pass search term through search API and subscribe
+    // to results
+    this.searchResults = this.http.get<SearchResult>('/api/search/' + this.searchTerm);
   }
 
 }

@@ -1,3 +1,12 @@
-<p>
-  search-results works!
-</p>
+<div *ngIf="searchResults | async as results; else loading">
+  <p *ngFor="let result of results">
+    {{ result.xml_id }}
+  </p>
+</div>
+<ng-template #loading>
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
+      <img class="loading" src="../../assets/loading.gif">
+    </div>
+  </div>
+</ng-template>

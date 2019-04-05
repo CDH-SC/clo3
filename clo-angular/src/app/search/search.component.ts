@@ -14,8 +14,8 @@ export class SearchComponent {
 
   // Goes to search results page when enter is pressed
   onEnter(route) {
-    console.log(route);
-    // this.router.navigate(['search-results/', route]);
+    // console.log(route);
+    this.router.navigate(['search-results/', route]);
   }
 
 }
