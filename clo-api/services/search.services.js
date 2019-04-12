@@ -30,6 +30,11 @@ exports.searchVolumes = async function(search) {
                     "_id": 1,
                     "letters.xml_id": 1,
                 }
+            },
+            {
+                $sort: {
+                    "_id": 1,
+                }
             }
         ];
 

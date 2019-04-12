@@ -1,0 +1,122 @@
+
+&mdash;  &#x2014;
+
+&ndash;  &#x2013;
+
+&ldquo;  &#x201C;
+
+&rdquo;  &#x201D;
+
+&lsquo;  &#x2018;
+
+&rsquo;  &#x2019;
+
+&hellip;  &#x2026;
+
+&         &#x26;    [search for & + space, & + c and then replace with space and with c; ditto &!  &.  &,  ]
+
+&c      &#x26;c
+
+
+
+&frac12;  &#xBD;
+
+&frac13;        &#x2153;
+
+&frac14;  &#xBC;
+
+&frac23;  &#x8532;
+
+&frac34;    &#xBE;
+
+
+
+
+
+$sol;  &#x2F;
+
+
+&auml;  &#xE4;
+
+&euml;  	&#xEB;
+
+&iuml; &#xEF;
+
+&Ouml;      &#xd6;
+
+&ouml;  	&#xF6;
+
+&Uuml;	&#xdc;
+
+&uuml;  	&#xfc;
+
+&yuml;  &#xff;
+
+
+&aacute;  	&#xE1;
+
+&eacute;  &#xE9;
+
+&Eacute;    &#xc9;
+
+&uacute;    	&#xFA;
+
+
+&acirc;     &#xe2;
+
+&ecirc;      &#xEA;
+
+&icirc;     &#xee;
+
+&ocirc;  	&#xF4;
+
+&ucirc;     &#xFB;
+
+
+&Agrave;        &#xc0;
+
+&agrave;  	&#xE0;
+
+&egrave;  	&#xE8;
+
+&ograv;     &#xf2;
+
+&ugrave;    	&#xf9;
+
+&Ccedil;        &#xc7;
+
+
+&dagger;  	&#8224;
+
+
+&AElig;     &#xc6;
+
+&aelig;     &#xe6;	
+
+&OElig;     &#x8c;
+
+&oelig;     &#x9c;
+
+
+&oslash;    &#xf8;
+
+
+&atilde;    	&#xe3;
+
+&ntilde;       &#xf1;
+
+&semi;      &#x3B;
+
+&dollar;        &#x24;
+
+&pound;     &#xa3;
+
+&deg;       	&#xB0;
+
+&ast;       &#x2a;
+
+&amacr;     &#x101;
+
+&para;      &#xb6;
+
+&verbar;    &#x7c;

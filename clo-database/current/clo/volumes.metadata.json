@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"clo.volumes"}],"uuid":"35a6636830b94659ac05ea50335b3a96"}
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"clo.volumes"},{"v":2,"key":{"volume_dates":1},"name":"volume_dates_1","ns":"clo.volumes","background":true},{"v":2,"key":{"_fts":"text","_ftsx":1},"name":"$**_text","ns":"clo.volumes","background":true,"weights":{"$**":1},"default_language":"english","language_override":"language","textIndexVersion":3}],"uuid":"f62d35283892402e96cb57a2feebc396"}
