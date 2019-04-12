@@ -12,11 +12,15 @@ exports.searchVolumes = async function(search) {
         // Search parameters
         var pipeline = [
             {
+                //MongDB match documentation @ https://docs.mongodb.com/manual/reference/operator/aggregation/match/
+                //Filter doc stream to only match search terms (reduces loading time)
                 $match: {
                     $text: { $search: search }
                 }
             },
             {
+                //MongoDB unwind documentation @ https://docs.mongodb.com/manual/reference/operator/aggregation/unwind/
+                //Deconstruct search term arry to load only specfied objects 
                 $unwind: "$letters"
             },
             {
