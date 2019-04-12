@@ -32,9 +32,9 @@ export class SearchResultsComponent implements OnInit {
     this.searchResults = this.searchService.search(this.searchTerm);
 
     // Uncomment for debug purposes
-    // this.searchService.search(this.searchTerm).subscribe(res => {
-    //   console.log(res);
-    // });
+    this.searchService.search(this.searchTerm).subscribe(res => {
+      console.log(res);
+    });
   }
 
 }

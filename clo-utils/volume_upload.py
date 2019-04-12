@@ -13,7 +13,7 @@ from lxml import etree
 from datetime import datetime # measure the speed of script
 
 startTime = datetime.now()
-directory = "../clo-xml-archive/clo-xml-archive/col_xml_archive/" # defines working directory
+directory = "../clo-xml-archive/" # defines working directory
 
 # Connect to Mongodb
 client = MongoClient('mongodb://localhost:27017/')
