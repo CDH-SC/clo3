@@ -1,7 +1,14 @@
 <div *ngIf="searchResults | async as results; else loading">
-  <p *ngFor="let result of results">
-    {{ result.xml_id }}
-  </p>
+  <div *ngIf="results.data.length == 0">
+    <p>No results</p>
+  </div>
+  <div *ngIf="results.data.length > 0">
+    <p *ngFor="let result of results.data">
+      Volume {{ result._id }}
+      <br>
+      xml_id: {{ result.letters.xml_id }}
+    </p>
+  </div>
 </div>
 <ng-template #loading>
   <div class="container-fluid">

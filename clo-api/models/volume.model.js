@@ -58,5 +58,6 @@ var volumeSchema = new Schema({
 }, { collection: 'volumes'})
 
 //Export function to create "Volume" model class
+volumeSchema.index({'$**':'text'});
 volumeSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Volume', volumeSchema);
