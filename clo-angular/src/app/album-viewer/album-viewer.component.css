@@ -1,5 +1,6 @@
 .box.flex {
   display: flex;
+  padding-top: 25px;
   justify-content: center;
 }
 

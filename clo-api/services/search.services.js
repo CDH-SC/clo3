@@ -33,6 +33,7 @@ exports.searchVolumes = async function(search) {
                 $project: {
                     "_id": 1,
                     "letters.xml_id": 1,
+                    "letters.docDate": 1,
                 }
             },
             {

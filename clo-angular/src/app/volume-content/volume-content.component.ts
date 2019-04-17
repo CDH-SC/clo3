@@ -13,6 +13,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class VolumeContentComponent implements OnInit {
 
+  private TOTAL_VOLUMES = 45;
+
   objectKeys = Object.keys;
 
   volume: [Volume];
@@ -119,13 +121,18 @@ export class VolumeContentComponent implements OnInit {
     this.volumeKeys = [];
     this.volumeService.getVolumeById<Volume[]>(volId).subscribe(data => {
       this.volume = data['data'];
+      this.volumeDates = this.volume['volume_dates'];
       this.setKeys();
       // Setting next and previous volume ids for navigation between volumes
       this.prevVolumeId = this.setVolumeId(this.volumeId, 'prev');
       this.nextVolumeId = this.setVolumeId(this.volumeId, 'next');
       // Get frontice piece object
       this.isFrontice = true;
-      this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
+      try {
+        this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
+      } catch (e) {
+        console.error(e);
+      }
       // Get letters object
       this.letters = this.volumeService.sortLetters(this.volume['letters']);
     });
@@ -192,7 +199,7 @@ export class VolumeContentComponent implements OnInit {
         }
       }
     } else if (nextOrPrev.toLowerCase() === 'next') {
-      if (parseInt(volId, 10) >= 44) {
+      if (parseInt(volId, 10) >= this.TOTAL_VOLUMES) {
         return null;
       } else {
         if (parseInt(volId, 10) < 9) {
