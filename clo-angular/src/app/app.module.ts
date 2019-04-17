@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgxPaginationModule} from 'ngx-pagination';
 
 import { RouterModule, Routes } from '@angular/router';
 import { RouterLink } from '@angular/router';
@@ -104,12 +105,13 @@ const appRoutes: Routes = [
     LightboxModule,
     FontAwesomeModule,
     AngularFontAwesomeModule,
+    NgxPaginationModule,
     NgxImageZoomModule.forRoot(),
   ],
   providers: [
     VolumeService,
     AlbumService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, SearchResultsComponent]
 })
 export class AppModule { }
