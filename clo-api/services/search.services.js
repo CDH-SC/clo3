@@ -5,7 +5,7 @@ exports.searchVolumes = async function(search) {
         // Search for whole words
         var searchTerm = new RegExp(
             search.split(" ").map(function(word) {
-                return "\\b" + word + "\\b"
+                return "\\b" + word + "\\b";
             }).join("|")
         );
 
@@ -49,4 +49,4 @@ exports.searchVolumes = async function(search) {
     } catch (e) {
         throw Error(e.message, "Error while searching!");
     }
-}
+};

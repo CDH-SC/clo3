@@ -64,6 +64,7 @@ def main():
         if filename.endswith(".xml"):
             print filename
             volumeID = ''.join(re.findall("\d{2}", filename)) # get volume id from filename
+            print(volumeID)
             file = open(os.path.join(directory, filename), "r")
             content = file.read()
             lettersArray = []
