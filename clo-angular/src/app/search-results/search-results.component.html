@@ -1,28 +1,51 @@
-
-
-<div *ngIf="searchResults | async as results; else loading">
-  <div *ngIf="results.data.length == 0">
-    <p>No results</p>
+<div
+  class="container-fluid"
+  *ngIf="(searchResults | async) as results; else loading"
+  id="content"
+>
+  <div class="row justify-content-start orange-border-bottom">
+    <h4>Search Results for "{{ searchTerm }}"</h4>
   </div>
-  <div *ngIf="results.data.length > 0">
-
-
-        <p *ngFor="let result of results.data">
-          Volume {{ result._id }}
-          <br>
-          <a [routerLink]="['/volume', result._id, result.letters.xml_id]" routerLinkActive="router-link-active"> Letter </a>
-          <br>
-          Date Published: {{ result.letters.docDate }}
-          <br>
-          Author: {{ result.letters.docAuthor }}
-        </p>
-
-  </div>
+  <ng-container *ngIf="results.data.length == 0">
+    <div class="row justify-content-start pt-2">
+      <span>No results found.</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="results.data.length > 0">
+    <div class="row justify-content-between pt-2">
+      <span>Displaying {{ start }} - {{ end }} of {{ results.data.length }} results.</span>
+      <ngb-pagination
+        [collectionSize]="results.data.length"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [(page)]="page"
+        (pageChange)="setPage($event)"
+      ></ngb-pagination>
+    </div>
+    <div class="col-12 pt-2 result" *ngFor="let result of results.data | slice:start-1:end">
+      <span>Volume {{ result._id }}</span>
+      <br>
+      <span>Letter:</span><a routerLink="volume/{{result._id}}/{{result.letters.xml_id}}" routerLinkActive="active">  {{ result.letters.xml_id }}</a>
+      <br>
+      <span>Date:</span> {{ result.letters.docDate | date: 'longDate'}}
+    </div>
+    <div class="row justify-content-center pt-2">
+      <ngb-pagination
+        [collectionSize]="results.data.length"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [(page)]="page"
+        (pageChange)="setPage($event)"
+      ></ngb-pagination>
+    </div>
+  </ng-container>
 </div>
 <ng-template #loading>
   <div class="container-fluid">
     <div class="row align-items-center justify-content-center">
-      <img class="loading" src="../../assets/loading.gif">
+      <img class="loading" src="../../assets/loading.gif" />
     </div>
   </div>
 </ng-template>
