@@ -1,15 +1,22 @@
+
+
 <div *ngIf="searchResults | async as results; else loading">
   <div *ngIf="results.data.length == 0">
     <p>No results</p>
   </div>
   <div *ngIf="results.data.length > 0">
-    <p *ngFor="let result of results.data">
-      Volume {{ result._id }}
-      <br>
-      xml_id: {{ result.letters.xml_id }}
-      <br>
-      docDate: {{ result.letters.docDate }}
-    </p>
+
+
+        <p *ngFor="let result of results.data">
+          Volume {{ result._id }}
+          <br>
+          <a [routerLink]="['/volume', result._id, result.letters.xml_id]" routerLinkActive="router-link-active"> Letter </a>
+          <br>
+          Date Published: {{ result.letters.docDate }}
+          <br>
+          Author: {{ result.letters.docAuthor }}
+        </p>
+
   </div>
 </div>
 <ng-template #loading>
