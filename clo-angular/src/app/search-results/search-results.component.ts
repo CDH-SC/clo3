@@ -16,6 +16,12 @@ export class SearchResultsComponent implements OnInit {
   // searchResults: SearchResult;
   searchResults: any;
 
+  page = 1;
+  pageSize = 10;
+
+  start = 1;
+  end = 10;
+
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -32,9 +38,15 @@ export class SearchResultsComponent implements OnInit {
     this.searchResults = this.searchService.search(this.searchTerm);
 
     // Uncomment for debug purposes
-    this.searchService.search(this.searchTerm).subscribe(res => {
-      console.log(res);
-    });
+    // this.searchService.search(this.searchTerm).subscribe(res => {
+    //   console.log(res);
+    // });
+  }
+
+  private setPage(page: number) {
+    this.page = page;
+    this.end = this.page * this.pageSize;
+    this.start = this.end - (this.pageSize - 1);
   }
 
 }

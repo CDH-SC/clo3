@@ -1,5 +1,39 @@
+#content {
+  margin: auto;
+  padding-top: 25px;
+  width: 80%;
+  max-width: 1000px;
+}
+
 .loading {
   width: 200px;
   height: 200px;
   margin: 25px;
+}
+
+.result {
+  border-bottom: 1px solid black;
+}
+
+span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/deep/.pagination .page-item .page-link {
+  border-radius: 0 !important;
+}
+
+/deep/ .page-item.active .page-link {
+  background-color: #21596f !important;
+  border-color: #21596f !important;
+  color: white !important;
+}
+
+/deep/ .pagination .page-link {
+  /* border-color: #21596f !important;
+  /* border-top-style: none !important;
+  border-bottom-style: none !important; */
+  background-color: #f5ebdc !important;
+  color: black !important;
 }
