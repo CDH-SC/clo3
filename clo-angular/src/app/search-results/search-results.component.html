@@ -43,20 +43,28 @@
         <span>Date: </span> {{ result.letters.docDate | date: "longDate" }}
       </div> -->
       <div class="col-8 p-0">
-        <table>
+        <table cellpadding = "10">
           <tr>
-            <td id="volResult">
+            <td id="volResult" white-space: nowrap>
               <span>Volume: </span> {{ result._id }}
             </td>
-            <td id="letterResult">
+            <td id="letterResult" white-space: nowrap>
               <span>Letter: </span>
               <a
                 routerLink="/volume/{{ result._id }}/{{ result.letters.xml_id }}"
                 routerLinkActive="active"
               >{{ result.letters.xml_id }}</a>
             </td>
-            <td id="dateResult">
+            <td id="dateResult" white-space: nowrap>
               <span>Date: </span> {{ result.letters.docDate | date: "longDate" }}
+            </td>
+          </tr>
+          <tr>
+            <td id = "letterAuthor" white-space: nowrap>
+              <span>Sender: </span> {{ result.letters.docAuthor.toUpperCase() }}
+            </td>
+            <td id = "letterRecipient">
+              <span>Recipient: </span> {{ result.letters.recipient }}
             </td>
           </tr>
         </table>

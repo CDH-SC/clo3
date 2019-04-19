@@ -35,7 +35,8 @@ exports.searchVolumes = async function(search) {
                     "letters.xml_id": 1,
                     "letters.docAuthor": 1,
                     "letters.docDate": 1,
-                    "letters.docBody": 1
+                    "letters.docBody": 1,
+                    "letters.recipient": 1
                 }
             },
             {
