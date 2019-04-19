@@ -15,6 +15,11 @@
   border-bottom: 1px solid black;
 }
 
+#resultText span {
+  font-size: 16px !important;
+  margin-right: 10px;
+}
+
 .viewer-box {
   display: flex;
   flex-direction: column;
