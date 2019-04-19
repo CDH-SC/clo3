@@ -57,3 +57,19 @@ span {
   background-color: #f5ebdc !important;
   color: black !important;
 }
+
+table {
+  width: 100%;
+}
+
+#volResult {
+  width: 20%;
+}
+
+#letterResult {
+  width: 45%;
+}
+
+#dateResult {
+  width: 35%;
+}
