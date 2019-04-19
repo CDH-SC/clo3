@@ -33,6 +33,7 @@
     "ngtweet": "^1.0.0",
     "ngx-image-zoom": "^0.3.3",
     "ngx-lightbox": "^1.1.0",
+    "ngx-pagination": "^3.2.1",
     "ngx-twitter-timeline": "^0.1.4",
     "rxjs": "^6.3.2",
     "rxjs-compat": "6.3.2",
