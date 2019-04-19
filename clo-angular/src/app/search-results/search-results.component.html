@@ -26,7 +26,7 @@
     <div class="col-12 pt-2 result" *ngFor="let result of results.data | slice:start-1:end">
       <span>Volume {{ result._id }}</span>
       <br>
-      <span>Letter:</span><a routerLink="volume/{{result._id}}/{{result.letters.xml_id}}" routerLinkActive="active">  {{ result.letters.xml_id }}</a>
+      <span>Letter:</span><a routerLink="/volume/{{result._id}}/{{result.letters.xml_id}}" routerLinkActive="active">  {{ result.letters.xml_id }}</a>
       <br>
       <span>Date:</span> {{ result.letters.docDate | date: 'longDate'}}
     </div>
