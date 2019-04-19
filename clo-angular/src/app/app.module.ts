@@ -112,6 +112,6 @@ const appRoutes: Routes = [
     VolumeService,
     AlbumService
   ],
-  bootstrap: [AppComponent, SearchResultsComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

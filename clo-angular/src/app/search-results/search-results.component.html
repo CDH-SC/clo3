@@ -29,6 +29,29 @@
       <span>Letter:</span><a routerLink="volume/{{result._id}}/{{result.letters.xml_id}}" routerLinkActive="active">  {{ result.letters.xml_id }}</a>
       <br>
       <span>Date:</span> {{ result.letters.docDate | date: 'longDate'}}
+
+          <!-- Collapsible transciption and manuscript -->
+          <ngb-accordion #acc="ngbAccordion">
+            <ngb-panel>
+              <!-- Titlebar -->
+              <ng-template ngbPanelTitle>
+                <span><b>View Notebook Page</b></span>
+                <span style="float:right">&#10133;</span>
+              </ng-template>
+
+              <!-- Collapsed content -->
+              <ng-template ngbPanelContent>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="viewer-box" innerHTML = "{{result.letters.docBody}}">
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ngb-panel>
+          </ngb-accordion>
+
+
     </div>
     <div class="row justify-content-center pt-2">
       <ngb-pagination
