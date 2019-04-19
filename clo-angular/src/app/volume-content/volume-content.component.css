@@ -1,9 +1,10 @@
 #content {
   margin: auto;
+  padding-top: 25px;
   width: 100%;
   max-width: 1200px;
 }
-
+/*
 #viewer {
   margin: 0px 40px;
   width: 35%;
@@ -50,4 +51,4 @@
 
 #letters {
   width: 100%;
-}
+} */

@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { SearchResult } from '../_shared/models/searchResult';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+
 import { SearchService } from '../_shared/_services/search.service';
+
+import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-results',
@@ -14,7 +15,6 @@ import { SearchService } from '../_shared/_services/search.service';
 export class SearchResultsComponent implements OnInit {
 
   searchTerm: string;
-  // searchResults: SearchResult;
   searchResults: any;
 
   page = 1;
@@ -22,6 +22,8 @@ export class SearchResultsComponent implements OnInit {
 
   start = 1;
   end = 10;
+
+  faPlusSquare = faPlusSquare;
 
   constructor(
     private http: HttpClient,
@@ -37,11 +39,6 @@ export class SearchResultsComponent implements OnInit {
     // Pass search term through search API and subscribe
     // to results
     this.searchResults = this.searchService.search(this.searchTerm);
-
-    // Uncomment for debug purposes
-    // this.searchService.search(this.searchTerm).subscribe(res => {
-    //   console.log(res);
-    // });
   }
 
   private setPage(page: number) {

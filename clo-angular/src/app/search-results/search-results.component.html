@@ -13,7 +13,10 @@
   </ng-container>
   <ng-container *ngIf="results.data.length > 0">
     <div class="row justify-content-between pt-2">
-      <span>Displaying {{ start }} - {{ end }} of {{ results.data.length }} results.</span>
+      <span
+        >Displaying {{ start }} - {{ end }} of
+        {{ results.data.length }} results.</span
+      >
       <ngb-pagination
         [collectionSize]="results.data.length"
         [pageSize]="pageSize"
@@ -23,35 +26,44 @@
         (pageChange)="setPage($event)"
       ></ngb-pagination>
     </div>
-    <div class="col-12 pt-2 result" *ngFor="let result of results.data | slice:start-1:end">
-      <span>Volume {{ result._id }}</span>
-      <br>
-      <span>Letter:</span><a routerLink="/volume/{{result._id}}/{{result.letters.xml_id}}" routerLinkActive="active">  {{ result.letters.xml_id }}</a>
-      <br>
-      <span>Date:</span> {{ result.letters.docDate | date: 'longDate'}}
-
-          <!-- Collapsible transciption and manuscript -->
-          <ngb-accordion #acc="ngbAccordion">
-            <ngb-panel>
-              <!-- Titlebar -->
-              <ng-template ngbPanelTitle>
-                <span><b>View Notebook Page</b></span>
-                <span style="float:right">&#10133;</span>
-              </ng-template>
-
-              <!-- Collapsed content -->
-              <ng-template ngbPanelContent>
-                <div class="row">
-                  <div class="col-12">
-                    <div class="viewer-box" innerHTML = "{{result.letters.docBody}}">
-                    </div>
-                  </div>
-                </div>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
-
-
+    <div
+      class="row justify-content-between align-items-center p-2 result"
+      *ngFor="let result of (results.data | slice: start - 1:end)"
+    >
+      <div class="col-4">
+        <span>Volume {{ result._id }}</span>
+        <br />
+        <span>Letter: </span>
+        <a
+          routerLink="/volume/{{ result._id }}/{{ result.letters.xml_id }}"
+          routerLinkActive="active"
+          >{{ result.letters.xml_id }}</a
+        >
+        <br />
+        <span>Date: </span> {{ result.letters.docDate | date: "longDate" }}
+      </div>
+      <div class="col-4" id="resultText">
+        <a
+          data-toggle="collapse"
+          href="#{{ result.letters.xml_id }}"
+          aria-expanded="false"
+          [attr.aria-controls]="result.letters.xml_id"
+          style="text-decoration: none;"
+        >
+          <span>View Letter Content</span>
+          <span style="color: #5c8b57 !important;">
+            <fa-icon [icon]="faPlusSquare"></fa-icon>
+          </span>
+        </a>
+      </div>
+      <div class="col-12">
+        <div class="collapse" id="{{ result.letters.xml_id }}">
+          <div
+            class="viewer-box"
+            innerHtml="{{ result.letters.docBody }}"
+          ></div>
+        </div>
+      </div>
     </div>
     <div class="row justify-content-center pt-2">
       <ngb-pagination
