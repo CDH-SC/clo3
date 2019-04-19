@@ -15,6 +15,21 @@
   border-bottom: 1px solid black;
 }
 
+.viewer-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 700px;
+  overflow: auto;
+  font-size: 16px;
+  padding: 25px;
+  align-items: start;
+  justify-content: start;
+  border: 1px solid #21596f;
+  border-radius: 5px;
+  background: #f5ebdc;
+}
+
 span {
   font-size: 14px;
   font-weight: bold;
