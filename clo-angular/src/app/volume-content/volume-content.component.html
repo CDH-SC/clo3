@@ -1,33 +1,81 @@
-<div class="container-fluid" id="content">
-  <div class="row flex-column-reverse flex-xl-row">
-    <div class="col-12 col-xl-9">
-      <div class="row justify-content-around">
-        <app-volume-toc
-          *ngIf="letters"
-          [volId]="volumeId"
-          [prevId]="prevVolumeId"
-          [nextId]="nextVolumeId"
-          [volumeDates]="volumeDates"
-          [keys]="volumeKeys"
-          [letters]="letters"
-          (fronticeClicked)="goToFront($event)"
-          (idChanged)="goToVolume($event)"
-          (contentChanged)="setPage($event)"
-          (letterChanged)="getLetter($event)"
-        ></app-volume-toc>
-        <app-volume-viewer
-          *ngIf="volume"
-          [viewContent]="viewContent"
-          [isFrontice]="isFrontice"
-          [sourceNote]="sourceNote"
-          [footnotes]="footnotes"
-        ></app-volume-viewer>
+<ng-container *ngIf="hasManuscript; else normalContainer">
+  <div class="container-fluid" id="manuscriptContent">
+    <div class="row flex-column-reverse flex-xl-row">
+      <div class="col-12 col-xl-10">
+        <div class="row justify-content-around">
+          <app-volume-toc
+            *ngIf="letters"
+            [volId]="volumeId"
+            [prevId]="prevVolumeId"
+            [nextId]="nextVolumeId"
+            [volumeDates]="volumeDates"
+            [keys]="volumeKeys"
+            [letters]="letters"
+            (fronticeClicked)="goToFront($event)"
+            (idChanged)="goToVolume($event)"
+            (contentChanged)="setPage($event)"
+            (letterChanged)="getLetter($event)"
+          ></app-volume-toc>
+          <div id="manuscriptViewer">
+            <ul>
+              <li *ngFor="let url of manuscriptUrl">
+                <img id="manuscriptImage" src="{{ url }}">
+              </li>
+            </ul>
+          </div>
+          <app-volume-viewer
+            *ngIf="volume"
+            [viewContent]="viewContent"
+            [isFrontice]="isFrontice"
+            [sourceNote]="sourceNote"
+            [footnotes]="footnotes"
+          ></app-volume-viewer>
+        </div>
       </div>
-    </div>
-    <div class="col-12 col-xl-3">
-      <div class="row justify-content-center m-auto">
-        <app-search></app-search>
+      <div class="col-12 col-xl-2">
+        <div class="row justify-content-center m-auto">
+          <app-search></app-search>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #normalContainer>
+  <div class="container-fluid" id="content">
+    <div class="row flex-column-reverse flex-xl-row">
+      <div class="col-12 col-xl-10">
+        <div class="row justify-content-around">
+          <app-volume-toc
+            *ngIf="letters"
+            [volId]="volumeId"
+            [prevId]="prevVolumeId"
+            [nextId]="nextVolumeId"
+            [volumeDates]="volumeDates"
+            [keys]="volumeKeys"
+            [letters]="letters"
+            (fronticeClicked)="goToFront($event)"
+            (idChanged)="goToVolume($event)"
+            (contentChanged)="setPage($event)"
+            (letterChanged)="getLetter($event)"
+          ></app-volume-toc>
+          <app-volume-viewer
+            *ngIf="volume"
+            [viewContent]="viewContent"
+            [isFrontice]="isFrontice"
+            [sourceNote]="sourceNote"
+            [footnotes]="footnotes"
+          ></app-volume-viewer>
+        </div>
+      </div>
+      <div class="col-12 col-xl-2">
+        <div class="row justify-content-center m-auto">
+          <app-search></app-search>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+

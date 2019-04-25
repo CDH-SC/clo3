@@ -4,6 +4,34 @@
   width: 100%;
   max-width: 1200px;
 }
+
+#manuscriptContent {
+  margin: auto;
+  padding-top: 25px;
+  width: 100%;
+}
+
+#manuscriptViewer {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  height: 750px;
+  border: 1px solid #21596f;
+  border-radius: 10px;
+  background: #f5ecdc;
+  font-size: 16px;
+  color: #21596f;
+  overflow: auto;
+}
+
+#manuscriptImage {
+  width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
 /*
 #viewer {
   margin: 0px 40px;
