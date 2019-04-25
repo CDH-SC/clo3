@@ -54,26 +54,14 @@ export class PhotoViewerComponent implements OnInit, AfterViewInit {
         navbar: false,
         title: false,
         toolbar: false,
+        ready() {
+          viewer.show(true);
+        },
         viewed() {
           viewer.zoomTo(0.5);
         }
       });
     }
-
-    this.zoomedImage.nativeElement.addEventListener('click', () => {
-      const elem = document.getElementsByClassName('viewer-button')[0];
-      elem.addEventListener('mouseover', () => {
-        console.log('it worked!');
-      });
-
-      const event = new MouseEvent('mouseover', {
-        'view': window,
-        'bubbles': true,
-        'cancelable': true
-      });
-
-      elem.dispatchEvent(event);
-    });
   }
 
   goToImage(id: string) {
