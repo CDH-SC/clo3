@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlbumService } from '../_shared/_services/album.service';
 import Album from '../_shared/models/album';
@@ -12,7 +12,8 @@ import Viewer from 'viewerjs';
   templateUrl: './photo-viewer.component.html',
   styleUrls: ['./photo-viewer.component.css']
 })
-export class PhotoViewerComponent implements OnInit {
+export class PhotoViewerComponent implements OnInit, AfterViewInit {
+  @ViewChild('image') zoomedImage: ElementRef;
 
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
@@ -45,16 +46,14 @@ export class PhotoViewerComponent implements OnInit {
       this.album = data['data'];
       this.goToImage(this.imageId);
     });
+  }
 
-    const image = document.getElementById('image');
-    if (image) {
-      const viewer = new Viewer(image, {
+  ngAfterViewInit() {
+    if (this.zoomedImage) {
+      const viewer = new Viewer(this.zoomedImage.nativeElement, {
         navbar: false,
         title: false,
         toolbar: false,
-        ready() {
-          console.log('ready');
-        },
         viewed() {
           viewer.zoomTo(0.5);
         }
