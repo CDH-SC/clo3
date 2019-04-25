@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, AfterViewInit, OnChanges, AfterViewChecked } from '@angular/core';
+import { Component, Input, OnInit, AfterViewInit, OnChanges, AfterViewChecked, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-volume-viewer',
@@ -7,9 +7,17 @@ import { Component, Input, OnInit, AfterViewInit, OnChanges, AfterViewChecked } 
 })
 export class VolumeViewerComponent implements AfterViewChecked {
   @Input() viewContent;
+  @Input() volId;
+  @Input() prevLetter;
+  @Input() nextLetter;
   @Input() isFrontice;
   @Input() sourceNote;
   @Input() footnotes;
+
+  @Output() letterChanged = new EventEmitter<string>();
+
+  prevLetterUrl: string;
+  nextLetterUrl: string;
 
   footnoteReferences: any;
 
@@ -28,6 +36,12 @@ export class VolumeViewerComponent implements AfterViewChecked {
         };
       }
     } catch {}
+    this.prevLetterUrl = '/volume/' + this.volId + '/' + this.prevLetter;
+    this.nextLetterUrl = '/volume/' + this.volId + '/' + this.nextLetter;
+  }
+
+  letterClicked(id: string) {
+    this.letterChanged.emit(id);
   }
 
 }

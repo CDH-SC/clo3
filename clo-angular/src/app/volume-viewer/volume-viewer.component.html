@@ -1,4 +1,8 @@
 <div class="viewerContainer" *ngIf="viewContent">
+  <div class="letter-navigation" *ngIf="prevLetter || nextLetter">
+    <a (click)="letterClicked(prevLetter)" *ngIf="prevLetter">< PREVIOUS</a>
+    <a (click)="letterClicked(nextLetter)" *ngIf="nextLetter">NEXT ></a>
+  </div>
   <div
     class="fronticeViewer"
     [innerHtml]="viewContent"

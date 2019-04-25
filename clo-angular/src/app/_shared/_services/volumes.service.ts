@@ -66,6 +66,17 @@ export class VolumeService {
       dateString = date[2] + ' ' + month + ' ' + year;
       letters[i].docDate = dateString;
 
+      if (i > 0 && i < letters.length - 1) {
+        letters[i].prevLetter = letters[i - 1].xml_id;
+        letters[i].nextLetter = letters[i + 1].xml_id;
+      } else if (i === 0) {
+        letters[i].prevLetter = null;
+        letters[i].nextLetter = letters[i + 1].xml_id;
+      } else if (i === letters.length - 1) {
+        letters[i].prevLetter = letters[i - 1].xml_id;
+        letters[i].nextLetter = null;
+      }
+
       if (reformattedLetters[month + ' ' + year] == null) {
         reformattedLetters[month + ' ' + year] = [];
         reformattedLetters[month + ' ' + year].push(letters[i]);
