@@ -1,4 +1,4 @@
-<div class="container-fluid" *ngIf="album" style="padding-top: 25px;">
+<div class="container-fluid" style="padding-top: 25px;">
   <div class="row justify-content-start m-auto w-75">
     <h4 class="orange-border-bottom" *ngIf="imageMetadata">
       {{ imageMetadata.title }}
@@ -7,7 +7,7 @@
   <div class="row justify-content-center">
     <div class="imageViewer">
       <div class="image">
-        <img id="image" src="{{ imageUrl }}" />
+        <img src="{{ imageUrl }}" #image/>
       </div>
       <div class="actionBar">
         <button type="button" class="actionButton" (click)="goToStart()">

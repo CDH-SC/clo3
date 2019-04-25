@@ -37,6 +37,9 @@ export class VolumeContentComponent implements OnInit {
   hasManuscript = false;
   manuscriptUrl: Object[] = [];
 
+  prevLetterId: string = null;
+  nextLetterId: string = null;
+
   constructor(
     private volumeService: VolumeService,
     private route: ActivatedRoute,
@@ -57,6 +60,9 @@ export class VolumeContentComponent implements OnInit {
         // Set the previous and next volume ids
         this.prevVolumeId = this.setVolumeId(this.volumeId, 'prev');
         this.nextVolumeId = this.setVolumeId(this.volumeId, 'next');
+        // Set the previous and next letter ids to null
+        this.prevLetterId = null;
+        this.nextLetterId = null;
         // Set the letters
         this.letters = this.volumeService.sortLetters(this.volume['letters']);
         // Set the viewContent to be null initially
@@ -94,6 +100,9 @@ export class VolumeContentComponent implements OnInit {
   private setPage(key: string) {
     this.sourceNote = null;
     this.footnotes = [];
+    // Set next and prev letter ids to null
+    this.prevLetterId = null;
+    this.nextLetterId = null;
     // Update url to reflect current section
     this.router.navigateByUrl('/volume/' + this.volumeId + '/' + key);
     this.isFrontice = false;
@@ -126,6 +135,9 @@ export class VolumeContentComponent implements OnInit {
       // Setting next and previous volume ids for navigation between volumes
       this.prevVolumeId = this.setVolumeId(this.volumeId, 'prev');
       this.nextVolumeId = this.setVolumeId(this.volumeId, 'next');
+      // Setting next and previous letter ids to null
+      this.prevLetterId = null;
+      this.nextLetterId = null;
       // Get frontice piece object
       this.isFrontice = true;
       try {
@@ -155,6 +167,15 @@ export class VolumeContentComponent implements OnInit {
     this.viewContent = null;
     this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
       const letter = data['data']['letters'][0];
+      this.objectKeys(this.letters).forEach((key) => {
+        for (const v in this.letters[key]) {
+          if (letter.xml_id === this.letters[key][v].xml_id) {
+            this.prevLetterId = this.letters[key][v].prevLetter;
+            this.nextLetterId = this.letters[key][v].nextLetter;
+            break;
+          }
+        }
+      });
       this.isFrontice = false;
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
       this.sourceNote = this.sanitizer.bypassSecurityTrustHtml(letter.sourceNote);

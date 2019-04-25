@@ -26,9 +26,13 @@
           <app-volume-viewer
             *ngIf="volume"
             [viewContent]="viewContent"
+            [volId]="volumeId"
+            [prevLetter]="prevLetterId"
+            [nextLetter]="nextLetterId"
             [isFrontice]="isFrontice"
             [sourceNote]="sourceNote"
             [footnotes]="footnotes"
+            (letterChanged)="getLetter($event)"
           ></app-volume-viewer>
         </div>
       </div>
@@ -62,9 +66,13 @@
           <app-volume-viewer
             *ngIf="volume"
             [viewContent]="viewContent"
+            [volId]="volumeId"
+            [prevLetter]="prevLetterId"
+            [nextLetter]="nextLetterId"
             [isFrontice]="isFrontice"
             [sourceNote]="sourceNote"
             [footnotes]="footnotes"
+            (letterChanged)="getLetter($event)"
           ></app-volume-viewer>
         </div>
       </div>
