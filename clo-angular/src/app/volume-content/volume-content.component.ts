@@ -90,7 +90,7 @@ export class VolumeContentComponent implements OnInit {
     const fronticeImage = fronticeObject['imageUrl'];
     const fronticeCaption = fronticeObject['imageCaption'];
     const fronticeHtml = '\
-    <img src="assets/' + fronticeImage + '" style="max-width: 100%; max-height: 500px;">\n\
+    <img src="assets' + fronticeImage + '" style="max-width: 100%; max-height: 500px;">\n\
     <br>\n\
     <br>\n\
     <p style="margin: 0;">' + fronticeCaption + '</p>\n';
