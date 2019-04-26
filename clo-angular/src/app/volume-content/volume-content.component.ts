@@ -200,6 +200,9 @@ export class VolumeContentComponent implements OnInit {
   goToFront(clicked: boolean) {
     this.sourceNote = null;
     this.footnotes = [];
+    // Set next and previous letter ids to null
+    this.prevLetterId = null;
+    this.nextLetterId = null;
     // Update the url to show we are at the frontice piece of the volume
     if (clicked) {
       this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
