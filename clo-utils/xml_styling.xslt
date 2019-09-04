@@ -103,7 +103,12 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="salute">
+  <xsl:template match="p/salute">
+    <span>
+      <xsl:apply-templates/>
+    </span><br/><br/>
+  </xsl:template>
+  <xsl:template match="docBody/salute">
     <p>
       <xsl:apply-templates/>
     </p>
@@ -111,7 +116,7 @@
 
   <xsl:template match="p">
     <p>
-      <xsl:apply-templates select="@* | node()"/>
+      <xsl:apply-templates/>
     </p>
   </xsl:template>
 
@@ -231,6 +236,7 @@
         <xsl:variable name="odnblink">
           <xsl:value-of select='substring(@target, 11)'/>
         </xsl:variable>
+
         <a href="{$odnblink}" target="_blank"><xsl:apply-templates/></a>
       </xsl:when>
 
@@ -243,7 +249,8 @@
         <xsl:variable name="vol">
           <xsl:value-of select='substring(@target, 8,3)'/>
         </xsl:variable>
-        <a href="{concat('../vol', $vol, '#', $id)}" target='_blank'><xsl:apply-templates/></a>
+
+        <a href="{concat('../volume', '/', $vol, $id)}" target='_blank'><xsl:apply-templates/></a>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text></xsl:text>
