@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumService } from '../_shared/_services/album.service';
 import Album from '../_shared/models/album';
 
@@ -34,6 +34,7 @@ export class PhotoViewerComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private albumService: AlbumService
   ) { }
 
@@ -68,6 +69,7 @@ export class PhotoViewerComponent implements OnInit, AfterViewInit {
     this.imageId = id;
     this.image = this.album.images[this.imageId];
     this.imageUrl = this.album.imagesFolder + this.image.imageUrl;
+    this.router.navigateByUrl('/photo-viewer/' + this.albumId + '/' + this.imageId);
     this.prevId = this.setPrevId(this.imageId);
     this.nextId = this.setNextId(this.imageId);
     this.imageMetadata = this.image.metadata;
