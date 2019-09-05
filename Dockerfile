@@ -1,39 +1,37 @@
 ### STAGE 1: Build ###
 # Label this stage as 'builder'
 FROM node:latest
-ENV a /clo-angular
-ENV e /clo-api
 ENV PORT 80
 
-COPY .${a}/package.json ./
+COPY ./clo-angular/package.json ./
 
 # Install node_modules
-RUN npm i -dd && mkdir ${a} && cp -R ./node_modules ${a}
+RUN npm i -dd && mkdir /clo-angular && cp -R ./node_modules /clo-angular
 RUN npm install -g nodemon
 
 RUN rm /package.json
 
-WORKDIR ${a}
+WORKDIR /clo-angular
 
 # Bring in the source code
-COPY .${a} .
+COPY ./clo-angular .
 RUN $(npm bin)/ng --version
 RUN $(npm bin)/ng build --prod
-RUN mv ${a}/dist/clo/* ${a}/dist/
+RUN mv /clo-angular/dist/clo/* /clo-angular/dist/
 RUN ls -lah
 
 WORKDIR /
 ### STAGE 2: Server ###
 
-COPY .${e}/package.json .${e}/package-lock.json ./
+COPY ./clo-api/package.json ./clo-api/package-lock.json ./
 
 # Install node_modules
-RUN npm i -dd && mkdir ${e} && cp -R ./node_modules ${e} && cp package.json ${e}
+RUN npm i -dd && mkdir /clo-api && cp -R ./node_modules /clo-api && cp package.json /clo-api
 
-WORKDIR ${e}
+WORKDIR /clo-api
 
 # Server source code
-COPY .${e} .
-RUN echo "$DB_HOST" > ${e}/.env
+COPY ./clo-api .
+RUN echo "$DB_HOST" > /clo-api/.env
 
 CMD ["npm","start"]
