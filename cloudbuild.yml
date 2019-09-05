@@ -1,17 +1,9 @@
 steps:
-    # build the project
-    - name: 'docker/compose:1.24.1'
-      args: ['build']
-      # the angular container takes a really long time to build
-      timeout: "1200s"
+    # build and run the project on clodevelopment host
+    - name: 'gcr.io/cloud-builders/gcloud'
+      args: ['compute', 'ssh', 'source-repo-service-account@clodevelopment',
+             '--zone', 'us-east1-b',
+             '--command',
+             'cd /mnt/disks/clostorage/clo-current && git pull && docker-compose build && docker-compose down && docker-compose up -d']
 
-    # take down the existing version
-    - name: 'docker/compose:1.24.1'
-      args: ['down']
-
-    # bring up the new version
-    - name: 'docker/compose:1.24.1'
-      args: ['up']
-
-# global timeout needs to be >= timeout of any specific step
 timeout: "1500s"
