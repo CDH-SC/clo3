@@ -2,6 +2,8 @@ steps:
     # build the project
     - name: 'docker/compose:1.24.1'
       args: ['build']
+      # the angular container takes a really long time to build
+      timeout: "1200s"
 
     # take down the existing version
     - name: 'docker/compose:1.24.1'
