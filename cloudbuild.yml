@@ -12,3 +12,6 @@ steps:
     # bring up the new version
     - name: 'docker/compose:1.24.1'
       args: ['up']
+
+# global timeout needs to be >= timeout of any specific step
+timeout: "1500s"
