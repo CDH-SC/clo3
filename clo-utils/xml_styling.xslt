@@ -1,5 +1,3 @@
-
-
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:template match="bold">
@@ -103,7 +101,12 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="salute">
+  <xsl:template match="p/salute">
+    <span>
+      <xsl:apply-templates/>
+    </span><br/><br/>
+  </xsl:template>
+  <xsl:template match="docBody/salute">
     <p>
       <xsl:apply-templates/>
     </p>
@@ -111,7 +114,7 @@
 
   <xsl:template match="p">
     <p>
-      <xsl:apply-templates select="@* | node()"/>
+      <xsl:apply-templates/>
     </p>
   </xsl:template>
 
@@ -218,22 +221,25 @@
     </xsl:if>
   </xsl:template>
 
+<!-- Handles links -->
   <xsl:template match="ref">
 
+    <!-- variable for testing type of link -->
     <xsl:variable name="testlink">
-      <xsl:value-of select='substring(@target, 11,1)'/>
+      <xsl:value-of select='substring(@target, 11,2)'/>
     </xsl:variable>
 
     <xsl:choose>
+      <!-- if link is for ODNB -->
+      <xsl:when test="$testlink = 'ht'">
 
-      <xsl:when test="$testlink = 'h'">
-
-        <xsl:variable name="odnblink">
+        <xsl:variable name="odnb_link">
           <xsl:value-of select='substring(@target, 11)'/>
         </xsl:variable>
-        <a href="{$odnblink}" target="_blank"><xsl:apply-templates/></a>
-      </xsl:when>
 
+        <a href="{$odnb_link}"><xsl:apply-templates/></a>
+      </xsl:when>
+      <!-- any other link -->
       <xsl:otherwise>
 
         <xsl:variable name="id">
@@ -243,7 +249,8 @@
         <xsl:variable name="vol">
           <xsl:value-of select='substring(@target, 8,3)'/>
         </xsl:variable>
-        <a href="{concat('../vol', $vol, '#', $id)}" target='_blank'><xsl:apply-templates/></a>
+
+        <a href="{concat('../volume', '/', $vol, $id)}"><xsl:apply-templates/></a>
       </xsl:otherwise>
     </xsl:choose>
     <xsl:text></xsl:text>

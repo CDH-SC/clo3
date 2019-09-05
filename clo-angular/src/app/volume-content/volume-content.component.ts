@@ -266,7 +266,7 @@ export class VolumeContentComponent implements OnInit {
               title: 'The Rival Brothers: Fragment of a Play by Jane Baillie Welsh'
             });
             break;
-          case 'biographicalNote':
+          case 'biographicalNotes':
             this.volumeKeys.push({
               key: k,
               title: 'Biographical Notes'
