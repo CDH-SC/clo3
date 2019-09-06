@@ -43,7 +43,7 @@ Live Version: Under Construction
     * MongoDB default port number: 27017
         * ```$ mongorestore <path to backup>```
     * Example:
-        * ```$ mongorestore clo/clo-database/dump```
+        * ```$ mongorestore clo-database/current```
     * Troubleshooting assistance can be found [here](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)
 
 * Create the environment variable
