@@ -87,7 +87,7 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="signed">
+  <xsl:template match="closer">
     <p>
       <xsl:apply-templates/>
     </p>
@@ -98,15 +98,12 @@
   </xsl:template>
 
   <xsl:template match="docBody">
-    <xsl:apply-templates/>
+    <docBody>
+      <xsl:apply-templates/>
+    </docBody>
   </xsl:template>
 
-  <xsl:template match="p/salute">
-    <span>
-      <xsl:apply-templates/>
-    </span><br/><br/>
-  </xsl:template>
-  <xsl:template match="docBody/salute">
+  <xsl:template match="salute">
     <p>
       <xsl:apply-templates/>
     </p>

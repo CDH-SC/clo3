@@ -67,7 +67,7 @@ def upload_accounts(volumeID, accountsArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith(".xml"):
+        if filename.endswith("33-P5.xml"):
             print filename
             # get volume id from filename
             volumeID = ''.join(re.findall("\d{2}", filename))
@@ -468,7 +468,9 @@ def main():
                     headMatch = re.findall(
                         "<head>((?:.|\n)*?)</head>", letterContent, re.DOTALL)
                     if headMatch:
-                        head = headMatch[0]
+                        head = "<head>" + headMatch[0] + "</head>"
+                        x = etree.fromstring(head)
+                        head = str(xsltTransformer(x))
                     else:
                         head = ''
 
