@@ -417,6 +417,11 @@ def main():
             try:
                 # loop through each letter inside lettersMatch
                 for letterContent in lettersMatch:
+                    sourceDoc = etree.fromstring("<div3>" + letterContent + "</div3>")
+                    letterContent = str(xsltTransformer(sourceDoc))
+
+                    print (letterContent)
+
                     xml_id = re.findall(
                         "<bibl xml:id=\"(.*?)\">", letterContent)
 
@@ -468,9 +473,7 @@ def main():
                     headMatch = re.findall(
                         "<head>((?:.|\n)*?)</head>", letterContent, re.DOTALL)
                     if headMatch:
-                        head = "<head>" + headMatch[0] + "</head>"
-                        x = etree.fromstring(head)
-                        head = str(xsltTransformer(x))
+                        head = headMatch[0]
                     else:
                         head = ''
 
@@ -491,8 +494,8 @@ def main():
                     # Enclose each letter inside <docBody> tag for the lxml parsing
                     docBody = "<docBody>%s</docBody>" % docBody
 
-                    sourceDoc = etree.fromstring(docBody)
-                    docBody = str(xsltTransformer(sourceDoc))
+                    # sourceDoc = etree.fromstring(docBody)
+                    # docBody = str(xsltTransformer(sourceDoc))
                     # print docBody
 
                     # add all content to end of letters array
