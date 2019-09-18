@@ -47,4 +47,10 @@ export class SearchResultsComponent implements OnInit {
     this.start = this.end - (this.pageSize - 1);
   }
 
+  private highlight(content: string) {
+    return content.replace(new RegExp(this.searchTerm, "gi"), match => {
+      return '<span class="highlightText">' + match + '</span>';
+    });
+  }
+
 }
