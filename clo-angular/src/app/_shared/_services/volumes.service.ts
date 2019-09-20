@@ -54,6 +54,7 @@ export class VolumeService {
 
     let year = '';
     let month = '';
+    let day = 0;
     let dateString = '';
 
     const reformattedLetters = {};
@@ -62,8 +63,10 @@ export class VolumeService {
 
       year = date[0];
       month = this.getMonth(date[1]);
+      day = +date[2];
+    
       // Creating and setting our own unique dateString to the docDate of the current letter
-      dateString = date[2] + ' ' + month + ' ' + year;
+      dateString = day + ' ' + month + ' ' + year;
       letters[i].docDate = dateString;
 
       if (i > 0 && i < letters.length - 1) {
