@@ -71,6 +71,15 @@ def htmlHexConverter(m):
     return entity
 
 
+def sluglineGen(xml_id, head, humanDate, sender, recipient, firstPage, lastPage, volumeID):
+    # ex: TC TO FREDERIC CHAPMAN ; july 2d, 1866; TC FREDERIC CHAPMAN DOI: 10.1215/lt-18660702-TC-FC-01 CL 44:1-1.
+    # breakdown: <head><sender /> TO <addressee /></head> ; <docDate />; <sender /> <addressee /> DOI 10.1215/<xml:id /> <i>CL</i> <vol:id />:<firstpage />-<lastpage />.
+    # head = " ".join(head.split())
+    slugline = "%s TO %s ; %s; %s %s DOI 10.1215/%s <i>CL</i> %s:%s-%s." % (
+        sender, recipient, humanDate[0], sender, recipient, xml_id[0], volumeID, firstPage[0], lastPage[0])
+    return slugline
+
+
 def linkFix(m):
     ref = m.group(2)
     vol_id = m.group(1)
@@ -556,8 +565,15 @@ def main():
                     # with open("log.html", "w") as f:
                     #     print >> f, letterContent
 
-                    header = "<p><strong>" + sender + " TO " + recipient + \
-                        "</strong></p>"  # Create header for the top of each letter
+                    humanDate = re.findall("<docDate.*?>(.*?)</docDate>", letterContent, re.DOTALL)
+
+                    # create slugline for beginning of each letter
+                    slugline = sluglineGen(xml_id, head, humanDate, sender,
+                                           recipient, firstPage, lastPage, volumeID)
+
+                    # Create header for the top of each letter
+                    header = "<p><slugline>%s</slugline></p><p><strong>%s TO %s</strong></p>" % (
+                        slugline, sender, recipient)
                     # Combine the header with the rest of the letter
                     docBody = header + ''.join(docBody)
                     # docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
@@ -581,6 +597,7 @@ def main():
                         "docBody": docBody,
                         "head": head,
                         "footnotes": footnotes,
+                        "slugline": slugline,
                     })
 
                     # uploads the letters

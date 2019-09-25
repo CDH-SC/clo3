@@ -24,6 +24,10 @@
   width: 600px;
 }
 
+/deep/ slugline {
+  font-size: 12px;
+}
+
 .fronticeViewer {
   display: flex;
   flex-direction: column;
