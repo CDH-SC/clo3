@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2
 
 # Volume Upload Script
 #
@@ -6,7 +6,6 @@
 # Contact: alcamech@gmail.com, emperor.pickles@gmail.com
 
 import os
-import sys
 import re
 from pymongo import MongoClient
 from lxml import etree
@@ -57,6 +56,70 @@ def upload_accounts(volumeID, accountsArray):
         {"$set": {"accounts": accountsArray}}
     )
 
+
+def htmlHexConverter(m):
+    entity = m.group()
+    hexcode = ("&#x2018;", "&#x2019;", "&#x2026;", "&#x2013;", "&#xa3;",
+               "&#xbd;", "&#x2014;", "&#x201c;", "&#x201d;", "/", "&#xe0;",
+               "&#xf9;", "&#xe4;", "&#xb0;", "&#xf6;", "&#xe9;", "&#xfc;")
+    namecode = ("&lsquo;", "&rsquo;", "&hellip;", "&ndash;", "&pound;",
+                "&frac12;", "&mdash;", "&ldquo;", "&rdquo;", "&sol;", "&agrave;",
+                "&ugrave;", "&auml;", "&deg;", "&ouml;", "&eacute;", "&uuml;")
+    if entity in namecode:
+        i = namecode.index(entity)
+        entity = hexcode[i]
+    return entity
+
+
+def linkFix(m):
+    ref = m.group(2)
+    vol_id = m.group(1)
+    body = m.group(3)
+    prefix = "<a href=\"..volume/"
+    newLink = m.group(0)
+
+    if "biographical" in ref:
+        newLink = "%s%s/biographicalNotes\">%s</a>" % (prefix, vol_id, body)
+    elif re.match("pg-\\d+:\\d+?", ref):
+        newLink = "%s%s/biographicalNotes\">%s</a>" % (prefix, vol_id, body)
+    elif "introduction" in ref:
+        newLink = "%s%s/introduction\">%s</a>" % (prefix, vol_id, body)
+    elif re.match("pg-\\d+:\\D+?", ref):
+        newLink = "%s%s/introduction\">%s</a>" % (prefix, vol_id, body)
+    elif "jane" in ref:
+        newLink = "%s%s/janeJournal\">%s</a>" % (prefix, vol_id, body)
+    elif "geraldine" in ref:
+        newLink = "%s%s/geraldineJewsbury\">%s</a>" % (prefix, vol_id, body)
+    elif "in_memoriam" in ref:
+        newLink = "%s%s/inMemoriam\">%s</a>" % (prefix, vol_id, body)
+    elif "athanaeum" in ref:
+        newLink = "%s%s/athanaeumAdvertisements\">%s</a>" % (prefix, vol_id, body)
+    elif "ellen" in ref:
+        newLink = "%s%s/ellenTwisleton\">%s</a>" % (prefix, vol_id, body)
+    elif "acknowledgements" in ref:
+        newLink = "%s%s/acknowledgements\">%s</a>" % (prefix, vol_id, body)
+    elif "chronology" in ref:
+        newLink = "%s%s/chronology\">%s</a>" % (prefix, vol_id, body)
+    elif "comments" in ref:
+        newLink = "%s%s/auroraComments\">%s</a>" % (prefix, vol_id, body)
+    elif "simple-story" in ref:
+        newLink = "%s%s/simpleStory\">%s</a>" % (prefix, vol_id, body)
+    elif "references" in ref:
+        newLink = "%s%s/key_to_references\">%s</a>" % (prefix, vol_id, body)
+    elif "appendix" in ref:
+        newLink = "%s%s/appendix\">%s</a>" % (prefix, vol_id, body)
+    elif "letters-to" in ref:
+        newLink = "%s%s/letters-to-the-carlyles\">%s</a>" % (prefix, vol_id, body)
+    elif re.match("[\\d]{8}[^)]*?", ref):
+        newLink = re.sub(
+            "(<ref target=\"volume-\\d{2}\\/)([\\d]{8}[^)]*?)(?:\">|\\)\">)", "\\1lt-\\2\">", m.group(0))
+    elif "oxforddnb" in ref:
+        newLink = "<ref target=\"volume-%s/http://%s>%s</ref>" % (vol_id, ref, body)
+    else:
+        print "NO MATCH, link is as follows:\n" + m.group(0) + "\n"
+
+    return newLink
+
 ###################################
 # iterates through an xml file   #
 # and parses associated data for  #
@@ -67,7 +130,7 @@ def upload_accounts(volumeID, accountsArray):
 def main():
     # loop through xml files in directory
     for filename in os.listdir(directory):
-        if filename.endswith("33-P5.xml"):
+        if filename.endswith(".xml"):
             print filename
             # get volume id from filename
             volumeID = ''.join(re.findall("\d{2}", filename))
@@ -75,9 +138,28 @@ def main():
             file = open(os.path.join(directory, filename), "r")
             content = file.read()
             lettersArray = []
-            notesArray = []
             accountsArray = []
-            introFootnotesArray = []
+
+            # convert html entities to their hex codes
+            content = re.sub("&.{1,6}?;", htmlHexConverter, content)
+
+            # converts loose "&" into the hex entity for "&"
+            content = re.sub("&\\s|&(?=\\w?[^#])", "&#38;", content)
+
+            # uses linkFix function to replace old links with usable ones
+            content = re.sub(
+                "<ref target=\"volume-(\\d{2})\\/([^lt\"]{2}.*?)>(.*?)</ref>", linkFix, content)
+
+            # checks for any leftover broken links and logs them in "links.xml"
+            links = re.findall("<ref target=\"volume-\\d{2}\\/[^lt\"]{2}.*?>.*?</ref>", content)
+            with open("links.xml", "a") as f:
+                f.write("\n" + volumeID + "\n")
+                for link in links:
+                    f.write(link+"\n")
+                f.close()
+            with open("log.xml", "w") as f:
+                f.write(content)
+                f.close()
 
             #####
             # volume-wide sections here
@@ -85,7 +167,8 @@ def main():
             # get volume_dates
             volume_datesMatch = re.findall(
                 "<publicationStmt>(?:\n.*<p>.*)(?:\n.*)*?(?:.*?<date when=.*?>|\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:.*</p>|\n.*</p>)", content)
-            #volume_datesMatch = re.findall("<publicationStmt>(?:.|\n)*?(?:<p>.*?<date when=.*?>|<p>\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>|\n.*</p>)?", content)
+            # volume_datesMatch = re.findall(
+            # "<publicationStmt>(?:.|\n)*?(?:<p>.*?<date when=.*?>|<p>\n.*?<date when=.*?>)(.*?)</date>(?:.*\n?<date when=.*?>(.*\n.*|.*?)</date>)?(?:</p>|\n.*</p>)?", content)
             if volume_datesMatch:
                 # join date range together
                 volume_dates = " - ".join(volume_datesMatch[0])
@@ -200,24 +283,6 @@ def main():
                 sourceDoc = etree.fromstring(xmlString)
                 xmlString = xsltTransformer(sourceDoc)  # transform xml
                 biographicalNotes = str(xmlString)
-
-                # links to biographical notes
-                biographicalNotes = re.sub(
-                    "(<a href=\"../.*?\d+/).{6}biographical-notes(\".*?>)", "\\1biographicalNotes\\2", biographicalNotes, re.DOTALL)
-                biographicalNotes = re.sub(
-                    "(<a href=\"../volume/\d+/)pg-\d+:\d+?(\".*?>)", "\\1biographicalNotes\\2", biographicalNotes, re.DOTALL)
-
-                # links to introduction
-                biographicalNotes = re.sub(
-                    "(<a href=\"../volume/\d+/)pg-\d+:\D+?(\".*?>)", "\\1introduction\\2", biographicalNotes, re.DOTALL)
-                biographicalNotes = re.sub(
-                    "(<a href=\"../volume/\d+/).{6}introduction.*?(\".*?>)", "\\1introduction\\2", biographicalNotes, re.DOTALL)
-
-                # links to special cases
-                biographicalNotes = re.sub(
-                    "(<a href=\"../volume/\d+/).{6}jane.*?(\".*?>)", "\\1janeJournal\\2", biographicalNotes, re.DOTALL)
-                biographicalNotes = re.sub(
-                    "(<a href=\"../volume/\d+/).{6}geraldine.*?(\".*?>)", "\\1geraldineJewsbury\\2", biographicalNotes, re.DOTALL)
 
                 db.volumes.update_one({"_id": str(volumeID)}, {
                                       "$set": {"biographicalNotes": biographicalNotes}})
@@ -417,10 +482,8 @@ def main():
             try:
                 # loop through each letter inside lettersMatch
                 for letterContent in lettersMatch:
-                    sourceDoc = etree.fromstring("<div3>" + letterContent + "</div3>")
-                    letterContent = str(xsltTransformer(sourceDoc))
-
-                    print (letterContent)
+                    # print (letterContent)
+                    letterContent = "<div3>" + letterContent + "</div3>"
 
                     xml_id = re.findall(
                         "<bibl xml:id=\"(.*?)\">", letterContent)
@@ -482,20 +545,27 @@ def main():
                         "<note.*?>(.*?)</note>", letterContent)
                     if footnotesMatch:
                         # pull footnotes from docBody
-                        footnotes = footnotesMatch
+                        footnotes = []
+                        for footnote in footnotesMatch:
+                            footnote = "<div>%s</div>" % footnote
+                            sourceDoc = etree.fromstring(footnote)
+                            footnote = str(xsltTransformer(sourceDoc))
+                            footnotes.append(footnote)
                     else:
                         footnotes = ''
+                    # with open("log.html", "w") as f:
+                    #     print >> f, letterContent
 
                     header = "<p><strong>" + sender + " TO " + recipient + \
                         "</strong></p>"  # Create header for the top of each letter
                     # Combine the header with the rest of the letter
-                    docBody = header + docBody[0]
+                    docBody = header + ''.join(docBody)
                     # docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
                     # Enclose each letter inside <docBody> tag for the lxml parsing
                     docBody = "<docBody>%s</docBody>" % docBody
 
-                    # sourceDoc = etree.fromstring(docBody)
-                    # docBody = str(xsltTransformer(sourceDoc))
+                    sourceDoc = etree.fromstring(docBody)
+                    docBody = str(xsltTransformer(sourceDoc))
                     # print docBody
 
                     # add all content to end of letters array
@@ -531,7 +601,7 @@ def main():
 
                 print "Records successfully updated\n"
             except Exception as e:
-                print str(e)
+                print ("\033[31m {}\033[00m" .format(str(e))+"\n")
 
             # check if another letter section exists
             if len(letterSection) > 1:
@@ -654,7 +724,7 @@ def main():
 
                     print "Records successfully updated\n"
                 except Exception as e:
-                    print str(e)
+                    print ("\033[31m {}\033[00m" .format(str(e))+"\n")
 
 
 if __name__ == '__main__':

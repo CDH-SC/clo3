@@ -19,14 +19,14 @@
   </xsl:template>
 
   <xsl:template match="div3">
-    <p><xsl:value-of select="head"/>
+    <slugline><xsl:value-of select="head"/>
       <xsl:text>; </xsl:text>
 
       <xsl:apply-templates select="bibl"/>
       DOI: 10.1215/%s
       <i>CL</i>
       %s:%s-%s.
-    </p>
+    </slugline>
 
     <xsl:apply-templates select="head"/>
 
@@ -236,7 +236,7 @@
 
         <a href="{$odnb_link}"><xsl:apply-templates/></a>
       </xsl:when>
-      <!-- any other link -->
+      <!-- if link is for a letter -->
       <xsl:otherwise>
 
         <xsl:variable name="id">
@@ -320,5 +320,13 @@
   <xsl:template match="docAuthor"></xsl:template>
 
   <xsl:template match="idno"></xsl:template>
+
+  <xsl:template match="a">
+    <xsl:variable name="link">
+      <xsl:value-of select='substring(@href, 1)'/>
+    </xsl:variable>
+
+    <a href="{$link}"><xsl:apply-templates/></a>
+  </xsl:template>
 
 </xsl:stylesheet>
