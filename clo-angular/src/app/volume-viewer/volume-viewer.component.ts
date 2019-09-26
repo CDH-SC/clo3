@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, AfterViewInit, OnChanges, AfterViewChecked, Output, EventEmitter } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-volume-viewer',
@@ -21,9 +22,17 @@ export class VolumeViewerComponent implements AfterViewChecked {
 
   footnoteReferences: any;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngAfterViewChecked() {
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+          return;
+      }
+      if (document.getElementById('volumeViewer')) {
+          document.getElementById('volumeViewer').scrollTop = 0;
+      }
+    });
     const container = document.querySelector('.viewerContainer');
     try {
       this.footnoteReferences = container.querySelectorAll('[id$=REF]');
