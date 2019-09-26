@@ -180,6 +180,7 @@ export class VolumeContentComponent implements OnInit {
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
       this.sourceNote = this.sanitizer.bypassSecurityTrustHtml(letter.sourceNote);
       letter.footnotes.forEach(footnote => {
+        footnote = this.sanitizer.bypassSecurityTrustHtml(footnote);
         this.footnotes.push(footnote);
         // console.log(footnote);
       });

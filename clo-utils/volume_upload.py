@@ -516,7 +516,7 @@ def main():
 
                     # check if sender exists
                     senderMatch = re.findall(
-                        "<person type=\"sender\">(.*?)</person>", letterContent)
+                        "<person type=\"sender\">(.*?)</person>", letterContent, re.DOTALL)
                     if senderMatch:
                         sender = senderMatch[0]
                     else:
@@ -524,7 +524,7 @@ def main():
 
                     # check if there is a recipient
                     recipientMatch = re.findall(
-                        "<person type=\"addressee\">(.*?)</person>", letterContent)
+                        "<person type=\"addressee\">(.*?)</person>", letterContent, re.DOTALL)
                     if recipientMatch:
                         recipient = recipientMatch[0]
                     else:
@@ -551,7 +551,7 @@ def main():
 
                     # check if there are any footnotes
                     footnotesMatch = re.findall(
-                        "<note.*?>(.*?)</note>", letterContent)
+                        "<note.*?>(.*?)</note>", letterContent, re.DOTALL)
                     if footnotesMatch:
                         # pull footnotes from docBody
                         footnotes = []
