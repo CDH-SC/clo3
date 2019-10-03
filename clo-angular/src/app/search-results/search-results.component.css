@@ -73,7 +73,3 @@ table {
 #dateResult {
   width: 35%;
 }
-
-/deep/ .highlightText {
-  color: red !important;
-}

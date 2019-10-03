@@ -30,6 +30,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1",
+    "mark.js": "^8.11.1",
     "ngtweet": "^1.0.0",
     "ngx-image-zoom": "^0.3.3",
     "ngx-lightbox": "^1.1.0",
