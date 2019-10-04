@@ -5,6 +5,7 @@ Live Version: Under Construction
 ### Running with Docker
 
 * `docker-compose up --build`
+* Visit `http://localhost:8090`
 
 Note: this may take a very long time (5-20 minutes) the first time you run
 because of the dependencies. This time would be likely be improved with an SSD.
