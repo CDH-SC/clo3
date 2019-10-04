@@ -1,7 +1,16 @@
 # Carlyle Letters Online (CLO)
 Live Version: Under Construction
-### Getting Started
+## Getting Started
 ---
+### Running with Docker
+
+* `docker-compose up --build`
+
+Note: this may take a very long time (5-20 minutes) the first time you run
+because of the dependencies. This time would be likely be improved with an SSD.
+
+### Running Locally
+
 #### Prerequisites
 * [Node](https://nodejs.org/en/) version 8.5.0 or higher
 * [NPM](https://www.npmjs.com/) version 5.3.0 or higher
@@ -104,7 +113,7 @@ These commands are useful for [backing up and restoring a database.](https://doc
 If you have received a new album metadata file, take the following steps to make changes to the albums collection:
 
 1. **RENAME** the file so it has the following format :
-    * `Volume<albumId>.xlsx` 
+    * `Volume<albumId>.xlsx`
     * Example : `Volume2.xlsx`
 2. **COPY** the file into the correct albums folder :
     * Each albums folder can be found at : `clo-angular/src/assets/albums/fullsize/`
