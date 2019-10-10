@@ -8,7 +8,7 @@
 # - Node JS
 # - AKA MEAN stack
 
-version: '3.6'
+version: '3.3'
 services:
   # The angular frontend and express js server
   angular:
