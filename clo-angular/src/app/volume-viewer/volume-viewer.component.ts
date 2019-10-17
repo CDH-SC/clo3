@@ -15,7 +15,7 @@ export class VolumeViewerComponent implements AfterViewChecked {
   @Input() sourceNote;
   @Input() footnotes;
 
-  @Output() letterChanged = new EventEmitter<string>();
+  @Output() letterCycle = new EventEmitter<string>();
 
   prevLetterUrl: string;
   nextLetterUrl: string;
@@ -49,8 +49,8 @@ export class VolumeViewerComponent implements AfterViewChecked {
     this.nextLetterUrl = '/volume/' + this.volId + '/' + this.nextLetter;
   }
 
-  letterClicked(id: string) {
-    this.letterChanged.emit(id);
+  letterCycled(id: string) {
+    this.letterCycle.emit(id);
   }
 
 }

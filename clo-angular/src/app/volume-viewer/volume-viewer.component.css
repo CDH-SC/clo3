@@ -10,8 +10,8 @@
   font-weight: bold;
 }
 
-img {
-  max-width: 200px;
+/deep/ img {
+  max-width: 550px !important;
 }
 
 #prev {

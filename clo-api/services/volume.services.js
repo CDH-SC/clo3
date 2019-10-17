@@ -45,6 +45,16 @@ exports.getVolumesByXML = async function(xml_id){
   }
 }
 
+exports.getAccountByXML = async function(xml_id){
+  try {
+    var volume = await Volume.findOne({"accounts.xml_id": xml_id}, {"accounts.$": 1});
+
+    return volume;
+  } catch(e) {
+    throw Error(e.message, "Error while retrieving account")
+  }
+}
+
 exports.createVolume = async function(volume){
   //Creating a new mongoose object by using the new keyword
   var newVolume = new Volume({

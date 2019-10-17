@@ -30,6 +30,7 @@ export class VolumeContentComponent implements OnInit {
   viewContent: SafeHtml;
 
   letters: any;
+  accounts: any;
 
   sourceNote: SafeHtml;
   footnotes: any = [];
@@ -65,6 +66,11 @@ export class VolumeContentComponent implements OnInit {
         this.nextLetterId = null;
         // Set the letters
         this.letters = this.volumeService.sortLetters(this.volume['letters']);
+        // Set the accounts
+        if (this.volume['accounts'].length > 0) {
+          this.accounts = this.volumeService.sortLetters(this.volume['accounts']);
+          console.log(this.accounts);
+        }
         // Set the viewContent to be null initially
         this.viewContent = null;
         // If the current key is a frontice piece, we need to create that object
@@ -81,7 +87,14 @@ export class VolumeContentComponent implements OnInit {
         // If the viewContent is still null at this step, we have a xml_id as a key
         if (this.viewContent === null) {
           this.isFrontice = false;
-          this.getLetter(this.currentKey);
+          // check if xml_id is for a letter or account
+          this.volumeService.getLetterById(this.volumeId, this.currentKey).subscribe(data => {
+            if (data["data"] == null) {
+              this.getAccount(this.currentKey);
+            } else {
+              this.getLetter(this.currentKey);
+            }
+          });
         }
       });
   }
@@ -120,6 +133,16 @@ export class VolumeContentComponent implements OnInit {
     }
   }
 
+  cycleLetter(xml_id: string) {
+    this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
+      if (data["data"] == null) {
+        this.getAccount(xml_id);
+      } else {
+        this.getLetter(xml_id);
+      }
+    });
+  }
+
   goToVolume(volId: string) {
     this.sourceNote = null;
     this.footnotes = [];
@@ -147,6 +170,13 @@ export class VolumeContentComponent implements OnInit {
       }
       // Get letters object
       this.letters = this.volumeService.sortLetters(this.volume['letters']);
+
+      // check if volume contains any accounts
+      if (this.volume['accounts'].length > 0) {
+        this.accounts = this.volumeService.sortLetters(this.volume['accounts']);
+      } else {
+        this.accounts = null;
+      }
     });
   }
 
@@ -195,6 +225,37 @@ export class VolumeContentComponent implements OnInit {
       } else {
         this.hasManuscript = false;
       }
+    });
+  }
+
+  getAccount(xml_id: string) {
+    this.sourceNote = null;
+    this.footnotes = [];
+    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
+    this.viewContent = null;
+    this.volumeService.getAccountById(this.volumeId, xml_id).subscribe(data => {
+      const account = data['data']['accounts'][0];
+      this.objectKeys(this.accounts).forEach((key) => {
+        for (const v in this.accounts[key]) {
+          if (account.xml_id === this.accounts[key][v].xml_id) {
+            this.prevLetterId = this.accounts[key][v].prevLetter;
+            this.nextLetterId = this.accounts[key][v].nextLetter;
+            break;
+          }
+        }
+      });
+      this.isFrontice = false;
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(account.docBody);
+      if (account.sourceNote) {
+        this.sourceNote = this.sanitizer.bypassSecurityTrustHtml(account.sourceNote);
+      }
+      if (account.footnotes[0]) {
+        account.footnotes.forEach(footnote => {
+          footnote = this.sanitizer.bypassSecurityTrustHtml(footnote);
+          this.footnotes.push(footnote);
+        });
+      }
+      account.sender = this.sanitizer.bypassSecurityTrustHtml(account.sender);
     });
   }
 
@@ -248,6 +309,8 @@ export class VolumeContentComponent implements OnInit {
           case 'frontice_piece':
             break;
           case 'letters':
+            break;
+          case 'accounts':
             break;
           case 'letters_to_carlyles':
             this.volumeKeys.push({
@@ -327,14 +390,14 @@ export class VolumeContentComponent implements OnInit {
               title: 'Athanaeum Advertisements'
             });
             break;
-          case 'accounts':
-            if (this.volume['accounts'].length > 0) {
-              this.volumeKeys.push({
-                key: k,
-                title: 'Account\'s of JWC\'s Death'
-              });
-            }
-            break;
+          // case 'accounts':
+          //   if (this.volume['accounts'].length > 0) {
+          //     this.volumeKeys.push({
+          //       key: k,
+          //       title: 'Account\'s of JWC\'s Death'
+          //     });
+          //   }
+          //   break;
           case 'introduction':
             if (this.volume['introduction'].introText !== '') {
               this.volumeKeys.push({

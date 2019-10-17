@@ -62,11 +62,11 @@ def htmlHexConverter(m):
     hexcode = ("&#x2018;", "&#x2019;", "&#x2026;", "&#x2013;", "&#xa3;",
                "&#xbd;", "&#x2014;", "&#x201c;", "&#x201d;", "/", "&#xe0;",
                "&#xf9;", "&#xe4;", "&#xb0;", "&#xf6;", "&#xe9;", "&#xfc;",
-               "&#38;")
+               "&#38;", "&apos;")
     namecode = ("&lsquo;", "&rsquo;", "&hellip;", "&ndash;", "&pound;",
                 "&frac12;", "&mdash;", "&ldquo;", "&rdquo;", "&sol;", "&agrave;",
                 "&ugrave;", "&auml;", "&deg;", "&ouml;", "&eacute;", "&uuml;",
-                "&amp;")
+                "&amp;", "&#39;")
     if entity in namecode:
         i = namecode.index(entity)
         entity = hexcode[i]
@@ -141,7 +141,7 @@ def linkFix(m):
 def main():
     # loop through xml files in directory
     for i, filename in enumerate(os.listdir(directory), start=1):
-        if filename.endswith("45-P5.xml"):
+        if filename.endswith("43-P5.xml"):
             print "%d/%d" % (i, len(os.listdir(directory)))
             print filename
             # get volume id from filename
@@ -539,7 +539,7 @@ def main():
                     if sourceNoteMatch:
                         sourceNote = sourceNoteMatch[0]
                     else:
-                        sourceNote = ''
+                        sourceNote = None
 
                     docBody = re.findall(
                         "<docBody>(.*?)</docBody>", letterContent, re.DOTALL)
@@ -564,7 +564,7 @@ def main():
                             footnote = str(xsltTransformer(sourceDoc))
                             footnotes.append(footnote)
                     else:
-                        footnotes = ''
+                        footnotes = None
                     # with open("log.html", "w") as f:
                     #     print >> f, letterContent
 
@@ -637,6 +637,8 @@ def main():
                 try:
                     # loop through each letter inside lettersMatch
                     for letterContent in accountMatch:
+                        letterContent = "<div3>" + letterContent + "</div3>"
+
                         xml_id = re.findall(
                             "<bibl xml:id=\"(.*?)\">", letterContent)
 
@@ -659,7 +661,7 @@ def main():
 
                         # check if sender exists
                         senderMatch = re.findall(
-                            "<person type=\"sender\">(.*?)</person>", letterContent)
+                            "<person type=\"sender\">(.*?)</person>", letterContent, re.DOTALL)
                         if senderMatch:
                             sender = senderMatch[0]
                         else:
@@ -667,7 +669,7 @@ def main():
 
                         # check if there is a recipient
                         recipientMatch = re.findall(
-                            "<person type=\"addressee\">(.*?)</person>", letterContent)
+                            "<person type=\"addressee\">(.*?)</person>", letterContent, re.DOTALL)
                         if recipientMatch:
                             recipient = recipientMatch[0]
                         else:
@@ -685,8 +687,8 @@ def main():
                             "<docBody>(.*?)</docBody>", letterContent, re.DOTALL)
 
                         # check if head exists
-                        headMatch = re.findall("<head>((?:.|\n)*?)</head>",
-                                               letterContent, re.DOTALL)
+                        headMatch = re.findall(
+                            "<head>((?:.|\n)*?)</head>", letterContent, re.DOTALL)
                         if headMatch:
                             head = headMatch[0]
                         else:
@@ -694,17 +696,32 @@ def main():
 
                         # check if there are any footnotes
                         footnotesMatch = re.findall(
-                            "<note.*?>(.*?)</note>", letterContent)
+                            "<note.*?>(.*?)</note>", letterContent, re.DOTALL)
                         if footnotesMatch:
                             # pull footnotes from docBody
-                            footnotes = footnotesMatch
+                            footnotes = []
+                            for footnote in footnotesMatch:
+                                footnote = "<div>%s</div>" % footnote
+                                sourceDoc = etree.fromstring(footnote)
+                                footnote = str(xsltTransformer(sourceDoc))
+                                footnotes.append(footnote)
                         else:
                             footnotes = ''
+                        # with open("log.html", "w") as f:
+                        #     print >> f, letterContent
 
-                        header = "<p><strong>" + sender + " TO " + recipient + \
-                            "</strong></p>"  # Create header for the top of each letter
+                        humanDate = re.findall("<docDate.*?>(.*?)</docDate>",
+                                               letterContent, re.DOTALL)
+
+                        # create slugline for beginning of each letter
+                        slugline = sluglineGen(xml_id, head, humanDate, sender,
+                                               recipient, firstPage, lastPage, volumeID)
+
+                        # Create header for the top of each letter
+                        header = "<p><p>%s</p></p><p><strong>%s TO %s</strong></p>" % (
+                            slugline, sender, recipient)
                         # Combine the header with the rest of the letter
-                        docBody = header + docBody[0]
+                        docBody = header + ''.join(docBody)
                         # docBody = re.sub("<note .*?>.*?</note>", "", docBodyHeader)
                         # Enclose each letter inside <docBody> tag for the lxml parsing
                         docBody = "<docBody>%s</docBody>" % docBody
@@ -712,6 +729,8 @@ def main():
                         sourceDoc = etree.fromstring(docBody)
                         docBody = str(xsltTransformer(sourceDoc))
                         # print docBody
+
+                        docBody = "<div id=\"letterText\">%s</div>" % docBody
 
                         # add all content to end of letters array
                         accountsArray.append({
@@ -723,9 +742,10 @@ def main():
                             "sender": sender,
                             "recipient": recipient,
                             "sourceNote": sourceNote,
-                            "docBody": docBody[0],
+                            "docBody": docBody,
                             "head": head,
                             "footnotes": footnotes,
+                            "slugline": slugline,
                         })
 
                         # uploads the letters

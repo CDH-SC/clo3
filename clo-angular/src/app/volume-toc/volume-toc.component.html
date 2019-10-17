@@ -38,4 +38,31 @@
       </div>
     </div>
   </div>
+  <div class="w-100 m-auto" id="tocItem" *ngIf="accounts">
+    <a class="drop" data-toggle="collapse" href="#accounts" aria-expanded="false" aria-controls="accounts">
+      ACCOUNTS
+    </a>
+  </div>
+  <div class="collapse" id="accounts" *ngIf="accounts">
+    <div class="pl-4 w-100 m-auto" id="tocItem" *ngFor="let l of objectKeys(accounts); index as x">
+      <a class="drop" data-toggle="collapse" href="#dates{{x}}" aria-expanded="false" [attr.aria-controls]="'dates' + x">
+        {{ l }}
+      </a>
+      <div class="w-100">
+        <div class="collapse" id="dates{{x}}">
+          <div class="w-100 m-auto pl-4" *ngFor="let o of accounts[l]">
+            <div>
+              <span><strong>{{ o.docDate }}</strong></span>
+            </div>
+            <div class="w-100"></div>
+            <div ng-bind-html="html">
+              <a (click)="accountClicked(o.xml_id)">
+                {{ o.sender }} TO {{ o.recipient }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

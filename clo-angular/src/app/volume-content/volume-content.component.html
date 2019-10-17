@@ -11,10 +11,13 @@
             [volumeDates]="volumeDates"
             [keys]="volumeKeys"
             [letters]="letters"
+            [accounts]="accounts"
             (fronticeClicked)="goToFront($event)"
             (idChanged)="goToVolume($event)"
             (contentChanged)="setPage($event)"
             (letterChanged)="getLetter($event)"
+            (accountChanged)="getAccount($event)"
+            (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
           <div id="manuscriptViewer">
             <ul>
@@ -33,6 +36,8 @@
             [sourceNote]="sourceNote"
             [footnotes]="footnotes"
             (letterChanged)="getLetter($event)"
+            (accountChanged)="getAccount($event)"
+            (letterCycle)="cycleLetter($event)"
           ></app-volume-viewer>
         </div>
       </div>
@@ -58,10 +63,13 @@
             [volumeDates]="volumeDates"
             [keys]="volumeKeys"
             [letters]="letters"
+            [accounts]="accounts"
             (fronticeClicked)="goToFront($event)"
             (idChanged)="goToVolume($event)"
             (contentChanged)="setPage($event)"
             (letterChanged)="getLetter($event)"
+            (accountChanged)="getAccount($event)"
+            (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
           <app-volume-viewer
             *ngIf="volume"
@@ -73,6 +81,8 @@
             [sourceNote]="sourceNote"
             [footnotes]="footnotes"
             (letterChanged)="getLetter($event)"
+            (accountChanged)="getAccount($event)"
+            (letterCycle)="cycleLetter($event)"
           ></app-volume-viewer>
         </div>
       </div>
@@ -84,6 +94,3 @@
     </div>
   </div>
 </ng-template>
-
-
-
