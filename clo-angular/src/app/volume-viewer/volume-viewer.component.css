@@ -10,7 +10,7 @@
   font-weight: bold;
 }
 
-/deep/ img {
+/deep/ #letterimage {
   max-width: 550px !important;
 }
 
