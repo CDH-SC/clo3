@@ -14,11 +14,13 @@ export class VolumeTocComponent {
   @Input() volumeDates: string;
   @Input() keys: any;
   @Input() letters: any;
+  @Input() accounts: any;
 
   @Output() fronticeClicked = new EventEmitter<boolean>();
   @Output() idChanged = new EventEmitter<string>();
   @Output() contentChanged = new EventEmitter<string>();
   @Output() letterChanged = new EventEmitter<string>();
+  @Output() accountChanged = new EventEmitter<string>();
 
   frontice(clicked: boolean) {
     this.fronticeClicked.emit(clicked);
@@ -38,6 +40,10 @@ export class VolumeTocComponent {
 
   letterClicked(id: string) {
     this.letterChanged.emit(id);
+  }
+
+  accountClicked(id: string) {
+    this.accountChanged.emit(id);
   }
 
 }

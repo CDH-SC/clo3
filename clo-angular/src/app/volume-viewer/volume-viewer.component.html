@@ -1,7 +1,7 @@
 <div class="viewerContainer" *ngIf="viewContent">
   <div class="letter-navigation" *ngIf="prevLetter || nextLetter">
-    <a id="prev" (click)="letterClicked(prevLetter)" *ngIf="prevLetter">< PREVIOUS</a>
-    <a id="next" (click)="letterClicked(nextLetter)" *ngIf="nextLetter">NEXT ></a>
+    <a id="prev" (click)="letterCycled(prevLetter)" *ngIf="prevLetter">< PREVIOUS</a>
+    <a id="next" (click)="letterCycled(nextLetter)" *ngIf="nextLetter">NEXT ></a>
   </div>
   <div
     class="fronticeViewer"

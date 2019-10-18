@@ -30,6 +30,10 @@ export class VolumeService {
     return this.http.get<T>(BACKEND_URL + id + '/' + xml_id);
   }
 
+  public getAccountById<T>(id: string, xml_id: string): Observable<T> {
+    return this.http.get<T>(BACKEND_URL + id + '/account/' + xml_id);
+  }
+
   /**
    * This function will parse through the letters attribute "docDate" and sort
    * first by year and then by month.
@@ -64,7 +68,7 @@ export class VolumeService {
       year = date[0];
       month = this.getMonth(date[1]);
       day = +date[2];
-    
+
       // Creating and setting our own unique dateString to the docDate of the current letter
       dateString = day + ' ' + month + ' ' + year;
       letters[i].docDate = dateString;

@@ -53,6 +53,12 @@ img {
   border: 0;
 }
 
+mark {
+  color: red;
+  padding: 0 !important;
+  background-color: #f5ebdc !important;
+}
+
 /*
 =================================================
 Custom metadata modal

@@ -10,7 +10,7 @@ xsltDoc = etree.parse("xml_styling.xslt")  # import xsl stylesheet
 xsltTransformer = etree.XSLT(xsltDoc)  # define xml transformation function
 
 for filename in os.listdir(directory):
-    if filename.endswith("09-P5.xml"):
+    if filename.endswith("45-P5.xml"):
         print filename
         # get volume id from filename
         volumeID = ''.join(re.findall("\\d{2}", filename))
@@ -126,12 +126,14 @@ for filename in os.listdir(directory):
 
         content = re.sub("&.{0,6};", htmlHexConverter, content)
 
-        xmlString = content
-        sourceDoc = etree.fromstring(xmlString)
-        xmlString = xsltTransformer(sourceDoc)  # transform xml
-        content = str(xmlString)
+        # xmlString = content
+        # sourceDoc = etree.fromstring(xmlString)
+        # xmlString = xsltTransformer(sourceDoc)  # transform xml
+        # content = str(xmlString)
 
-        links = re.findall("<ref target=\"volume-\\d{2}\\/[^lt\"]{2}.*?>.*?</ref>", content)
+        # links = re.findall("<ref target=\"volume-\\d{2}\\/[^lt\"]{2}.*?>.*?</ref>", content)
+        links = re.findall("<figure>.*?</figure>", content, re.DOTALL)
+
         with open("links.xml", "a") as f:
             f.write("\n" + volumeID + "\n")
             for link in links:

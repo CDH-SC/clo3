@@ -179,8 +179,8 @@
         <xsl:variable name="image-expanded">
           <xsl:value-of select="concat(substring-before($image,'.gif'),'_expanded.gif')"/>
         </xsl:variable>
-        <a class="fancybox" href="/clo/static/images/letters/{$image-expanded}">
-          <img src="/clo/static/images/letters/{$image}" alt="{$image}"/></a>
+        <a class="fancybox" href="assets/images/{$image-expanded}">
+          <img src="assets/images/{$image}" alt="{$image}"/></a>
         <br/>
 
         <xsl:apply-templates select="@* | node()"/>
@@ -191,8 +191,8 @@
         <xsl:variable name="image-expanded">
           <xsl:value-of select="concat(substring-before($image,'.gif'),'_expanded.gif')"/>
         </xsl:variable>
-        <a class="fancybox" href="/clo/static/images/letters/{$image-expanded}">
-          <img src="/clo/static/images/letters/{$image}" alt="{$image}"/></a>
+        <a class="fancybox" href="assets/images/{$image-expanded}">
+          <img src="assets/images/{$image}" alt="{$image}"/></a>
 
         <xsl:apply-templates select="@* | node()"/>
       </xsl:otherwise>
