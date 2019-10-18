@@ -66,6 +66,13 @@
             <td id = "letterRecipient">
               <span>Recipient: </span> {{ result.letters.recipient }}
             </td>
+            <td id = "letterFootnotes">
+              <span>Footnotes: </span> 
+              <a
+              routerLink="/volume/{{ result._id }}/{{ result.letters.xml_id }}#footnoteContents"
+              routerLinkActive="active"
+              >Link to Footnotes</a>
+            </td>
           </tr>
         </table>
       </div>
