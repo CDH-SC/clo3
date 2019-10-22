@@ -18,11 +18,11 @@
   </div>
   <div class="collapse" id="letters">
     <div class="pl-4 w-100 m-auto" id="tocItem" *ngFor="let l of objectKeys(letters); index as i">
-      <a class="drop" data-toggle="collapse" href="#dates{{i}}" aria-expanded="false" [attr.aria-controls]="'dates' + i">
+      <a class="drop" data-toggle="collapse" href="#letterdates{{i}}" aria-expanded="false" [attr.aria-controls]="'dates' + i">
         {{ l }}
       </a>
       <div class="w-100">
-        <div class="collapse" id="dates{{i}}">
+        <div class="collapse" id="letterdates{{i}}">
           <div class="w-100 m-auto pl-4" *ngFor="let o of letters[l]">
             <div>
               <span><strong>{{ o.docDate }}</strong></span>
@@ -45,21 +45,28 @@
   </div>
   <div class="collapse" id="accounts" *ngIf="accounts">
     <div class="pl-4 w-100 m-auto" id="tocItem" *ngFor="let l of objectKeys(accounts); index as x">
-      <a class="drop" data-toggle="collapse" href="#dates{{x}}" aria-expanded="false" [attr.aria-controls]="'dates' + x">
+      <a class="drop" data-toggle="collapse" href="#accountdates{{x}}" aria-expanded="false" [attr.aria-controls]="'dates' + x">
         {{ l }}
       </a>
       <div class="w-100">
-        <div class="collapse" id="dates{{x}}">
-          <div class="w-100 m-auto pl-4" *ngFor="let o of accounts[l]">
+        <div class="collapse" id="accountdates{{x}}">
+          <div class="w-100 m-auto pl-4" *ngFor="let a of accounts[l]">
             <div>
-              <span><strong>{{ o.docDate }}</strong></span>
+              <span><strong>{{ a.docDate }}</strong></span>
             </div>
             <div class="w-100"></div>
-            <div ng-bind-html="html">
-              <a (click)="accountClicked(o.xml_id)">
-                {{ o.sender }} TO {{ o.recipient }}
+            <div *ngIf="a.recipient; else noRecipient">
+              <a (click)="accountClicked(a.xml_id)">
+                {{ a.sender }} TO {{ a.recipient }}
               </a>
             </div>
+            <ng-template #noRecipient>
+              <div>
+                <a (click)="accountClicked(a.xml_id)">
+                  {{ a.sender }}
+                </a>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>
