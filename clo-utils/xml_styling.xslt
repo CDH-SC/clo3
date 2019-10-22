@@ -180,7 +180,7 @@
           <xsl:value-of select="concat(substring-before($image,'.gif'),'_expanded.gif')"/>
         </xsl:variable>
         <a class="fancybox" href="assets/images/{$image-expanded}">
-          <img src="assets/images/{$image}" alt="{$image}"/></a>
+          <img id="letterimage" src="assets/images/{$image}" alt="{$image}"/></a>
         <br/>
 
         <xsl:apply-templates select="@* | node()"/>
@@ -192,11 +192,16 @@
           <xsl:value-of select="concat(substring-before($image,'.gif'),'_expanded.gif')"/>
         </xsl:variable>
         <a class="fancybox" href="assets/images/{$image-expanded}">
-          <img src="assets/images/{$image}" alt="{$image}"/></a>
+          <img id="letterimage" src="assets/images/{$image}" alt="{$image}"/></a>
 
+        <xsl:apply-templates select="graphic"/>
         <xsl:apply-templates select="@* | node()"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="graphic">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="figure/p">
@@ -209,14 +214,14 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="figure/p[last()]">
+  <!-- <xsl:template match="figure/p[last()]">
 
     <xsl:if test="string(.)">
       <span style="font-size:10px">
         <xsl:apply-templates select="@* | node()"/>
       </span>
     </xsl:if>
-  </xsl:template>
+  </xsl:template> -->
 
 <!-- Handles links -->
   <xsl:template match="ref">
