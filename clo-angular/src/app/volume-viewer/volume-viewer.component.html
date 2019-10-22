@@ -41,11 +41,7 @@
   <div class="collapse" id="footnotesContent" *ngIf="footnotes.length > 0">
     <div *ngFor="let footnote of footnotes; index as i">
       <p>
-<<<<<<< HEAD
         <a class="footnoteId" id="FN{{ i + 1 }}" routerLink="./" fragment="FN{{ i+1 }}_REF">{{ i + 1 }}</a>
-=======
-        <a class="footnoteId" id="FN{{ i + 1 }}" href="{concat('#FN', $number, '_REF')}">{{ i + 1 }}</a>
->>>>>>> 65d9a0c40adedd995529c77002882e42f3746c3a
         <span [innerHtml]="footnote"></span>
       </p>
     </div>
