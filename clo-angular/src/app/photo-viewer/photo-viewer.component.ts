@@ -13,7 +13,7 @@ import Viewer from 'viewerjs';
   styleUrls: ['./photo-viewer.component.css']
 })
 export class PhotoViewerComponent implements OnInit, AfterViewInit {
-  @ViewChild('image') zoomedImage: ElementRef;
+  // @ViewChild('image') zoomedImage: ElementRef;
 
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
@@ -50,19 +50,33 @@ export class PhotoViewerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.zoomedImage) {
-      const viewer = new Viewer(this.zoomedImage.nativeElement, {
-        navbar: false,
-        title: false,
-        toolbar: false,
-        ready() {
-          viewer.show(true);
-        },
-        viewed() {
-          viewer.zoomTo(0.5);
-        }
-      });
-    }
+  //   if (this.zoomedImage) {
+  //     const viewer = new Viewer(this.zoomedImage.nativeElement, {
+  //       navbar: false,
+  //       title: false,
+  //       toolbar: true,
+  //       ready() {
+  //         viewer.show(true);
+  //       },
+  //       viewed() {
+  //         viewer.zoomTo(0.5);
+  //       }
+  //     });
+  //   }
+  }
+
+  viewImage() {
+    const viewer = new Viewer(document.getElementById('image'), {
+      navbar: false,
+      title: false,
+      toolbar: true,
+      ready() {
+        viewer.show(true);
+      },
+      viewed() {
+        viewer.zoomTo(0.5);
+      }
+    });
   }
 
   goToImage(id: string) {
