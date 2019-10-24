@@ -82,7 +82,3 @@ Custom metadata modal
 .metadataBackdrop {
   background-color: #FFFFFF;
 }
-
-.lightboxOverlay {
-  background-color: rgba(0, 0, 0, 0) !important;
-}
