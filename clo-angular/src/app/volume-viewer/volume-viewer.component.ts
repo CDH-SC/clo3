@@ -32,13 +32,12 @@ export class VolumeViewerComponent implements AfterViewChecked {
       if (document.getElementById('volumeViewer')) {
           document.getElementById('volumeViewer').scrollTop = 0;
       }
-    });
-    this.router.events.subscribe(s => {
-      if (s instanceof NavigationEnd) {
+      // scrolls to footnote in letter
+      if (evt instanceof NavigationEnd) {
         const tree = this.router.parseUrl(this.router.url);
         if (tree.fragment) {
-          const element = document.querySelector("#" + tree.fragment);
-          if (element) { element.scrollIntoView(true); }
+          const element = document.querySelector('#' + tree.fragment);
+          if (element) { element.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
         }
       }
     });

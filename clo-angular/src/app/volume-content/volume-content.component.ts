@@ -209,11 +209,13 @@ export class VolumeContentComponent implements OnInit {
       this.isFrontice = false;
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(letter.docBody);
       this.sourceNote = this.sanitizer.bypassSecurityTrustHtml(letter.sourceNote);
-      letter.footnotes.forEach(footnote => {
-        footnote = this.sanitizer.bypassSecurityTrustHtml(footnote);
-        this.footnotes.push(footnote);
-        // console.log(footnote);
-      });
+      if (letter.footnotes) {
+        letter.footnotes.forEach(footnote => {
+          footnote = this.sanitizer.bypassSecurityTrustHtml(footnote);
+          this.footnotes.push(footnote);
+          // console.log(footnote);
+        });
+      }
       // console.log(letter);
       // Check if the letter has a manuscript
       if (letter.hasOwnProperty('manuscript')) {
