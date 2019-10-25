@@ -44,7 +44,9 @@ because of the dependencies. This time would be likely be improved with an SSD.
             * ```$ sudo service mongod start```
         or
             * ```$ sudo service mongod restart```
-        * Mac (if MongoDB was installed via homebrew):
+        * Mac:
+            * ```brew tap mongodb/brew```
+            * ```brew install mongodb-community```
             * ```brew services start mongodb```
             * to restart:
                 * ```brew services stop mongodb```

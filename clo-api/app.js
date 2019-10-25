@@ -25,7 +25,7 @@ mongoose.Promise = bluebird;
 mongoose
   .connect(
     process.env.DB_HOST,
-    { useMongoClient: true }
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
   )
   .then(() => {
     console.log(

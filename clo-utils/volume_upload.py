@@ -29,6 +29,13 @@ xsltTransformer = etree.XSLT(xsltDoc)  # define xml transformation function
 #############################
 
 
+class Account:
+    def __init__(acc, head, xml_id, firstPage, slugline, sourceNote, recipient,
+                 footnotes, docBody, sender, docDate, lastPage, docAuthor):
+        acc.head = head
+        acc.xml_id = xml_id
+
+
 def upload_volume(volumeID, volume_dates, acknowledgements, introText, letters_to_carlyles, key_to_references, chronology):
     db.volumes.update_one(
         {"_id": str(volumeID)},
@@ -141,7 +148,7 @@ def linkFix(m):
 def main():
     # loop through xml files in directory
     for i, filename in enumerate(os.listdir(directory), start=1):
-        if filename.endswith("43-P5.xml"):
+        if filename.endswith("45-P5.xml"):
             print "%d/%d" % (i, len(os.listdir(directory)))
             print filename
             # get volume id from filename
@@ -732,6 +739,9 @@ def main():
 
                         docBody = "<div id=\"letterText\">%s</div>" % docBody
 
+                        # account = Account(head, xml_id[0], firstPage[0], slugline, sourceNote,
+                        #                   recipient, footnotes, docBody, sender, docDate, lastPage[0], docAuthor)
+
                         # add all content to end of letters array
                         accountsArray.append({
                             "xml_id": xml_id[0],
@@ -749,7 +759,7 @@ def main():
                         })
 
                         # uploads the letters
-                        upload_accounts(volumeID, accountsArray)
+                        # upload_accounts(volumeID, accountsArray)
 
                         # print xml_id
                         # print docDate
@@ -763,7 +773,7 @@ def main():
                         # print head
                         # print footnotes
                         # print "\n"
-
+                    upload_accounts(volumeID, accountsArray)
                     print "Records successfully updated\n"
                 except Exception as e:
                     print ("\033[31m {}\033[00m" .format(str(e))+"\n")
