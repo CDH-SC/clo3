@@ -17,15 +17,9 @@
     "@angular/platform-browser-dynamic": "^5.2.1",
     "@angular/platform-server": "^5.2.1",
     "@angular/router": "^5.2.1",
-<<<<<<< HEAD
-    "bluebird": "^3.5.1",
-    "body-parser": "~1.18.2",
-    "cookie-parser": "~1.4.3",
-=======
     "bluebird": "^3.7.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
->>>>>>> 56ade17d5ae074883d156028f300830cb52abe74
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
