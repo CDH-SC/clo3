@@ -84,8 +84,10 @@ def sluglineGen(xml_id, head, humanDate, sender, recipient, firstPage, lastPage,
     # ex: TC TO FREDERIC CHAPMAN ; july 2d, 1866; TC FREDERIC CHAPMAN DOI: 10.1215/lt-18660702-TC-FC-01 CL 44:1-1.
     # breakdown: <head><sender /> TO <addressee /></head> ; <docDate />; <sender /> <addressee /> DOI 10.1215/<xml:id /> <i>CL</i> <vol:id />:<firstpage />-<lastpage />.
     # head = " ".join(head.split())
-    slugline = "%s TO %s ; %s; %s %s DOI 10.1215/%s <i>CL</i> %s:%s-%s." % (
-        sender, recipient, humanDate[0], sender, recipient, xml_id[0], volumeID, firstPage[0], lastPage[0])
+    # slugline = "%s TO %s; %s; %s %s DOI 10.1215/%s <i>CL</i> %s:%s-%s. " % (
+    #     sender, recipient, humanDate[0], sender, recipient, xml_id[0], volumeID, firstPage[0], lastPage[0])
+    slugline = "%s TO %s; %s; DOI 10.1215/%s" % (
+        sender, recipient, humanDate[0], xml_id[0])
     return slugline
 
 
