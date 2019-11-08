@@ -20,6 +20,14 @@
   cursor: pointer;
 }
 
+a:visited {
+  font-weight: bold;
+}
+
+a:active {
+  font-weight: bold;
+}
+
 #volNav {
   display: flex;
   flex-direction: row;
