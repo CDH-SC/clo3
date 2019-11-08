@@ -51,7 +51,16 @@ export class PhotoViewerComponent implements OnInit, AfterViewChecked {
     const viewer = new Viewer(document.getElementById('image'), {
       navbar: false,
       title: false,
-      toolbar: true,
+      toolbar: {
+        zoomIn: true,
+        zoomOut: true,
+        oneToOne: true,
+        reset: true,
+        rotateLeft: true,
+        rotateRight: true,
+        flipHorizontal: true,
+        flipVertical: true,
+      },
       ready() {
         viewer.show(true);
       },
