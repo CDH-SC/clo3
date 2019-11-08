@@ -120,6 +120,7 @@
 
 .footnoteId {
   text-decoration: underline !important;
+  font-family: FontAwesome;
   font-weight: bold !important;
   font-size: 14px;
   margin-right: 5px;
