@@ -377,7 +377,7 @@ export class VolumeContentComponent implements OnInit {
           case 'ellenTwisleton':
             this.volumeKeys.push({
               key: k,
-              title: 'Ellen Twisleton Account of Life at Craigenputtoch'
+              title: 'Ellen Twisleton\'s Account of Life at Craigenputtoch'
             });
             break;
           case 'auroraComments':

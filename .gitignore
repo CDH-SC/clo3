@@ -7,6 +7,7 @@ yarn-error.log*
 
 # VS Code Settings File
 .vscode
+*.code-workspace
 
 # Runtime data
 pids
@@ -58,7 +59,7 @@ typings/
 .yarn-integrity
 
 # XML Files
-*.xml
+# *.xml
 
 # Environment Variables
 *.env 
