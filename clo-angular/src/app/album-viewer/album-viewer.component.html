@@ -1,5 +1,10 @@
 <div class="box flex" *ngIf="album">
-  <h2 class="orange-border-bottom">Album: {{ album._id }}</h2>
+  <div class="orange-border-bottom" *ngIf="album._id > 0">
+    <h2>Album: {{ album._id }}</h2>
+  </div>
+  <div class="orange-border-bottom" *ngIf="album._id === 0">
+    <h2>Fronticepieces</h2>
+  </div>
 </div>
 
 
