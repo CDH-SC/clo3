@@ -137,3 +137,4 @@ If you have received a new album metadata file, take the following steps to make
 ### Contributors
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
+* **Prithvi Tippabhatla**
