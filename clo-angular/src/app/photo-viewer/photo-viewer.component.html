@@ -42,6 +42,15 @@
           <td class="col1">Description:</td>
           <td class="col2">{{ imageMetadata.description }}</td>
         </tr>
+        <tr *ngIf="album._id === 0">
+          <td class ="col1">Link to Volume:</td>
+          <td class ="col2">
+              <a
+              routerLink="/../volume/04/frontice_piece"
+              routerLinkActive="active">
+              Link to Volume</a>
+          </td>
+        </tr>
           
         <tr *ngIf="imageMetadata.subjects.length">
           <td class="col1">Subjects:</td>
