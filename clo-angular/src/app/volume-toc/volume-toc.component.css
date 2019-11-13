@@ -20,13 +20,6 @@
   cursor: pointer;
 }
 
-a:visited {
-  font-weight: bold;
-}
-
-a:active {
-  font-weight: bold;
-}
 
 #volNav {
   display: flex;
@@ -58,4 +51,8 @@ a:active {
   text-align: center;
   width: 20px;
   margin-right: 5px;
+}
+
+a:active {
+  font-weight: bold;
 }
