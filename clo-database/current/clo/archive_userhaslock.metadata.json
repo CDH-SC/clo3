@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"clo.archive_userhaslock"}],"uuid":"317a64e314c94ddba288be8dd21b9f3c"}

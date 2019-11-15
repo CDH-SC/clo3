@@ -150,7 +150,7 @@ def linkFix(m):
 def main():
     # loop through xml files in directory
     for i, filename in enumerate(os.listdir(directory), start=1):
-        if filename.endswith("01-P5.xml"):
+        if filename.endswith("45-P5.xml"):
             print "%d/%d" % (i, len(os.listdir(directory)))
             print filename
             # get volume id from filename

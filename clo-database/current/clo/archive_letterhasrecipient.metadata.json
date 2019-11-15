@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"clo.archive_letterhasrecipient"}],"uuid":"6103156ae77b4603bc083bb3cc79a468"}
