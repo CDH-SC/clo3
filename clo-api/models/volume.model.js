@@ -20,7 +20,10 @@ var volumeSchema = new Schema({
   inMemoriam: String,
   janeNotebook: String,
   simpleStory: String,
-  janeJournal: String,
+  janeJournal: {
+    journalText: String,
+    journalFootnotes: [String],
+  },
   geraldineJewsbury: String,
   ellenTwisleton: String,
   athanaeumAdvertisements: String,
