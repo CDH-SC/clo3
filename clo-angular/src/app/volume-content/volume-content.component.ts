@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import Mark from 'mark.js';
 
 @Component({
   selector: 'app-volume-content',
@@ -16,6 +17,7 @@ export class VolumeContentComponent implements OnInit {
   private TOTAL_VOLUMES = 45;
 
   objectKeys = Object.keys;
+  searchTerm: string;
 
   volume: [Volume];
 
@@ -99,6 +101,16 @@ export class VolumeContentComponent implements OnInit {
       });
   }
 
+  ngAfterViewChecked() {
+    this.route.queryParams.subscribe(params => {
+      this.searchTerm = params.term;
+      if (this.searchTerm) {
+        var instance = new Mark(document.querySelectorAll('.volumeViewer'));
+        instance.mark(this.searchTerm)
+      }
+    });
+  }
+
   private createFronticePiece(fronticeObject: Object) {
     const fronticeImage = fronticeObject['imageUrl'];
     const fronticeCaption = fronticeObject['imageCaption'];
@@ -126,6 +138,13 @@ export class VolumeContentComponent implements OnInit {
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
         this.volume[key].introText
       );
+    } else if (key === 'janeJournal') {
+      this.volume[key].journalFootnotes.forEach(footnote => {
+        this.footnotes.push(footnote);
+      });
+      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
+        this.volume[key].journalText
+      );
     } else {
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
         this.volume[key]
@@ -137,8 +156,12 @@ export class VolumeContentComponent implements OnInit {
     this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
       if (data["data"] == null) {
         this.getAccount(xml_id);
+        // Update the url to display the current xml id of the letter
+        this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
       } else {
         this.getLetter(xml_id);
+        // Update the url to display the current xml id of the letter
+        this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
       }
     });
   }
@@ -192,8 +215,6 @@ export class VolumeContentComponent implements OnInit {
         window.clearInterval(scrollToTop);
       }
     }, 2);
-    // Update the url to display the current xml id of the letter
-    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
     this.viewContent = null;
     this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
       const letter = data['data']['letters'][0];
@@ -233,7 +254,6 @@ export class VolumeContentComponent implements OnInit {
   getAccount(xml_id: string) {
     this.sourceNote = null;
     this.footnotes = [];
-    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
     this.viewContent = null;
     this.volumeService.getAccountById(this.volumeId, xml_id).subscribe(data => {
       const account = data['data']['accounts'][0];
@@ -363,10 +383,12 @@ export class VolumeContentComponent implements OnInit {
             });
             break;
           case 'janeJournal':
-            this.volumeKeys.push({
-              key: k,
-              title: 'Jane Welsh Carlyle Journal'
-            });
+            if (this.volume['janeJournal'].journalText !== '') {
+              this.volumeKeys.push({
+                key: k,
+                title: 'Jane Welsh Carlyle Journal'
+              });
+            }
             break;
           case 'geraldineJewsbury':
             this.volumeKeys.push({

@@ -15,8 +15,8 @@
             (fronticeClicked)="goToFront($event)"
             (idChanged)="goToVolume($event)"
             (contentChanged)="setPage($event)"
-            (letterChanged)="getLetter($event)"
-            (accountChanged)="getAccount($event)"
+            (letterChanged)="cycleLetter($event)"
+            (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
           <div id="manuscriptViewer">
@@ -35,8 +35,8 @@
             [isFrontice]="isFrontice"
             [sourceNote]="sourceNote"
             [footnotes]="footnotes"
-            (letterChanged)="getLetter($event)"
-            (accountChanged)="getAccount($event)"
+            (letterChanged)="cycleLetter($event)"
+            (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-viewer>
         </div>
@@ -67,8 +67,8 @@
             (fronticeClicked)="goToFront($event)"
             (idChanged)="goToVolume($event)"
             (contentChanged)="setPage($event)"
-            (letterChanged)="getLetter($event)"
-            (accountChanged)="getAccount($event)"
+            (letterChanged)="cycleLetter($event)"
+            (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
           <app-volume-viewer
@@ -80,8 +80,8 @@
             [isFrontice]="isFrontice"
             [sourceNote]="sourceNote"
             [footnotes]="footnotes"
-            (letterChanged)="getLetter($event)"
-            (accountChanged)="getAccount($event)"
+            (letterChanged)="cycleLetter($event)"
+            (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-viewer>
         </div>
