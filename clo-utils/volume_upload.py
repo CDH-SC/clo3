@@ -152,9 +152,13 @@ def linkFix(m):
 
 def main():
     # loop through xml files in directory
-    for i, filename in enumerate(os.listdir(directory), start=1):
-        if filename.endswith("%s-P5.xml" % volSelect):
-            print "%d/%d" % (i, len(os.listdir(directory)))
+    dirList = os.listdir(directory)
+    dirList.sort()
+    for i, filename in enumerate(dirList, start=1):
+        # if you just want to upload one volume, replace
+        # str(i-1) with volSelect
+        if filename.endswith("%s-P5.xml" % str(i-1)):
+            print "%d/%d" % (i, len(dirList))
             print filename
             # get volume id from filename
             volumeID = ''.join(re.findall("\d{2}", filename))
