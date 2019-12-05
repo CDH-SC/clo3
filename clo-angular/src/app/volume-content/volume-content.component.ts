@@ -320,6 +320,7 @@ export class VolumeContentComponent implements OnInit {
   }
 
   private setKeys() {
+    console.log(this.volume)
     for (const k in this.volume) {
       if (this.volume.hasOwnProperty(k)) {
         switch (k) {
@@ -383,7 +384,7 @@ export class VolumeContentComponent implements OnInit {
             });
             break;
           case 'janeJournal':
-            if (this.volume['janeJournal'].journalText !== '') {
+            if (this.volume['janeJournal'].journalText) {
               this.volumeKeys.push({
                 key: k,
                 title: 'Jane Welsh Carlyle Journal'
