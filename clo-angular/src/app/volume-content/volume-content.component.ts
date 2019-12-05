@@ -320,7 +320,6 @@ export class VolumeContentComponent implements OnInit {
   }
 
   private setKeys() {
-    console.log(this.volume)
     for (const k in this.volume) {
       if (this.volume.hasOwnProperty(k)) {
         switch (k) {
