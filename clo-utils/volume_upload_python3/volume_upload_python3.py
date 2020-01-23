@@ -3,6 +3,7 @@ import re
 import os
 import pprint as pp
 from pymongo import MongoClient
+from lxml import etree
 from datetime import datetime  # measure the speed of script
 
 startTime = datetime.now()
@@ -10,6 +11,9 @@ directory = './'
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client.clo_test
+
+xsltDoc = etree.parse('xml_styling.xslt')
+xsltTransformer = etree.XSLT(xsltDoc)
 
 volume = {}
 l_array = []
@@ -19,8 +23,6 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-    	# if you just want to upload one volume, replace
-		# str(i-1) with volSelect
 		if filename.endswith('P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
@@ -33,6 +35,7 @@ def main():
 			header = bs_content.biblFull.find_all('date')
 			volume_dates = header[0].string + ' - ' + header[1].string
 			print(volume_dates)
+
 
 			front = bs_content.find_all('div1')
 			for section in front:
@@ -47,19 +50,19 @@ def main():
 
 				# join contents of section body together into single string
 				body = ' '.join(map(str, section.contents))
+				sourceDoc = etree.fromstring('<body>%s</body>' % body)
+				body_formatted = str(xsltTransformer(sourceDoc))
 
-				volume.update({name: body})
+				volume.update({name: body_formatted})
+
 				# pp.pprint(volume, depth=1)
-				# with open('log.xml', 'a') as f:
-				# 	f.write('\n' + section['id'] + '\n')
-				# 	f.write(body)
-				# 	f.close()
 
 			db.volumes.update_one(
 				{'_id': str(volumeID)},
 				{'$set': volume}, upsert=True
 			)
-			
+
+
 			letters = bs_content.find_all('div3')
 			print(letters[0].contents)
 			for l in letters:
@@ -78,19 +81,18 @@ def main():
 				docBody = l.docBody.contents
 				footnotes = l.find_all('note')
 
-				letter = {	'xml_id': xml_id,
-							'docDate': docDate,
-							'firstPage': firstPage,
-							'lastPage': lastPage,
-							'docAuthor': docAuthor,
-							'sender': sender,
-							'recipient': recipient,
-							'sourceNote': 'test',
-							'docBody': 'test',
-							'footnotes': 'footnotes'
-						}
-
-				# pp.pprint(letter, indent=3)
+				letter = {
+					'xml_id': xml_id,
+					'docDate': docDate,
+					'firstPage': firstPage,
+					'lastPage': lastPage,
+					'docAuthor': docAuthor,
+					'sender': sender,
+					'recipient': recipient,
+					'sourceNote': 'test',
+					'docBody': 'test',
+					'footnotes': 'footnotes'
+				}
 
 				l_array.append(letter)
 
