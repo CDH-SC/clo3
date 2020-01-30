@@ -4,9 +4,9 @@ import os
 import pprint as pp
 from pymongo import MongoClient
 from lxml import etree
-import datetime as dt
+from datetime import datetime
 
-startTime = dt.datetime.now()
+startTime = datetime.now()
 directory = '../../clo-xml-archive/'
 
 client = MongoClient('mongodb://localhost:27017/')
@@ -137,11 +137,11 @@ def main():
 			volumeID = ''.join(re.findall('\d{2}', filename))
 
 			# get volume dates from header
-			header = bs_content.biblFull.find_all('date')
-			if dt.datetime.fromisoformat(header[1]['when']) < dt.date(1900, 1, 1):
-				volume_dates = header[0].string + ' - ' + header[1].string
-			elif header[0]['when'] < dt.date(1900, 1, 1):
-				volume_dates = header[0].string
+			dates = bs_content.biblFull.find_all('date')
+			if int(dates[1]['when'][:4]) < 1900:
+				volume_dates = str.join('', (dates[0].string + ' - ' + dates[1].string).splitlines())
+			elif int(dates[0]['when'][:4]) < 1900:
+				volume_dates = dates[0].string
 			else: volume_dates = 'Not found'
 			print(volumeID)
 			print(volume_dates)
@@ -158,6 +158,10 @@ def main():
 					name = 'key_to_references'
 				elif 'Rival-Brothers' in name:
 					name = 'rival_brothers'
+				elif 'biographical' in name:
+					name = 'biographicalNotes'
+				elif 'in-memoriam' in name:
+					name = 'inMemoriam'
 				print(name)
 
 				# check for any footnotes in section
@@ -245,4 +249,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
-	print(dt.datetime.now() - startTime)
+	print(datetime.now() - startTime)
