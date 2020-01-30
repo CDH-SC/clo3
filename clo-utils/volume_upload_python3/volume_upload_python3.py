@@ -4,9 +4,9 @@ import os
 import pprint as pp
 from pymongo import MongoClient
 from lxml import etree
-from datetime import datetime  # measure the speed of script
+import datetime as dt
 
-startTime = datetime.now()
+startTime = dt.datetime.now()
 directory = '../../clo-xml-archive/'
 
 client = MongoClient('mongodb://localhost:27017/')
@@ -138,7 +138,11 @@ def main():
 
 			# get volume dates from header
 			header = bs_content.biblFull.find_all('date')
-			volume_dates = header[0].string + ' - ' + header[1].string
+			if dt.datetime.fromisoformat(header[1]['when']) < dt.date(1900, 1, 1):
+				volume_dates = header[0].string + ' - ' + header[1].string
+			elif header[0]['when'] < dt.date(1900, 1, 1):
+				volume_dates = header[0].string
+			else: volume_dates = 'Not found'
 			print(volumeID)
 			print(volume_dates)
 
@@ -241,4 +245,4 @@ def main():
 
 if __name__ == '__main__':
 	main()
-	print(datetime.now() - startTime)
+	print(dt.datetime.now() - startTime)
