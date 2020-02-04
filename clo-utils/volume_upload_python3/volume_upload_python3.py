@@ -112,7 +112,7 @@ def xsltFormat(inputString):
 def footnoteFormat(footnotesArray):
 	footnotes = []
 	for f in footnotesArray:
-		footnote = xsltFormat(''.join(map(str, f.contents)))
+		footnote = xsltFormat(str(f.contents))
 		footnotes.append(footnote)
 	return footnotes
 
@@ -144,9 +144,9 @@ def letterUpload(array, letterType, volumeID):
 		else: recipient = None
 
 		if l.sourceNote.contents:
-			sourceNote = xsltFormat(' '.join(map(str, l.sourceNote.contents)))
+			sourceNote = xsltFormat(str(l.sourceNote))
 		else: sourceNote = None
-		docBody = xsltFormat(' '.join(map(str, l.docBody.contents)))
+		docBody = xsltFormat(str(l.docBody))
 
 		slugline = sluglineGen(xml_id, humanDate, sender, recipient)
 
@@ -262,7 +262,8 @@ def main():
 				else: footnotes = None
 
 				# join contents of section body together into single string and format with xslt
-				body = xsltFormat(' '.join(map(str, section.contents)))
+				# body = xsltFormat(' '.join(map(str, section.contents)))
+				body = xsltFormat(str(section))
 
 				if name == 'introduction':
 					body = {
