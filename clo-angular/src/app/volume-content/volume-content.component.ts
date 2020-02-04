@@ -132,9 +132,11 @@ export class VolumeContentComponent implements OnInit {
     this.router.navigateByUrl('/volume/' + this.volumeId + '/' + key);
     this.isFrontice = false;
     if (key === 'introduction') {
-      this.volume[key].introFootnotes.forEach(footnote => {
-        this.footnotes.push(footnote);
-      });
+      if (this.volume[key].introFootnotes) {
+        this.volume[key].introFootnotes.forEach(footnote => {
+          this.footnotes.push(footnote);
+        });
+      }
       this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
         this.volume[key].introText
       );
@@ -423,7 +425,7 @@ export class VolumeContentComponent implements OnInit {
           //   }
           //   break;
           case 'introduction':
-            if (this.volume['introduction'].introText !== '') {
+            if (this.volume['introduction'].introText) {
               this.volumeKeys.push({
                 key: k,
                 title: k
