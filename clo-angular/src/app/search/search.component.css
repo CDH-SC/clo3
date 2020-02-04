@@ -10,6 +10,9 @@
   border: 1px solid #cbc29d;
   border-radius: 5px;
   background-color: #d2e0dc;
+
+  position: relative;
+  left: 200px;
 }
 
 #searchButton {

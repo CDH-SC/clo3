@@ -27,6 +27,16 @@
   display: flex;
   flex-direction: column;
   width: 600px;
+  position: relative;
+  left: 85px
+}
+
+.transcriptionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  position: relative;
+  left: 110px;
 }
 
 /deep/ slugline {
