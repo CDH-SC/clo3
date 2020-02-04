@@ -6,6 +6,7 @@ import pprint as pp
 from pymongo import MongoClient
 from lxml import etree
 from datetime import datetime
+import progressbar
 
 startTime = datetime.now()
 directory = '../../clo-xml-archive/'
@@ -83,6 +84,38 @@ def linkFix(m):
 	return newLink
 
 
+def nameFix(name):
+	if 'letters-to' in name:
+		name = 'letters_to_carlyles'
+	elif 'key-to' in name:
+		name = 'key_to_references'
+	elif 'Rival-Brothers' in name:
+		name = 'rival_brothers'
+	elif 'biographical' in name:
+		name = 'biographicalNotes'
+	elif 'in-memoriam' in name:
+		name = 'inMemoriam'
+	elif 'JWC-by-Robert' in name:
+		name = 'JWCbyTait'
+	elif 'TC-by-Robert' in name:
+		name = 'TCbyTait'
+	elif 'carlyle-notebook' in name:
+		name = 'janeNotebook'
+	elif 'carlyle-journal' in name:
+		name = 'janeJournal'
+	elif 'simple-story' in name:
+		name = 'simpleStory'
+	elif 'geraldine-jewsbury' in name:
+		name = 'geraldineJewsbury'
+	elif 'ellen-twisleton' in name:
+		name = 'ellenTwisleton'
+	elif 'athanaeum' in name:
+		name = 'athanaeumAdvertisements'
+	elif 'aurora-leigh' in name:
+		name = 'auroraComments'
+	return name
+
+
 def sluglineGen(xml_id, humanDate, sender, recipient):
 	# ex: TC TO FREDERIC CHAPMAN ; july 2d, 1866; TC FREDERIC CHAPMAN DOI: 10.1215/lt-18660702-TC-FC-01 CL 44:1-1.
 	# breakdown: <head><sender /> TO <addressee /></head> ; <docDate />; <sender /> <addressee /> DOI 10.1215/<xml:id /> <i>CL</i> <vol:id />:<firstpage />-<lastpage />.
@@ -121,7 +154,7 @@ def letterUpload(array, letterType, volumeID):
 	print('%d %s found' % (len(array), letterType))
 	letterArray = []
 
-	for l in array:
+	for l in progressbar.progressbar(array, widgets=['Processing: [', progressbar.SimpleProgress(), '] ']):
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
 		humanDate = l.docDate.string
@@ -215,9 +248,7 @@ def main():
 			else: volumeDates = 'Not found'
 
 			volume.update({'volume_dates': volumeDates})
-
-			print(volumeID)
-			print(volumeDates)
+			print('Volume ' + volumeID)
 
 
 			front = bs_content.find_all('div1')
@@ -225,35 +256,7 @@ def main():
 				name = re.match('.{6}(.*)', section['id']).group(1)
 				
 				# fix section names to match MongoDB fields
-				if 'letters-to' in name:
-					name = 'letters_to_carlyles'
-				elif 'key-to' in name:
-					name = 'key_to_references'
-				elif 'Rival-Brothers' in name:
-					name = 'rival_brothers'
-				elif 'biographical' in name:
-					name = 'biographicalNotes'
-				elif 'in-memoriam' in name:
-					name = 'inMemoriam'
-				elif 'JWC-by-Robert' in name:
-					name = 'JWCbyTait'
-				elif 'TC-by-Robert' in name:
-					name = 'TCbyTait'
-				elif 'carlyle-notebook' in name:
-					name = 'janeNotebook'
-				elif 'carlyle-journal' in name:
-					name = 'janeJournal'
-				elif 'simple-story' in name:
-					name = 'simpleStory'
-				elif 'geraldine-jewsbury' in name:
-					name = 'geraldineJewsbury'
-				elif 'ellen-twisleton' in name:
-					name = 'ellenTwisleton'
-				elif 'athanaeum' in name:
-					name = 'athanaeumAdvertisements'
-				elif 'aurora-leigh' in name:
-					name = 'auroraComments'
-				print(name)
+				name = nameFix(name)
 
 				# check for any footnotes in section
 				footnotesArray = section.find_all('note')
@@ -284,12 +287,13 @@ def main():
 				'imageCaption': fronticePieces.get(volumeID)['imageCaption']
 			}
 			volume.update({'frontice_piece': frontice_piece})
-
+			print('%d front sections found' % len(volume))
 
 			db.volumes.update_one(
 				{'_id': str(volumeID)},
 				{'$set': volume}, upsert=True
 			)
+			print('Front sections successfully uploaded')
 
 
 			letterSections = bs_content.find_all('div2')
