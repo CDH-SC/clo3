@@ -1,24 +1,40 @@
-from bs4 import BeautifulSoup as bs
+#!/usr/bin/env python3
+
+""" Volume Upload Script
+
+Given a directory of xml files it will parse each file
+and format it into usable html before uploading each volume
+to the MongoDB database
+ """
+
+# standard library
 import re
 import os
 import json
-import pprint as pp
-from pymongo import MongoClient
-from lxml import etree
 from datetime import datetime
-import progressbar
 
+# 3rd party packages
+from lxml import etree
+from pymongo import MongoClient
+from bs4 import BeautifulSoup as bs
+
+# start timing of script
 startTime = datetime.now()
+# working directory for xml files
 directory = '../../clo-xml-archive/'
 
+# establish connection to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client.clo_test
 
+# load xslt stylesheet for later styling
 xsltDoc = etree.parse('xml_styling.xslt')
 xsltTransformer = etree.XSLT(xsltDoc)
 
 
 def htmlHexConverter(m):
+	""" Convert HTML entities to their hexcode values to prevent errors
+	when using XSLT styling """
 	entity = m.group()
 	hexcode = ("&#x2018;", "&#x2019;", "&#x2026;", "&#x2013;", "&#xa3;",
 			   "&#xbd;", "&#x2014;", "&#x201c;", "&#x201d;", "/", "&#xe0;",
@@ -35,6 +51,8 @@ def htmlHexConverter(m):
 
 
 def linkFix(m):
+	""" Convert <ref> tags in XML into <a href> tags that point to
+	the correct urls of the site """
 	ref = m.group(2)
 	vol_id = m.group(1)
 	body = m.group(3)
@@ -80,11 +98,11 @@ def linkFix(m):
 		newLink = '<ref target=\"volume-%s/http://%s>%s</ref>' % (vol_id, ref, body)
 	else:
 		print('NO MATCH, link is as follows:\n' + m.group(0) + '\n')
-
 	return newLink
 
 
 def nameFix(name):
+	""" Rename the front sections of the XML to match the MongoDB naming sceme """
 	if 'letters-to' in name:
 		name = 'letters_to_carlyles'
 	elif 'key-to' in name:
@@ -117,10 +135,11 @@ def nameFix(name):
 
 
 def sluglineGen(xml_id, humanDate, sender, recipient):
-	# ex: TC TO FREDERIC CHAPMAN ; july 2d, 1866; TC FREDERIC CHAPMAN DOI: 10.1215/lt-18660702-TC-FC-01 CL 44:1-1.
-	# breakdown: <head><sender /> TO <addressee /></head> ; <docDate />; <sender /> <addressee /> DOI 10.1215/<xml:id /> <i>CL</i> <vol:id />:<firstpage />-<lastpage />.
-	# slugline = "%s TO %s; %s; %s %s DOI 10.1215/%s <i>CL</i> %s:%s-%s. " % (
-	# sender, recipient, humanDate[0], sender, recipient, xml_id[0], volumeID, firstPage[0], lastPage[0])
+	""" Generate the slugline to attach to the front of each letter
+
+	ex: TC TO FREDERIC CHAPMAN; july 2d, 1866; DOI 10.1215/lt-18660702-TC-FC-01.
+	XML breakdown: <head><sender /> TO <addressee /></head>; <docDate />; DOI 10.1215/<xml:id />."""
+
 	if recipient:
 		slugline = '%s TO %s; %s; DOI 10.1215/%s' % (sender, recipient, humanDate, xml_id)
 	else:
@@ -129,6 +148,8 @@ def sluglineGen(xml_id, humanDate, sender, recipient):
 
 
 def xsltFormat(inputString):
+	""" Apply XSLT stylesheet to input XML """
+
 	# convert html entities to their hex codes
 	inputString = re.sub('&.{1,6}?;', htmlHexConverter, inputString)
 	# converts loose "&" into the hex entity for "&"
@@ -143,6 +164,7 @@ def xsltFormat(inputString):
 
 
 def footnoteFormat(footnotesArray):
+	""" Apply XSLT to each footnote in given array """
 	footnotes = []
 	for f in footnotesArray:
 		footnote = xsltFormat(str(f.contents))
@@ -151,15 +173,14 @@ def footnoteFormat(footnotesArray):
 
 
 def letterUpload(array, letterType, volumeID):
+	""" Parse and upload any letters/accounts """
 	print('%d %s found' % (len(array), letterType))
 	letterArray = []
 
-	for l in progressbar.progressbar(array, widgets=['Processing: [', progressbar.SimpleProgress(), '] ']):
+	for l in array:
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
 		humanDate = l.docDate.string
-
-		# pp.pprint(xml_id, indent=4)
 
 		firstPage = l.select('idno[type="firstpage"]')[0].string
 		lastPage = l.select('idno[type="lastpage"]')[0].string
@@ -206,14 +227,15 @@ def letterUpload(array, letterType, volumeID):
 			'docBody': docBody,
 			'footnotes': footnotes,
 		}
-
 		letterArray.append(letter)
 
-
-	db.volumes.update_many(
-		{'_id': str(volumeID)},
-		{'$set': {letterType: letterArray}}, upsert=True
-	)
+	try:
+		db.volumes.update_many(
+			{'_id': str(volumeID)},
+			{'$set': {letterType: letterArray}}, upsert=True
+		)
+		print('%s successfully uploaded\n' % letterType)
+	except Exception as e: print(e)
 
 
 def main():
@@ -231,10 +253,6 @@ def main():
 			bs_content = bs(content, 'xml')
 			
 			volume = {}
-
-			# with open('log.xml', 'w') as f:
-			# 	# f.write(''.join(map(str, bs_content.contents)))
-			# 	f.write(bs_content)
 
 			# get volume ID from filename
 			volumeID = ''.join(re.findall('\d{2}', filename))
@@ -278,7 +296,6 @@ def main():
 						'journalText': body,
 						'journalFootnotes': footnotes,
 					}
-
 				volume.update({name: body})
 
 			# create frontice piece object
@@ -289,25 +306,25 @@ def main():
 			volume.update({'frontice_piece': frontice_piece})
 			print('%d front sections found' % len(volume))
 
-			db.volumes.update_one(
-				{'_id': str(volumeID)},
-				{'$set': volume}, upsert=True
-			)
-			print('Front sections successfully uploaded')
+			try:
+				db.volumes.update_one(
+					{'_id': str(volumeID)},
+					{'$set': volume}, upsert=True
+				)
+				print('Front sections successfully uploaded')
+			except Exception as e: print(e)
 
-
+			# get all letters in volume and check for any accounts (eg: vol43)
 			letterSections = bs_content.find_all('div2')
-
 			if letterSections[0]:
 				letters = letterSections[0].find_all('div3')
 				letterUpload(letters, 'letters', volumeID)
-				print('letters successfully uploaded\n')
 			if len(letterSections) > 1:
 				accounts = letterSections[1].find_all('div3')
 				letterUpload(accounts, 'accounts', volumeID)
-				print('accounts successfully uploaded\n')
 
 
 if __name__ == '__main__':
 	main()
+	# print script runtime
 	print(datetime.now() - startTime)
