@@ -167,7 +167,7 @@ def footnoteFormat(footnotesArray):
 	""" Apply XSLT to each footnote in given array """
 	footnotes = []
 	for f in footnotesArray:
-		footnote = xsltFormat(str(f.contents))
+		footnote = xsltFormat(''.join(map(str, f.contents)))
 		footnotes.append(footnote)
 	return footnotes
 
@@ -198,7 +198,7 @@ def letterUpload(array, letterType, volumeID):
 		else: recipient = None
 
 		if l.sourceNote.contents:
-			sourceNote = xsltFormat(str(l.sourceNote))
+			sourceNote = xsltFormat(''.join(map(str, l.sourceNote.contents)))
 		else: sourceNote = None
 		docBody = xsltFormat(str(l.docBody))
 
