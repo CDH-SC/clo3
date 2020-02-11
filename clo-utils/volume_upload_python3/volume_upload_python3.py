@@ -180,7 +180,7 @@ def letterUpload(array, letterType, volumeID):
 	for l in array:
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
-		humanDate = l.docDate.string
+		humanDate = ''.join(l.docDate.strings)
 
 		firstPage = l.select('idno[type="firstpage"]')[0].string
 		lastPage = l.select('idno[type="lastpage"]')[0].string
@@ -268,6 +268,17 @@ def main():
 			volume.update({'volume_dates': volumeDates})
 			print('Volume ' + volumeID)
 
+			hasFootnotes = [
+				'introduction',
+				'acknowledgements',
+				'rival_brothers',
+				'janeJournal',
+				'janeNotebook',
+				'simpleStory',
+				'geraldineJewsbury',
+				'ellenTwisleton',
+			]
+
 
 			front = bs_content.find_all('div1')
 			for section in front:
@@ -286,15 +297,10 @@ def main():
 				# body = xsltFormat(' '.join(map(str, section.contents)))
 				body = xsltFormat(str(section))
 
-				if name == 'introduction':
+				if name in hasFootnotes:
 					body = {
-						'introText': body,
-						'introFootnotes': footnotes,
-						}
-				elif name == 'janeJournal':
-					body = {
-						'journalText': body,
-						'journalFootnotes': footnotes,
+						'body': body,
+						'footnotes': footnotes
 					}
 				volume.update({name: body})
 
