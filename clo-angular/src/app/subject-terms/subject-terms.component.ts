@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { SubjectTerm } from '../_shared/models/subject-term';
+import { SubjectTermService } from '../_shared/_services/subject-terms.service';
+
 @Component({
   selector: 'app-subject-terms',
   templateUrl: './subject-terms.component.html',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubjectTermsComponent implements OnInit {
 
-  constructor() { }
+  subjectTerm = [SubjectTerm];
+
+  constructor(
+    private subjectTermService: SubjectTermService,
+  ) { }
 
   ngOnInit() {
+    this.subjectTermService.getSubjectTerms<SubjectTerm[]>().subscribe(data => {
+      console.log(data['data']);
+    })
   }
 
 }

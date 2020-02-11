@@ -7,7 +7,7 @@ var examples = require('./api/example.route');
 var volume = require('./api/volume.route');
 var album = require('./api/album.route');
 var searchResults = require('./api/search.route');
-var subjectTerms = requrie('./api/subject-terms.route');
+var subjectTerms = require('./api/subject-terms.route');
 
 //add route modules here
 router.use('/examples', examples);
