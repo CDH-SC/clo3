@@ -7,25 +7,43 @@ var Schema = mongoose.Schema;
 var volumeSchema = new Schema({
   _id: String,
   volume_dates: String,
-  acknowledgements: String,
+  acknowledgements: {
+    body: String,
+    footnotes: [String],
+  },
   introduction: {
-    introText: String,
-    introFootnotes: [String],
+    body: String,
+    footnotes: [String],
   },
   letters_to_carlyles: String,
   key_to_references: String,
   chronology: String,
-  rival_brothers: String,
+  rival_brothers: {
+    body: String,
+    footnotes: [String],
+  },
   biographicalNote: String,
   inMemoriam: String,
-  janeNotebook: String,
-  simpleStory: String,
-  janeJournal: {
-    journalText: String,
-    journalFootnotes: [String],
+  janeNotebook: {
+    body: String,
+    footnotes: [String],
   },
-  geraldineJewsbury: String,
-  ellenTwisleton: String,
+  simpleStory: {
+    body: String,
+    footnotes: [String],
+  },
+  janeJournal: {
+    body: String,
+    footnotes: [String],
+  },
+  geraldineJewsbury: {
+    body: String,
+    footnotes: [String],
+  },
+  ellenTwisleton: {
+    body: String,
+    footnotes: [String],
+  },
   athanaeumAdvertisements: String,
   auroraComments: String,
   appendix: String,
