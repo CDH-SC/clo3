@@ -21,6 +21,10 @@ export class SubjectTermService {
     return this.http.get<T>(BACKEND_URL);
   }
 
+  public getLetterVolByXML(xml_id: string) {
+    return this.http.get(BACKEND_URL + xml_id);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);

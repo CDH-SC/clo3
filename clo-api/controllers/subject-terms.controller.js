@@ -15,3 +15,13 @@ exports.getSubjectTerms = async function(req, res, next) {
 		return res.status(400).json({status: 400, message: e.message});
 	}
 }
+
+exports.getLetterVolByXML = async function(req, res) {
+	var xml_id = req.params.xml_id;
+	try {
+		var vol = await SubjectTermService.getLetterVolByXML(xml_id);
+		return res.status(200).json({status: 200, data: vol, message: 'Successfully retrieved letter'});
+	} catch(e) {
+		return res.status(400).json({status: 400, message: e.message});
+	}
+}
