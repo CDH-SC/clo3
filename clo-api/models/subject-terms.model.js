@@ -5,9 +5,7 @@ var mongoosePaginate = require('mongoose-paginate')
 var SubjectTermSchema = new mongoose.Schema({
 	_id: String,
 	xml_ids: [String]
-})
+}, { collection: 'subjectterms' })
 
 SubjectTermSchema.plugin(mongoosePaginate)
-const SubjectTerm = mongoose.model('SubjectTerm', SubjectTermSchema)
-
-module.exports = SubjectTerm;
+module.exports = mongoose.model('SubjectTerm', SubjectTermSchema);
