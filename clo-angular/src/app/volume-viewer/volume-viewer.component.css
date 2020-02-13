@@ -45,8 +45,21 @@ img {
   height: 700px;
   width: 500px;
   position: relative;
-  left: 70px;
-  top: -40px;
+  left: 75px;
+  top: -35px;
+}
+
+ .imgBorder { 
+  position: absolute;
+  left: 65px;
+  right: 10px;
+  bottom: 100px;
+  height: 720px;
+  width: 520px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  background: #f5ebdc;
+  z-index: -10;
 }
 
 /deep/ slugline {
