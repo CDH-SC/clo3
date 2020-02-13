@@ -40,7 +40,6 @@
 }
 
 img {
-  border: 2px solid #21596f;
   border-radius: 10px;
   height: 700px;
   width: 500px;
@@ -49,18 +48,19 @@ img {
   top: -35px;
 }
 
- .imgBorder { 
+  .imgBorder { 
   position: absolute;
+  position: center;
   left: 65px;
   right: 10px;
   bottom: 100px;
   height: 720px;
   width: 520px;
-  border: 2px solid grey;
+  border: 1px solid #21596f;
   border-radius: 5px;
   background: #f5ebdc;
   z-index: -10;
-}
+} 
 
 /deep/ slugline {
   font-size: 12px;
