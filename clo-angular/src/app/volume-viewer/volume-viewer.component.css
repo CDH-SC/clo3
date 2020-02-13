@@ -40,6 +40,8 @@
 }
 
 img {
+  border: 2px solid #21596f;
+  border-radius: 10px;
   height: 700px;
   width: 500px;
   position: relative;
