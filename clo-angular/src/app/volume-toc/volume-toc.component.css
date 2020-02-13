@@ -7,8 +7,8 @@
   border-bottom: 0px;
   border-top: 0px;
   border-radius: 10px 10px 0 0;
-  position: fixed;
-  left: 10px;
+  position: absolute;
+  left: -200px;
 }
 
 #volInfo {
