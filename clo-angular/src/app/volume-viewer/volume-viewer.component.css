@@ -39,6 +39,14 @@
   left: 110px;
 }
 
+img {
+  height: 700px;
+  width: 500px;
+  position: relative;
+  left: 70px;
+  top: -40px;
+}
+
 /deep/ slugline {
   font-size: 12px;
 }
