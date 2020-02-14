@@ -46,4 +46,8 @@
       </p>
     </div>
   </div>
+  <div class="letter-navigation" *ngIf="prevLetter || nextLetter">
+    <a id="prev" (click)="letterCycled(prevLetter)" *ngIf="prevLetter">< PREVIOUS</a>
+    <a id="next" (click)="letterCycled(nextLetter)" *ngIf="nextLetter">NEXT ></a>
+  </div>
 </div>

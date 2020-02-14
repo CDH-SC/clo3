@@ -1,21 +1,23 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 
 import { Volume } from '../_shared/models/volume';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import Mark from 'mark.js';
 
 @Component({
   selector: 'app-volume-content',
   templateUrl: './volume-content.component.html',
   styleUrls: ['./volume-content.component.css']
 })
-export class VolumeContentComponent implements OnInit {
+export class VolumeContentComponent implements OnInit, AfterViewChecked {
 
   private TOTAL_VOLUMES = 45;
 
   objectKeys = Object.keys;
+  searchTerm: string;
 
   volume: [Volume];
 
@@ -69,7 +71,6 @@ export class VolumeContentComponent implements OnInit {
         // Set the accounts
         if (this.volume['accounts'].length > 0) {
           this.accounts = this.volumeService.sortLetters(this.volume['accounts']);
-          console.log(this.accounts);
         }
         // Set the viewContent to be null initially
         this.viewContent = null;
@@ -89,7 +90,7 @@ export class VolumeContentComponent implements OnInit {
           this.isFrontice = false;
           // check if xml_id is for a letter or account
           this.volumeService.getLetterById(this.volumeId, this.currentKey).subscribe(data => {
-            if (data["data"] == null) {
+            if (data['data'] == null) {
               this.getAccount(this.currentKey);
             } else {
               this.getLetter(this.currentKey);
@@ -97,6 +98,16 @@ export class VolumeContentComponent implements OnInit {
           });
         }
       });
+  }
+
+  ngAfterViewChecked() {
+    this.route.queryParams.subscribe(params => {
+      this.searchTerm = params.term;
+      if (this.searchTerm) {
+        const instance = new Mark(document.querySelectorAll('.volumeViewer'));
+        instance.mark(this.searchTerm);
+      }
+    });
   }
 
   private createFronticePiece(fronticeObject: Object) {
@@ -119,26 +130,34 @@ export class VolumeContentComponent implements OnInit {
     // Update url to reflect current section
     this.router.navigateByUrl('/volume/' + this.volumeId + '/' + key);
     this.isFrontice = false;
-    if (key === 'introduction') {
-      this.volume[key].introFootnotes.forEach(footnote => {
-        this.footnotes.push(footnote);
-      });
-      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
-        this.volume[key].introText
-      );
-    } else {
-      this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
-        this.volume[key]
-      );
-    }
+    this.volumeKeys.forEach(k => {
+      if (key === k['key'] && k['hasFootnotes'] === true) {
+        if (this.volume[key].footnotes) {
+          this.volume[key].footnotes.forEach(footnote => {
+            this.footnotes.push(footnote);
+          });
+        }
+        this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
+          this.volume[key].body
+        );
+      } else if (key === k['key']) {
+        this.viewContent = this.sanitizer.bypassSecurityTrustHtml(
+          this.volume[key]
+        );
+      }
+    });
   }
 
   cycleLetter(xml_id: string) {
     this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
       if (data["data"] == null) {
         this.getAccount(xml_id);
+        // Update the url to display the current xml id of the letter
+        this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
       } else {
         this.getLetter(xml_id);
+        // Update the url to display the current xml id of the letter
+        this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
       }
     });
   }
@@ -192,8 +211,6 @@ export class VolumeContentComponent implements OnInit {
         window.clearInterval(scrollToTop);
       }
     }, 2);
-    // Update the url to display the current xml id of the letter
-    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
     this.viewContent = null;
     this.volumeService.getLetterById(this.volumeId, xml_id).subscribe(data => {
       const letter = data['data']['letters'][0];
@@ -213,10 +230,8 @@ export class VolumeContentComponent implements OnInit {
         letter.footnotes.forEach(footnote => {
           footnote = this.sanitizer.bypassSecurityTrustHtml(footnote);
           this.footnotes.push(footnote);
-          // console.log(footnote);
         });
       }
-      // console.log(letter);
       // Check if the letter has a manuscript
       if (letter.hasOwnProperty('manuscript')) {
         this.hasManuscript = true;
@@ -233,7 +248,6 @@ export class VolumeContentComponent implements OnInit {
   getAccount(xml_id: string) {
     this.sourceNote = null;
     this.footnotes = [];
-    this.router.navigateByUrl('/volume/' + this.volumeId + '/' + xml_id);
     this.viewContent = null;
     this.volumeService.getAccountById(this.volumeId, xml_id).subscribe(data => {
       const account = data['data']['accounts'][0];
@@ -251,7 +265,7 @@ export class VolumeContentComponent implements OnInit {
       if (account.sourceNote) {
         this.sourceNote = this.sanitizer.bypassSecurityTrustHtml(account.sourceNote);
       }
-      if (account.footnotes[0]) {
+      if (account.footnotes) {
         account.footnotes.forEach(footnote => {
           footnote = this.sanitizer.bypassSecurityTrustHtml(footnote);
           this.footnotes.push(footnote);
@@ -301,7 +315,7 @@ export class VolumeContentComponent implements OnInit {
 
   private setKeys() {
     for (const k in this.volume) {
-      if (this.volume.hasOwnProperty(k)) {
+      if (this.volume.hasOwnProperty(k) && this.volume[k].hasOwnProperty('body') || !this.volume[k].hasOwnProperty('footnotes')) {
         switch (k) {
           case '_id':
             break;
@@ -329,7 +343,8 @@ export class VolumeContentComponent implements OnInit {
           case 'rival_brothers':
             this.volumeKeys.push({
               key: k,
-              title: 'The Rival Brothers: Fragment of a Play by Jane Baillie Welsh'
+              title: 'The Rival Brothers: Fragment of a Play by Jane Baillie Welsh',
+              hasFootnotes: true
             });
             break;
           case 'biographicalNotes':
@@ -350,34 +365,45 @@ export class VolumeContentComponent implements OnInit {
               title: 'JWC by Robert Scott Tait'
             });
             break;
+          case 'TCbyTait':
+            this.volumeKeys.push({
+              key: k,
+              title: 'TC by Robert Scott Tait'
+            });
+            break;
           case 'janeNotebook':
             this.volumeKeys.push({
               key: k,
-              title: 'Jane Carlyle Notebook'
+              title: 'Jane Carlyle Notebook',
+              hasFootnotes: true
             });
             break;
           case 'simpleStory':
             this.volumeKeys.push({
               key: k,
-              title: 'Simple Story of My Own First Love'
+              title: 'Simple Story of My Own First Love',
+              hasFootnotes: true
             });
             break;
           case 'janeJournal':
             this.volumeKeys.push({
               key: k,
-              title: 'Jane Welsh Carlyle Journal'
+              title: 'Jane Welsh Carlyle Journal',
+              hasFootnotes: true
             });
             break;
           case 'geraldineJewsbury':
             this.volumeKeys.push({
               key: k,
-              title: 'Geraldine Jewsbury to Froude'
+              title: 'Geraldine Jewsbury to Froude',
+              hasFootnotes: true
             });
             break;
           case 'ellenTwisleton':
             this.volumeKeys.push({
               key: k,
-              title: 'Ellen Twisleton\'s Account of Life at Craigenputtoch'
+              title: 'Ellen Twisleton\'s Account of Life at Craigenputtoch',
+              hasFootnotes: true
             });
             break;
           case 'auroraComments':
@@ -392,21 +418,19 @@ export class VolumeContentComponent implements OnInit {
               title: 'Athanaeum Advertisements'
             });
             break;
-          // case 'accounts':
-          //   if (this.volume['accounts'].length > 0) {
-          //     this.volumeKeys.push({
-          //       key: k,
-          //       title: 'Account\'s of JWC\'s Death'
-          //     });
-          //   }
-          //   break;
           case 'introduction':
-            if (this.volume['introduction'].introText !== '') {
-              this.volumeKeys.push({
-                key: k,
-                title: k
-              });
-            }
+            this.volumeKeys.push({
+              key: k,
+              title: k,
+              hasFootnotes: true
+            });
+            break;
+          case 'acknowledgements':
+            this.volumeKeys.push({
+              key: k,
+              title: k,
+              hasFootnotes: true
+            });
             break;
           default:
             this.volumeKeys.push({

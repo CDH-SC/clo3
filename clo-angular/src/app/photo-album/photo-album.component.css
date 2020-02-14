@@ -19,3 +19,7 @@
 .photoLink:hover, .photoLink:active, .photoLink:focus {
   color: #a59657 !important;
 }
+
+.force-indent {
+  margin-left: 8px;
+}
