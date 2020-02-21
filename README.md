@@ -2,15 +2,27 @@
 Live Version: Under Construction
 ## Getting Started
 ---
-### Running with Docker
 
+**Nota bene:** CLO has now been containerized such that it can be built using a single docker-compose command. Unless you are a developer working directly on CLOv3, we (the CDH DevOps team) HIGHLY recommend [building CLO with Docker.](# Running with Docker)
+
+### Running with Docker
+#### Dependencies:
+**Do not use default apt packages for Docker and docker-compose. They are deprecated, insecure, and (most importantly) insufficient to sucessfully build CLOv3.**
+
+Verified to build with:
+- Docker v19.03.6+
+- docker-compose v1.25.4
+
+#### Run
+
+* `git clone <repo-url>; cd clo3/
 * `docker-compose up --build`
-* Visit `http://localhost:8090`
+* Visit `127.0.0.1:8090`
 
 Note: this may take a very long time (5-20 minutes) the first time you run
-because of the dependencies. This time would be likely be improved with an SSD.
+because of the dependencies. This time would be likely be improved with an SSD (KJ: ~3 minutes). 
 
-### Running Locally
+### Building Locally (without Docker/docker-compose)
 
 #### Prerequisites
 * [Node](https://nodejs.org/en/) version 8.5.0 or higher
