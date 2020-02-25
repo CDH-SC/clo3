@@ -1,30 +1,24 @@
 <div class="container-fluid" id="content" *ngIf="subjectTerm">
-  <div
-    class="row justify-content-between align-items-center p-2"
-    *ngFor="let subject of subjectTerm"
-  >
+  <div class="row justify-content-between align-items-center p-2">
     <div class="col-8 p-0">
-      <span>Subject Term: {{ subject._id }}</span>
       <table cellpadding = "10">
-        <tr>
-          <td white-space: nowrap>
-            <span>Associated Letters:</span>
-          </td>
-          <td *ngFor="let id of (subject.xml_ids ? subject.xml_ids.slice(0,5): [])" white-space: nowrap>
-            <a (click)="letterLink(id)">{{ id }}</a>
-          </td>
-          <td *ngIf="subject.xml_ids.length > 5" white-space: nowrap style="color: #c17953;">
-            <a>View Additional Letters</a>
-          </td>
-        </tr>
+        <td>
+          <tr *ngFor="let subject of (subjectTerm ? subjectTerm.slice(0,10): [])" white-space: nowrap>
+            <app-child [subjectTerm]="subjectTerm"></app-child>
+            <a routerLink="/subject-letters/{{ subject._id }}">{{ subject._id }}</a>
+          </tr>
+        </td>
+        <td>
+          <tr *ngFor="let subject of (subjectTerm ? subjectTerm.slice(10,20): [])" white-space: nowrap>
+            <a routerLink="/subject-letters/{{ subject._id }}">{{ subject._id }}</a>
+          </tr>
+        </td>
+        <td>
+          <tr *ngFor="let subject of (subjectTerm ? subjectTerm.slice(20,30): [])" white-space: nowrap>
+            <a routerLink="/subject-letters/{{ subject._id }}">{{ subject._id }}</a>
+          </tr>
+        </td>
       </table>
     </div>
   </div>
 </div>
-<ng-template #loading>
-  <div class="container-fluid">
-    <div class="row align-items-center justify-content-center">
-      <img class="loading" src="../../assets/loading.gif" />
-    </div>
-  </div>
-</ng-template>

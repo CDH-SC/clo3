@@ -41,6 +41,7 @@ import { VolumeTocComponent } from './volume-toc/volume-toc.component';
 import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SubjectTermsComponent } from './subject-terms/subject-terms.component';
+import { SubjectLettersComponent } from './subject-letters/subject-letters.component';
 
 const appRoutes: Routes = [
   {
@@ -65,6 +66,7 @@ const appRoutes: Routes = [
   { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
+  { path: 'subject-letters/:subjectTerm', component: SubjectLettersComponent },
 ];
 
 @NgModule({
@@ -94,6 +96,7 @@ const appRoutes: Routes = [
     VolumeViewerComponent,
     SearchResultsComponent,
     SubjectTermsComponent,
+    SubjectLettersComponent,
   ],
   imports: [
     BrowserModule,
