@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { SubjectTerm } from '../_shared/models/subject-term';
 import { SubjectTermService } from '../_shared/_services/subject-terms.service';
@@ -16,22 +16,12 @@ export class SubjectTermsComponent implements OnInit {
 
   constructor(
     private subjectTermService: SubjectTermService,
-    @Inject(DOCUMENT) private document: Document,
+    private router: Router,
   ) { }
 
   ngOnInit() {
     this.subjectTermService.getSubjectTerms<SubjectTerm[]>().subscribe(data => {
       this.subjectTerm = data['data'];
-      console.log(this.subjectTerm)
     })
   }
-
-  private letterLink(xml_id) {
-    this.subjectTermService.getLetterVolByXML(xml_id).subscribe(data => {
-      this.volNum = data['data'][0]['_id'];
-      console.log(this.volNum);
-      this.document.location.href = `/volume/${this.volNum}/${xml_id}`
-    });
-  }
-
 }

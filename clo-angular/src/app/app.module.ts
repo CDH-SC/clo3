@@ -66,7 +66,7 @@ const appRoutes: Routes = [
   { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
-  { path: 'subject-letters/:subjectTerm', component: SubjectLettersComponent },
+  { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
 ];
 
 @NgModule({

@@ -15,6 +15,7 @@ const BACKEND_URL = environment.apiUrl + '/api/subject-terms/';
 
 @Injectable()
 export class SubjectTermService {
+
   constructor(private http: HttpClient) {}
 
   public getSubjectTerms<T>(): Observable<T> {
@@ -23,6 +24,14 @@ export class SubjectTermService {
 
   public getLetterVolByXML(xml_id: string) {
     return this.http.get(BACKEND_URL + xml_id);
+  }
+
+  public getLetter(xml_id: string) {
+    return this.http.get(BACKEND_URL + xml_id);
+  }
+
+  public getSingleSubjectTerm(subjectSearch: string) {
+    return this.http.get(BACKEND_URL + 'subject/' + subjectSearch);
   }
 
   private handleError(error: any): Promise<any> {
