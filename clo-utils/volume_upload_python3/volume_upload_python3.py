@@ -25,7 +25,7 @@ directory = '../../clo-xml-archive/'
 
 # establish connection to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
-db = client.clo_test
+db = client.clo
 
 # load xslt stylesheet for later styling
 xsltDoc = etree.parse('xml_styling.xslt')
