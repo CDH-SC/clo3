@@ -21,7 +21,7 @@ from bs4 import BeautifulSoup as bs
 # start timing of script
 startTime = datetime.now()
 # working directory for xml files
-directory = '../../clo-xml-archive/'
+directory = '../clo-xml-archive/'
 
 # establish connection to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
