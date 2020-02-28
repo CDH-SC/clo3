@@ -4,6 +4,12 @@
     border-radius: 10px;
 }
 
-td {
-    white-space: nowrap;
+#content {
+  margin: auto;
+  padding-top: 25px;
+  width: 80%;
+}
+
+.searchBar {
+  max-width: 250px;
 }
