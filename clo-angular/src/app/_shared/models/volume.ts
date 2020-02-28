@@ -7,19 +7,43 @@ import { Injectable } from '@angular/core';
   export class Volume {
     _id: string;
     volume_dates: string;
-    acknowledgements: string;
-    introduction: string;
+    acknowledgements: {
+      body: string;
+      footnotes: [string];
+    };
+    introduction: {
+      body: string;
+      footnotes: [string];
+    };
     letters_to_carlyles: string;
     key_to_references: string;
     chronology: string;
-    rival_brothers: string;
+    rival_brothers: {
+      body: string;
+      footnotes: [string];
+    };
     biographicalNote: string;
     inMemoriam: string;
-    janeNotebook: string;
-    simpleStory: string;
-    janeJournal: string;
-    geraldineJewsbury: string;
-    ellenTwisleton: string;
+    janeNotebook: {
+      body: string;
+      footnotes: [string];
+    };
+    simpleStory: {
+      body: string;
+      footnotes: [string];
+    };
+    janeJournal: {
+      body: string;
+      footnotes: [string];
+    };
+    geraldineJewsbury: {
+      body: string;
+      footnotes: [string];
+    };
+    ellenTwisleton: {
+      body: string;
+      footnotes: [string];
+    };
     athanaeumAdvertisements: string;
     auroraComments: string;
     appendix: string;

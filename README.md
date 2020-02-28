@@ -1,16 +1,28 @@
 # Carlyle Letters Online (CLO)
-Live Version: Under Construction
+Live Version: [carlyleletters.dukeupress.edu](https://carlyleletters.dukeupress.edu/home)
 ## Getting Started
 ---
-### Running with Docker
 
+**Nota bene:** CLO has now been containerized such that it can be built using a single docker-compose command. Unless you are a developer working directly on CLOv3, we (the CDH DevOps team) HIGHLY recommend [building CLO with Docker.](# Running with Docker)
+
+### Running with Docker
+#### Dependencies:
+**Do not use default apt packages for Docker and docker-compose. They are deprecated, insecure, and (most importantly) insufficient to sucessfully build CLOv3.**
+
+Verified to build with:
+- Docker v19.03.6+
+- docker-compose v1.25.4
+
+#### Run
+
+* `git clone <repo-url>; cd clo3/
 * `docker-compose up --build`
-* Visit `http://localhost:8090`
+* Visit `127.0.0.1:8090`
 
 Note: this may take a very long time (5-20 minutes) the first time you run
-because of the dependencies. This time would be likely be improved with an SSD.
+because of the dependencies. This time would be likely be improved with an SSD (KJ: ~3 minutes). 
 
-### Running Locally
+### Building Locally (without Docker/docker-compose)
 
 #### Prerequisites
 * [Node](https://nodejs.org/en/) version 8.5.0 or higher
@@ -95,7 +107,7 @@ because of the dependencies. This time would be likely be improved with an SSD.
 
 Note: Be sure to merge the latest from "upstream" before making a pull request!
 
-### Extended Contributing
+### Extended Contributing (Angular)
 * **Component** ```ng g component my-new-component```
 * **Service** ```ng g service my-new-service```
 * **Module** ```ng g module my-new-module```
@@ -110,6 +122,24 @@ These commands are useful for [backing up and restoring a database.](https://doc
 
 * [mongodump](https://docs.mongodb.com/manual/reference/program/mongodump/#bin.mongodump): `sudo mongodump --db clo --out <path>/clo-database/current`
 * [mongorestore](https://docs.mongodb.com/manual/reference/program/mongorestore/#bin.mongorestore): `sudo mongorestore <path>/clo-database/current`
+
+Update only one specific collection.
+
+* [mongorestore](https://docs.mongodb.com/manual/reference/program/mongorestore/#cmdoption-mongorestore-collection): `sudo mongorestore --db clo --collection <collection> <path>/clo-database/current/clo/<collection>.bson --drop`
+
+#### Updating Volumes
+
+If there are any changes to the volume XML that need to be uploaded to the database or there are issues in the current version of the database, follow these steps:
+
+1. **GOTO** the `clo-utils` folder and check that you have a working `python3` install:
+   * `python3 --version`
+2. **INSTALL** the required dependencies for the script:
+   * First setup a virtual environment if you wish, documentation [here](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
+   * `pip3 install lxml bs4 pymongo`
+3. **START** an instance of MongoDB if one is not already running:
+   * `sudo mongod`
+4. **RUN** the `volume_upload_python3.py` script:
+   * `python3 volume_upload_python3.py`
 
 #### Adding Albums
 
@@ -138,3 +168,6 @@ If you have received a new album metadata file, take the following steps to make
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
 * **Prithvi Tippabhatla**
+* **Joshua Nelson**
+* **Ian McDowell**
+* **Tyron Schultz**

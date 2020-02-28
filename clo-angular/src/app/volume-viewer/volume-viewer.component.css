@@ -74,7 +74,7 @@ img {
   overflow: auto;
   padding: 25px;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   border: 1px solid #21596f;
   border-radius: 5px;
   background: #f5ebdc;
@@ -88,8 +88,8 @@ img {
   overflow: auto;
   font-size: 16px;
   padding: 25px;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   border: 1px solid #21596f;
   border-radius: 5px;
   background: #f5ebdc;

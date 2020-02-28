@@ -34,11 +34,14 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
+import { SubjectTermService } from './_shared/_services/subject-terms.service';
 
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
 import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { SubjectTermsComponent } from './subject-terms/subject-terms.component';
+import { SubjectLettersComponent } from './subject-letters/subject-letters.component';
 
 const appRoutes: Routes = [
   {
@@ -62,6 +65,8 @@ const appRoutes: Routes = [
   { path: 'album-viewer/:id', component: AlbumViewerComponent },
   { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
   { path: 'search-results/:search', component: SearchResultsComponent },
+  { path: 'subject-terms', component: SubjectTermsComponent },
+  { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
 ];
 
 @NgModule({
@@ -90,6 +95,8 @@ const appRoutes: Routes = [
     VolumeTocComponent,
     VolumeViewerComponent,
     SearchResultsComponent,
+    SubjectTermsComponent,
+    SubjectLettersComponent,
   ],
   imports: [
     BrowserModule,
@@ -104,7 +111,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     VolumeService,
-    AlbumService
+    AlbumService,
+    SubjectTermService
   ],
   bootstrap: [AppComponent]
 })
