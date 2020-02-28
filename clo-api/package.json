@@ -36,7 +36,7 @@
     "typescript": "2.4.2"
   },
   "devDependencies": {
-    "@angular/cli": "^8.3.14",
+    "@angular/cli": "^9.0.4",
     "nodemon": "^1.19.4"
   }
 }
