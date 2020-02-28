@@ -12,7 +12,6 @@
     "@angular/compiler-cli": "^8.2.12",
     "@angular/core": "^5.2.1",
     "@angular/forms": "^5.2.1",
-    "@angular/http": "^5.2.1",
     "@angular/platform-browser": "^5.2.1",
     "@angular/platform-browser-dynamic": "^5.2.1",
     "@angular/platform-server": "^5.2.1",
@@ -33,7 +32,8 @@
     "rxjs": "^5.5.6",
     "serve-favicon": "~2.4.5",
     "swagger-ui-express": "^4.1.2",
-    "typescript": "2.4.2"
+    "typescript": "2.4.2",
+    "zone.js": "^0.10.2"
   },
   "devDependencies": {
     "@angular/cli": "^9.0.4",
