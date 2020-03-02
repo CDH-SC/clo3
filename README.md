@@ -88,6 +88,9 @@ because of the dependencies. This time would be likely be improved with an SSD (
 
 ### Creating Documentation
 
+### Image Compression
+Image compression of Album images/Frontispieces compiled with ImageOptim.
+
 ### Unit Tests
 ---
 * Tests are under development
