@@ -34,6 +34,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { SubjectTermService } from './_shared/_services/subject-terms.service';
+import { SortByPipe } from './_shared/pipes/sortBy.pipe';
 
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
@@ -96,6 +97,7 @@ const appRoutes: Routes = [
     SearchResultsComponent,
     SubjectTermsComponent,
     SubjectLettersComponent,
+    SortByPipe,
   ],
   imports: [
     BrowserModule,
