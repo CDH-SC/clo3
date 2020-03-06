@@ -11,7 +11,7 @@
   font-weight: bold;
 }
 
-/deep/ #letterimage {
+::ng-deep #letterimage {
   max-width: 550px !important;
 }
 
@@ -63,6 +63,7 @@ img {
 } 
 
 /deep/ slugline {
+::ng-deep slugline {
   font-size: 12px;
 }
 
