@@ -26,6 +26,7 @@ import { AboutEditorsComponent } from './about/about-editors/about-editors.compo
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
   { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
+  { path: 'advanced-search', component: AdvancedSearchComponent }
 ];
 
 @NgModule({
@@ -96,6 +98,7 @@ const appRoutes: Routes = [
     SearchResultsComponent,
     SubjectTermsComponent,
     SubjectLettersComponent,
+    AdvancedSearchComponent
   ],
   imports: [
     BrowserModule,

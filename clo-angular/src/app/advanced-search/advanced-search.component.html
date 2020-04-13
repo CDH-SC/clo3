@@ -1,28 +1,51 @@
-<div class="p-2" id="searchWrap">
-  <div id="searchButton">
-    <img src="../../assets/magnifying-glass.png" alt="Go"
-    name="formButton" id="formButton">
-  </div>
-  <div id="searchInput">
-    <div id="formField">
-      <input
-        type="text"
-        class="formsA"
-        aria-label="Search"
-        (keyup.enter)="onEnter(route)"
-        [(ngModel)]="route"
-        size="27">
-    </div>
-    <br>
-    <br>
-    <div class="d-flex flex-row justify-content-start">
-      <a href="#">Advanced Search</a>
-      <div class="d-flex flex-row align-items-start ml-2">
-        <input type="checkbox" name="wholeWord" id="wholeWord" checked/>
-        <label for="wholeWord" id="wholeWordLabel">
-          <span>Whole-word</span>
-        </label>
-      </div>
+
+<div class="container" id="content">
+  <div class="row justify-content-start">
+    <div class="col-12">
+      <H3>Advanced Search</H3>
+
+      <script type="text/javascript">
+
+      document.addEventListener('input',
+          function (event) {
+              var eventID = event.target.id;
+              if (eventID.includes("boolOp")) {
+                  var inputID = eventID.replace('boolOp','');
+                  var inputName = document.getElementById(inputID).name;
+                  document.getElementById(inputID).setAttribute("name",event.target.value + inputName.substring(3));
+              }
+              else if (eventID.includes("fields")) {
+                  var inputID = eventID.replace('fields','');
+                  var inputName = document.getElementById(inputID).name;
+                  document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
+              }
+          }, false);
+
+      </script>
+      <div id="searchQuery">{{ searchQuery }}</div>
+      <form action="/boolesearch/" method="post">
+          <label for="terms"><INPUT type="submit" value="Search"></label><br/>
+          <div id="new_chq" #new_chq></div>
+          <input type="hidden" value="1" id="total_chq">    
+      </form>
+      <button (click)="addField()">Add Field</button>
+
+      <!-- {{#if volumes}}
+          <hr/>
+          {{#each volumes}}
+              <div class="volume">
+                  <div class="title"><span class="label">ID:</span><a href="https://clo.dev.cdhsc.org/volume/{{_id}}/{{letter.xml_id}}" target="_blank">{{letter.xml_id}}</a></div>
+                  <div><span class="label">Letter Date:</span> {{letter.docDate}}</div>
+                  <div><span class="label">Author:</span> {{letter.docAuthor}}</div>
+                  <div><span class="label">Recipient:</span> {{letter.recipient}}</div>
+              </div>
+              <hr/>
+          {{/each}}
+      {{else}}
+          <div>No data to display.</div>
+      {{/if}}
+
+       -->
     </div>
   </div>
 </div>
