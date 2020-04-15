@@ -23,13 +23,23 @@
 
       </script>
       <div id="searchQuery">{{ searchQuery }}</div>
-      <form action="/boolesearch/" method="post">
+      <form action="/boolesearch/" method="post" id="searchTerms">
           <label for="terms"><INPUT type="submit" value="Search"></label><br/>
-          <div id="new_chq" #new_chq></div>
-          <input type="hidden" value="1" id="total_chq">    
+          <div *ngFor='let query of queries; let i = index'>
+             <select [attr.id]="query[0][i]" (change)='testMethod($event)'>
+                <option value='AND'>AND</option>
+                <option value='OR-'>OR</option>
+                <option value='NOT'>NOT</option>
+            </select>
+            <select [attr.id]="query[1][i]" (change)='testMethod($event)'>
+                <option value='docBody'>Letter Body</option>
+                <option value='sourceNote'>Source Notes</option>
+                <option value='footnotes'>Foot Notes</option>
+            </select>
+            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/><br/>
+         </div> 
       </form>
       <button (click)="addField()">Add Field</button>
-
       <!-- {{#if volumes}}
           <hr/>
           {{#each volumes}}
