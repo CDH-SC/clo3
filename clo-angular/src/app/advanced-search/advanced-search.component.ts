@@ -35,6 +35,14 @@ export class AdvancedSearchComponent {
     let newQuery = [this.boolOps,this.fields,this.inputs];
     this.queries.push(newQuery);
   }
+
+  removeField() {
+    if (this.queryNumber > 1) {
+      this.queryNumber--;
+      this.queries.splice(this.queryNumber);
+    }
+  }
+
   testMethod (event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;

@@ -99,7 +99,7 @@ const appRoutes: Routes = [
     SearchResultsComponent,
     SubjectTermsComponent,
     SubjectLettersComponent,
-    AdvancedSearchComponent
+    AdvancedSearchComponent,
     SortByPipe,
   ],
   imports: [
