@@ -4,11 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import Mark from 'mark.js';
 
-import { SearchService } from '../_shared/_services/search.service';
+// import { SearchService } from '../_shared/_services/search.service';
+import { ElasticSearchService } from '../_shared/_services/elastic-search.service';
+import { ElasticSearch } from '../_shared/models/elastic-search';
 import { VolumeService } from '../_shared/_services/volumes.service';
 import { Volume } from '../_shared/models/volume';
 
-import { faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-search-results',
@@ -38,7 +40,8 @@ export class SearchResultsComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private searchService: SearchService,
+    // private searchService: SearchService,
+    private searchService: ElasticSearchService,
     private volumeService: VolumeService,
     private sanitizer: DomSanitizer
   ) {}
@@ -49,15 +52,21 @@ export class SearchResultsComponent implements OnInit {
 
     // Pass search term through search API and subscribe
     // to results
+    // this.searchService.search(this.searchTerm).subscribe(data => {
+    //   this.searchResults = data['data'];
+    // });
     this.searchResults = this.searchService.search(this.searchTerm);
+    this.searchService.search(this.searchTerm).subscribe(data => {
+      console.log(data['data']);
+    })
   }
 
   ngAfterViewChecked() {
     var instance = new Mark(document.querySelectorAll('.viewer-box'));
-    instance.mark(this.searchTerm)
+    instance.mark(this.searchTerm);
   }
 
-  private setPage(page: number) {
+  setPage(page: number) {
     this.page = page;
     this.end = this.page * this.pageSize;
     this.start = this.end - (this.pageSize - 1);
