@@ -22,6 +22,9 @@ db = client.clo
 xsltDoc = etree.parse("xml_styling.xslt")  # import xsl stylesheet
 xsltTransformer = etree.XSLT(xsltDoc)  # define xml transformation function
 
+# Select a particular volume for testing
+volSelect = "30"
+
 #############################
 # Uploads the processed     #
 # pages from an xml file #
@@ -149,9 +152,13 @@ def linkFix(m):
 
 def main():
     # loop through xml files in directory
-    for i, filename in enumerate(os.listdir(directory), start=1):
-        if filename.endswith("45-P5.xml"):
-            print "%d/%d" % (i, len(os.listdir(directory)))
+    dirList = os.listdir(directory)
+    dirList.sort()
+    for i, filename in enumerate(dirList, start=1):
+        # if you just want to upload one volume, replace
+        # str(i-1) with volSelect
+        if filename.endswith("%s-P5.xml" % str(i-1)):
+            print "%d/%d" % (i, len(dirList))
             print filename
             # get volume id from filename
             volumeID = ''.join(re.findall("\d{2}", filename))
@@ -204,6 +211,9 @@ def main():
             # get acknowledgements section
             acknowledgementsMatch = re.findall(
                 "<div1 type=\"section\" id=\"ed-%s-acknowledgements\">(.*?)</div1>" % volumeID, content, re.DOTALL)
+            if not acknowledgementsMatch:
+                acknowledgementsMatch = re.findall(
+                    "<div1 type=\"section\" id=\"ed-%s-acknowledgments\">(.*?)</div1>" % volumeID, content, re.DOTALL)
             if acknowledgementsMatch:
                 acknowledgements = acknowledgementsMatch[0]
                 xmlString = "<body>%s</body>" % acknowledgements
@@ -366,7 +376,14 @@ def main():
                 janeJournal = str(xmlString)
 
                 db.volumes.update_one({"_id": str(volumeID)}, {
-                                      "$set": {"janeJournal": janeJournal}})
+                                      "$set": {"janeJournal.journalText": janeJournal}})
+                
+                # if footnotes exist add as array to introduction
+                journalFootnotes = re.findall("<note.*?>(.*?)</note>",
+                                            janeJournalMatch[0], re.DOTALL)
+                if journalFootnotes:
+                    db.volumes.update_one({"_id": str(volumeID)}, {
+                                          "$set": {"janeJournal.journalFootnotes": journalFootnotes}})
 
             # check if geraldine-jewsbury-to-froude exists and if so add to volume
             geraldineJewsburyMatch = re.findall(

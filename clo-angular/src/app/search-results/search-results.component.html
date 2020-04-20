@@ -52,6 +52,7 @@
               <span>Letter: </span>
               <a
                 routerLink="/volume/{{ result._id }}/{{ result.letters.xml_id }}"
+                [queryParams]="{ term: searchTerm }"
                 routerLinkActive="active"
               >{{ result.letters.xml_id }}</a>
             </td>

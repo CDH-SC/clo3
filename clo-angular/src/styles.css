@@ -59,6 +59,10 @@ mark {
   background-color: #f5ebdc !important;
 }
 
+a.tx_sup {
+  color: #007bff !important;
+}
+
 /*
 =================================================
 Custom metadata modal

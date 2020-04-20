@@ -43,12 +43,25 @@
           <td class="col2">{{ imageMetadata.description }}</td>
         </tr>
         <tr *ngIf="album._id === 0">
+          <td class ="col1">Caption:</td>
+          <td class = "col2"></td>
+        </tr>
+        
+        <tr *ngIf="album._id === 0">
           <td class ="col1">Link to Volume:</td>
           <td class ="col2">
+            <tr *ngIf="nextId >= 9">
               <a
-              routerLink="/../volume/0{{ album._id + 1}}/frontice_piece"
+              routerLink="/../volume/{{ nextId }}/frontice_piece"
               routerLinkActive="active">
-              Link to Volume</a>
+              Volume {{ nextId }}</a>
+            </tr>
+            <tr *ngIf="nextId <= 9">
+              <a
+              routerLink="/../volume/0{{ nextId }}/frontice_piece"
+              routerLinkActive="active">
+              Volume 0{{ nextId }}</a>
+            </tr>
           </td>
         </tr>
           

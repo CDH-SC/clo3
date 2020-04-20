@@ -1,0 +1,15 @@
+#subjectTable {
+    border: 2px solid #21596f;
+    background: #f5ebdc;
+    border-radius: 10px;
+}
+
+#content {
+  margin: auto;
+  padding-top: 25px;
+  width: 80%;
+}
+
+.searchBar {
+  max-width: 250px;
+}
