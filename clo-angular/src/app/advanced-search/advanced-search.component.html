@@ -3,35 +3,16 @@
   <div class="row justify-content-start">
     <div class="col-12">
       <H3>Advanced Search</H3>
-
-      <script type="text/javascript">
-
-      document.addEventListener('input',
-          function (event) {
-              var eventID = event.target.id;
-              if (eventID.includes("boolOp")) {
-                  var inputID = eventID.replace('boolOp','');
-                  var inputName = document.getElementById(inputID).name;
-                  document.getElementById(inputID).setAttribute("name",event.target.value + inputName.substring(3));
-              }
-              else if (eventID.includes("fields")) {
-                  var inputID = eventID.replace('fields','');
-                  var inputName = document.getElementById(inputID).name;
-                  document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
-              }
-          }, false);
-
-      </script>
       <div id="searchQuery">{{ searchQuery }}</div>
-      <form action="/boolesearch/" method="post" id="searchTerms">
-          <label for="terms"><INPUT type="submit" value="Search"></label><br/>
+      <form id="searchTerms">
+          <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
           <div *ngFor='let query of queries; let i = index'>
-             <select [attr.id]="query[0][i]" (change)='testMethod($event)'>
+             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
                 <option value='AND'>AND</option>
                 <option value='OR-'>OR</option>
                 <option value='NOT'>NOT</option>
             </select>
-            <select [attr.id]="query[1][i]" (change)='testMethod($event)'>
+            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
                 <option value='docBody'>Letter Body</option>
                 <option value='sourceNote'>Source Notes</option>
                 <option value='footnotes'>Foot Notes</option>
@@ -40,6 +21,10 @@
          </div> 
       </form>
       <button (click)="addField()">Add Field</button>
+
+      <div>
+        
+      </div>
       <!-- {{#if volumes}}
           <hr/>
           {{#each volumes}}
