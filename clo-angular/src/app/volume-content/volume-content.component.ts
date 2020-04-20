@@ -14,7 +14,7 @@ import Mark from 'mark.js';
 })
 export class VolumeContentComponent implements OnInit, AfterViewChecked {
 
-  private TOTAL_VOLUMES = 45;
+  private TOTAL_VOLUMES = 46;
 
   objectKeys = Object.keys;
   searchTerm: string;
@@ -328,72 +328,114 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
             break;
           case 'accounts':
             break;
-          case 'letters_to_carlyles':
+          case 'acknowledgements':
             this.volumeKeys.push({
+              index: 1,
               key: k,
-              title: 'Letters to the Carlyles'
+              title: k,
+              hasFootnotes: true
+            });
+            break;
+          case 'acknowledgments':
+            this.volumeKeys.push({
+              index: 1,
+              key: k,
+              title: k,
+              hasFootnotes: true
+            });
+            break;
+          case 'introduction':
+            this.volumeKeys.push({
+              index: 2,
+              key: k,
+              title: k,
+              hasFootnotes: true
             });
             break;
           case 'key_to_references':
             this.volumeKeys.push({
+              index: 3,
               key: k,
               title: 'Key to References'
             });
             break;
+          case 'letters_to_carlyles':
+            this.volumeKeys.push({
+              index: 4,
+              key: k,
+              title: 'Letters to the Carlyles'
+            });
+            break;
+          case 'chronology':
+            this.volumeKeys.push({
+              index: 5,
+              key: k,
+              title: k
+            });
+            break;
+          case 'biographicalNotes':
+            this.volumeKeys.push({
+              index: 6,
+              key: k,
+              title: 'Biographical Notes'
+            });
+            break;
           case 'rival_brothers':
             this.volumeKeys.push({
+              index: 7,
               key: k,
               title: 'The Rival Brothers: Fragment of a Play by Jane Baillie Welsh',
               hasFootnotes: true
             });
             break;
-          case 'biographicalNotes':
-            this.volumeKeys.push({
-              key: k,
-              title: 'Biographical Notes'
-            });
-            break;
           case 'inMemoriam':
             this.volumeKeys.push({
+              index: 8,
               key: k,
               title: 'In Memoriam'
             });
             break;
           case 'JWCbyTait':
             this.volumeKeys.push({
+              index: 9,
               key: k,
               title: 'JWC by Robert Scott Tait'
             });
             break;
           case 'TCbyTait':
             this.volumeKeys.push({
+              index: 10,
               key: k,
               title: 'TC by Robert Scott Tait'
             });
             break;
+          case 'janeJournal':
+            this.volumeKeys.push({
+              index: 11,
+              key: k,
+              title: 'Jane Welsh Carlyle\'s Journal',
+              hasFootnotes: true
+            });
+            break;
           case 'janeNotebook':
             this.volumeKeys.push({
+              index: 12,
               key: k,
-              title: 'Jane Carlyle Notebook',
+              title: 'Jane Welsh Carlyle\'s Notebook',
               hasFootnotes: true
             });
             break;
           case 'simpleStory':
             this.volumeKeys.push({
+              index: 13,
               key: k,
               title: 'Simple Story of My Own First Love',
               hasFootnotes: true
             });
             break;
-          case 'janeJournal':
-            this.volumeKeys.push({
-              key: k,
-              title: 'Jane Welsh Carlyle Journal',
-              hasFootnotes: true
-            });
-            break;
           case 'geraldineJewsbury':
             this.volumeKeys.push({
+              index: 14,
               key: k,
               title: 'Geraldine Jewsbury to Froude',
               hasFootnotes: true
@@ -401,6 +443,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
             break;
           case 'ellenTwisleton':
             this.volumeKeys.push({
+              index: 15,
               key: k,
               title: 'Ellen Twisleton\'s Account of Life at Craigenputtoch',
               hasFootnotes: true
@@ -408,32 +451,36 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
             break;
           case 'auroraComments':
             this.volumeKeys.push({
+              index: 16,
               key: k,
               title: 'Comments on Aurora Leigh'
             });
             break;
           case 'athanaeumAdvertisements':
             this.volumeKeys.push({
+              index: 17,
               key: k,
               title: 'Athanaeum Advertisements'
             });
             break;
-          case 'introduction':
+          case 'appendix-one':
             this.volumeKeys.push({
+              index: 18,
               key: k,
-              title: k,
+              title: 'Appendix One',
               hasFootnotes: true
             });
             break;
-          case 'acknowledgements':
+          case 'appendix-two':
             this.volumeKeys.push({
+              index: 19,
               key: k,
-              title: k,
-              hasFootnotes: true
+              title: 'Appendix Two'
             });
             break;
           default:
             this.volumeKeys.push({
+              index: 99,
               key: k,
               title: k
             });
@@ -441,5 +488,6 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
         }
       }
     }
+    this.volumeKeys = this.volumeKeys.sort((a, b) => a.index - b.index)
   }
 }
