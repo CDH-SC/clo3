@@ -25,7 +25,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
   prevVolumeId: string = null;
   nextVolumeId: string = null;
   volumeDates: string;
-  volumeKeys: Object[] = [];
+  volumeKeys: any = [];
   currentKey: string;
 
   isFrontice = false;
