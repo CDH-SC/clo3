@@ -28,8 +28,8 @@
   overflow: auto;
   font-size: 16px;
   padding: 25px;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   border: 1px solid #21596f;
   border-radius: 5px;
   background: #f5ebdc;
@@ -40,17 +40,17 @@ span {
   font-weight: bold;
 }
 
-/deep/.pagination .page-item .page-link {
+::ng-deep.pagination .page-item .page-link {
   border-radius: 0 !important;
 }
 
-/deep/ .page-item.active .page-link {
+::ng-deep .page-item.active .page-link {
   background-color: #21596f !important;
   border-color: #21596f !important;
   color: white !important;
 }
 
-/deep/ .pagination .page-link {
+::ng-deep .pagination .page-link {
   /* border-color: #21596f !important;
   /* border-top-style: none !important;
   border-bottom-style: none !important; */

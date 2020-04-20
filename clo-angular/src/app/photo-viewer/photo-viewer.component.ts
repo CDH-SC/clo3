@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlbumService } from '../_shared/_services/album.service';
 import Album from '../_shared/models/album';
+import Volume from '../_shared/models/volume';
 
 import { faAngleLeft, faAngleRight, faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -27,6 +28,8 @@ export class PhotoViewerComponent implements OnInit, AfterViewChecked {
   prevId: string;
   nextId: string;
   imageMetadata: any;
+
+  volume: Volume;
 
   dropdownHidden = true;
 

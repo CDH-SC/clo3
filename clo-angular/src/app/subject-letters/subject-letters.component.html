@@ -1,0 +1,82 @@
+<div class="container-fluid" id="content" *ngIf="letters.length > 0">
+  <div class="row justify-content-start orange-border-bottom">
+    <h4>Letters related to "{{ subjectSearch }}"</h4>
+  </div>
+  <ng-container *ngIf="subjectTerm.xml_ids.length > 0">
+    <div class="row justify-content-between pt-2">
+      <span>Displaying {{ start }} - {{ end }} of {{ subjectTerm.xml_ids.length }} results.</span>
+      <ngb-pagination
+        [collectionSize]="subjectTerm.xml_ids.length"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [(page)]="page"
+        (pageChange)="setPage($event)"
+      ></ngb-pagination>
+    </div>
+    <div
+      class="row justify-content-between align-items-center p-2 letter"
+      *ngFor="let letter of (letters | slice: start - 1:end)"
+    >
+      <div class="col-8 p-0">
+        <table cellpadding = "10">
+          <tr>
+            <td id="volResult" white-space: nowrap>
+              <span>Volume: </span> {{ letter._id }}
+            </td>
+            <td id="letterResult" white-space: nowrap>
+              <span>Letter: </span>
+              <a
+                routerLink="/volume/{{ letter._id }}/{{ letter.letters.xml_id }}"
+                routerLinkActive="active"
+              >{{ letter.letters.xml_id }}</a>
+            </td>
+            <td id="dateResult" white-space: nowrap>
+              <span>Date: </span> {{ letter.letters.docDate | date: "longDate" }}
+            </td>
+          </tr>
+          <tr>
+            <td id = "letterAuthor" white-space: nowrap>
+              <span>Sender: </span> {{ letter.letters.docAuthor.toUpperCase() }}
+            </td>
+            <td id = "letterRecipient">
+              <span>Recipient: </span> {{ letter.letters.recipient }}
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-4 p-auto" id="resultText">
+        <a
+          data-toggle="collapse"
+          href="#{{ letter.letters.xml_id }}"
+          aria-expanded="false"
+          [attr.aria-controls]="letter.letters.xml_id"
+          style="text-decoration: none;"
+        >
+          <span>View Letter Content</span>
+          <span style="color: #5c8b57 !important;">
+            <fa-icon [icon]="faPlusSquare"></fa-icon>
+          </span>
+        </a>
+      </div>
+      <div class="col-12">
+        <div class="collapse" id="{{ letter.letters.xml_id }}">
+          <div
+            class="viewer-box"
+            [innerHtml]="safeHTML(letter.letters.docBody)"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center pt-2">
+      <ngb-pagination
+        [collectionSize]="subjectTerm.xml_ids.length"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [(page)]="page"
+        (pageChange)="setPage($event)"
+      ></ngb-pagination>
+    </div>
+  </ng-container>
+</div>
