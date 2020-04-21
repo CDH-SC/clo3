@@ -15,10 +15,9 @@ exports.basicSearch = async function(req, res) {
 }
 
 exports.advancedSearch = async function(req, res) {
-  var search = req.params.search
-
+  var query = req.params.query;
   try {
-    var results = await ElasticService.advancedSearch(search)
+    var results = await ElasticService.advancedSearch(query);
 
     return res.status(200).json({status: 200, data: results, message: 'Successfully performed advanced search'})
   } catch (e) {

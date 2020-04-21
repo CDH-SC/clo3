@@ -119,48 +119,30 @@ export class AdvancedSearchComponent {
     }
     console.log(result);
     var queryString = ""
-    var andArray = [];
-    var orArray = [];
-    var notArray = [];
+    var ANDString = "$AND:_"
+    var ORString = "$OR:_"
+    var NOTString = "$NOT:_"
     for(var i = 0; i < result.length; i++) {
-      var fieldName = "letters." + result[i][0].substring(3);
       if(result[i][0].includes("AND")) {
         for(var j = 0; j < result[i][1].length; j++) {
-          var match_phrase = {};
-          match_phrase[fieldName] = result[i][1][j];
-          andArray.push({
-            match_phrase
-          });
-          queryString += "AND "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
+          ANDString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
         }
       } else if(result[i][0].includes("OR")) {
         for(var j = 0; j < result[i][1].length; j++) {
-          var match_phrase = {};
-          match_phrase[fieldName] = result[i][1][j];
-          orArray.push({
-            match_phrase
-          });
-          queryString += "OR "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
+          ORString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
         }
       } else if(result[i][0].includes("NOT")) {
         for(var j = 0; j < result[i][1].length; j++) {
-          var match_phrase = {};
-          match_phrase[fieldName] = result[i][1][j];
-          notArray.push({
-            match_phrase
-          });
-          queryString += "NOT "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
+          NOTString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
         }        
       }
     }
-    var queryObject = {
-        must: andArray,
-        should: orArray,
-        must_not: notArray
-      };
-    console.log(queryObject);
-    this.searchResults = this.searchService.advancedSearch(queryObject);
-    this.searchResults.sort(this.compareValues('score', 'desc'));
+    queryString = ANDString + ORString + NOTString
+    this.searchResults = this.searchService.advancedSearch(queryString);
+    this.searchService.advancedSearch(queryString).subscribe(data => {
+      console.log("data",data['data']);
+    })
+    // this.searchResults.sort(this.compareValues('score', 'desc'));
     this.searchQuery = queryString;
     // res.render("boolesearch", {searchQuery:queryString, volumes:searchResults});
   }

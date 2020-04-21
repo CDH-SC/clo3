@@ -16,8 +16,8 @@ export class ElasticSearchService {
     return this.http.get(BACKEND_URL + searchTerm);
   }
 
-  advancedSearch(query: any) {
-    return this.http.get(BACKEND_URL + 'advancedSearch/' + query);
+  advancedSearch(query: string) {
+    return this.http.get(BACKEND_URL + 'advanced-search/' + query);
   }
 
 }
