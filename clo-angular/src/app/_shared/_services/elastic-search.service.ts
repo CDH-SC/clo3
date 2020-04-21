@@ -17,7 +17,7 @@ export class ElasticSearchService {
   }
 
   advancedSearch(query: any) {
-  
+    return this.http.get(BACKEND_URL + 'advancedSearch/' + query);
   }
 
 }
