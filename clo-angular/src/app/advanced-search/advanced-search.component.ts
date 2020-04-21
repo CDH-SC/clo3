@@ -36,6 +36,14 @@ export class AdvancedSearchComponent {
     let newQuery = [this.boolOps,this.fields,this.inputs];
     this.queries.push(newQuery);
   }
+
+  removeField() {
+    if (this.queryNumber > 1) {
+      this.queryNumber--;
+      this.queries.splice(this.queryNumber);
+    }
+  }
+
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
@@ -50,6 +58,7 @@ export class AdvancedSearchComponent {
       document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
     }
   }
+  
   // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
   compareValues(key, order = 'asc') {
     return function innerSort(a, b) {
