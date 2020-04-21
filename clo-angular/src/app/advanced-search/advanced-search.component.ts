@@ -160,7 +160,7 @@ export class AdvancedSearchComponent {
       };
     console.log(queryObject);
     this.searchResults = this.searchService.advancedSearch(queryObject);
-    // this.searchResults.sort(this.compareValues('score', 'desc'));
+    this.searchResults.sort(this.compareValues('score', 'desc'));
     this.searchQuery = queryString;
     // res.render("boolesearch", {searchQuery:queryString, volumes:searchResults});
   }
