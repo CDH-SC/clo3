@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import {NgForm} from '@angular/forms';
 
+import { ElasticSearchService } from '../_shared/_services/elastic-search.service';
+import { ElasticSearch } from '../_shared/models/elastic-search';
+
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -11,9 +14,11 @@ import {NgForm} from '@angular/forms';
 export class AdvancedSearchComponent {
 
   route = '';
-  searchQuery;
+  searchQuery: string;
 
-  constructor(@Inject(DOCUMENT) document) { }
+  constructor(
+    @Inject(DOCUMENT) document,
+    private searchService: ElasticSearchService) { }
 
   // Goes to search results page when enter is pressed
   onEnter(route) {
@@ -27,6 +32,7 @@ export class AdvancedSearchComponent {
   query = [this.boolOps,this.fields,this.inputs];
   queries = [this.query];
   queryNumber = 1;
+  searchResults: any;
 
   addField() {
     this.queryNumber++;
@@ -58,7 +64,7 @@ export class AdvancedSearchComponent {
       document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
     }
   }
-  
+
   // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
   compareValues(key, order = 'asc') {
     return function innerSort(a, b) {
@@ -105,126 +111,57 @@ export class AdvancedSearchComponent {
       var currInputName = (<HTMLInputElement>document.getElementById(currInputId)).name;
       var currInputValue = (<HTMLInputElement>document.getElementById(currInputId)).value;
       var check = this.checkQuery(result,currInputName);
-      console.log(check);
       if(check[0]) {
         result[check[1]][1].push(currInputValue);
       } else {
         result.push([currInputName, [currInputValue]]);
       }
     }
-    console.log(result); //remove the checks for typeof 
-
-    // var result = Object.keys(req.body).map(function(key) {
-    //   return [key, req.body[key]];
-    // });
-    // var queryString = ""
-    // andArray = [];
-    // orArray = [];
-    // notArray = [];
-    // for(var i = 0; i < result.length; i++) {
-    //   var fieldName = "letters." + result[i][0].substring(3);
-    //   if(result[i][0].includes("AND")) {
-    //     if(typeof(result[i][1]) == typeof("")) {
-    //       match_phrase = {};
-    //       match_phrase[fieldName] = result[i][1];
-    //       andArray.push({
-    //         match_phrase
-    //       });
-    //       queryString += "AND "+ result[i][0].substring(3) + ": " + result[i][1] + "\n";
-    //     } else {
-    //       for(var j = 0; j < result[i][1].length; j++) {
-    //         match_phrase = {};
-    //         match_phrase[fieldName] = result[i][1][j];
-    //         andArray.push({
-    //           match_phrase
-    //         });
-    //         queryString += "AND "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
-    //       }
-    //     }
-    //   } else if(result[i][0].includes("OR")) {
-    //     if(typeof(result[i][1]) == typeof("")) {
-    //       match_phrase = {};
-    //       match_phrase[fieldName] = result[i][1];
-    //       orArray.push({
-    //         match_phrase
-    //       });
-    //       queryString += "OR "+ result[i][0].substring(3) + ": " + result[i][1] + "\n";
-    //     } else {
-    //       for(var j = 0; j < result[i][1].length; j++) {
-    //         match_phrase = {};
-    //         match_phrase[fieldName] = result[i][1][j];
-    //         orArray.push({
-    //           match_phrase
-    //         });
-    //         queryString += "OR "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
-    //       }
-    //     }
-    //   } else if(result[i][0].includes("NOT")) {
-    //     if(typeof(result[i][1]) == typeof("")) {
-    //       match_phrase = {};
-    //       match_phrase[fieldName] = result[i][1];
-    //       notArray.push({
-    //         match_phrase
-    //       });
-    //       queryString += "NOT "+ result[i][0].substring(3) + ": " + result[i][1] + "\n";
-    //     } else {
-    //       for(var j = 0; j < result[i][1].length; j++) {
-    //         match_phrase = {};
-    //         match_phrase[fieldName] = result[i][1][j];
-    //         andArray.push({
-    //           match_phrase
-    //         });
-    //         queryString += "NOT "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
-    //       }
-    //     }
-    //   }
-    // }
-    // queryObject = {
-    //     must: andArray,
-    //     should: orArray,
-    //     must_not: notArray
-    //   };
-    // console.log(queryObject);
-    // console.log(andArray);
-    // console.log(orArray);
-    // console.log(notArray);
-    // client.search({
-    //   size: 45,
-    //   index: 'volumes',
-    //   body: {
-    //     query: {
-    //       nested: {
-    //         path: "letters",
-    //         query: {
-    //           bool: queryObject
-    //         },
-    //         inner_hits : {
-    //           size: 10
-    //         }
-    //       }
-    //     }
-    //   }
-    // },function (error, response,status) {
-    //     if (error){
-    //       console.log("search error: "+error)
-    //     }
-    //     else {
-    //       var searchResults = new Array();
-    //       response.body.hits.hits.forEach(function(hit) {
-    //         hit.inner_hits.letters.hits.hits.forEach(function(inHit){
-    //           console.log(hit._id);
-    //           var result = {
-    //             _id: hit._id,
-    //             source: inHit._source,
-    //             terms: result,
-    //             letter: inHit._source
-    //           }
-    //           searchResults.push(result);
-    //         });
-    //       });
-    //       searchResults.sort(compareValues('score', 'desc'));
-    //       res.render("boolesearch", {searchQuery:queryString, volumes:searchResults});
-    //     }
-    //   });
+    console.log(result);
+    var queryString = ""
+    var andArray = [];
+    var orArray = [];
+    var notArray = [];
+    for(var i = 0; i < result.length; i++) {
+      var fieldName = "letters." + result[i][0].substring(3);
+      if(result[i][0].includes("AND")) {
+        for(var j = 0; j < result[i][1].length; j++) {
+          var match_phrase = {};
+          match_phrase[fieldName] = result[i][1][j];
+          andArray.push({
+            match_phrase
+          });
+          queryString += "AND "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
+        }
+      } else if(result[i][0].includes("OR")) {
+        for(var j = 0; j < result[i][1].length; j++) {
+          var match_phrase = {};
+          match_phrase[fieldName] = result[i][1][j];
+          orArray.push({
+            match_phrase
+          });
+          queryString += "OR "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
+        }
+      } else if(result[i][0].includes("NOT")) {
+        for(var j = 0; j < result[i][1].length; j++) {
+          var match_phrase = {};
+          match_phrase[fieldName] = result[i][1][j];
+          notArray.push({
+            match_phrase
+          });
+          queryString += "NOT "+ result[i][0].substring(3) + ": " + result[i][1][j] + "\n";
+        }        
+      }
+    }
+    var queryObject = {
+        must: andArray,
+        should: orArray,
+        must_not: notArray
+      };
+    console.log(queryObject);
+    this.searchResults = this.searchService.advancedSearch(queryObject);
+    // this.searchResults.sort(this.compareValues('score', 'desc'));
+    this.searchQuery = queryString;
+    // res.render("boolesearch", {searchQuery:queryString, volumes:searchResults});
   }
 }

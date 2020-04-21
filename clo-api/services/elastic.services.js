@@ -50,3 +50,25 @@ exports.basicSearch = async function(search) {
     throw Error(e.message, "Error using basic Elasticsearch");
   }
 };
+
+
+exports.advancedSearch = async function(query) {
+  try {
+    const { body } = await esClient.search(query)
+    var results = new Array();
+    body.hits.hits.forEach(hit => {
+      hit.inner_hits.letters.hits.hits.forEach(inHit => {
+        var result = {
+          _id: hit._id,
+          score: inHit._score,
+          terms: search,
+          letter: inHit._source
+        }
+        results.push(result);
+      });
+    });
+    return results
+  } catch (e) {
+    throw Error(e.message, "Error using advanced Elasticsearch");
+  }
+}

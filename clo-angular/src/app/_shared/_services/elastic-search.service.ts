@@ -16,4 +16,8 @@ export class ElasticSearchService {
     return this.http.get(BACKEND_URL + searchTerm);
   }
 
+  advancedSearch(query: any) {
+  
+  }
+
 }
