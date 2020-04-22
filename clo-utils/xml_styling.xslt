@@ -55,9 +55,12 @@
   </xsl:template>
 
   <xsl:template match="hi">
-
     <xsl:if test='@rend="italic"'>
       <i><xsl:apply-templates/></i>
+    </xsl:if>
+
+    <xsl:if test='@rend="bold"'>
+      <strong><xsl:apply-template/></strong>
     </xsl:if>
   </xsl:template>
 
@@ -279,7 +282,6 @@
   </xsl:template>
 
   <xsl:template match="hi">
-
     <xsl:if test='@rend="italic"'>
       <i><xsl:apply-templates/></i>
     </xsl:if>
@@ -290,6 +292,10 @@
 
       <xsl:variable name="upper" select="translate($lower, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
       <small><xsl:value-of select="normalize-space($upper)"/></small>
+    </xsl:if>
+
+    <xsl:if test='@rend="bold"'>
+      <strong><xsl:apply-template/></strong>
     </xsl:if>
   </xsl:template>
 

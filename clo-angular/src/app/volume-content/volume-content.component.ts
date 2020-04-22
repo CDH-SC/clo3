@@ -75,7 +75,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
         // Set the viewContent to be null initially
         this.viewContent = null;
         // If the current key is a frontice piece, we need to create that object
-        if (this.currentKey === 'frontice_piece') {
+        if (this.currentKey === 'frontispiece') {
           this.isFrontice = true;
           this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
         }
@@ -166,7 +166,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
     this.sourceNote = null;
     this.footnotes = [];
     // Update url to reflect we are at the frontice piece of the volume
-    this.router.navigateByUrl('/volume/' + volId + '/frontice_piece');
+    this.router.navigateByUrl('/volume/' + volId + '/frontispiece');
     this.viewContent = null;
     this.volumeId = volId;
     this.volumeKeys = [];
@@ -283,7 +283,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
     this.nextLetterId = null;
     // Update the url to show we are at the frontice piece of the volume
     if (clicked) {
-      this.router.navigateByUrl('/volume/' + this.volumeId + '/frontice_piece');
+      this.router.navigateByUrl('/volume/' + this.volumeId + '/frontispiece');
       this.isFrontice = true;
       this.viewContent = this.createFronticePiece(this.volume['frontice_piece']);
     }

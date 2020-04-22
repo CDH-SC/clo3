@@ -233,6 +233,8 @@ def letterUpload(array, letterType, volumeID):
 		}
 		letterArray.append(letter)
 
+	letterArray.sort(key=lambda x: x['docDate'])
+
 	try:
 		db.volumes.update_many(
 			{'_id': str(volumeID)},
@@ -251,7 +253,7 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('46-P5.xml'):
+		if filename.endswith('-P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
