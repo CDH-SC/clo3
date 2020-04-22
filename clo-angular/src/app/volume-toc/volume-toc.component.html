@@ -8,9 +8,14 @@
     <a class="mr-auto" (click)="prev(prevId)" *ngIf="prevId">PREV VOLUME</a>
     <a class="ml-auto" (click)="next(nextId)" *ngIf="nextId">NEXT VOLUME</a>
   </div>
-  <div class="w-100" id="tocItem" *ngFor="let key of keys.slice().reverse()">
+  
+  <!-- List of Frontice Pieces -->
+  <div class="w-100" id="tocItem" *ngFor="let key of keys.slice()">
     <a class="pl-2" (click)="sectionClicked(key['key'])">{{ key['title'].toUpperCase() }}</a>
   </div>
+  <!-- End Frontice Pieces -->
+
+  <!-- Letters dropdown -->
   <div class="w-100 m-auto" id="tocItem" *ngIf="letters">
     <a class="drop" data-toggle="collapse" href="#letters" aria-expanded="false" aria-controls="letters">
       LETTERS
@@ -38,6 +43,9 @@
       </div>
     </div>
   </div>
+  <!-- End Letters Dropdown -->
+
+  <!-- Accounts dropdown -->
   <div class="w-100 m-auto" id="tocItem" *ngIf="accounts">
     <a class="drop" data-toggle="collapse" href="#accounts" aria-expanded="false" aria-controls="accounts">
       ACCOUNTS OF JWC'S DEATH
@@ -72,4 +80,5 @@
       </div>
     </div>
   </div>
+  <!-- End Accounts Dropdown -->
 </div>

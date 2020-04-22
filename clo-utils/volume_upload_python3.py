@@ -247,7 +247,7 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('2020.xml'):
+		if filename.endswith('20.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
@@ -271,12 +271,14 @@ def main():
 			hasFootnotes = [
 				'introduction',
 				'acknowledgements',
+				'acknowledgments',
 				'rival_brothers',
 				'janeJournal',
 				'janeNotebook',
 				'simpleStory',
 				'geraldineJewsbury',
 				'ellenTwisleton',
+				'appendix-one',
 			]
 
 
