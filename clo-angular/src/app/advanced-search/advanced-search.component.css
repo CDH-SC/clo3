@@ -1,0 +1,75 @@
+#content {
+  margin: auto;
+  padding-top: 25px;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.loading {
+  width: 200px;
+  height: 200px;
+  margin: 25px;
+}
+
+.result {
+  border-bottom: 1px solid black;
+}
+
+#resultText span {
+  font-size: 16px !important;
+  margin-right: 10px;
+}
+
+.viewer-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 700px;
+  overflow: auto;
+  font-size: 16px;
+  padding: 25px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid #21596f;
+  border-radius: 5px;
+  background: #f5ebdc;
+}
+
+span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+::ng-deep.pagination .page-item .page-link {
+  border-radius: 0 !important;
+}
+
+::ng-deep .page-item.active .page-link {
+  background-color: #21596f !important;
+  border-color: #21596f !important;
+  color: white !important;
+}
+
+::ng-deep .pagination .page-link {
+  /* border-color: #21596f !important;
+  /* border-top-style: none !important;
+  border-bottom-style: none !important; */
+  background-color: #f5ebdc !important;
+  color: black !important;
+}
+
+table {
+  width: 100%;
+}
+
+#volResult {
+  width: 20%;
+}
+
+#letterResult {
+  width: 45%;
+}
+
+#dateResult {
+  width: 35%;
+}

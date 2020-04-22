@@ -8,6 +8,7 @@ var expressOasGenerator = require('express-oas-generator');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var esClient = require('./elasticClient');
 
 var bluebird = require('bluebird');
 
@@ -34,6 +35,15 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+// Check connection to Elasticsearch cluster
+esClient.ping(err => {
+  if (err) {
+    console.log('Unable to connect to Elasticsearch!\n', err);
+  } else {
+    console.log('Connected to Elasticsearch at URL:', process.env.ES_HOST);
+  }
+})
 
 // CORS config
 app.use(function(req, res, next) {

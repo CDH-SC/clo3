@@ -1,10 +1,57 @@
-<div
+
+<div class="container" id="content">
+  <div class="row justify-content-start">
+    <div class="col-12">
+      <H3>Advanced Search</H3>
+      <form id="searchTerms">
+          <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
+          <div *ngFor='let query of queries; let i = index'>
+             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+                <option value='AND'>AND</option>
+                <option value='OR-'>OR</option>
+                <option value='NOT'>NOT</option>
+            </select>
+            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
+                <option value='docBody'>Letter Body</option>
+                <option value='sourceNote'>Source Notes</option>
+                <option value='footnotes'>Foot Notes</option>
+            </select>
+            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/><br/>
+         </div> 
+      </form>
+      <button (click)="addField()">Add Field</button>
+      <button (click)="removeField()">Remove Field</button>
+    </div>
+  </div>
+</div>
+      <!-- {{#if volumes}}
+          <hr/>
+          {{#each volumes}}
+              <div class="volume">
+                  <div class="title"><span class="label">ID:</span><a href="https://clo.dev.cdhsc.org/volume/{{_id}}/{{letter.xml_id}}" target="_blank">{{letter.xml_id}}</a></div>
+                  <div><span class="label">Letter Date:</span> {{letter.docDate}}</div>
+                  <div><span class="label">Author:</span> {{letter.docAuthor}}</div>
+                  <div><span class="label">Recipient:</span> {{letter.recipient}}</div>
+              </div>
+              <hr/>
+          {{/each}}
+      {{else}}
+          <div>No data to display.</div>
+      {{/if}}
+
+       -->
+ <div
   class="container-fluid"
-  *ngIf="(searchResults | async) as results; else loading"
+  *ngIf="(searchResults | async) as results"
   id="content"
 >
   <div class="row justify-content-start orange-border-bottom">
-    <h4>Search Results for "{{ searchTerm }}"</h4>
+    <h4>Search Results for: <!-- "{{ searchQuery }}" --></h4>
+    <ul style="list-style-type: none;">
+      <li><h4>AND: {{ displayQuery[0] }}</h4></li>
+      <li><h4>OR: {{ displayQuery[1] }}</h4></li>
+      <li><h4>NOT: {{ displayQuery[2] }}</h4></li>
+    </ul>
   </div>
   <ng-container *ngIf="results.data.length == 0">
     <div class="row justify-content-start pt-2">
@@ -30,18 +77,6 @@
       class="row justify-content-between align-items-center p-2 result"
       *ngFor="let result of (results.data | sortBy:'dsc':results.data.score | slice: start - 1:end)"
     >
-      <!-- <div class="col-4">
-        <span>Volume {{ result._id }}</span>
-        <br />
-        <span>Letter: </span>
-        <a
-          routerLink="/volume/{{ result._id }}/{{ result.letter.xml_id }}"
-          routerLinkActive="active"
-          >{{ result.letter.xml_id }}</a
-        >
-        <br />
-        <span>Date: </span> {{ result.letter.docDate | date: "longDate" }}
-      </div> -->
       <div class="col-8 p-0">
         <table cellpadding = "10">
           <tr>
@@ -54,6 +89,7 @@
                 routerLink="/volume/{{ result._id }}/{{ result.letter.xml_id }}"
                 [queryParams]="{ term: searchTerm }"
                 routerLinkActive="active"
+                target="_blank"
               >{{ result.letter.xml_id }}</a>
             </td>
             <td id="dateResult" white-space: nowrap>
@@ -112,10 +148,3 @@
     </div>
   </ng-container>
 </div>
-<ng-template #loading>
-  <div class="container-fluid">
-    <div class="row align-items-center justify-content-center">
-      <img class="loading" src="../../assets/loading.gif" />
-    </div>
-  </div>
-</ng-template>
