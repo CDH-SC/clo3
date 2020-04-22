@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, ViewChild, Inject} from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import {NgForm} from '@angular/forms';
+import { faPlusSquare, faGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { ElasticSearchService } from '../_shared/_services/elastic-search.service';
 import { ElasticSearch } from '../_shared/models/elastic-search';
@@ -15,10 +17,12 @@ export class AdvancedSearchComponent {
 
   route = '';
   searchQuery: string;
+  faPlusSquare = faPlusSquare;
 
   constructor(
     @Inject(DOCUMENT) document,
-    private searchService: ElasticSearchService) { }
+    private searchService: ElasticSearchService,
+    private sanitizer: DomSanitizer) { }
 
   // Goes to search results page when enter is pressed
   onEnter(route) {
@@ -33,6 +37,12 @@ export class AdvancedSearchComponent {
   queries = [this.query];
   queryNumber = 1;
   searchResults: any;
+
+  page = 1;
+  pageSize = 10;
+
+  start = 1;
+  end = 10;
 
   addField() {
     this.queryNumber++;
@@ -142,8 +152,16 @@ export class AdvancedSearchComponent {
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
     })
-    // this.searchResults.sort(this.compareValues('score', 'desc'));
     this.searchQuery = queryString;
-    // res.render("boolesearch", {searchQuery:queryString, volumes:searchResults});
+  }
+
+  safeHTML(content: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
+
+  setPage(page: number) {
+    this.page = page;
+    this.end = this.page * this.pageSize;
+    this.start = this.end - (this.pageSize - 1);
   }
 }

@@ -130,7 +130,7 @@ exports.advancedSearch = async function(query) {
         var result = {
           _id: hit._id,
           score: inHit._score,
-          terms: search,
+          terms: query,
           letter: inHit._source
         }
         results.push(result);
