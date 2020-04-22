@@ -137,11 +137,14 @@
     <div class="lg">
       <xsl:apply-templates select="@* | node()"/>
     </div>
-    <br/>
+    <!-- <br/> -->
   </xsl:template>
 
   <xsl:template match="lb">
     <br/>
+    <span>
+      <xsl:apply-templates select="@* | node()"/>
+    </span>
   </xsl:template>
 
   <xsl:template match="l">
@@ -207,10 +210,9 @@
   <xsl:template match="figure/p">
 
     <xsl:if test="string(.)">
-      <span style="font-size:10px">
+      <p style="font-size:10px">
         <xsl:apply-templates select="@* | node()"/>
-      </span>
-      <br/>
+      </p>
     </xsl:if>
   </xsl:template>
 

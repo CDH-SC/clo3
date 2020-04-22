@@ -153,6 +153,8 @@ def xsltFormat(inputString):
 	# convert html entities to their hex codes
 	inputString = re.sub('&.{1,6}?;', htmlHexConverter, inputString)
 	# converts loose "&" into the hex entity for "&"
+	# with open('log.xml', 'a') as f:
+	# 	f.write(inputString)
 	inputString = re.sub('&\\s|&(?=\\w?[^#])', '&#38;', inputString)
 	# fix any broken links
 	inputString = re.sub("<ref target=\"volume-(\\d{2})\\/([^lt\"]{2}.*?)>(.*?)</ref>", linkFix, inputString)
@@ -197,8 +199,14 @@ def letterUpload(array, letterType, volumeID):
 			recipient = l.select('person[type="addressee"]')[0].string
 		else: recipient = None
 
+		footnotesArray = l.find_all('note')
+		if footnotesArray:
+			footnotes = footnoteFormat(footnotesArray)
+		else: footnotes = None
+
 		if l.sourceNote.contents:
-			sourceNote = xsltFormat(''.join(map(str, l.sourceNote.contents)))
+			# sourceNote = xsltFormat(''.join(map(str, l.sourceNote.contents)))
+			sourceNote = xsltFormat(str(l.sourceNote))
 		else: sourceNote = None
 		docBody = xsltFormat(str(l.docBody))
 
@@ -210,10 +218,6 @@ def letterUpload(array, letterType, volumeID):
 			header = "<p>%s</p><p><strong>%s</strong></p>" % (slugline, sender)
 		docBody = header + docBody
 
-		footnotesArray = l.find_all('note')
-		if footnotesArray:
-			footnotes = footnoteFormat(footnotesArray)
-		else: footnotes = None
 
 		letter = {
 			'xml_id': xml_id,
@@ -247,7 +251,7 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('20.xml'):
+		if filename.endswith('46-P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
