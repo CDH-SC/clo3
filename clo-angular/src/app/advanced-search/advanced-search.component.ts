@@ -38,6 +38,8 @@ export class AdvancedSearchComponent {
   queryNumber = 1;
   searchResults: any;
 
+  displayQuery = ["","",""];
+
   page = 1;
   pageSize = 10;
 
@@ -148,6 +150,9 @@ export class AdvancedSearchComponent {
       }
     }
     queryString = ANDString + ORString + NOTString
+    this.displayQuery[0] = ANDString.substring(6);
+    this.displayQuery[1] = ORString.substring(5);
+    this.displayQuery[2] = NOTString.substring(6);
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);

@@ -1,61 +1,75 @@
-#searchWrap {
-  margin: 0 0 5px 0;
-  float: right;
-  width: 225px;
+#content {
+  margin: auto;
+  padding-top: 25px;
+  width: 90%;
+  max-width: 1000px;
+}
 
-  font-family: Verdana, 'Geneva', Tahoma, sans-serif;
-  font-size: 12px;
-  text-align: left;
+.loading {
+  width: 200px;
+  height: 200px;
+  margin: 25px;
+}
 
-  border: 1px solid #cbc29d;
+.result {
+  border-bottom: 1px solid black;
+}
+
+#resultText span {
+  font-size: 16px !important;
+  margin-right: 10px;
+}
+
+.viewer-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: 700px;
+  overflow: auto;
+  font-size: 16px;
+  padding: 25px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  border: 1px solid #21596f;
   border-radius: 5px;
-  background-color: #d2e0dc;
+  background: #f5ebdc;
 }
 
-#searchButton {
-  position: relative;
-  float: right;
-  padding: 0 60px 0 0;
-  cursor: pointer;
-  z-index: 1;
+span {
+  font-size: 14px;
+  font-weight: bold;
 }
 
-#formButton {
-  position: absolute;
-  z-index: 1;
-  padding: 10px 0 0 0;
+::ng-deep.pagination .page-item .page-link {
+  border-radius: 0 !important;
 }
 
-#searchInput {
-  text-align: left;
-  margin: 0;
+::ng-deep .page-item.active .page-link {
+  background-color: #21596f !important;
+  border-color: #21596f !important;
+  color: white !important;
 }
 
-#searchInput a:link, #searchInput a:visited {
-  color: #21596f;
-  font-size: 9px;
-  text-decoration: none;
+::ng-deep .pagination .page-link {
+  /* border-color: #21596f !important;
+  /* border-top-style: none !important;
+  border-bottom-style: none !important; */
+  background-color: #f5ebdc !important;
+  color: black !important;
 }
 
-#searchInput a:hover, #searchInput a:active, #searchInput a:focus {
-  color: #a59657;
-  text-decoration: none;
-}
-
-#formField {
-  float: left;
-  margin: 0;
+table {
   width: 100%;
 }
 
-.formsA {
-  color: #666d77;
-  background-color: #f8f1e5;
-  border: 1px solid #9db993;
-  border-radius: 5px;
+#volResult {
+  width: 20%;
 }
 
-#wholeWordLabel {
-  font-size: 9px;
-  color: #34576c;
+#letterResult {
+  width: 45%;
+}
+
+#dateResult {
+  width: 35%;
 }
