@@ -77,7 +77,7 @@ because of the dependencies. This time would be likely be improved with an SSD (
 * Sync the Mongodb to Elastic Search
     * ```cd clo-api/```
       * ```echo "ES_HOST=http://127.0.0.1:9200" >> .env```
-    *Terminal 1: Runs elastic search
+    * Terminal 1: Runs elastic search
       * ```cd elasticsearch-6.8.8/```
       * ```./bin/elasticsearch```
     * Terminal 2: Run elasticSync.js
