@@ -33,6 +33,7 @@ because of the dependencies. This time would be likely be improved with an SSD (
 * [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
 * [Nodemon](https://nodemon.io/)
     * ```npm install -g nodemon```
+* [Elastic Search](https://www.elastic.co/guide/en/elasticsearch/reference/6.8/zip-targz.html)
 
 #### Installing
 * Clone this repo
@@ -73,6 +74,18 @@ because of the dependencies. This time would be likely be improved with an SSD (
 * Create the environment variable
     * ```cd clo-api/```
         * ```echo "DB_HOST=mongodb://127.0.0.1:27017/clo" >> .env```
+* Sync the Mongodb to Elastic Search
+    * ```cd clo-api/```
+      * ```echo "ES_HOST=http://127.0.0.1:9200" >> .env```
+    *Terminal 1: Runs elastic search
+      * ```cd elasticsearch-6.8.8/```
+      * ```./bin/elasticsearch```
+    * Terminal 2: Run elasticSync.js
+      * ```cd clo-api/```
+      * ```node elasticSync.js```
+      
+     
+   
 
 ### Deployment
 ---
