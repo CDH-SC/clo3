@@ -39,7 +39,7 @@ because of the dependencies. This time would be likely be improved with an SSD (
 * Clone this repo
     * ```git clone https://github.com/CDH-SC/clo-v3.git```
 * Install Prerequisites (Check the section above)
-* ```cd <path>/clo```
+* ```cd <path>/clo3```
     * ```cd clo-api/```
         * ```npm install```
     * ```cd clo-angular/```
@@ -51,7 +51,7 @@ because of the dependencies. This time would be likely be improved with an SSD (
 
 
 * Create a local database
-    * A binary BSON dump of the database can be found here: clo/clo-database/dump
+    * A binary BSON dump of the database can be found here: clo/clo-database/current
     * Ensure Mongo has been started on your local machine:
         * Linux:
             * ```$ sudo service mongod start```
@@ -66,9 +66,7 @@ because of the dependencies. This time would be likely be improved with an SSD (
                 * ```brew services start mongodb```
     * Use mongorestore to restore the dump file to your local machine
     * MongoDB default port number: 27017
-        * ```$ mongorestore <path to backup>```
-    * Example:
-        * ```$ mongorestore clo-database/current```
+        * ```$ mongorestore mongorestore -d clo clo/```
     * Troubleshooting assistance can be found [here](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)
 
 * Create the environment variable
@@ -89,7 +87,7 @@ because of the dependencies. This time would be likely be improved with an SSD (
 
 ### Deployment
 ---
-* 2 Terminal Setup
+* 3 Terminal Setup
 * Terminal 1 : Runs the Express server
     * ```cd <path>/clo/clo-api/```
     * ```npm start```
@@ -97,6 +95,9 @@ because of the dependencies. This time would be likely be improved with an SSD (
 * Terminal 2 : Builds the webapp for development
     * ```cd <path>/clo/clo-angular/```
     * ```ng serve```
+* Terminal 3: Runs elastic search
+      * ```cd elasticsearch-6.8.6/```
+      * ```./bin/elasticsearch```
 * The Carlyle Letters Online application should now be available at http://localhost:4200/
 
 ### Creating Documentation
