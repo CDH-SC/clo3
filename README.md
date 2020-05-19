@@ -6,8 +6,6 @@
 
 
 ## Prerequisites
-TK: add Git and JAVA to prerequisites
-TK: add note about adding `ng` (and maybe others) to PATH
 
 - **Install Git**
 
@@ -436,7 +434,18 @@ In a different terminal, if necessary, navigate to `clo-angular` and serve the f
 By default, your site will be served to [localhost:4200](localhost:4200) . 
 
  
+---
 
- 
+### Contributors
+* **Jerrod Mathis**
+* **Caleb Kitzmann**
+* **Prithvi Tippabhatla**
+* **Joshua Nelson**
+* **Kenny Johnson**
+* **Ian McDowell**
+* **Tyron Schultz**
 
+---
+
+*Documentation about contributing or extending CLO (originally found in bottom of the new-deprecated README (still available at `docs/deprecated/old-README.md`) can be found in the `docs/` folder (`docs/contrib-or-extend.me`).*
 
