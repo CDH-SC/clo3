@@ -64,3 +64,9 @@ typings/
 # Environment Variables
 *.env 
 .env
+env/
+
+# clo3-specific 
+clo-api/bin/elasticsearch-7.8.0/
+clo-api/bin/elasticsearch-7.8.0/*
+
