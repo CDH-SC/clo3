@@ -13,7 +13,7 @@ npm install -g @angular/cli@latest
 echo "Installing node dependencies."
 echo "[Note] Decending into clo-angular..."
 cd clo-angular ; npm install ; cd ..
-cd clo-angular ; npm install --save typescript@3.7 ; cd ..
+#cd clo-angular ; npm install --save typescript@3.7 ; cd ..
 
 echo "...clo-angular depencies installed."
 echo "[Note] Decending into clo-api..."
