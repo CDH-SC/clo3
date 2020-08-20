@@ -68,11 +68,11 @@ app.use('/users', users);
 app.use('/api', api);
 
 // Angular DIST output folder
-app.use(express.static('../clo-angular/dist'));
+app.use(express.static('/srv/dist'));
 
 // Set all other requests to the Angular app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../clo-angular/dist/index.html'));
+  res.sendFile(path.join(__dirname, '/srv/dist/index.html'));
 });
 
 // catch 404 and forward to error handler
