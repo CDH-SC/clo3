@@ -16,10 +16,12 @@ tar -xzf elasticsearch-7.8.0-linux-x86_64.tar.gz
 rm -rf elasticsearch-7.8.0-linux-x86_64.tar.gz.sha512 elasticsearch-7.8.0-linux-x86_64.tar.gz
 
 # Killing a previous instance of ES, if it existed. 
-exec $CLO_ROOT/bin/ZZ-kill_es_proc.sh
+#exec $CLO_ROOT/bin/ZZ-kill_es_proc.sh
 
 
-echo "Deleting previous pid file..."
-rm ./elasticsearch-7.8.0/pid 
+#echo "Deleting previous pid file..."
+#rm ./elasticsearch-7.8.0/pid 
 
+cd $CLO_ROOT/clo-api/bin/elasticsearch-7.8.0
+./bin/elasticsearch -d -p pid
 cd $CLO_ROOT

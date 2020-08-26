@@ -15,7 +15,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable mongod
 sudo systemctl start mongod
 
-mongorestore -d clo ~/clo3/clo-database/current/clo
+mongorestore -d clo $CLO_ROOT/clo-database/current/clo
 sudo systemctl status mongod
 
 cd $CLO_ROOT 

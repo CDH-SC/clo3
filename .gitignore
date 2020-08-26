@@ -71,3 +71,4 @@ clo-api/bin/elasticsearch-7.8.0/
 clo-api/bin/elasticsearch-7.8.0/*
 clo-angular/package-lock.json
 clo-api/package-lock.json
+README.md.backup
