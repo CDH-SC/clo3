@@ -11,13 +11,13 @@ sudo apt-get install -y python3-pip python3-certbot-nginx certbot
 if [ -z "$CLO_ROOT" ]
 then
       echo "\$CLO_ROOT is empty, setting to parent directory..."
-      echo "Setting \$CLO_ROOT in /etc/environment file."
+      echo "Setting \$CLO_ROOT in your ~/.bashrc file."
 
       # Assume default CLO_ROOT is the parent of this bin/ directory
       # The `sed` command simply strips off the last component of the path.
       CLO_ROOT_DEFAULT=$( pwd | sed -e "s/\/[^\/]*$//" )
       echo "export CLO_ROOT=$CLO_ROOT_DEFAULT" >> ~/.bashrc
-      source ~/.bashrc
+      #source ~/.bashrc
 else
       echo "\$CLO_ROOT is already set. It will remain unchanged."
 fi
@@ -26,7 +26,7 @@ source ~/.bashrc
 
 echo "[CLO3] Please confirm the validity of the $CLO_ROOT environment variable."
 echo "....It should point to the root directory of the CLO3 repository."
-echo "....This environment variable is set in the '/etc/environment' file."
+echo "....This environment variable is set for the system in the '/etc/environment' file."
 echo 
 echo "....\$CLO_ROOT: $CLO_ROOT"
 
