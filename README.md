@@ -43,7 +43,9 @@ Before you begin, add the following line to your .bashrc file:
 `cd clo3/bin`
 
 `./A1-configure_nodeenv.sh`
+
 `./A2-install_dependencies.sh`
+
 `./A3-api_env_file.sh`
 
 
@@ -54,14 +56,19 @@ Whenever you are working with CLO3, be sure to have the nodeenv activated.
 
 
 `./B1-install_mongo.sh` 
+
 `./B2-install_elastic.sh`
 
 `cd ../clo-api`
+
 `node elasticSync.js`
+
 `nohup ./bin/www &`
 
 **Build clo-angular:**
+
 `cd ../clo-angular`
+
 `ng build --prod`
 
 
