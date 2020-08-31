@@ -81,7 +81,7 @@ This last command runs the equivalent of 'npm start' using the `nohup` ("no hang
 
 `cd $CLO_ROOT/bin`
 
-`./C1-build_site_PROD.sh
+`./C1-build_site_PROD.sh`
 
 This script builds the Angular front-end. It also creates a symlink from the build artifact ('dist') to the /srv/ directory as per the LFSH. This is the directory that NGINX points to. 
 
