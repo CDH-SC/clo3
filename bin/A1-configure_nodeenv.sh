@@ -3,6 +3,7 @@
 # by: Kenneth Johnson
 # CLO3 Remediation - Summer 2020 
 
+sudo apt-get update
 sudo apt-get install -y python3-pip python3-certbot-nginx certbot
 
 #  Set CLO_ROOT env variable for reference in other scripts.
@@ -17,12 +18,14 @@ then
       # The `sed` command simply strips off the last component of the path.
       CLO_ROOT_DEFAULT=$( pwd | sed -e "s/\/[^\/]*$//" )
       echo "export CLO_ROOT=$CLO_ROOT_DEFAULT" >> ~/.bashrc
+      echo "export CLO_ROOT=$CLO_ROOT_DEFAULT" >> ~/.bash_profile
       #source ~/.bashrc
 else
       echo "\$CLO_ROOT is already set. It will remain unchanged."
 fi
 
 source ~/.bashrc
+source ~/.bash_profile
 
 echo "[CLO3] Please confirm the validity of the $CLO_ROOT environment variable."
 echo "....It should point to the root directory of the CLO3 repository."

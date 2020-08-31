@@ -35,29 +35,39 @@ Clone the repository to your command line:
 
 ### The Scripts
 
-Before you begin, add the following line to your .bashrc file:
-
-`echo "export CLO_ROOT=/home/kennethj/clo3 >> `
-`source ~/.bashrc`
-
 `cd clo3/bin`
 
 `./A1-configure_nodeenv.sh`
 
+The first script should configure the CLO_ROOT environment variable. However, this change will only propogate after exiting and re-logging into the server (quitting an restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`). 
+
+Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`. 
+
+This script creates the Nodeenv (https://pypi.org/project/nodeenv/). Activate it manually with: 
+
+`source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
+
+Whenever you are working with CLO3, be sure to have the nodeenv activated.
+
 `./A2-install_dependencies.sh`
+
+The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. 
 
 `./A3-api_env_file.sh`
 
+This script creates and populates the .env file in clo-api.
 
-`source ../env/bin/activate`  
-Whenever you are working with CLO3, be sure to have the nodeenv activated.
 
 **Deploy clo-api:**
 
 
 `./B1-install_mongo.sh` 
 
+This script install MongoDB and restores the contents of the database. 
+
 `./B2-install_elastic.sh`
+
+This script installs elasticsearch to the $CLO_ROOT/clo-api/bin directory. 
 
 `cd ../clo-api`
 
@@ -65,11 +75,18 @@ Whenever you are working with CLO3, be sure to have the nodeenv activated.
 
 `nohup ./bin/www &`
 
+This last command runs the equivalent of 'npm start' using the `nohup` ("no hangup") command. The "&" sends the process to the background immediately. This allows the process to continue running after the shell has been detached. 
+
 **Build clo-angular:**
 
-`cd ../clo-angular`
+`cd $CLO_ROOT/bin`
 
-`ng build --prod`
+`./C1-build_site_PROD.sh
+
+This script builds the Angular front-end. It also creates a symlink from the build artifact ('dist') to the /srv/ directory as per the LFSH. This is the directory that NGINX points to. 
+
+This script also copies the HTTP version of the Nginx config to the '/etc/nginx/sites-available' directory. 
+
 
 
 
@@ -96,6 +113,11 @@ At this point, speak to the DevOps team to setup DNS if you have not already.
 Answer all the questions as given, and be sure to choose the **redirect** option for the final question. 
 
 `sudo nginx -s reload`
+
+**Webserver Configuration:**
+
+This section is mainly used by the DevOps team. 
+
 
 
 
