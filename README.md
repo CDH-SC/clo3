@@ -21,12 +21,12 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 - jquery (^3.4.1)
 
 
-**Install Git**
+**Install Dependencies from Task Manager**
 
 Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is: 
 
 `sudo apt-get update`  
-`sudo apt-get install git-all`
+`sudo apt-get install git python3-pip certbot python3-certbot-nginx`
 
 Clone the repository to your command line:
 
@@ -37,25 +37,34 @@ Clone the repository to your command line:
 
 `cd clo3/bin`
 
+The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. 
+
 `./A1-configure_nodeenv.sh`
 
 The first script should configure the CLO_ROOT environment variable. However, this change will only propogate after exiting and re-logging into the server (quitting an restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`). 
 
 Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`. 
 
+If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file and run `source ~/.bashrc`. 
+
+```
+$ echo $CLO_ROOT
+/home/kennethj/clo3
+```
+
 This script creates the Nodeenv (https://pypi.org/project/nodeenv/). Activate it manually with: 
 
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
 
-Whenever you are working with CLO3, be sure to have the nodeenv activated.
+**Whenever you are working with CLO3, be sure to have the nodeenv activated.**
 
 `./A2-install_dependencies.sh`
 
-The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. 
+The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
 
 `./A3-api_env_file.sh`
 
-This script creates and populates the .env file in clo-api.
+This script creates and populates the .env file in clo-api. You can check that it is correctly configured with `cat $CLO_ROOT/clo-api/.env`. 
 
 
 **Deploy clo-api:**
@@ -63,11 +72,11 @@ This script creates and populates the .env file in clo-api.
 
 `./B1-install_mongo.sh` 
 
-This script install MongoDB and restores the contents of the database. 
+This script install MongoDB and restores the contents of the database. You can check that is is running via `ps -aux | grep -e "mongo" | grep -v "grep"`.
 
 `./B2-install_elastic.sh`
 
-This script installs elasticsearch to the $CLO_ROOT/clo-api/bin directory. 
+This script installs elasticsearch to the $CLO_ROOT/clo-api/bin directory. You can check that it is running via `ps -aux | grep -e "elastic" | grep -v "grep"`.
 
 `cd ../clo-api`
 
@@ -76,6 +85,16 @@ This script installs elasticsearch to the $CLO_ROOT/clo-api/bin directory.
 `nohup ./bin/www &`
 
 This last command runs the equivalent of 'npm start' using the `nohup` ("no hangup") command. The "&" sends the process to the background immediately. This allows the process to continue running after the shell has been detached. 
+
+Due to a inconsistency in the output of `nohup`, you may need to press Enter/Return to get another command prompt in your terminal. This is normal. 
+
+At this point, your API is running. Ensure it is configured correctly by checking the contents of the logging file with `cat nohup.out`.
+
+```
+$ cat nohup.out 
+Connected to MongoDB at URL: mongodb://127.0.0.1:27017/clo
+Connected to Elasticsearch at URL: http://127.0.0.1:9200
+```
 
 **Build clo-angular:**
 
@@ -87,8 +106,7 @@ This script builds the Angular front-end. It also creates a symlink from the bui
 
 This script also copies the HTTP version of the Nginx config to the '/etc/nginx/sites-available' directory. 
 
-
-
+Note that this will take awhile to run. Developers often report the longest wait at `92% compiling`. Be patient. 
 
 ## Deploy CLO
 
@@ -100,9 +118,9 @@ This script also copies the HTTP version of the Nginx config to the '/etc/nginx/
 
 `sudo cp /<path>/<to>/clo3/docs/nginx-configs/clo.dev.HTTP.conf /etc/nginx/sites-available`
 
-At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://<ip-address>*
+At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://<ip-address>*.
 
-Be sure to check the server_name directive.
+Be sure to check the server\_name directive. It defaults to a non-existent clo.dev2.cdhsc.org.
 
 At this point, speak to the DevOps team to setup DNS if you have not already. 
 
@@ -111,6 +129,7 @@ At this point, speak to the DevOps team to setup DNS if you have not already.
 `sudo certbot --nginx`
 
 Answer all the questions as given, and be sure to choose the **redirect** option for the final question. 
+Please note that changes to the DNS can take up to 5 minutes to propogate. Also, make sure your browser is not using a cached version of the site if you are not seeing the changes you expected. It is common to use the "private mode" of a browser for troubleshooting of this type. 
 
 `sudo nginx -s reload`
 
