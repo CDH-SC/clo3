@@ -4,8 +4,7 @@ For non-technical information about this project, consult the [about-project](ht
 
 ## Build
 
-*While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list. 
-*
+*While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
 You will need root access to the machine to build CLO3. Our team currently uses Ubuntu 20.04 for its remote servers. 
 
@@ -21,17 +20,20 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 - jquery (^3.4.1)
 
 
-**Install Dependencies from Task Manager**
+**Install Dependencies from Package Manager**
 
 Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is: 
 
 `sudo apt-get update`  
 `sudo apt-get install git python3-pip certbot python3-certbot-nginx`
 
+This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient. 
+
 Clone the repository to your command line:
 
 `git clone https://github.com/cdh-sc/clo3`
 
+If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch. 
 
 ### The Scripts
 

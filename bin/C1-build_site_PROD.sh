@@ -19,7 +19,7 @@ sudo apt-get install nginx -y
 
 echo "....Copying Nginx config to 'sites-available directory."
 echo "....To enable it, use a symbolic link in the sites-enabled directory."
-echo "....Validate the new config with `sudo nginx -t`"
-echo "....Reload the new config with `sudo nginx -s reload`"
+echo "....Validate the new config with \`sudo nginx -t\`"
+echo "....Reload the new config with \`sudo nginx -s reload\`"
 
 sudo cp $CLO_ROOT/docs/nginx-configs/clo.dev.HTTP.conf /etc/nginx/sites-available
