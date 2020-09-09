@@ -1,0 +1,9 @@
+steps:
+    # build and run the project on clodevelopment host
+    - name: 'gcr.io/cloud-builders/gcloud'
+      args: ['compute', 'ssh', 'source-repo-service-account@clodevelopment',
+             '--zone', 'us-east1-b',
+             '--command',
+             'cd /mnt/disks/clostorage/clo-current && git pull && docker-compose build && docker-compose down && docker-compose up -d']
+
+timeout: "1500s"

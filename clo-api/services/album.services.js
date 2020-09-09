@@ -1,7 +1,7 @@
 //Get mongoose model
 var Album = require('../models/album.model')
 
-//Save the context of this module inside the _the variable
+//Save the context of this module inside the _this variable
 _this = this
 
 //Async function to get the Album list

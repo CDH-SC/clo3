@@ -26,6 +26,7 @@ import { AboutEditorsComponent } from './about/about-editors/about-editors.compo
 import { AboutAckComponent } from './about/about-ack/about-ack.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -34,6 +35,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { SubjectTermService } from './_shared/_services/subject-terms.service';
+import { SortByPipe } from './_shared/pipes/sortBy.pipe';
 
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
@@ -66,6 +68,7 @@ const appRoutes: Routes = [
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
   { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
+  { path: 'advanced-search', component: AdvancedSearchComponent }
 ];
 
 @NgModule({
@@ -96,6 +99,8 @@ const appRoutes: Routes = [
     SearchResultsComponent,
     SubjectTermsComponent,
     SubjectLettersComponent,
+    AdvancedSearchComponent,
+    SortByPipe,
   ],
   imports: [
     BrowserModule,

@@ -1,176 +1,166 @@
-# Carlyle Letters Online (CLO)
-Live Version: [carlyleletters.dukeupress.edu](https://carlyleletters.dukeupress.edu/home)
-## Getting Started
+# CLO3 
+
+For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself. 
+
+## Build
+
+*While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
+
+You will need root access to the machine to build CLO3. Our team currently uses Ubuntu 20.04 for its remote servers. 
+
+**Dependencies:**
+
+- Git
+- python3-pip
+- Nodeenv
+- Node (^12.18.3)
+- MongoDB
+- ElasticSearch (^7.8)
+- Angular (^9.0.4)
+- jquery (^3.4.1)
+
+
+**Install Dependencies from Package Manager**
+
+Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is: 
+
+`sudo apt-get update`  
+`sudo apt-get install git python3-pip certbot python3-certbot-nginx`
+
+This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient. 
+
+Clone the repository to your command line:
+
+`git clone https://github.com/cdh-sc/clo3`
+
+If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch. 
+
+### The Scripts
+
+`cd clo3/bin`
+
+The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. 
+
+`./A1-configure_nodeenv.sh`
+
+The first script should configure the CLO_ROOT environment variable. However, this change will only propogate after exiting and re-logging into the server (quitting an restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`). 
+
+Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`. 
+
+If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file and run `source ~/.bashrc`. 
+
+```
+$ echo $CLO_ROOT
+/home/kennethj/clo3
+```
+
+This script creates the Nodeenv (https://pypi.org/project/nodeenv/). Activate it manually with: 
+
+`source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
+
+**Whenever you are working with CLO3, be sure to have the nodeenv activated.**
+
+`./A2-install_dependencies.sh`
+
+The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
+
+`./A3-api_env_file.sh`
+
+This script creates and populates the .env file in clo-api. You can check that it is correctly configured with `cat $CLO_ROOT/clo-api/.env`. 
+
+
+**Deploy clo-api:**
+
+
+`./B1-install_mongo.sh` 
+
+This script install MongoDB and restores the contents of the database. You can check that is is running via `ps -aux | grep -e "mongo" | grep -v "grep"`.
+
+`./B2-install_elastic.sh`
+
+This script installs elasticsearch to the $CLO_ROOT/clo-api/bin directory. You can check that it is running via `ps -aux | grep -e "elastic" | grep -v "grep"`.
+
+`cd ../clo-api`
+
+`node elasticSync.js`
+
+`nohup ./bin/www &`
+
+This last command runs the equivalent of 'npm start' using the `nohup` ("no hangup") command. The "&" sends the process to the background immediately. This allows the process to continue running after the shell has been detached. 
+
+Due to a inconsistency in the output of `nohup`, you may need to press Enter/Return to get another command prompt in your terminal. This is normal. 
+
+At this point, your API is running. Ensure it is configured correctly by checking the contents of the logging file with `cat nohup.out`.
+
+```
+$ cat nohup.out 
+Connected to MongoDB at URL: mongodb://127.0.0.1:27017/clo
+Connected to Elasticsearch at URL: http://127.0.0.1:9200
+```
+
+**Build clo-angular:**
+
+`cd $CLO_ROOT/bin`
+
+`./C1-build_site_PROD.sh`
+
+This script builds the Angular front-end. It also creates a symlink from the build artifact ('dist') to the /srv/ directory as per the LFSH. This is the directory that NGINX points to. 
+
+This script also copies the HTTP version of the Nginx config to the '/etc/nginx/sites-available' directory. 
+
+Note that this will take awhile to run. Developers often report the longest wait at `92% compiling`. Be patient. 
+
+## Deploy CLO
+
+**Configure NGINX**
+
+`cd /etc/nginx/sites-enabled`
+
+`sudo unlink default`
+
+`sudo cp /<path>/<to>/clo3/docs/nginx-configs/clo.dev.HTTP.conf /etc/nginx/sites-available`
+
+At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://<ip-address>*.
+
+Be sure to check the server\_name directive. It defaults to a non-existent clo.dev2.cdhsc.org.
+
+At this point, speak to the DevOps team to setup DNS if you have not already. 
+
+**Enable SSL/HTTPS Support:**
+
+`sudo certbot --nginx`
+
+Answer all the questions as given, and be sure to choose the **redirect** option for the final question. 
+Please note that changes to the DNS can take up to 5 minutes to propogate. Also, make sure your browser is not using a cached version of the site if you are not seeing the changes you expected. It is common to use the "private mode" of a browser for troubleshooting of this type. 
+
+`sudo nginx -s reload`
+
+**Webserver Configuration:**
+
+This section is mainly used by the DevOps team. 
+
+
+
+
+
+
+ 
 ---
-
-**Nota bene:** CLO has now been containerized such that it can be built using a single docker-compose command. Unless you are a developer working directly on CLOv3, we (the CDH DevOps team) HIGHLY recommend [building CLO with Docker.](# Running with Docker)
-
-### Running with Docker
-#### Dependencies:
-**Do not use default apt packages for Docker and docker-compose. They are deprecated, insecure, and (most importantly) insufficient to sucessfully build CLOv3.**
-
-Verified to build with:
-- Docker v19.03.6+
-- docker-compose v1.25.4
-
-#### Run
-
-* `git clone <repo-url>; cd clo3/
-* `docker-compose up --build`
-* Visit `127.0.0.1:8090`
-
-Note: this may take a very long time (5-20 minutes) the first time you run
-because of the dependencies. This time would be likely be improved with an SSD (KJ: ~3 minutes). 
-
-### Building Locally (without Docker/docker-compose)
-
-#### Prerequisites
-* [Node](https://nodejs.org/en/) version 8.5.0 or higher
-* [NPM](https://www.npmjs.com/) version 5.3.0 or higher
-    * [Download Node and NPM](https://nodejs.org/en/)
-* [Angular CLI](https://cli.angular.io/) version 1.4.4 or higher (*should be saved in devDependencies*)
-    * ```npm install -g @angular/cli@latest```
-* [MongoDB](https://docs.mongodb.com/manual/administration/install-community/)
-* [Nodemon](https://nodemon.io/)
-    * ```npm install -g nodemon```
-
-#### Installing
-* Clone this repo
-    * ```git clone https://github.com/CDH-SC/clo-v3.git```
-* Install Prerequisites (Check the section above)
-* ```cd <path>/clo```
-    * ```cd clo-api/```
-        * ```npm install```
-    * ```cd clo-angular/```
-        * ```npm install```
-* Note: If the npm install throws an error:
-    * If it says a module is not installed, run ```npm install --save <module name>```
-    * If it says that an invalid character was read at the end of the line, delete the node_module folder and the package-lock.json file and try the ```npm install``` command again
-    * If it's a npm permission error, see [here](https://docs.npmjs.com/getting-started/fixing-npm-permissions)
-
-
-* Create a local database
-    * A binary BSON dump of the database can be found here: clo/clo-database/dump
-    * Ensure Mongo has been started on your local machine:
-        * Linux:
-            * ```$ sudo service mongod start```
-        or
-            * ```$ sudo service mongod restart```
-        * Mac:
-            * ```brew tap mongodb/brew```
-            * ```brew install mongodb-community```
-            * ```brew services start mongodb```
-            * to restart:
-                * ```brew services stop mongodb```
-                * ```brew services start mongodb```
-    * Use mongorestore to restore the dump file to your local machine
-    * MongoDB default port number: 27017
-        * ```$ mongorestore <path to backup>```
-    * Example:
-        * ```$ mongorestore clo-database/current```
-    * Troubleshooting assistance can be found [here](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)
-
-* Create the environment variable
-    * ```cd clo-api/```
-        * ```echo "DB_HOST=mongodb://127.0.0.1:27017/clo" >> .env```
-
-### Deployment
----
-* 2 Terminal Setup
-* Terminal 1 : Runs the Express server
-    * ```cd <path>/clo/clo-api/```
-    * ```npm start```
-    * If it cannot find module: ```npm install --save <module>```
-* Terminal 2 : Builds the webapp for development
-    * ```cd <path>/clo/clo-angular/```
-    * ```ng serve```
-* The Carlyle Letters Online application should now be available at http://localhost:4200/
-
-### Creating Documentation
-
-### Image Compression
-Image compression of Album images/Frontispieces compiled with ImageOptim.
-
-### Unit Tests
----
-* Tests are under development
-
-### Built With
-* [Angular 2+](https://angular.io/)
-* [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
-* [Express.js](https://expressjs.com/)
-
-### Contributing
-1. **Fork** the repo
-2. **Clone** the project to your own machine
-3. **Commit** changes to your own branch
-4. **Push** your work back up to your fork
-5. Submit a **Pull Request** so that we can review your changes
-
-Note: Be sure to merge the latest from "upstream" before making a pull request!
-
-### Extended Contributing (Angular)
-* **Component** ```ng g component my-new-component```
-* **Service** ```ng g service my-new-service```
-* **Module** ```ng g module my-new-module```
-* **IF YOU DON'T KNOW WHERE SOMETHING GOES, ASK**
-
-* ```npm install [packages] --save``` or ```--save-dev``` for development only
-
-### Extended Contributing (Database Changes)
-#### Useful Commands
-
-These commands are useful for [backing up and restoring a database.](https://docs.mongodb.com/manual/tutorial/backup-and-restore-tools/)
-
-* [mongodump](https://docs.mongodb.com/manual/reference/program/mongodump/#bin.mongodump): `sudo mongodump --db clo --out <path>/clo-database/current`
-* [mongorestore](https://docs.mongodb.com/manual/reference/program/mongorestore/#bin.mongorestore): `sudo mongorestore <path>/clo-database/current`
-
-Update only one specific collection.
-
-* [mongorestore](https://docs.mongodb.com/manual/reference/program/mongorestore/#cmdoption-mongorestore-collection): `sudo mongorestore --db clo --collection <collection> <path>/clo-database/current/clo/<collection>.bson --drop`
-
-#### Updating Volumes
-
-If there are any changes to the volume XML that need to be uploaded to the database or there are issues in the current version of the database, follow these steps:
-
-1. **GOTO** the `clo-utils` folder and check that you have a working `python3` install:
-   * `python3 --version`
-2. **INSTALL** the required dependencies for the script:
-   * First setup a virtual environment if you wish, documentation [here](https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/)
-   * `pip3 install lxml bs4 pymongo`
-3. **START** an instance of MongoDB if one is not already running:
-   * `sudo mongod`
-4. **RUN** the `volume_upload_python3.py` script:
-   * `python3 volume_upload_python3.py`
-
-#### Adding Albums
-
-If you have received a new album metadata file, take the following steps to make changes to the albums collection:
-
-1. **RENAME** the file so it has the following format :
-    * `Volume<albumId>.xlsx`
-    * Example : `Volume2.xlsx`
-2. **COPY** the file into the correct albums folder :
-    * Each albums folder can be found at : `clo-angular/src/assets/albums/fullsize/`
-3. **DROP** the current albums collection from the database :
-    * In MongoDB Compass :
-        * Click on the clo database in the sidenav
-        * Next to the albums collection in the sidenav, click the trash can icon and follow prompts
-    * In Mongo Shell (`mongo` or `sudo mongo`):
-        * Switch to clo database : `use clo`
-        * List the current collections : `show collections`
-        * Drop the albums collection : `db.albums.drop()`
-        * To confirm the drop : `show collections`
-4. **RUN** the album_upload.py script
-    * `python album_upload.py`
-
-### Versioning
 
 ### Contributors
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
 * **Prithvi Tippabhatla**
 * **Joshua Nelson**
+* **Kenny Johnson**
 * **Ian McDowell**
 * **Tyron Schultz**
+
+
+
+## Notes:
+
+1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.* 
+
+
+

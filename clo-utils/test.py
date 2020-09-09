@@ -10,8 +10,8 @@ xsltDoc = etree.parse("xml_styling.xslt")  # import xsl stylesheet
 xsltTransformer = etree.XSLT(xsltDoc)  # define xml transformation function
 
 for filename in os.listdir(directory):
-    if filename.endswith("45-P5.xml"):
-        print filename
+    if filename.endswith("46-P5.xml"):
+        print(filename)
         # get volume id from filename
         volumeID = ''.join(re.findall("\\d{2}", filename))
         print(volumeID)
@@ -105,7 +105,7 @@ for filename in os.listdir(directory):
             elif "oxforddnb" in ref:
                 newLink = "%s%s/http://%s\">%s</a>" % (prefix, vol_id, ref, body)
             else:
-                print "NO MATCH, link is as follows:\n" + m.group(0) + "\n"
+                print("NO MATCH, link is as follows:\n" + m.group(0) + "\n")
 
             return newLink
 
@@ -118,10 +118,10 @@ for filename in os.listdir(directory):
             namecode = ("&lsquo;", "&rsquo;")
 
             if entity in namecode:
-                print entity
+                print(entity)
                 i = namecode.index(entity)
                 entity = hexcode[i]
-                print entity + "\n"
+                print(entity + "\n")
             return entity
 
         content = re.sub("&.{0,6};", htmlHexConverter, content)

@@ -138,5 +138,8 @@
       }
     }
   },
-  "defaultProject": "clo"
+  "defaultProject": "clo",
+  "cli": {
+    "analytics": "e618fce1-f33c-4f35-a6b6-deccdb5b098a"
+  }
 }

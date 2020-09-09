@@ -1,0 +1,150 @@
+
+<div class="container" id="content">
+  <div class="row justify-content-start">
+    <div class="col-12">
+      <H3>Advanced Search</H3>
+      <form id="searchTerms">
+          <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
+          <div *ngFor='let query of queries; let i = index'>
+             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+                <option value='AND'>AND</option>
+                <option value='OR-'>OR</option>
+                <option value='NOT'>NOT</option>
+            </select>
+            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
+                <option value='docBody'>Letter Body</option>
+                <option value='sourceNote'>Source Notes</option>
+                <option value='footnotes'>Foot Notes</option>
+            </select>
+            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/><br/>
+         </div> 
+      </form>
+      <button (click)="addField()">Add Field</button>
+      <button (click)="removeField()">Remove Field</button>
+    </div>
+  </div>
+</div>
+      <!-- {{#if volumes}}
+          <hr/>
+          {{#each volumes}}
+              <div class="volume">
+                  <div class="title"><span class="label">ID:</span><a href="https://clo.dev.cdhsc.org/volume/{{_id}}/{{letter.xml_id}}" target="_blank">{{letter.xml_id}}</a></div>
+                  <div><span class="label">Letter Date:</span> {{letter.docDate}}</div>
+                  <div><span class="label">Author:</span> {{letter.docAuthor}}</div>
+                  <div><span class="label">Recipient:</span> {{letter.recipient}}</div>
+              </div>
+              <hr/>
+          {{/each}}
+      {{else}}
+          <div>No data to display.</div>
+      {{/if}}
+
+       -->
+ <div
+  class="container-fluid"
+  *ngIf="(searchResults | async) as results"
+  id="content"
+>
+  <div class="row justify-content-start orange-border-bottom">
+    <h4>Search Results for: <!-- "{{ searchQuery }}" --></h4>
+    <ul style="list-style-type: none;">
+      <li><h4>AND: {{ displayQuery[0] }}</h4></li>
+      <li><h4>OR: {{ displayQuery[1] }}</h4></li>
+      <li><h4>NOT: {{ displayQuery[2] }}</h4></li>
+    </ul>
+  </div>
+  <ng-container *ngIf="results.data.length == 0">
+    <div class="row justify-content-start pt-2">
+      <span>No results found.</span>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="results.data.length > 0">
+    <div class="row justify-content-between pt-2">
+      <span
+        >Displaying {{ start }} - {{ end }} of
+        {{ results.data.length }} results.</span
+      >
+      <ngb-pagination
+        [collectionSize]="results.data.length"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [(page)]="page"
+        (pageChange)="setPage($event)"
+      ></ngb-pagination>
+    </div>
+    <div
+      class="row justify-content-between align-items-center p-2 result"
+      *ngFor="let result of (results.data | sortBy:'dsc':results.data.score | slice: start - 1:end)"
+    >
+      <div class="col-8 p-0">
+        <table cellpadding = "10">
+          <tr>
+            <td id="volResult" white-space: nowrap>
+              <span>Volume: </span> {{ result._id }}
+            </td>
+            <td id="letterResult" white-space: nowrap>
+              <span>Letter: </span>
+              <a
+                routerLink="/volume/{{ result._id }}/{{ result.letter.xml_id }}"
+                [queryParams]="{ term: searchTerm }"
+                routerLinkActive="active"
+                target="_blank"
+              >{{ result.letter.xml_id }}</a>
+            </td>
+            <td id="dateResult" white-space: nowrap>
+              <span>Date: </span> {{ result.letter.docDate | date: "longDate" }}
+            </td>
+          </tr>
+          <tr>
+            <td id = "letterAuthor" white-space: nowrap>
+              <span>Sender: </span> {{ result.letter.docAuthor.toUpperCase() }}
+            </td>
+            <td id = "letterRecipient">
+              <span>Recipient: </span> {{ result.letter.recipient }}
+            </td>
+            <td id = "letterFootnotes">
+              <span>Footnotes: </span>
+              <a
+              routerLink="/volume/{{ result._id }}/{{ result.letter.xml_id }}#footnoteCollapse"
+              routerLinkActive="active">
+              Link to Footnotes</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-4 p-auto" id="resultText">
+        <a
+          data-toggle="collapse"
+          href="#{{ result.letter.xml_id }}"
+          aria-expanded="false"
+          [attr.aria-controls]="result.letter.xml_id"
+          style="text-decoration: none;"
+        >
+          <span>View Letter Content</span>
+          <span style="color: #5c8b57 !important;">
+            <fa-icon [icon]="faPlusSquare"></fa-icon>
+          </span>
+        </a>
+      </div>
+      <div class="col-12">
+        <div class="collapse" id="{{ result.letter.xml_id }}">
+          <div
+            class="viewer-box"
+            [innerHtml]="safeHTML(result.letter.docBody)"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center pt-2">
+      <ngb-pagination
+        [collectionSize]="results.data.length"
+        [pageSize]="pageSize"
+        [maxSize]="5"
+        [rotate]="true"
+        [(page)]="page"
+        (pageChange)="setPage($event)"
+      ></ngb-pagination>
+    </div>
+  </ng-container>
+</div>

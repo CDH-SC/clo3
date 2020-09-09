@@ -8,6 +8,7 @@ var expressOasGenerator = require('express-oas-generator');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var esClient = require('./elasticClient');
 
 var bluebird = require('bluebird');
 
@@ -35,6 +36,15 @@ mongoose
     console.log(err);
   });
 
+// Check connection to Elasticsearch cluster
+esClient.ping(err => {
+  if (err) {
+    console.log('Unable to connect to Elasticsearch!\n', err);
+  } else {
+    console.log('Connected to Elasticsearch at URL:', process.env.ES_HOST);
+  }
+})
+
 // CORS config
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -58,11 +68,11 @@ app.use('/users', users);
 app.use('/api', api);
 
 // Angular DIST output folder
-app.use(express.static('../clo-angular/dist'));
+app.use(express.static('/srv/dist'));
 
 // Set all other requests to the Angular app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../clo-angular/dist/index.html'));
+  res.sendFile(path.join(__dirname, '/srv/dist/index.html'));
 });
 
 // catch 404 and forward to error handler
