@@ -204,9 +204,8 @@ def letterUpload(array, letterType, volumeID):
 			footnotes = footnoteFormat(footnotesArray)
 		else: footnotes = None
 
-		if l.sourceNote.contents:
-			# sourceNote = xsltFormat(''.join(map(str, l.sourceNote.contents)))
-			sourceNote = xsltFormat(str(l.sourceNote))
+		if l.sourceNote:
+			sourceNote = xsltFormat(''.join(map(str, l.sourceNote.contents)))
 		else: sourceNote = None
 		docBody = xsltFormat(str(l.docBody))
 
