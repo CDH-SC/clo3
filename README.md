@@ -4,8 +4,8 @@ For non-technical information about this project, consult the [about-project](ht
 
 
 # Table of Contents
-1.[Installation](#installation)
-2.[Contributing](#contributing)
+1.[Installation](#installation)<br>
+2.[Contributing](#contributing)<br>
 3.[Contributors](#contributers)
 
 
@@ -161,11 +161,11 @@ This section is mainly used by the DevOps team.
 ---
 
 ### <a name=contributing>Contributing</a>
-	Clear and concise commit messages are a must. Let's all shoot for unambiquous language in them.
+Clear and concise commit messages are a must. Let's all shoot for unambiquous language.
 
 >
-~~Making some changes.~~
-~~Fixed a bug.~~
+__~~Making some changes.~~__<br>
+__~~Fixed a bug.~~__
 >
 >>
 Made a change that fixes rendering errors associated with database field.
@@ -175,8 +175,8 @@ Please make your a serious attempt to be both thorough and brief. Describe <em> 
 A good rule of thumb is that messages should have a specific object. Also, for new members especially, it could help to format your messages in a way that completes this sentence:
 
 > ___If applied, this commit will...___
-.
 
+All major changes should be documented in the changelog - which can be found here....
 ### Contributors
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
