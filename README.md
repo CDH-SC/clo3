@@ -67,7 +67,7 @@ $ echo $CLO_ROOT
 
 If `echo $CLO_ROOT` still shows that it is empty, you can set it manually:
 
-Find your current path by running `pwd`, then run export `CLO_ROOT=`~your current path here~ .
+Find your current path by running `pwd`, then run export `CLO_ROOT=`*your current path here* .
 
 Then run `source ~/.bashrc` again, and `echo $CLO_ROOT` to check that it was correctly set.
 
