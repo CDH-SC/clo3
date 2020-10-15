@@ -4,9 +4,9 @@
 For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself. 
 
 # Table of Contents
-##[Installation](#installation)<br>
-##[Contributing](#contributing)<br>
-##[Contributors](#contributers)
+* [Installation](#installation)<br>
+* [Contributing](#contributing)<br>
+* [Contributors](#contributers)
 
 
 ## <a name="installation">Installation</a>
