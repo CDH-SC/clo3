@@ -1,12 +1,12 @@
 # CLO3 
-
+[Production Site](https://carlyleletters.dukeupress.edu/home)
+[Development Site](https://clo.dev.cdhsc.org/home)
 For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself. 
 
-
 # Table of Contents
-1.[Installation](#installation)<br>
-2.[Contributing](#contributing)<br>
-3.[Contributors](#contributers)
+##[Installation](#installation)<br>
+##[Contributing](#contributing)<br>
+##[Contributors](#contributers)
 
 
 ## <a name="installation">Installation</a>
@@ -36,17 +36,11 @@ Install Git using your system's package manager. See [https://git-scm.com/book/e
 
 This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient. 
 
-Clone the repository to your command line:
-
-`git clone https://github.com/cdh-sc/clo3`
-
-If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch. 
+Clone the repository to your terminal.
 
 ### The Scripts
 
-`cd clo3/bin`
-
-The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory. Executing the first script outside of /bin directory may prevent the correct configuration of the environment variable.
+The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable.
 
 #### Install Node & Configure Environment Variable
 
@@ -176,7 +170,10 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 
 > ___If applied, this commit will...___
 
-All major changes should be documented in the changelog - which can be found here....
+All major changes should be documented in the [changelog](docs/CHANGELOG.md). 
+
+If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch. 
+
 ### Contributors
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
@@ -185,7 +182,8 @@ All major changes should be documented in the changelog - which can be found her
 * **Kenny Johnson**
 * **Ian McDowell**
 * **Tyron Schultz**
-
+* **Mitchell Lambert**
+* **Stella Masucci**
 
 
 ## Notes:
