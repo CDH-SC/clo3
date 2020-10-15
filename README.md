@@ -178,6 +178,7 @@ __~~Making some changes.~~__<br>
 __~~Fixed a bug.~~__
 >
 >___Made a change that fixes rendering errors associated with database field.___
+
 >___Fixed a bug in Authentication Fields.___
 
 Please make your a serious attempt to be both thorough and brief. Describe <em> what </em> changes were made, describe <em> which </em> bug was fixed, etc.
