@@ -6,7 +6,7 @@ For non-technical information about this project, consult the [about-project](ht
 # Table of Contents
 * [Installation](#installation)<br>
 * [Contributing](#contributing)<br>
-* [Contributors](#contributers)
+* [Contributors](#contributors)
 
 
 ## <a name="installation">Installation</a>
@@ -190,7 +190,7 @@ All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
 If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch. 
 
-### Contributors
+### <a name="contributors">Contributors</a>
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
 * **Prithvi Tippabhatla**
