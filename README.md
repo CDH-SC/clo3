@@ -1,7 +1,7 @@
-# CLO3 
+# CLO3
 [Production Site](https://carlyleletters.dukeupress.edu/home)
 [Development Site](https://clo.dev.cdhsc.org/home)
-For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself. 
+For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself.
 
 # Table of Contents
 * [Installation](#installation)<br>
@@ -61,15 +61,27 @@ $ echo $CLO_ROOT
 
 If `echo $CLO_ROOT` still shows that it is empty, you can set it manually:
 
-Find your current path by running `pwd`, then run export `CLO_ROOT=`*your current path here* .
+Find your current path by running `pwd`, then run
 
-Then run `source ~/.bashrc` again, and `echo $CLO_ROOT` to check that it was correctly set.
+`export CLO_ROOT=`*your current path here* .
+
+Then run
+
+`source ~/.bashrc`
+
+`echo $CLO_ROOT`
+
+to check that it was correctly set.
 
 This script creates the Nodeenv (https://pypi.org/project/nodeenv/). Activate it manually with:
 
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
 
-If this doesn't work, you may need to run `./A1-configure_nodeenv.sh` again from the clo3 directory, and then try the above command again.
+If this doesn't work, you may need to run
+
+`./A1-configure_nodeenv.sh`
+
+again from the clo3 directory, and then try the above source command again.
 
 **Whenever you are working with CLO3, be sure to have the nodeenv activated.**
 
@@ -139,9 +151,13 @@ Note that this will take awhile to run. Developers often report the longest wait
 
 Run `ls` to check that this has been done correctly. You should see clo.dev.HTTP.conf .
 
-If you are working on a virtual machine provided by the sysadmin, you will need to change to localhost by doing the following:
+If you are working on a virtual machine provided by the sysadmin, you will need to change to localhost:
 
-Run `sudo vim clo.dev.HTTP.conf`. Type `i` to go into insert mode, and then change server_name to localhost. `esc` and `:wq` to save and exit.
+`sudo vim clo.dev.HTTP.conf`
+
+Type `i` to go into insert mode, and then change server_name to localhost.
+
+`esc` and `:wq` to save and exit.
 
 At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://<ip-address>*.
 
@@ -187,9 +203,9 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 
 > ___If applied, this commit will...___
 
-All major changes should be documented in the [changelog](docs/CHANGELOG.md). 
+All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
-If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch. 
+If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
 
 ### <a name=contributors>Contributors</a>
 * **Jerrod Mathis**
