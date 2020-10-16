@@ -48,28 +48,43 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
 `./A1-configure_nodeenv.sh`
 
-The first script should configure the CLO_ROOT environment variable. However, this change will only propogate after exiting and re-logging into the server (quitting an restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`).
+The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
+Configuring a variable initially is only tentative. The change in our bash configuration file  will only propogate after exiting and re-logging into the server (quitting and restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`).
 
 Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`.
 
-If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file and run `source ~/.bashrc`.
-
+<!-- moved this output block above following sentence (it was below initially), it makes more logical sense here? -->
 ```
 $ echo $CLO_ROOT
 /home/kennethj/clo3
 ```
 
-If `echo $CLO_ROOT` still shows that it is empty, you can set it manually:
+If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file.
+
+```
+$ tail ~/.bashrc | less -N
+1. PS1=...
+2. ...
+3. ...
+4. ...
+5. export CLO_ROOT="/home/mitchelllambert/clo3"
+```
+
+`q`
+
+If you do not see the export statement at the bottom of this command output, the export line was not appended.
+
+At this point, you should try setting it manually:
 
 Find your current path by running `pwd`, then run export `CLO_ROOT=`*your current path here* .
 
 Then run `source ~/.bashrc` again, and `echo $CLO_ROOT` to check that it was correctly set.
 
-This script creates the Nodeenv (https://pypi.org/project/nodeenv/). Activate it manually with:
+Now that we have the first part taken care of, we can move onto activating the Node environment. Be sure to have this environment activated at any time you're working with CLO3.
 
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
 
-If this doesn't work, you may need to run `./A1-configure_nodeenv.sh` again from the clo3 directory, and then try the above command again.
+If this doesn't work, you may need to run `./A1-configure_nodeenv.sh` again from the /bin directory, and then try the above command again.
 
 **Whenever you are working with CLO3, be sure to have the nodeenv activated.**
 
