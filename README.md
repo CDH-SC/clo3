@@ -63,6 +63,8 @@ $ echo $CLO_ROOT
 
 If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file.
 
+<!-- need to ask someone who's not on mac whether or not the tilde symbol is alias for home directory. b/c if it's not then this command won't uniformly work like this -->
+`tail ~/.bashrc | less -N`
 ```
 $ tail ~/.bashrc | less -N
 1. PS1=...
