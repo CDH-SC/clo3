@@ -48,7 +48,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
 #### Install Node & Configure Environment Variable
 
-Let's check out the first script before running it to get a general sense of what's going on in [it](bin/A1-configure_nodeenv.sh){:target="_blank"}
+Let's check out the first script before running it to get a general sense of what's going on in <a href="bin/A1-configure_nodeenv.sh" target="_blank">it</a>
 
 
 `./A1-configure_nodeenv.sh`
