@@ -48,6 +48,9 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
 #### Install Node & Configure Environment Variable
 
+Let's check out the first script before running it to get a general sense of what's going on in [it](bin/A1-configure_nodeenv.sh){:target="_blank"}
+
+
 `./A1-configure_nodeenv.sh`
 
 The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
@@ -61,18 +64,19 @@ $ echo $CLO_ROOT
 /home/kennethj/clo3
 ```
 
-If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file.
-
+If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file. Let's issue a command to quickly do this.
 <!-- need to ask someone who's not on mac whether or not the tilde symbol is alias for home directory. b/c if it's not then this command won't uniformly work like this -->
-`tail ~/.bashrc | less -N`
+`tail -r ~/.bashrc`
 ```
-$ tail ~/.bashrc | less -N
-1. PS1=...
-2. ...
-3. ...
-4. ...
-5. export CLO_ROOT="/home/mitchelllambert/clo3"
+$ tail -r ~/.bashrc 
+
+export CLO_ROOT="/home/mitchelllambert/clo3"
+
+alias python=...
+PS1=...
 ```
+
+The tail command just entered a process. We'll have to exit out before moving on. Doing so is quite simple.
 
 `q`
 
