@@ -48,13 +48,13 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
 #### Install Node & Configure Environment Variable
 
-Let's check out the first script before running it to get a general sense of what's going on in <a href="bin/A1-configure_nodeenv.sh" target="_blank">it</a>
+It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after moving on from the script is a good idea. Let's check out the first one in a different window. Right click the link and choose the option "open in a different window:"<a href="bin/A1-configure_nodeenv.sh" target="_blank">the first script.</a>
 
-
-`./A1-configure_nodeenv.sh`
 
 The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
 Configuring a variable initially is only tentative. The change in our bash configuration file  will only propogate after exiting and re-logging into the server (quitting and restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`).
+
+`./A1-configure_nodeenv.sh`
 
 Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`.
 
@@ -97,10 +97,12 @@ Then run
 to check that it was correctly set.
 
 Now that we have the first part taken care of, we can move onto activating the Node environment. Be sure to have this environment activated at any time you're working with CLO3.
-
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
 
-If this doesn't work, you may need to run
+<!-- added this because realized kenny source's this in next script -->
+For the build process, the next script does contain the above command so you don't have to manually execute this command if you are currently trying to build it.
+<!-- stella's additions -->
+If you tried manually executing it but it doesn't work, you may need to run
 
 `./A1-configure_nodeenv.sh`
 
@@ -110,10 +112,72 @@ again from the /bin directory, and then try the above source command again.
 
 #### Install Required Node Packages
 
+<!-- added a bit to this section because it was seriously lacking -->
+Let's check out the <a href="bin/A1-configure_nodeenv.sh" target="_blank">the second script.</a> in a new window.
+
+<!-- this comment was first below execution statement, but i think it'd be a good idea to save execution for after explanation --> 
+The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. The last script installed Node for us, which comes with a default (node) package manager. As you can see, we're using this to install things after descending into the two directories via the 
+
+`npm` 
+
+command. To introduce you to our dependency structure, let's check out the two files our package manager is obtaining the dependency information.
+
+Besides generally understanding that our scripting process, a good thing to note about the following steps is that our dependencies are found in package.json files... 
+```
+$ sed -e '/"dependencies": {/,$p' clo-angular/package.json
+  "dependencies": {
+    "@angular/common": "^9.0.4",
+    "@angular/compiler": "^9.0.4",
+    "@angular/compiler-cli": "^9.0.4",
+    "@angular/core": "^9.0.4",
+    "@angular/forms": "^9.0.4",
+    "@angular/localize": "^9.0.4",
+    "@angular/platform-browser": "^9.0.4",
+    "@angular/platform-browser-dynamic": "^9.0.4",
+    "@angular/router": "^9.0.4",
+    "@fortawesome/angular-fontawesome": "^0.6.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@ng-bootstrap/ng-bootstrap": "^6.0.0",
+    "bootstrap": "^4.4.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.4.1",
+    "mark.js": "^8.11.1",
+    "nan": "^2.14.0",
+    "popper.js": "^1.16.1",
+    "rxjs": "^6.5.4",
+    "tslib": "^1.11.1",
+    "zone.js": "~0.10.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.900.4",
+    "@angular/cli": "~9.0.4",
+    "@fortawesome/fontawesome-free": "^5.12.1",
+    "jasmine-core": "~3.5.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
+    "karma-jasmine": "~3.1.1",
+    "karma-jasmine-html-reporter": "^1.5.2",
+    "protractor": "^5.4.3",
+    "ts-node": "~8.6.2",
+    "tslint": "~6.0.0",
+    "typescript": "^3.7.5",
+    "viewerjs": "^1.5.0"
+  }
+}
+
+```
+Similarly, we can run the same command, substituting the api's package.json in as argument file to check it's dependencies:
+
+`sed -e '/"dependencies": {/,$p' clo-api/package.json`
+
+Now let's execute the script.
+
 `./A2-install_dependencies.sh`
 
-The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
-
+Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
 #### Configure API
 
 `./A3-api_env_file.sh`
@@ -245,3 +309,5 @@ If working on a feature branch other than master, you can checkout that branch v
 ## Notes:
 
 1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.*
+
+
