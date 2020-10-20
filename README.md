@@ -99,32 +99,62 @@ to check that it was correctly set.
 Now that we have the first part taken care of, we can move onto activating the Node environment. Be sure to have this environment activated at any time you're working with CLO3.
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
 
-<!-- added this because realized kenny source's this in next script -->
-For the build process, the next script does contain the above command so you don't have to manually execute this command if you are currently trying to build it.
 <!-- stella's additions -->
-If you tried manually executing it but it doesn't work, you may need to run
+If this doesn't work, you may need to execute the script again (in the /bin directory), and then try the above source command again.
 
+`pwd`
+
+```
+$ pwd
+/home/mitchelllambert/clo3/bin
+```
 `./A1-configure_nodeenv.sh`
+`source ../env/bin/activate`
 
-again from the /bin directory, and then try the above source command again.
-
+What we've just installed and activated is Node.js, this is a JavaScript runtime environment that lets us execute our JavaScript code outside a web browser.
 **Whenever you are working with CLO3, be sure to have the nodeenv activated.**
 
-#### Install Required Node Packages
+#### Dependency Management 
 
 <!-- added a bit to this section because it was seriously lacking -->
-Let's check out the <a href="bin/A1-configure_nodeenv.sh" target="_blank">the second script.</a> in a new window.
+Let's check out the <a href="bin/A2-install_dependenciessh" target="_blank">the second script.</a> in a new window.
 
 <!-- this comment was first below execution statement, but i think it'd be a good idea to save execution for after explanation --> 
-The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. The last script installed Node for us, which comes with a default (node) package manager. As you can see, we're using this to install things after descending into the two directories via the 
+The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. Rember that last script installed Node for us. Node comes with a default (node) package manager. Which means Node's default package manager is a dependency of Node itself. 
 
-`npm` 
+As you can see if you're following along in the script, our package manager installs dependencies after descending into the two directories using the aptly named... 
 
-command. To introduce you to our dependency structure, let's check out the two files our package manager is obtaining the dependency information.
+`npm install`... 
 
-Besides generally understanding that our scripting process, a good thing to note about the following steps is that our dependencies are found in package.json files... 
+... command. Now, to introduce you to our dependency structure, let's check where our package manager is obtaining the dependency information. 
+
+They can be found in the package.json files of Angular's & the API's root directory. Check them out by clicking on the links below our run the commands below to view the segment of these two files that our package manager is getting the required information. 
+
+
+<details>
+
+  <summary> Locate and Open the Files </summary>
+
+	1. `cd ../clo-angular && vim package.json`
+>___Backtrack to the project's root direct then move into angular's root directory, and open up the file (we use vim here but you can use whichever text editor you're most comfortable with.___	
+	2. Take note of the dependencies & devDependencies section, these are angular's dependencies and all the key-value pairs listed here is where our package manager is reading from in the second script.
+	3. `:q!`
+>___Exit the vim editor.___
+	4. Repeat this process for checking out the API's dependencies, subsiting the API's root folder in for step 1.
+</details>
+
+<details>
+	
+  <summary> Output Dependencies List from Command Line </summary>
+
+`sed -n '/"dependencies'/,$p' ../clo-angular/package.json`
+
+  <details>
+
+  <summary> Expected Output </summary>	 
+
 ```
-$ sed -e '/"dependencies": {/,$p' clo-angular/package.json
+$ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
   "dependencies": {
     "@angular/common": "^9.0.4",
     "@angular/compiler": "^9.0.4",
@@ -169,6 +199,10 @@ $ sed -e '/"dependencies": {/,$p' clo-angular/package.json
 }
 
 ```
+  </details>
+
+</details>
+
 Similarly, we can run the same command, substituting the api's package.json in as argument file to check it's dependencies:
 
 `sed -e '/"dependencies": {/,$p' clo-api/package.json`
