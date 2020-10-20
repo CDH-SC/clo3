@@ -11,8 +11,9 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
   - [Dependencies](#dependencies)<br>
   - [Insall Dependencies from Package Manager](#install-initial-depencies)<br>
   - [The Scripts](#scripts)<br>
-* [Contributing](#contributing)<br>
-* [Contributors](#contributors)
+- [Deploy](#deployment)<br>
+- [Contributing](#contributing)<br>
+- [Contributors](#contributors)
 
 
 ## <a name="installation"> Installation </a>
@@ -54,7 +55,7 @@ Clone the repository to your command line. On the home page of the repository, l
 
 </details>
 
-### <a name="scripts"> The Scripts </a>
+## <a name="scripts"> The Scripts </a>
 
 The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable. The scripts for building the site are listed below. 
 
@@ -69,7 +70,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 - __clo3/bin/C1-build_site_PROD.sh__<br>
 
 
-#### Configure Node Environment 
+### Configure Node Environment 
 
 <details>
 
@@ -169,7 +170,7 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 </details>
 
 
-#### Dependency Management 
+### Dependency Management 
 
 <details>
 
@@ -282,7 +283,7 @@ Note that the script will prompt the user for returning feedback about Angular t
 
 </details>
 
-#### Configure API
+### Configure API
 
 <details>
   
@@ -301,7 +302,7 @@ This script creates and populates the .env file in clo-api. You can check that i
 </details>
 
 <!-- changed these bolded descriptions into headers pretty much so we can access them from ToC -->
-#### Deploy clo-api
+### Deploy clo-api
 
 <details>
 
@@ -318,7 +319,7 @@ ___B2-install_elastic.sh___
 
    <summary> First Script </summary>
 
-##### Install Mongo
+### Install Mongo
 
 >___B1-install_mongo.sh___
 
@@ -341,7 +342,7 @@ Let's check to see if Mongo is running.
    
    <summary> Second Script </summary>
 
-##### Install Elastic Search
+### Install Elastic Search
 
 >___B2-install_elastic.sh___
 
@@ -383,7 +384,7 @@ Connected to Elasticsearch at URL: http://127.0.0.1:9200
   </details>
 </details>
 
-#### Build clo-angular
+### Build clo-angular
 
   <details>
 
@@ -405,7 +406,7 @@ Note that this will take awhile to run. Developers often report the longest wait
 </details> 
 
 <!-- last closing tag should partition the scripts segment away from the following segments -->
-## Deploy CLO
+## <a name="deployment"> Deploy CLO </a>
 
 **Configure NGINX**
 
@@ -452,7 +453,7 @@ This section is mainly used by the DevOps team.
 
 ---
 
-### <a name=contributing>Contributing</a>
+## <a name=contributing>Contributing</a>
 Clear and concise commit messages are a must. Let's all shoot for unambiguous language.
 
 >
@@ -473,7 +474,7 @@ All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
 If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
 
-### <a name=contributors>Contributors</a>
+## <a name=contributors>Contributors</a>
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
 * **Prithvi Tippabhatla**
