@@ -131,6 +131,7 @@ As you can see if you're following along in the script, our package manager inst
 They can be found in the package.json files of Angular's & the API's root directory. Check them out by clicking on the links below our run the commands below to view the segment of these two files that our package manager is getting the required information. 
 
 
+##### Where is NPM locating Dependency Information?
 <details>
 
   <summary> Locate and Open the Files </summary>
@@ -210,12 +211,13 @@ Similarly, we can run the same command, substituting the api's package.json in a
 
 </details>
 
-Now let's execute the script.
-</details>
+Now that we've checked out where our package manager is getting it's information, let's execute the script.
 
 `./A2-install_dependencies.sh`
 
 Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
+
+
 #### Configure API
 
 `./A3-api_env_file.sh`
