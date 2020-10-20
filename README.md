@@ -117,7 +117,7 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 #### Dependency Management 
 
 <!-- added a bit to this section because it was seriously lacking -->
-Let's check out the <a href="bin/A2-install_dependenciessh" target="_blank">the second script.</a> in a new window.
+Let's check out the <a href="bin/A2-install_dependencies.sh" target="_blank">the second script</a> in a new window.
 
 <!-- this comment was first below execution statement, but i think it'd be a good idea to save execution for after explanation --> 
 The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. Rember that last script installed Node for us. Node comes with a default (node) package manager. Which means Node's default package manager is a dependency of Node itself. 
@@ -135,11 +135,13 @@ They can be found in the package.json files of Angular's & the API's root direct
 
   <summary> Locate and Open the Files </summary>
 
-	1. `cd ../clo-angular && vim package.json`
+	1.	`cd ../clo-angular && vim package.json`
 >___Backtrack to the project's root direct then move into angular's root directory, and open up the file (we use vim here but you can use whichever text editor you're most comfortable with.___	
+	
 	2. Take note of the dependencies & devDependencies section, these are angular's dependencies and all the key-value pairs listed here is where our package manager is reading from in the second script.
-	3. `:q!`
+	3.	`:q!`
 >___Exit the vim editor.___
+	
 	4. Repeat this process for checking out the API's dependencies, subsiting the API's root folder in for step 1.
 </details>
 
@@ -201,13 +203,15 @@ $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
 ```
   </details>
 
-</details>
 
-Similarly, we can run the same command, substituting the api's package.json in as argument file to check it's dependencies:
+Similarly, we can run the same command, substituting the api's package.json in as argument file to check the api's dependencies:
 
 `sed -e '/"dependencies": {/,$p' clo-api/package.json`
 
+</details>
+
 Now let's execute the script.
+</details>
 
 `./A2-install_dependencies.sh`
 
