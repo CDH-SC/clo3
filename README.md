@@ -40,7 +40,15 @@ Install Git using your system's package manager. See [https://git-scm.com/book/e
 
 This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient.
 
-Clone the repository to your command line:
+<details>
+
+  <summary> Clone Repository </summary>
+
+Clone the repository to your command line. On the home page of the repository, locate the green button above the list of folders and files that says "Code," and click on it to pull up the HTTPS of this repository. Click the button to the right of the url. This copies it, you'll need to paste it into the cloning command.
+
+`git clone <url>`
+
+</details>
 
 ### The Scripts
 
@@ -74,9 +82,20 @@ $ echo $CLO_ROOT
 
 </details>
 
-If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file. Let's issue a command to quickly do this.
+If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file. 
 <!-- need to ask someone who's not on mac whether or not the tilde symbol is alias for home directory. b/c if it's not then this command won't uniformly work like this -->
+<details>
+	
+  <summary> Click here if You're Having Trouble </summary>
+Let's issue a command to see if the line was appended...
+
 `tail -r ~/.bashrc`
+`q`
+
+<details>
+	
+  <summary> Example Output </summary>
+
 ```
 $ tail -r ~/.bashrc 
 
@@ -86,11 +105,9 @@ alias python=...
 PS1=...
 ```
 
-The tail command just entered a process. We'll have to exit out before moving on. Doing so is quite simple.
+<!-- Stella's additions, much was lacking from first version of README regarding troubleshooting but to prevent it from too clogged up, encapsulated all the troubleshooting aspects in collapsable sections -->
 
-`q`
-
-If you do not see the export statement at the bottom of this command output, the export line was not appended.
+If you do not see the export statement at the top of this command output, the export line was not appended.
 
 At this point, you should try setting it manually:
 
@@ -105,6 +122,7 @@ Then run
 `echo $CLO_ROOT`
 
 to check that it was correctly set.
+</details>
 
 Now that we have the first part taken care of, we can move onto activating the Node environment. Be sure to have this environment activated at any time you're working with CLO3.
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
