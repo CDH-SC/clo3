@@ -59,10 +59,20 @@ Configuring a variable initially is only tentative. The change in our bash confi
 Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`.
 
 <!-- moved this output block above following sentence (it was below initially), it makes more logical sense here? -->
+
+<!-- NOTICED THAT PUTTING A COMMAND OUTPUT BOX DIFFERS FROM OUR CONVENTIALL ONE COMMAND LINE BLOCK SO IT TAKES A SECOND TO REALIZE THE TOP COMMAND IN THIS BLOCK IS SUPPOSED TO BE EXECUTED -->
+`echo $CLO_ROOT`
+
+<details>
+
+  <summary> Example Output </summary>
+
 ```
 $ echo $CLO_ROOT
 /home/kennethj/clo3
 ```
+
+</details>
 
 If it is empty, the environment variable is not set. Check that the necessary "export" line has been appended to your ~/.bashrc file. Let's issue a command to quickly do this.
 <!-- need to ask someone who's not on mac whether or not the tilde symbol is alias for home directory. b/c if it's not then this command won't uniformly work like this -->
@@ -246,13 +256,21 @@ This last command runs the equivalent of 'npm start' using the `nohup` ("no hang
 
 Due to a inconsistency in the output of `nohup`, you may need to press Enter/Return to get another command prompt in your terminal. This is normal.
 
-At this point, your API is running. Ensure it is configured correctly by checking the contents of the logging file with `cat nohup.out`.
+At this point, your API is running. Ensure it is configured correctly by checking the contents of the logging file with.
+
+`cat nohup.out`
+
+<details>
+  
+  <summary> Expected Output </summary>
+
 
 ```
 $ cat nohup.out
 Connected to MongoDB at URL: mongodb://127.0.0.1:27017/clo
 Connected to Elasticsearch at URL: http://127.0.0.1:9200
 ```
+</details>
 
 **Build clo-angular:**
 
@@ -286,7 +304,7 @@ Type `i` to go into insert mode, and then change server_name to localhost.
 
 `esc` and `:wq` to save and exit.
 
-At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://<ip-address>*.
+At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://clo.dev.cdhsc.org.
 
 Be sure to check the server\_name directive. It defaults to a non-existent clo.dev2.cdhsc.org.
 
