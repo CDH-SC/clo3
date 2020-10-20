@@ -3,15 +3,19 @@
 
 [Development Site](https://clo.dev.cdhsc.org/home)
 
-For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself.
+<!-- added a sentence describing what it is, always nice to showcase the why in things to ensure we comprehend the value of the work itself; inspiring! -->
+Carlyle Letters Online hosts a digital archive containing thousands of letters of great historical import, dating back to the Victorian Era. The influential pair of thinkers whose letter correspondence make up our archive - Thomas and Jane Welsh Carlyle - are timeless figures needing a group of individuals to modernize their writings. For more non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself.
 
 # Table of Contents
-* [Installation](#installation)<br>
+- [Installation](#installation)<br>
+  - [Dependencies](#dependencies)<br>
+  - [Insall Dependencies from Package Manager](#install-initial-depencies)<br>
+  - [The Scripts](#scripts)<br>
 * [Contributing](#contributing)<br>
 * [Contributors](#contributors)
 
 
-## <a name="installation">Installation</a>
+## <a name="installation"> Installation </a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -19,7 +23,7 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
 
-**Dependencies:**
+<a name="dependencies"> **Dependencies:** </a>
 
 - Git
 - python3-pip
@@ -31,7 +35,7 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 - jquery (^3.4.1)
 
 
-**Install Dependencies from Package Manager**
+<a name="install-initial-dependencies"> **Install Dependencies from Package Manager** </a>
 
 Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
 
@@ -50,16 +54,32 @@ Clone the repository to your command line. On the home page of the repository, l
 
 </details>
 
-### The Scripts
+### <a name="scripts"> The Scripts </a>
 
-The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable.
+The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable. The scripts for building the site are listed below. 
 
-#### Install Node & Configure Environment Variable
+<!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
+<!-- within those collapsable sections, all the troubleshooting should be in collapsable sections within the main collapsable section for that particular script since not everyone will have trouble with execution, but of course, it's a neccessary and useful bit of information to keep here -->
+- clo3/bin/A1-configure_nodeenv.sh<br>
+- clo3/bin/A2-install_dependencies.sh<br>
+- clo3/bin/A3-api_env_file.sh<br>
+- clo3/bin/B1-install_mongo.sh<br>
+- clo3/bin/B2-install_elastic.sh<br>
+- clo3/bin/C1-build_site_PROD.sh<br>
 
-It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after moving on from the script is a good idea. Let's check out the first one in a different window. Right click the link and choose the option "open in a different window:"<a href="bin/A1-configure_nodeenv.sh" target="_blank">the first script.</a>
 
+#### Configure Node Environment 
+
+<details>
+
+  <summary> The First Script </summary>
+
+>___ clo3/bin/A1-configure_nodeenv.sh___
+
+It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
 
 The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
+
 Configuring a variable initially is only tentative. The change in our bash configuration file  will only propogate after exiting and re-logging into the server (quitting and restarting SSH) or by running the "source" command on your .bashrc file in the terminal (`source ~/.bashrc`).
 
 `./A1-configure_nodeenv.sh`
@@ -145,7 +165,16 @@ $ pwd
 What we've just installed and activated is Node.js, this is a JavaScript runtime environment that lets us execute our JavaScript code outside a web browser.
 **Whenever you are working with CLO3, be sure to have the nodeenv activated.**
 
+</details>
+
+
 #### Dependency Management 
+
+<details>
+
+  <summary> The Second Script </summary>
+
+>___ clo3/bin/A2-install_dependencies.sh___
 
 <!-- added a bit to this section because it was seriously lacking -->
 Let's check out the <a href="bin/A2-install_dependencies.sh" target="_blank">the second script</a> in a new window.
@@ -159,13 +188,13 @@ As you can see if you're following along in the script, our package manager inst
 
 ... command. Now, to introduce you to our dependency structure, let's check where our package manager is obtaining the dependency information. 
 
-They can be found in the package.json files of Angular's & the API's root directory. Check them out by clicking on the links below our run the commands below to view the segment of these two files that our package manager is getting the required information. 
+They can be found in the package.json files of Angular's & the API's root directory. Check them out by either opening these files in a text editor or run a command to view the particular segment of these two files from which our package manager is getting the required information. 
 
 
-##### Where is NPM locating Dependency Information?
+** So where is NPM locating Dependency Information? **
 <details>
 
-  <summary> Locate and Open the Files </summary>
+  <summary> Locate and Open the Files NPM is Using </summary>
 
 	1.	`cd ../clo-angular && vim package.json`
 >___Backtrack to the project's root direct then move into angular's root directory, and open up the file (we use vim here but you can use whichever text editor you're most comfortable with.___	
@@ -179,7 +208,9 @@ They can be found in the package.json files of Angular's & the API's root direct
 
 <details>
 	
-  <summary> Output Dependencies List from Command Line </summary>
+  <summary> Output Dependency List to Command Line from Files NPM is Using </summary>
+  
+  
 
 `sed -n '/"dependencies'/,$p' ../clo-angular/package.json`
 
@@ -248,25 +279,77 @@ Now that we've checked out where our package manager is getting it's information
 
 Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
 
+</details>
 
 #### Configure API
 
-`./A3-api_env_file.sh`
+>___A3-api_env_file.sh___
+
+<details>
+  
+  <summary> Script Three </summary>
 
 This script creates and populates the .env file in clo-api. You can check that it is correctly configured with `cat $CLO_ROOT/clo-api/.env`.
 
+<!-- add some descriptions... cat output? -->
 
-**Deploy clo-api:**
+`./A3-api_env_file.sh`
+
+</details>
+
+<!-- changed these bolded descriptions into headers pretty much so we can access them from ToC -->
+#### Deploy clo-api
+
+>___B1-install_mongo.sh___
+>___B2-install_elastic.sh___ 
+
+<!-- soomething about these two not being listed to begin this section initially disoriented me, like I was expecting one script per section when I first read this doc -->
+
+<details>
+
+<summary> Backend Scripts </summary>
+
+  <details>
+
+   <summary> First Script </summary>
+
+##### Install Mongo
+
+>___B1-install_mongo.sh___
+
+This script install MongoDB and restores the contents of the database. 
 
 
+
+
+
+
+<!-- add stuff to this, add descriptions before execution step -->
 `./B1-install_mongo.sh`
 
-This script install MongoDB and restores the contents of the database. You can check that is is running via `ps -aux | grep -e "mongo" | grep -v "grep"`.
+Let's check to see if Mongo is running.
+`ps -aux | grep -e "mongo" | grep -v "grep"`.
+
+  </details>
+
+  <details>
+   
+   <summary> Second Script </summary>
+
+##### Install Elastic Search
+
+>___B2-install_elastic.sh___
+
+This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo-api/bin directory). 
+
+<!-- anything more I can add? -->
+
 
 `./B2-install_elastic.sh`
+Let's check to make sure elastic search is running.
+`ps -aux | grep -e "elastic" | grep -v "grep"`.
 
-This script installs elasticsearch to the $CLO_ROOT/clo-api/bin directory. You can check that it is running via `ps -aux | grep -e "elastic" | grep -v "grep"`.
-
+<!-- what are we doing here? a bit unclear of a transition -->
 `cd ../clo-api`
 
 `node elasticSync.js`
@@ -281,9 +364,9 @@ At this point, your API is running. Ensure it is configured correctly by checkin
 
 `cat nohup.out`
 
-<details>
+   <details>
   
-  <summary> Expected Output </summary>
+   <summary> Expected Output </summary>
 
 
 ```
@@ -291,9 +374,17 @@ $ cat nohup.out
 Connected to MongoDB at URL: mongodb://127.0.0.1:27017/clo
 Connected to Elasticsearch at URL: http://127.0.0.1:9200
 ```
+   </details>
+  </details>
 </details>
 
-**Build clo-angular:**
+##### Build clo-angular
+
+>___C1-build_site_PROD.sh___
+
+  <details>
+
+  <summary> Last Frontend Script </summary>
 
 `cd $CLO_ROOT/bin`
 
@@ -305,6 +396,11 @@ This script also copies the HTTP version of the Nginx config to the '/etc/nginx/
 
 Note that this will take awhile to run. Developers often report the longest wait at `92% compiling`. Be patient.
 
+  </details>
+
+</details> 
+
+<!-- last closing tag should partition the scripts segment away from the following segments -->
 ## Deploy CLO
 
 **Configure NGINX**
