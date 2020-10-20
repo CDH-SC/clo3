@@ -122,6 +122,9 @@ Then run
 `echo $CLO_ROOT`
 
 to check that it was correctly set.
+  
+  </details>
+
 </details>
 
 Now that we have the first part taken care of, we can move onto activating the Node environment. Be sure to have this environment activated at any time you're working with CLO3.
