@@ -3,6 +3,7 @@
 For non-technical information about this project, consult the [about-project](https://clo.cdhsc.org/about-project) page on the site itself. 
 
 
+
 # Table of Contents
 1.[Installation](#installation)<br>
 2.[Contributing](#contributing)<br>
@@ -10,6 +11,7 @@ For non-technical information about this project, consult the [about-project](ht
 
 
 ## <a name="installation">Installation</a>
+
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -46,9 +48,13 @@ If working on a feature branch other than master, you can checkout that branch v
 
 `cd clo3/bin`
 
+
 The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory. Executing the first script outside of /bin directory may prevent the correct configuration of the environment variable.
 
 #### Install Node & Configure Environment Variable
+
+
+The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. 
 
 `./A1-configure_nodeenv.sh`
 
@@ -69,11 +75,13 @@ This script creates the Nodeenv (https://pypi.org/project/nodeenv/). Activate it
 
 **Whenever you are working with CLO3, be sure to have the nodeenv activated.**
 
+
 #### Install Required Node Packages
 
 `./A2-install_dependencies.sh`
 
 The second script decends into 'clo-angular' and 'clo-api' to install the required node packages. Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
+
 
 #### Configure API
 
