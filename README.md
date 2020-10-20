@@ -60,19 +60,20 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
 <!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
 <!-- within those collapsable sections, all the troubleshooting should be in collapsable sections within the main collapsable section for that particular script since not everyone will have trouble with execution, but of course, it's a neccessary and useful bit of information to keep here -->
-- clo3/bin/A1-configure_nodeenv.sh<br>
-- clo3/bin/A2-install_dependencies.sh<br>
-- clo3/bin/A3-api_env_file.sh<br>
-- clo3/bin/B1-install_mongo.sh<br>
-- clo3/bin/B2-install_elastic.sh<br>
-- clo3/bin/C1-build_site_PROD.sh<br>
+
+- >___clo3/bin/A1-configure_nodeenv.sh___<br>
+- >___clo3/bin/A2-install_dependencies.sh___<br>
+- >___clo3/bin/A3-api_env_file.sh___<br>
+- >___clo3/bin/B1-install_mongo.sh___<br>
+- >___clo3/bin/B2-install_elastic.sh___<br>
+- >___clo3/bin/C1-build_site_PROD.sh___<br>
 
 
 #### Configure Node Environment 
 
 <details>
 
-  <summary> The First Script </summary>
+  <summary> Script One </summary>
 
 >___ clo3/bin/A1-configure_nodeenv.sh___
 
@@ -283,11 +284,13 @@ Note that the script will prompt the user for returning feedback about Angular t
 
 #### Configure API
 
->___A3-api_env_file.sh___
-
 <details>
   
   <summary> Script Three </summary>
+
+___A3-api_env_file.sh___
+
+ 
 
 This script creates and populates the .env file in clo-api. You can check that it is correctly configured with `cat $CLO_ROOT/clo-api/.env`.
 
@@ -300,14 +303,16 @@ This script creates and populates the .env file in clo-api. You can check that i
 <!-- changed these bolded descriptions into headers pretty much so we can access them from ToC -->
 #### Deploy clo-api
 
->___B1-install_mongo.sh___
->___B2-install_elastic.sh___ 
-
-<!-- soomething about these two not being listed to begin this section initially disoriented me, like I was expecting one script per section when I first read this doc -->
-
 <details>
 
 <summary> Backend Scripts </summary>
+
+___B1-install_mongo.sh___
+___B2-install_elastic.sh___ 
+
+<!-- soomething about these two not being listed to begin this section initially disoriented me, like I was expecting one script per section when I first read this doc -->
+
+
 
   <details>
 
@@ -378,14 +383,13 @@ Connected to Elasticsearch at URL: http://127.0.0.1:9200
   </details>
 </details>
 
-##### Build clo-angular
-
->___C1-build_site_PROD.sh___
+#### Build clo-angular
 
   <details>
 
   <summary> Last Frontend Script </summary>
 
+>___C1-build_site_PROD.sh___
 `cd $CLO_ROOT/bin`
 
 `./C1-build_site_PROD.sh`
