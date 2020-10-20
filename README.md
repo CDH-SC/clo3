@@ -61,12 +61,12 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 <!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
 <!-- within those collapsable sections, all the troubleshooting should be in collapsable sections within the main collapsable section for that particular script since not everyone will have trouble with execution, but of course, it's a neccessary and useful bit of information to keep here -->
 
-- >___clo3/bin/A1-configure_nodeenv.sh___<br>
-- >___clo3/bin/A2-install_dependencies.sh___<br>
-- >___clo3/bin/A3-api_env_file.sh___<br>
-- >___clo3/bin/B1-install_mongo.sh___<br>
-- >___clo3/bin/B2-install_elastic.sh___<br>
-- >___clo3/bin/C1-build_site_PROD.sh___<br>
+- __clo3/bin/A1-configure_nodeenv.sh__<br>
+- __clo3/bin/A2-install_dependencies.sh__<br>
+- __clo3/bin/A3-api_env_file.sh__<br>
+- __clo3/bin/B1-install_mongo.sh__<br>
+- __clo3/bin/B2-install_elastic.sh__<br>
+- __clo3/bin/C1-build_site_PROD.sh__<br>
 
 
 #### Configure Node Environment 
