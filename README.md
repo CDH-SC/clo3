@@ -562,7 +562,6 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 
 It is vital that we understand what's been changed and when, not only for developmental purposes, but for our project managers as well so they can obtain this neccessary information promptly when needed to report them on grant requests. All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
-If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
 
 </details>
 
@@ -583,5 +582,7 @@ If working on a feature branch other than master, you can checkout that branch v
 ## <a name=notes>Notes</a>
 
 1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.*
+
+2. If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
 
 
