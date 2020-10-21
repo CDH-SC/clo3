@@ -112,7 +112,7 @@ Before running the next script, ensure the environment variable is set via `echo
 <details>
 
   <summary> Example Output </summary>
-
+<br>
 ```
 $ echo $CLO_ROOT
 /home/kennethj/clo3
@@ -125,6 +125,7 @@ If it is empty, the environment variable is not set. Check that the necessary "e
 <details>
 	
   <summary> Click here if You're Having Trouble </summary>
+<br>
 Let's issue a command to see if the line was appended...
 
 `tail -r ~/.bashrc`
@@ -133,6 +134,7 @@ Let's issue a command to see if the line was appended...
 <details>
 	
   <summary> Example Output </summary>
+<br>
 
 ```
 $ tail -r ~/.bashrc 
@@ -216,7 +218,7 @@ __So where is NPM locating Dependency Information?__
 <details>
 
   <summary> Locate and Open the Files NPM is Using </summary>
-
+<br>
 `cd ../clo-angular && vim package.json`
 >___Backtrack to the project's root direct then move into angular's root directory, and open up the file (we use vim here but you can use whichever text editor you're most comfortable with.___	
 
@@ -230,16 +232,15 @@ Now you can repeat this process for checking out the API's dependencies, subsiti
 
 <details>
 	
-  <summary> View File Contents NPM is Using from Command Line </summary>
-  
-  
+  <summary> View File Contents NPM is Using from Command Line </summary> 
 
+<br>
 `sed -n '/"dependencies'/,$p' ../clo-angular/package.json`
 
   <details>
 
   <summary> Expected Output </summary>	 
-
+<br>
 ```
 $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
   "dependencies": {
@@ -359,7 +360,7 @@ Let's ensure its correctly configured by checking the .env file contents.
 
    <summary> First Script </summary>
 
-### Install Mongo
+#### Install Mongo
 <br>
 
 ***B1-install_mongo.sh***
@@ -386,7 +387,7 @@ Let's check to see if Mongo is running.
    
    <summary> Second Script </summary>
 
-### Install Elastic Search
+#### Install Elastic Search
 <br>
 
 ***B2-install_elastic.sh***
