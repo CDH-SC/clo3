@@ -25,13 +25,8 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 
 
-<!-- sections will comprise all subsections associated with class --> 
-<!-- subsections separated using div elements -->
-<!-- sections are outer list elements from ToC, div elements correspond to the inner list elements -->
 
 
-
-<section>
 
 ##<a name="installation"></a>Installation
 
@@ -41,7 +36,7 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
 <br>
-###<a name="dependencies"></a>Dependencies<
+###<a name="dependencies"></a>Dependencies
 
 - Git
 - python3-pip
