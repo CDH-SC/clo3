@@ -35,7 +35,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 You will need root access to the machine to build CLO3. Our team currently uses Ubuntu 20.04 for its remote servers.
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
-<br>
+
 ### <a name=dependencies>Dependencies</a>
 - Git
 - python3-pip
@@ -49,22 +49,21 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 
 ### <a name=install-initial-dependencies>Install Dependencies from Package Manager </a>
 
-    Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
+ Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
 
 `sudo apt-get update`  
 `sudo apt-get install git python3-pip certbot python3-certbot-nginx`
 
 This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient.
 
-  <a name="Clone Repo">**Clone Repository**</a>
+**Clone Repository**
 
 Clone the repository to your command line. On the home page of the repository, locate the green button above the list of folders and files that says "Code," and click on it to pull up the HTTPS of this repository. Click the button to the right of the url. This copies it, you'll need to paste it into the cloning command.
 
 `git clone <url>`
 
 
-## <a name="scripts"></a>The Scripts 
-
+## <a name=scripts>The Scripts</a>
 The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable. The scripts for building the site are listed below. 
 
 <!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
@@ -82,7 +81,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 - __clo3/bin/C1-build_site_PROD.sh__<br>
 
 
-### <a></a>Configure Node Environment 
+### Configure Node Environment 
 
 <details>
 
