@@ -39,14 +39,14 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 
   <a name="dependencies"> **Dependencies** </a>
 
-	- Git
-	- python3-pip
-	- Nodeenv
-	- Node (^12.18.3)
-	- MongoDB
-	- ElasticSearch (^7.8)
-	- Angular (^9.0.4)
-	- jquery (^3.4.1)
+- Git
+- python3-pip
+- Nodeenv
+- Node (^12.18.3)
+- MongoDB
+- ElasticSearch (^7.8)
+- Angular (^9.0.4)
+- jquery (^3.4.1)
 
 
   <a name="install-initial-dependencies"> **Install Dependencies from Package Manager** </a>
@@ -72,6 +72,10 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 <!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
 <!-- within those collapsable sections, all the troubleshooting should be in collapsable sections within the main collapsable section for that particular script since not everyone will have trouble with execution, but of course, it's a neccessary and useful bit of information to keep here -->
 
+
+<!-- along with listing these out, links to them are provided in their respective headings so participants can follow along as they're executing these scripts -->
+<!-- preferably, they would read before execution; therefore I swapped around the original positioning a bit -->
+<!-- namely, the explanation of script functionality initially came after execution step - I moved these explanations above the execution steps -->
 - __clo3/bin/A1-configure_nodeenv.sh__<br>
 - __clo3/bin/A2-install_dependencies.sh__<br>
 - __clo3/bin/A3-api_env_file.sh__<br>
@@ -84,7 +88,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
 <details>
 
-  <summary> Script One </summary>
+  <summary> First Script </summary>
 
 >___ clo3/bin/A1-configure_nodeenv.sh___
 It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
@@ -183,7 +187,7 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 
 <details>
 
-  <summary> The Second Script </summary>
+  <summary> Second Script  </summary>
 
 >___ clo3/bin/A2-install_dependencies.sh___
 <!-- added a bit to this section because it was seriously lacking -->
@@ -198,27 +202,29 @@ As you can see if you're following along in the script, our package manager inst
 
 ... command. Now, to introduce you to our dependency structure, let's check where our package manager is obtaining the dependency information. 
 
-They can be found in the package.json files of Angular's & the API's root directory. Check them out by either opening these files in a text editor or run a command to view the particular segment of these two files from which our package manager is getting the required information. 
+They can be found in the package.json files of Angular's & the API's root directory. Check them out by either opening these files in a text editor or by executing a command to print in your terminal the particular segment of these two files from which our package manager is getting the required information. 
 
 
-** So where is NPM locating Dependency Information? **
+__So where is NPM locating Dependency Information?__
+
 <details>
 
   <summary> Locate and Open the Files NPM is Using </summary>
 
-	1.	`cd ../clo-angular && vim package.json`
+`cd ../clo-angular && vim package.json`
 >___Backtrack to the project's root direct then move into angular's root directory, and open up the file (we use vim here but you can use whichever text editor you're most comfortable with.___	
-	
-	2. Take note of the dependencies & devDependencies section, these are angular's dependencies and all the key-value pairs listed here is where our package manager is reading from in the second script.
-	3.	`:q!`
+
+Take note of the dependencies & devDependencies section, these are angular's dependencies and all the key-value pairs listed here is where our package manager is reading from in the second script.
+
+`:q!`
 >___Exit the vim editor.___
 	
-	4. Repeat this process for checking out the API's dependencies, subsiting the API's root folder in for step 1.
+Now you can repeat this process for checking out the API's dependencies, subsiting the API's root folder in for step 1.
 </details>
 
 <details>
 	
-  <summary> Output Dependency List to Command Line from Files NPM is Using </summary>
+  <summary> View File Contents NPM is Using from Command Line </summary>
   
   
 
@@ -228,7 +234,7 @@ They can be found in the package.json files of Angular's & the API's root direct
 
   <summary> Expected Output </summary>	 
 
-    ```
+```
 $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
   "dependencies": {
     "@angular/common": "^9.0.4",
@@ -272,8 +278,7 @@ $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
     "viewerjs": "^1.5.0"
   }
 }
-
-   ```
+```
   
   </details>
 
