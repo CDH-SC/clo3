@@ -89,7 +89,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 <details>
 
   <summary> First Script </summary>
-
+<br>
 >___bin/A1-configure_nodeenv.sh___
 <br>
 It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
@@ -189,7 +189,7 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 <details>
 
   <summary> Second Script  </summary>
-
+<br>
 >___clo3/bin/A2-install_dependencies.sh___ 
 <br>
 <!-- added a bit to this section because it was seriously lacking -->
@@ -297,6 +297,7 @@ Now that we've checked out where our package manager is getting it's information
 
 Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
 
+</details>
 
 ### Configure API
 
