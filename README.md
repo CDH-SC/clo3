@@ -47,9 +47,9 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 - jquery (^3.4.1)
 
 
-### <a name=install-initial-dependencies>Install Dependencies from Package Manager </a>
+### <a name=install-initial-dependencies>Install Dependencies from Package Manager</a>
 
- Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
+Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
 
 `sudo apt-get update`  
 `sudo apt-get install git python3-pip certbot python3-certbot-nginx`
