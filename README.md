@@ -19,7 +19,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
   - [Commit Messages](#commit-messages)<br>
   - [Tracking Changes](#tracking-changes)<br>
 - [Contributors](#contributors)<br>
-- [Miscelaneous Notes] (#notes)<br>
+- [Miscelaneous Notes](#notes)<br>
 
 <!-- the beginning setup never changes so keep first two sections as un-collapsable, the following sections may be revisited to at different times two get a more thorough understanding on a particular script or particular scripts; so making the scripts section collapsable helps us quickly find what we're looking for, without showing uneeded info -->
 
@@ -511,9 +511,11 @@ Please note that changes to the DNS can take up to 5 minutes to propogate. Also,
 <details>
 
 <summary> Webserver Configuration </summary>
-<br>
 
+<br>
 This section is mainly used by the DevOps team.
+
+</details>
 
 
 
