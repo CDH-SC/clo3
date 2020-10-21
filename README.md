@@ -521,6 +521,7 @@ This section is mainly used by the DevOps team.
 
   <summary> Expectations </summary>
 
+<br>
 Clear and concise commit messages are a must. Let's all shoot for unambiguous language.
 
 Here are some examples of insufficient messages...
@@ -546,11 +547,10 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 </details>
 
 
-<a name="tracking-changes">**Tracking Changes** </a>
-
+### Tracking Changes
 <details>
 
-  <summary>Tracking Changes</summary>
+  <summary>Changelog</summary>
 
 It is vital that we understand what's been changed and when, not only for developmental purposes, but for our project managers as well so they can obtain this neccessary information promptly when needed to report them on grant requests. All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
