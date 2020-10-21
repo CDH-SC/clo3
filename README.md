@@ -33,7 +33,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 <section>
 
-##<a name="installation">Installation</a>
+##<a name="installation"></a>Installation
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -41,7 +41,7 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
 <br>
-###<a name="dependencies">Dependencies</a>
+###<a name="dependencies"></a>Dependencies<
 
 - Git
 - python3-pip
@@ -69,7 +69,7 @@ Clone the repository to your command line. On the home page of the repository, l
 `git clone <url>`
 
 
-## <a name="scripts"> The Scripts </a>
+## <a name="scripts"></a>The Scripts 
 
 The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable. The scripts for building the site are listed below. 
 
