@@ -546,7 +546,7 @@ Let's fix those up a bit...
 
 >___Fixed a bug in Authentication Fields.___
 
-Please make your a serious attempt to be both thorough and brief. Describe <em> what </em> changes were made, describe <em> which </em> bug was fixed, etc.
+Please make a serious attempt to be both thorough and brief. Describe <em> what </em> changes were made, describe <em> which </em> bug was fixed, etc.
 
 A good rule of thumb is that messages should have a specific object. Also, for new members especially, it could help to format your messages in a way that completes this sentence:
 
