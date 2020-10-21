@@ -91,7 +91,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
   <summary> First Script </summary>
 <br>
 
->___bin/A1-configure_nodeenv.sh___
+***bin/A1-configure_nodeenv.sh***
 
 <br>
 It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
@@ -192,7 +192,9 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 
   <summary> Second Script  </summary>
 <br>
->___clo3/bin/A2-install_dependencies.sh___ 
+
+***clo3/bin/A2-install_dependencies.sh***
+
 <br>
 <!-- added a bit to this section because it was seriously lacking -->
 Let's check out the <a href="bin/A2-install_dependencies.sh" target="_blank">the second script</a> in a new window.
@@ -306,8 +308,10 @@ Note that the script will prompt the user for returning feedback about Angular t
 <details>
   
   <summary> Script Three </summary>
+<br>
 
->___A3-api_env_file.sh___
+***A3-api_env_file.sh***
+
 <br>
 Let's pull up the <a href="bin/A3-api_env_file.sh">third script</a>.
 This script creates and populates the .env file in clo-api.
@@ -340,10 +344,12 @@ Let's ensure its correctly configured by checking the .env file contents.
 <details>
 
   <summary> Backend Scripts </summary>
-
->___B1-install_mongo.sh___
 <br>
->___B2-install_elastic.sh___ 
+
+***B1-install_mongo.sh***
+<br>
+
+***B2-install_elastic.sh***
 
 <!-- soomething about these two not being listed to begin this section initially disoriented me, like I was expecting one script per section when I first read this doc -->
 
@@ -354,8 +360,11 @@ Let's ensure its correctly configured by checking the .env file contents.
    <summary> First Script </summary>
 
 ### Install Mongo
+<br>
 
->___B1-install_mongo.sh___
+***B1-install_mongo.sh***
+<br>
+
 This script is found <a href="bin/B1-install_mongo.sh">here</a>.
 
 This script install MongoDB and restores the contents of the database. 
@@ -378,9 +387,11 @@ Let's check to see if Mongo is running.
    <summary> Second Script </summary>
 
 ### Install Elastic Search
+<br>
 
+***B2-install_elastic.sh***
+<br>
 
->___B2-install_elastic.sh___
 I am <a href="bin/B2-install_elastic.sh">here</a>.
 
 This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo-api/bin directory). 
@@ -426,8 +437,11 @@ Connected to Elasticsearch at URL: http://127.0.0.1:9200
   <details>
 
   <summary> Final Frontend Script </summary>
+<br>
 
->___C1-build_site_PROD.sh___
+***C1-build_site_PROD.sh***
+<br>
+
 Open <a href="C1-build_site_PROD.sh">me</a> in a new window.
 
 `cd $CLO_ROOT/bin`
