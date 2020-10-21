@@ -1,5 +1,4 @@
 All notable changes will be documented in this file. It's separated by semesters. Please write the date on which your change was made when you make an entry.
- [template](https://keepachangelog.com/en/1.0.0/).
 
 This file will contain chronological listing of notable changes to project.
 
