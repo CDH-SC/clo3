@@ -40,7 +40,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 You will need root access to the machine to build CLO3. Our team currently uses Ubuntu 20.04 for its remote servers.
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
-
+<br>
 ###<a name="dependencies">Dependencies</a>
 
 - Git
