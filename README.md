@@ -1,4 +1,4 @@
-# CLO3
+# Carlyle Letters Online
 [Production Site](https://carlyleletters.dukeupress.edu/home)
 
 [Development Site](https://clo.dev.cdhsc.org/home)
@@ -33,7 +33,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 <section>
 
-## <a name="installation"> Installation </a>
+##<a name="installation">Installation</a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
