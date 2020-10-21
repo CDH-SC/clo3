@@ -1,4 +1,4 @@
-# Carlyle Letters Online
+
 [Production Site](https://carlyleletters.dukeupress.edu/home)
 
 [Development Site](https://clo.dev.cdhsc.org/home)
@@ -19,7 +19,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
   - [Commit Messages](#commit-messages)<br>
   - [Tracking Changes](#tracking-changes)<br>
 - [Contributors](#contributors)<br>
-
+- [Miscelaneous Notes] (#notes)<br>
 
 <!-- the beginning setup never changes so keep first two sections as un-collapsable, the following sections may be revisited to at different times two get a more thorough understanding on a particular script or particular scripts; so making the scripts section collapsable helps us quickly find what we're looking for, without showing uneeded info -->
 
@@ -487,14 +487,18 @@ Type `i` to go into insert mode, and then change server_name to localhost.
 
 `esc` and `:wq` to save and exit.
 
-At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://clo.dev.cdhsc.org.
+At this point, run `nginx -s reload` and confirm that the config is valid. You can check at this point if the front end is available at *http://clo.dev.cdhsc.org.*
 
 Be sure to check the server\_name directive. It defaults to a non-existent clo.dev2.cdhsc.org.
 
 At this point, speak to the DevOps team to setup DNS if you have not already.
 
-**Enable SSL/HTTPS Support:**
+</details>
 
+<details>
+
+<summary> Enable SSL/HTTPS Support </summary>
+<br>
 `sudo certbot --nginx`
 
 Answer all the questions as given, and be sure to choose the **redirect** option for the final question.
@@ -502,16 +506,19 @@ Please note that changes to the DNS can take up to 5 minutes to propogate. Also,
 
 `sudo nginx -s reload`
 
-**Webserver Configuration:**
+</details>
+
+<details>
+
+<summary> Webserver Configuration </summary>
+<br>
 
 This section is mainly used by the DevOps team.
 
 
-</section>
 
 ---
 
-<section>
 
 ## <a name=contributing>Contributing</a>
 
@@ -572,7 +579,7 @@ If working on a feature branch other than master, you can checkout that branch v
 * **Mitchell Lambert**
 * **Stella Masucci**
 
-## Notes
+## <a name=notes>Notes</a>
 
 1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.*
 
