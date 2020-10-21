@@ -9,7 +9,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 # Table of Contents
 - [Installation](#installation)<br>
   - [Dependencies](#dependencies)<br>
-  - [Insall Dependencies from Package Manager](#install-initial-depencies)<br>
+  - [Install Dependencies from Package Manager](#install-initial-depencies)<br>
   - [The Scripts](#scripts)<br>
 - [Deploy](#deployment)<br>
   - [Configure NGINX](#nginx-config)<br>
@@ -28,7 +28,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 
 
-<a name="installation">**Installation**</a>
+## <a name=installation>Installation</a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -36,7 +36,7 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
 <br>
-<a name="dependencies">**Dependencies**</a>
+### <a name=dependencies>Dependencies</a>
 - Git
 - python3-pip
 - Nodeenv
@@ -47,7 +47,7 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 - jquery (^3.4.1)
 
 
-  <a name="install-initial-dependencies">**Install Dependencies from Package Manager** </a>
+### <a name=install-initial-dependencies>Install Dependencies from Package Manager </a>
 
     Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
 
