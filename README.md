@@ -32,7 +32,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 
 <section>
-## <a name="installation"> Installation </a>
+##<a name="installation">Installation </a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -545,12 +545,15 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 
 > ___If applied, this commit will...___
 
-<a name="tracking-changes> Tracking Changes </a>
+</details>
+
+<details>
+<a name="tracking-changes"> Tracking Changes </a>
 
 It is vital that we understand what's been changed and when, not only for developmental purposes, but for our project managers as well so they can obtain this neccessary information promptly when needed to report them on grant requests. All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
 If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
-
+</details>
 
 </section>
 
