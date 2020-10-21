@@ -36,12 +36,13 @@ The [template](https://keepachangelog.com/en/1.0.0/) can be found at that link. 
   <summary> Changes </summary>
 
 ### Added
-- Changlog to track notable changes: 10/21/20
+- 10//01/20: Changlog to track notable changes
 ### Changed
-- Structure of sections in README into collapsable sections: 10/20/20
-- Structure of Scripting sections in README so that the script explanations come before the execution step: 10/01/20
+- 10/20/20: Structure of sections in README into collapsable sections
+- 10/01/20: Structure of Scripting sections in README so that the script explanations come before the execution step
 ### Removed
 ### Depracated
+- 08/20/20: Script Build obsoleted old Docker build
 ### Fixed
 ### Security
 
