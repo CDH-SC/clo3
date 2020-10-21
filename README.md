@@ -16,7 +16,20 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 - [Contributors](#contributors)
 
 
-## <a name="installation"> Installation </a>
+<!-- the beginning setup never changes so keep first two sections as un-collapsable, the following sections may be revisited to at different times two get a more thorough understanding on a particular script or particular scripts; so making the scripts section collapsable helps us quickly find what we're looking for, without showing uneeded info -->
+
+
+
+<!-- sections will comprise all subsections associated with class --> 
+<!-- subsections separated using div elements -->
+<!-- sections are outer list elements from ToC, div elements correspond to the inner list elements -->
+
+
+
+<section>
+## <a name="installation"> 
+     Installation 
+  </a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -24,36 +37,33 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
 
-<a name="dependencies"> **Dependencies:** </a>
+  <a name="dependencies"> **Dependencies** </a>
 
-- Git
-- python3-pip
-- Nodeenv
-- Node (^12.18.3)
-- MongoDB
-- ElasticSearch (^7.8)
-- Angular (^9.0.4)
-- jquery (^3.4.1)
+	- Git
+	- python3-pip
+	- Nodeenv
+	- Node (^12.18.3)
+	- MongoDB
+	- ElasticSearch (^7.8)
+	- Angular (^9.0.4)
+	- jquery (^3.4.1)
 
 
-<a name="install-initial-dependencies"> **Install Dependencies from Package Manager** </a>
+  <a name="install-initial-dependencies"> **Install Dependencies from Package Manager** </a>
 
-Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
+    Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
 
 `sudo apt-get update`  
 `sudo apt-get install git python3-pip certbot python3-certbot-nginx`
 
 This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient.
 
-<details>
-
-  <summary> Clone Repository </summary>
+  <a name="Clone Repo"> **Clone Repository** </a>
 
 Clone the repository to your command line. On the home page of the repository, locate the green button above the list of folders and files that says "Code," and click on it to pull up the HTTPS of this repository. Click the button to the right of the url. This copies it, you'll need to paste it into the cloning command.
 
 `git clone <url>`
 
-</details>
 
 ## <a name="scripts"> The Scripts </a>
 
@@ -77,7 +87,6 @@ The bin/ directory at the root of the project contains all the build scripts. Th
   <summary> Script One </summary>
 
 >___ clo3/bin/A1-configure_nodeenv.sh___
-
 It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
 
 The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
@@ -177,7 +186,6 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
   <summary> The Second Script </summary>
 
 >___ clo3/bin/A2-install_dependencies.sh___
-
 <!-- added a bit to this section because it was seriously lacking -->
 Let's check out the <a href="bin/A2-install_dependencies.sh" target="_blank">the second script</a> in a new window.
 
@@ -220,7 +228,7 @@ They can be found in the package.json files of Angular's & the API's root direct
 
   <summary> Expected Output </summary>	 
 
-```
+    ```
 $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
   "dependencies": {
     "@angular/common": "^9.0.4",
@@ -265,7 +273,8 @@ $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
   }
 }
 
-```
+   ```
+  
   </details>
 
 
@@ -281,7 +290,6 @@ Now that we've checked out where our package manager is getting it's information
 
 Note that the script will prompt the user for returning feedback about Angular to Google. Answer as you please.
 
-</details>
 
 ### Configure API
 
@@ -290,23 +298,37 @@ Note that the script will prompt the user for returning feedback about Angular t
   <summary> Script Three </summary>
 
 ___A3-api_env_file.sh___
+Let's pull up the <a href="bin/A3-api_env_file.sh">third script</a>.
+This script creates and populates the .env file in clo-api.
 
- 
-
-This script creates and populates the .env file in clo-api. You can check that it is correctly configured with `cat $CLO_ROOT/clo-api/.env`.
-
-<!-- add some descriptions... cat output? -->
 
 `./A3-api_env_file.sh`
 
+Let's ensure its correctly configured by checking the .env file contents.
+
+`cat $CLO_ROOT/clo-api/.env`.
+
+  <details>
+  
+   <summary> Expected Output </summary>
+    
+	```
+	$ cat $CLO_ROOT/clo-api/.env
+	DB_HOST=mongodb://127.0.0.1.27017/clo   
+    ES_HOST=http://127.0.0.1:9200
+    ```
+
+  </details>
+
 </details>
 
-<!-- changed these bolded descriptions into headers pretty much so we can access them from ToC -->
+<!-- changed most bolded descriptions into headers pretty much so we can access them from ToC -->
+
 ### Deploy clo-api
 
 <details>
 
-<summary> Backend Scripts </summary>
+  <summary> Backend Scripts </summary>
 
 ___B1-install_mongo.sh___
 ___B2-install_elastic.sh___ 
@@ -322,6 +344,7 @@ ___B2-install_elastic.sh___
 ### Install Mongo
 
 >___B1-install_mongo.sh___
+This script is found <a href="bin/B1-install_mongo.sh">here</a>.
 
 This script install MongoDB and restores the contents of the database. 
 
@@ -344,7 +367,9 @@ Let's check to see if Mongo is running.
 
 ### Install Elastic Search
 
+
 >___B2-install_elastic.sh___
+I am <a href="bin/B2-install_elastic.sh">here</a>.
 
 This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo-api/bin directory). 
 
@@ -388,9 +413,11 @@ Connected to Elasticsearch at URL: http://127.0.0.1:9200
 
   <details>
 
-  <summary> Last Frontend Script </summary>
+  <summary> Final Frontend Script </summary>
 
 >___C1-build_site_PROD.sh___
+Open <a href="C1-build_site_PROD.sh">me</a> in a new window.
+
 `cd $CLO_ROOT/bin`
 
 `./C1-build_site_PROD.sh`
@@ -404,9 +431,15 @@ Note that this will take awhile to run. Developers often report the longest wait
   </details>
 
 </details> 
+<!-- last details closing tag should partition the scripts segment away from the following segments -->
 
-<!-- last closing tag should partition the scripts segment away from the following segments -->
-## <a name="deployment"> Deploy CLO </a>
+</section>
+
+
+
+<section>
+
+## <a name="deployment"> Deploy </a>
 
 **Configure NGINX**
 
@@ -446,12 +479,11 @@ Please note that changes to the DNS can take up to 5 minutes to propogate. Also,
 This section is mainly used by the DevOps team.
 
 
-
-
-
-
+</section>
 
 ---
+
+<section>
 
 ## <a name=contributing>Contributing</a>
 Clear and concise commit messages are a must. Let's all shoot for unambiguous language.
@@ -474,6 +506,11 @@ All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
 If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
 
+</section>
+
+
+<section>
+
 ## <a name=contributors>Contributors</a>
 * **Jerrod Mathis**
 * **Caleb Kitzmann**
@@ -485,7 +522,7 @@ If working on a feature branch other than master, you can checkout that branch v
 * **Mitchell Lambert**
 * **Stella Masucci**
 
-
+</section>
 ## Notes:
 
 1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.*
