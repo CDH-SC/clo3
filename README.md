@@ -28,7 +28,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 
 
-##<a name="installation"></a>Installation
+<a name="installation">**Installation**</a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
