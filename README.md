@@ -63,7 +63,7 @@ Clone the repository to your command line. On the home page of the repository, l
 `git clone <url>`
 
 
-## <a name=scripts>The Scripts</a>
+### <a name=scripts>The Scripts</a>
 The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable. The scripts for building the site are listed below. 
 
 <!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
@@ -81,7 +81,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 - __clo3/bin/C1-build_site_PROD.sh__<br>
 
 
-### Configure Node Environment 
+#### Configure Node Environment 
 
 <details>
 
@@ -185,7 +185,7 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 </details>
 
 
-### Dependency Management 
+#### Dependency Management 
 
 <details>
 
@@ -301,7 +301,7 @@ Note that the script will prompt the user for returning feedback about Angular t
 
 </details>
 
-### Configure API
+#### Configure API
 
 <details>
   
