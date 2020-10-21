@@ -36,8 +36,7 @@ You will need root access to the machine to build CLO3. Our team currently uses 
 
 Attempting the install on your own local machine, especially if you're on Mac, might be difficult. If you're struggling, ask the sysadmins to set up a clean virtual machine for you.
 <br>
-###<a name="dependencies"></a>Dependencies
-
+<a name="dependencies">**Dependencies**</a>
 - Git
 - python3-pip
 - Nodeenv
@@ -48,7 +47,7 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 - jquery (^3.4.1)
 
 
-  <a name="install-initial-dependencies"> **Install Dependencies from Package Manager** </a>
+  <a name="install-initial-dependencies">**Install Dependencies from Package Manager** </a>
 
     Install Git using your system's package manager. See [https://git-scm.com/book/en/v2/Getting-Started-Installing-Git](their installation directions). On Debian/Ubuntu based systems, the command is:
 
@@ -57,7 +56,7 @@ Attempting the install on your own local machine, especially if you're on Mac, m
 
 This may take awhile, especially on the line *"processing triggers for man-db"*. Be patient.
 
-  <a name="Clone Repo"> **Clone Repository** </a>
+  <a name="Clone Repo">**Clone Repository**</a>
 
 Clone the repository to your command line. On the home page of the repository, locate the green button above the list of folders and files that says "Code," and click on it to pull up the HTTPS of this repository. Click the button to the right of the url. This copies it, you'll need to paste it into the cloning command.
 
@@ -83,7 +82,7 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 - __clo3/bin/C1-build_site_PROD.sh__<br>
 
 
-### Configure Node Environment 
+### <a></a>Configure Node Environment 
 
 <details>
 
@@ -546,18 +545,21 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 
 </details>
 
+
+<a name="tracking-changes">**Tracking Changes** </a>
+
 <details>
-<a name="tracking-changes"> Tracking Changes </a>
+
+  <summary>Tracking Changes</summary>
 
 It is vital that we understand what's been changed and when, not only for developmental purposes, but for our project managers as well so they can obtain this neccessary information promptly when needed to report them on grant requests. All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
 If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
+
 </details>
 
-</section>
 
 
-<section>
 
 ## <a name=contributors>Contributors</a>
 * **Jerrod Mathis**
@@ -570,7 +572,6 @@ If working on a feature branch other than master, you can checkout that branch v
 * **Mitchell Lambert**
 * **Stella Masucci**
 
-</section>
 ##Notes
 
 1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.*
