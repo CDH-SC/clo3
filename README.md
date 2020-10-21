@@ -12,7 +12,12 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
   - [Insall Dependencies from Package Manager](#install-initial-depencies)<br>
   - [The Scripts](#scripts)<br>
 - [Deploy](#deployment)<br>
+  - [Configure NGINX](#nginx-config)
+  - [Enable SSL/HTTPS Support](#enable-support)
+  - [Webserver Configuration](#server-config)
 - [Contributing](#contributing)<br>
+  - [Commit Messages](#commit-messages)
+  - [Tracking Changes](#tracking-changes)
 - [Contributors](#contributors)
 
 
@@ -27,9 +32,7 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 
 
 <section>
-## <a name="installation"> 
-     Installation 
-  </a>
+## <a name="installation"> Installation </a>
 
 *While most of these dependencies are installed automatically by executing the scripts in *bin/*, see below for a list of the major dependencies required to build and deploy CLO3. This list is not exhaustive, and one should consult those scripts, as well as the respective *package.json* files for a complete list.*
 
@@ -467,7 +470,8 @@ Note that this will take awhile to run. Developers often report the longest wait
 
 ## <a name="deployment"> Deploy </a>
 
-**Configure NGINX**
+
+<a name="nginx-config">**Configure NGINX**</a>
 
 `cd /etc/nginx/sites-enabled`
 
@@ -512,12 +516,25 @@ This section is mainly used by the DevOps team.
 <section>
 
 ## <a name=contributing>Contributing</a>
+
+### Commit Messages
+
+<details>
+
+  <summary> Expectations </summary>
+
 Clear and concise commit messages are a must. Let's all shoot for unambiguous language.
 
->
-__~~Making some changes.~~__<br>
-__~~Fixed a bug.~~__
->
+Here are some examples of insufficient messages...
+<br>
+
+>___~~Making some changes.~~___<br>
+>___~~Fixed a bug.~~___
+<br>
+
+Let's fix those up a bit...
+<br>
+
 >___Made a change that fixes rendering errors associated with database field.___
 
 >___Fixed a bug in Authentication Fields.___
@@ -528,9 +545,12 @@ A good rule of thumb is that messages should have a specific object. Also, for n
 
 > ___If applied, this commit will...___
 
-All major changes should be documented in the [changelog](docs/CHANGELOG.md).
+<a name="tracking-changes> Tracking Changes </a>
+
+It is vital that we understand what's been changed and when, not only for developmental purposes, but for our project managers as well so they can obtain this neccessary information promptly when needed to report them on grant requests. All major changes should be documented in the [changelog](docs/CHANGELOG.md).
 
 If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
+
 
 </section>
 
