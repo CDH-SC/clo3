@@ -572,7 +572,7 @@ If working on a feature branch other than master, you can checkout that branch v
 * **Mitchell Lambert**
 * **Stella Masucci**
 
-##Notes
+## Notes
 
 1. *[**ATTENTION**] It is absolutely important at all times to understand your dependency structure. **It is important to document if a command is run with `sudo`.** It is important to understand whether Node is using a globally installed package, a package it knows to install w/ `npm install`, or if the dependency is not being tracked by node at all.*
 
