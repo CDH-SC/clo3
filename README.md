@@ -12,13 +12,13 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
   - [Insall Dependencies from Package Manager](#install-initial-depencies)<br>
   - [The Scripts](#scripts)<br>
 - [Deploy](#deployment)<br>
-  - [Configure NGINX](#nginx-config)
-  - [Enable SSL/HTTPS Support](#enable-support)
-  - [Webserver Configuration](#server-config)
+  - [Configure NGINX](#nginx-config)<br>
+  - [Enable SSL/HTTPS Support](#enable-support)<br>
+  - [Webserver Configuration](#server-config)<br>
 - [Contributing](#contributing)<br>
-  - [Commit Messages](#commit-messages)
-  - [Tracking Changes](#tracking-changes)
-- [Contributors](#contributors)
+  - [Commit Messages](#commit-messages)<br>
+  - [Tracking Changes](#tracking-changes)<br>
+- [Contributors](#contributors)<br>
 
 
 <!-- the beginning setup never changes so keep first two sections as un-collapsable, the following sections may be revisited to at different times two get a more thorough understanding on a particular script or particular scripts; so making the scripts section collapsable helps us quickly find what we're looking for, without showing uneeded info -->
