@@ -19,12 +19,14 @@ The [template](https://keepachangelog.com/en/1.0.0/) can be found at that link. 
 <details>
 
   <summary> Changes </summary>
+
 ### Added
 ### Changed
 ### Removed
 ### Depracated
 ### Fixed
 ### Security
+
 </details>
 
 ## Fall 20: August 20 - December 14
@@ -42,4 +44,5 @@ The [template](https://keepachangelog.com/en/1.0.0/) can be found at that link. 
 ### Depracated
 ### Fixed
 ### Security
+
 </details>
