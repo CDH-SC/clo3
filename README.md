@@ -90,7 +90,8 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 
   <summary> First Script </summary>
 
->___ clo3/bin/A1-configure_nodeenv.sh___
+>___bin/A1-configure_nodeenv.sh___
+<br>
 It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
 
 The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
@@ -189,7 +190,8 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 
   <summary> Second Script  </summary>
 
->___ clo3/bin/A2-install_dependencies.sh___
+>___clo3/bin/A2-install_dependencies.sh___ 
+<br>
 <!-- added a bit to this section because it was seriously lacking -->
 Let's check out the <a href="bin/A2-install_dependencies.sh" target="_blank">the second script</a> in a new window.
 
@@ -302,7 +304,8 @@ Note that the script will prompt the user for returning feedback about Angular t
   
   <summary> Script Three </summary>
 
-___A3-api_env_file.sh___
+>___A3-api_env_file.sh___
+<br>
 Let's pull up the <a href="bin/A3-api_env_file.sh">third script</a>.
 This script creates and populates the .env file in clo-api.
 
@@ -335,8 +338,9 @@ Let's ensure its correctly configured by checking the .env file contents.
 
   <summary> Backend Scripts </summary>
 
-___B1-install_mongo.sh___
-___B2-install_elastic.sh___ 
+>___B1-install_mongo.sh___
+<br>
+>___B2-install_elastic.sh___ 
 
 <!-- soomething about these two not being listed to begin this section initially disoriented me, like I was expecting one script per section when I first read this doc -->
 
