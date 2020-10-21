@@ -287,7 +287,7 @@ $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
 }
 ```
   
-  </details>
+</details>
 
 
 Similarly, we can run the same command, substituting the api's package.json in as argument file to check the api's dependencies:
@@ -327,12 +327,11 @@ Let's ensure its correctly configured by checking the .env file contents.
   <details>
   
    <summary> Expected Output </summary>
-    
-	```
-	$ cat $CLO_ROOT/clo-api/.env
-	DB_HOST=mongodb://127.0.0.1.27017/clo   
-    ES_HOST=http://127.0.0.1:9200
-    ```
+```
+$ cat $CLO_ROOT/clo-api/.env
+DB_HOST=mongodb://127.0.0.1.27017/clo   
+ES_HOST=http://127.0.0.1:9200
+```
 
   </details>
 
