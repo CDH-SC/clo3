@@ -52,6 +52,7 @@ export class PhotoViewerComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     const viewer = new Viewer(document.getElementById('image'), {
+      inline: false,
       navbar: false,
       title: false,
       toolbar: {

@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"clo.archive_userprofile"}],"uuid":"c037d14dfcaf4bcaac49f2fec9e248f9"}
+{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"clo.archive_userprofile"}],"uuid":"754ecbb8210840e6bed9f64101b53a30"}

@@ -1,3 +1,5 @@
+@import '~viewerjs/dist/viewer.css';
+
 html, body {
   height: 100% !important;
 }
@@ -60,7 +62,7 @@ mark {
 }
 
 a.tx_sup {
-  color: #007bff !important;
+  color: #344c5c !important;
 }
 
 /*
