@@ -327,24 +327,13 @@ ES_HOST=http://127.0.0.1:9200
 
 <!-- changed most bolded descriptions into headers pretty much so we can access them from ToC -->
 
-### Deploy clo-api
+### Install Mongo 
 
 <details>
 
-  <summary> Install Mongo & Install Elastic Search </summary>
-
-  <details>
-
-   <summary> First Script </summary>
-
-#### Install Mongo
-<br>
-
-***B1-install_mongo.sh***
-<br>
-
-This script is found <a href="bin/B1-install_mongo.sh">here</a>.
-
+   <summary> B1 </summary>
+This script and the next one together deploy clo-api.
+This Mongo installation script is found <a href="bin/B1-install_mongo.sh">here</a>.
 This script install MongoDB and restores the contents of the database. 
 
 
@@ -360,15 +349,11 @@ Let's check to see if Mongo is running.
 
   </details>
 
-  <details>
+### Install Elastic Search
+  
+ <details>
    
-   <summary> Second Script </summary>
-
-#### Install Elastic Search
-<br>
-
-***B2-install_elastic.sh***
-<br>
+   <summary> B2 </summary>
 
 I am <a href="bin/B2-install_elastic.sh">here</a>.
 
@@ -410,15 +395,11 @@ Connected to Elasticsearch at URL: http://127.0.0.1:9200
   </details>
 </details>
 
-### Build clo-angular
+### Build Site 
 
   <details>
 
-  <summary> Final Frontend Script </summary>
-<br>
-
-***C1-build_site_PROD.sh***
-<br>
+  <summary> C1 </summary>
 
 Open <a href="C1-build_site_PROD.sh">me</a> in a new window.
 
@@ -435,13 +416,9 @@ Note that this will take awhile to run. Developers often report the longest wait
   </details>
 
 </details> 
+
 <!-- last details closing tag should partition the scripts segment away from the following segments -->
 
-</section>
-
-
-
-<section>
 
 ## <a name="deployment"> Deploy </a>
 
