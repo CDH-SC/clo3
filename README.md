@@ -63,7 +63,7 @@ Clone the repository to your command line. On the home page of the repository, l
 `git clone <url>`
 
 
-### <a name=scripts>The Scripts</a>
+## <a name=scripts>The Scripts</a>
 The bin/ directory at the root of the project contains all the build scripts. These scripts are named sequentially. Most are small, and do not do more than a few different things. Be sure that you are in the /bin directory before executing the first script. Executing the first script outside of /bin directory may prevent correct configuration of the environment variable. The scripts for building the site are listed below. 
 
 <!-- for ease of navigation & to reduce cluter every script is in collapsable section of it's own -->
@@ -73,25 +73,18 @@ The bin/ directory at the root of the project contains all the build scripts. Th
 <!-- along with listing these out, links to them are provided in their respective headings so participants can follow along as they're executing these scripts -->
 <!-- preferably, they would read before execution; therefore I swapped around the original positioning a bit -->
 <!-- namely, the explanation of script functionality initially came after execution step - I moved these explanations above the execution steps -->
-- __clo3/bin/A1-configure_nodeenv.sh__<br>
-- __clo3/bin/A2-install_dependencies.sh__<br>
-- __clo3/bin/A3-api_env_file.sh__<br>
-- __clo3/bin/B1-install_mongo.sh__<br>
-- __clo3/bin/B2-install_elastic.sh__<br>
-- __clo3/bin/C1-build_site_PROD.sh__<br>
 
+When going through the scripts, it's important to know what is going on in them, rather than just going through the following steps described in this section. To that end, it's reccomended that you read the scripts prior to execution. Here is a link to the <a href="bin/">folder</a> which contains our scripts. Open that page in a new tab and follow along that way as we progress in this section or open each script individually in a new window as we come to it - the links to that particular script will be in each section.
 
-#### Configure Node Environment 
+Before executing each script, you can expect a brief description on its functionality. Let's begin!
+
+### Configure Node Environment 
 
 <details>
 
-  <summary> First Script </summary>
-<br>
+  <summary> A1 </summary>
 
-***bin/A1-configure_nodeenv.sh***
-
-<br>
-It's recommended that you check out all the scripts before running them to get a general sense of what's going on. Opening them in a different window and then closing that window after succesful execution is a good idea. Let's check out the first one. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window." 
+Let's check out the first script. Right click the link to the <a href="bin/A1-configure_nodeenv.sh"> first script </a>  and choose the option "open in a different window," or just click on the script "A1-configure-nodeenv.sh," from the bin/ folder. 
 
 The first script serves two important functions. First, it configure the CLO_ROOT environment variable. Second, it creates the Node environment. 
 
@@ -99,8 +92,7 @@ Configuring a variable initially is only tentative. The change in our bash confi
 
 `./A1-configure_nodeenv.sh`
 
-Before running the next script, ensure the environment variable is set via `echo $CLO_ROOT`.
-
+Before running the next script, ensure the environment variable is set.
 <!-- moved this output block above following sentence (it was below initially), it makes more logical sense here? -->
 
 <!-- NOTICED THAT PUTTING A COMMAND OUTPUT BOX DIFFERS FROM OUR CONVENTIALL ONE COMMAND LINE BLOCK SO IT TAKES A SECOND TO REALIZE THE TOP COMMAND IN THIS BLOCK IS SUPPOSED TO BE EXECUTED -->
@@ -108,8 +100,10 @@ Before running the next script, ensure the environment variable is set via `echo
 
 <details>
 
-  <summary> Example Output </summary>
+<summary> Expected Output After Echo Statement </summary>
+
 <br>
+
 ```
 $ echo $CLO_ROOT
 /home/kennethj/clo3
@@ -124,7 +118,7 @@ If it is empty, the environment variable is not set. Check that the necessary "e
   <summary> Click here if You're Having Trouble </summary>
 <br>
 Let's issue a command to see if the line was appended...
-
+<br>
 `tail -r ~/.bashrc`
 `q`
 
@@ -144,38 +138,34 @@ PS1=...
 
 <!-- Stella's additions, much was lacking from first version of README regarding troubleshooting but to prevent it from too clogged up, encapsulated all the troubleshooting aspects in collapsable sections -->
 
-If you do not see the export statement at the top of this command output, the export line was not appended.
+This command prints out the last few lines of our bashrc file in reverse order. So, if you do not see the export statement at the top of this command output, the export line was not appended.
 
-At this point, you should try setting it manually:
+Un-collapse this section to move on from this if the line was appended or execute the following steps to set the variable manually.
 
-Find your current path by running `pwd`, then run
+Find your current path: `pwd`
+Create Variable & Put it in bashrc file: `export CLO_ROOT=`*your current path here* .
+Save Changes Permanently to Bashrc: `source ~/.bashrc`
+Now, run the echo steps again to verify it's set.
 
-`export CLO_ROOT=`*your current path here* .
-
-Then run
-
-`source ~/.bashrc`
-
-`echo $CLO_ROOT`
-
-to check that it was correctly set.
-  
   </details>
 
 </details>
 
 Now that we have the first part taken care of, we can move onto activating the Node environment. Be sure to have this environment activated at any time you're working with CLO3.
+<br>
 `source ../env/bin/activate` or `source $CLO_ROOT/env/bin/activate`  
 
-<!-- stella's additions -->
 If this doesn't work, you may need to execute the script again (in the /bin directory), and then try the above source command again.
 
-`pwd`
-
+Ensure that you're in the /bin folder first!
+<br>
 ```
 $ pwd
 /home/mitchelllambert/clo3/bin
 ```
+<br>
+You in the /bin folder? If so, go ahead and execute the script then activate the environment. If not, navigate to it before moving on.
+
 `./A1-configure_nodeenv.sh`
 `source ../env/bin/activate`
 
@@ -185,14 +175,11 @@ What we've just installed and activated is Node.js, this is a JavaScript runtime
 </details>
 
 
-#### Dependency Management 
+### Dependency Management 
 
 <details>
 
-  <summary> Second Script  </summary>
-<br>
-
-***clo3/bin/A2-install_dependencies.sh***
+  <summary> A2 </summary>
 
 <br>
 <!-- added a bit to this section because it was seriously lacking -->
@@ -216,6 +203,7 @@ __So where is NPM locating Dependency Information?__
 
   <summary> Locate and Open the Files NPM is Using </summary>
 <br>
+
 `cd ../clo-angular && vim package.json`
 >___Backtrack to the project's root direct then move into angular's root directory, and open up the file (we use vim here but you can use whichever text editor you're most comfortable with.___	
 
@@ -232,12 +220,15 @@ Now you can repeat this process for checking out the API's dependencies, subsiti
   <summary> View File Contents NPM is Using from Command Line </summary> 
 
 <br>
+
 `sed -n '/"dependencies'/,$p' ../clo-angular/package.json`
 
   <details>
 
   <summary> Expected Output </summary>	 
+
 <br>
+
 ```
 $ sed -n '/"dependencies"/,$p' ../clo-angular/package.json
   "dependencies": {
@@ -301,20 +292,17 @@ Note that the script will prompt the user for returning feedback about Angular t
 
 </details>
 
-#### Configure API
+### Configure API
 
 <details>
   
-  <summary> Script Three </summary>
-<br>
-
-***A3-api_env_file.sh***
+  <summary> A3 </summary>
 
 <br>
 Let's pull up the <a href="bin/A3-api_env_file.sh">third script</a>.
-This script creates and populates the .env file in clo-api.
 
-
+This script creates and populates the .env file in the api.
+<br>
 `./A3-api_env_file.sh`
 
 Let's ensure its correctly configured by checking the .env file contents.
@@ -324,6 +312,9 @@ Let's ensure its correctly configured by checking the .env file contents.
   <details>
   
    <summary> Expected Output </summary>
+
+<br>
+
 ```
 $ cat $CLO_ROOT/clo-api/.env
 DB_HOST=mongodb://127.0.0.1.27017/clo   
@@ -340,17 +331,7 @@ ES_HOST=http://127.0.0.1:9200
 
 <details>
 
-  <summary> Backend Scripts </summary>
-<br>
-
-***B1-install_mongo.sh***
-<br>
-
-***B2-install_elastic.sh***
-
-<!-- soomething about these two not being listed to begin this section initially disoriented me, like I was expecting one script per section when I first read this doc -->
-
-
+  <summary> Install Mongo & Install Elastic Search </summary>
 
   <details>
 
