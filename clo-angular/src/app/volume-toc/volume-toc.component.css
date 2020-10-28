@@ -45,6 +45,10 @@ a.pl-2 {
   color: #344c5c;
 }
 
+a.mr-auto, a.ml-auto {
+  color: #c17953;
+}
+
 .drop::before {
   float: left;
   font-family: FontAwesome;
