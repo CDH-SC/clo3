@@ -551,4 +551,3 @@ It is vital that we understand what's been changed and when, not only for develo
 
 2. If working on a feature branch other than master, you can checkout that branch via `git checkout <branch-name>`. Use the '-b' flag to create a NEW branch.
 
-

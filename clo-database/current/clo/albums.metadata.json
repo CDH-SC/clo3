@@ -1,1 +1,1 @@
-{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"clo.albums"}],"uuid":"54709867c147421c86647533713857fb"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"fa16409ce000432d93afdb5e8dc2cde0","collectionName":"albums"}
