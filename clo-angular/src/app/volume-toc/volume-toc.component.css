@@ -38,7 +38,11 @@
 }
 
 .pl-2 {
-  padding-left: 0!important;  
+  padding-left: 0!important;
+}
+
+a.pl-2 {
+  color: #344c5c;
 }
 
 .drop::before {
