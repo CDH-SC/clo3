@@ -381,7 +381,6 @@ At this point, your API is running. Ensure it is configured correctly by checkin
 
 `cat nohup.out`
 
-Please be sure to exit the terminal session properly for the nohup command to maintain the website as a background process.
    <details>
   
    <summary> Expected Output </summary>
@@ -393,7 +392,15 @@ Connected to MongoDB at URL: mongodb://127.0.0.1:27017/clo
 Connected to Elasticsearch at URL: http://127.0.0.1:9200
 ```
    </details>
-  </details>
+
+<details>
+  
+  <summary> Important Info About Nohup For SysAdmins </summary>
+   
+   Maintaining the process in background after terminal session is ended will work only if the terminal session was ended properly. To do this, before exiting, you must press Control+D in the terminal. 
+
+</details>
+
 </details>
 
 ### Build Site 
