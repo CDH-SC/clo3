@@ -42,11 +42,11 @@
 }
 
 a.pl-2 {
-  color: #344c5c;
+  color: #344c5c!important;
 }
 
 a.mr-auto, a.ml-auto {
-  color: #c17953;
+  color: #c17953!important;
 }
 
 .drop::before {
