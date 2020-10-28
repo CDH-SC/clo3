@@ -381,6 +381,7 @@ At this point, your API is running. Ensure it is configured correctly by checkin
 
 `cat nohup.out`
 
+Please be sure to exit the terminal session properly for the nohup command to maintain the website as a background process.
    <details>
   
    <summary> Expected Output </summary>
