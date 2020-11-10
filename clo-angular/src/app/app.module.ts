@@ -19,7 +19,6 @@ import { TwitterComponent } from './twitter/twitter.component';
 import { SearchComponent } from './search/search.component';
 import { AboutCarlylesComponent } from './about/about-carlyles/about-carlyles.component';
 import { AboutProjectComponent } from './about/about-project/about-project.component';
-import { AboutPhotosComponent } from './about/about-photos/about-photos.component';
 import { AboutPrintedComponent } from './about/about-printed/about-printed.component';
 import { AboutCitingComponent } from './about/about-citing/about-citing.component';
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
@@ -58,7 +57,6 @@ const appRoutes: Routes = [
   { path: 'browse-subject', component: BrowseSubjectComponent },
   { path: 'about-carlyles', component: AboutCarlylesComponent },
   { path: 'about-project', component: AboutProjectComponent },
-  { path: 'about-photoAlbums', component: AboutPhotosComponent },
   { path: 'about-printedEdition', component: AboutPrintedComponent },
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
@@ -87,7 +85,6 @@ const appRoutes: Routes = [
     SearchComponent,
     AboutCarlylesComponent,
     AboutProjectComponent,
-    AboutPhotosComponent,
     AboutPrintedComponent,
     AboutCitingComponent,
     AboutEditorsComponent,
