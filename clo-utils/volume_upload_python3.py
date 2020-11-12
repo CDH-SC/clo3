@@ -179,6 +179,10 @@ def letterUpload(array, letterType, volumeID):
 	print('%d %s found' % (len(array), letterType))
 	letterArray = []
 
+	# get letters with manuscripts from json file
+	with open('%smanuscripts.json' % directory) as g:
+		manuscripts = json.load(g)
+
 	for l in array:
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
@@ -230,6 +234,10 @@ def letterUpload(array, letterType, volumeID):
 			'docBody': docBody,
 			'footnotes': footnotes,
 		}
+
+		if manuscripts.get(xml_id):
+			letter['manuscript'] = manuscripts.get(xml_id)
+
 		letterArray.append(letter)
 
 	letterArray.sort(key=lambda x: x['docDate'])
@@ -252,7 +260,7 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('-P5.xml'):
+		if filename.endswith('06-P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
