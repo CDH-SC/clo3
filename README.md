@@ -9,12 +9,9 @@ Carlyle Letters Online hosts a digital archive containing thousands of letters o
 # Table of Contents
 - [Installation](#installation)<br>
   - [Dependencies](#dependencies)<br>
-  - [Install Dependencies from Package Manager](#install-initial-depencies)<br>
+  - [Install Dependencies from Package Manager](#install-initial-dependencies)<br>
   - [The Scripts](#scripts)<br>
 - [Deploy](#deployment)<br>
-  - [Configure NGINX](#nginx-config)<br>
-  - [Enable SSL/HTTPS Support](#enable-support)<br>
-  - [Webserver Configuration](#server-config)<br>
 - [Contributing](#contributing)<br>
   - [Commit Messages](#commit-messages)<br>
   - [Tracking Changes](#tracking-changes)<br>
