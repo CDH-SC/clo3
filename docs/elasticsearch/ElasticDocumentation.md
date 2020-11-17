@@ -16,7 +16,7 @@ If you have the content of a book searchable but not the title, the N.ES. would 
 - Install ElasticSearch https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
 - Install MongoDB https://docs.mongodb.com/manual/installation/
 - Start ElasticSearch in a terminal
-		cd ~/elasticsearch-6.8.6/bin
+		cd ~/elasticsearch-7.X.X/bin
 		./elasticsearch
 - Start MongoDB in a terminal
 		mongod (-port 27018)
