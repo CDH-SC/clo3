@@ -81,7 +81,7 @@ def main():
         if idMatch:
             albumId = idMatch[0]
             print("Working on Album:", albumId)
-            albumFiles = sorted(os.listdir(subdir), key=lambda f: int(list(filter(str.isdigit, f))))
+            albumFiles = sorted(os.listdir(subdir), key=lambda f: int("".join(filter(str.isdigit, f))))
             print(albumFiles[0])
             metadataFile = subdir + '/' + albumFiles[0] if re.match('Volume.\.xlsx', albumFiles[0]) is not None else None
             if metadataFile:

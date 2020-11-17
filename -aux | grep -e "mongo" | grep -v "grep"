@@ -1,0 +1,9 @@
+[0;1;32m●[0m mongod.service - MongoDB Database Server
+   Loaded: loaded (/lib/systemd/system/mongod.service; enabled; vendor preset: enabled)
+   Active: [0;1;32mactive (running)[0m since Thu 2020-10-15 10:43:31 EDT; 1min 4s ago
+     Docs: https://docs.mongodb.org/manual
+ Main PID: 19215 (mongod)
+   CGroup: /system.slice/mongod.service
+           └─19215 /usr/bin/mongod --config /etc/mongod.conf
+
+Oct 15 10:43:31 icm-Lenovo-ideapad-320-17IKB systemd[1]: Started MongoDB Database Server.
