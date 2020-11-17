@@ -354,7 +354,8 @@ Let's check to see if Mongo is running.
 
 I am <a href="bin/B2-install_elastic.sh">here</a>.
 
-This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo-api/bin directory). 
+This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo-api/bin directory).
+</br>ElasticSearch is a database used with MongoDB because of its phenomenal ability to search through files.
 
 <!-- anything more I can add? -->
 
@@ -363,6 +364,7 @@ This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo
 Let's check to make sure elastic search is running.
 `ps -aux | grep -e "elastic" | grep -v "grep"`.
 
+Now we are going to run a script that takes all of the entries in the Mongo database and put the relevant information into the ElasticSearch database so that the user can search through the volumes.
 <!-- what are we doing here? a bit unclear of a transition -->
 `cd ../clo-api`
 
