@@ -1,1 +1,5 @@
+<<<<<<< Updated upstream
 {"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"ece3ad315331467db87c53b7b1d0aa8f","collectionName":"albums"}
+=======
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"0274d1fba9af4aa99f495f2715a360c3","collectionName":"albums"}
+>>>>>>> Stashed changes
