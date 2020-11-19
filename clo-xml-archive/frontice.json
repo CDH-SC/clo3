@@ -125,11 +125,11 @@
 	},
 	"32": {
 		"imageUrl": "/frontice_images/volume32.gif",
-		"imageCaption": "Thomas Carlyle in the attic, 5 Cheyne Row, by Robert Scott Tait, 27 July 1857  Courtesy of Edinburgh University Library."
+		"imageCaption": "Thomas Carlyle in the attic, 5 Cheyne Row, by Robert Scott Tait, 27 July 1857. Courtesy of Edinburgh University Library."
 	},
 	"33": {
 		"imageUrl": "/frontice_images/volume33.gif",
-		"imageCaption": "Thomas Carlyle and Nero at the back door, 5 Cheyne Row, by Robert Scott Tait, 29 July 1857  Courtesy of Edinburgh University Library"
+		"imageCaption": "Thomas Carlyle and Nero at the back door, 5 Cheyne Row, by Robert Scott Tait, 29 July 1857. Courtesy of Edinburgh University Library"
 	},
 	"34": {
 		"imageUrl": "/frontice_images/volume34.gif",
@@ -137,23 +137,23 @@
 	},
 	"35": {
 		"imageUrl": "/frontice_images/volume35.gif",
-		"imageCaption": "Sharp, Greenwood, and Fowler, Map of Fife, 1828 (detail)  Courtesy of the National Library of Scotland"
+		"imageCaption": "Sharp, Greenwood, and Fowler, Map of Fife, 1828 (detail). Courtesy of the National Library of Scotland"
 	},
 	"36": {
 		"imageUrl": "/frontice_images/volume36.gif",
-		"imageCaption": "\"Thomas Carlyle on a midnight ramble\"; by Charles Bell Birch, 1859  Courtesy of the National Portrait Galler"
+		"imageCaption": "\"Thomas Carlyle on a midnight ramble\"; by Charles Bell Birch, 1859. Courtesy of the National Portrait Galler"
 	},
 	"37": {
 		"imageUrl": "/frontice_images/volume37.gif",
-		"imageCaption": "Jane Welsh Carlyle to Mary Baring, 31 January 1861  Courtesy of the National Library of Scotland"
+		"imageCaption": "Jane Welsh Carlyle to Mary Baring, 31 January 1861. Courtesy of the National Library of Scotland"
 	},
 	"38": {
 		"imageUrl": "/frontice_images/volume38.gif",
-		"imageCaption": "Thomas Carlyle, by William Jeffrey, September 1862  Courtesy of The National Trust"
+		"imageCaption": "Thomas Carlyle, by William Jeffrey, September 1862. Courtesy of The National Trust"
 	},
 	"39": {
 		"imageUrl": "/frontice_images/volume39.gif",
-		"imageCaption": "Auchtertool Manse, 1863  Courtesy of Rare Book and Manuscript Library, Columbia University"
+		"imageCaption": "Auchtertool Manse, 1863. Courtesy of Rare Book and Manuscript Library, Columbia University"
 	},
 	"40": {
 		"imageUrl": "/frontice_images/volume40.gif",
@@ -161,7 +161,7 @@
 	},
 	"41": {
 		"imageUrl": "/frontice_images/volume41.gif",
-		"imageCaption": "Lady Airlie, by Camille Silvy, 1860  Courtesy of Rare Book and Manuscript Library, Columbia University"
+		"imageCaption": "Lady Airlie, by Camille Silvy, 1860. Courtesy of Rare Book and Manuscript Library, Columbia University"
 	},
 	"42": {
 		"imageUrl": "/frontice_images/volume42.gif",
@@ -173,15 +173,14 @@
 	},
 	"44": {
 		"imageUrl": "/frontice_images/volume44.gif",
-		"imageCaption": ""
+		"imageCaption": "Jane Welsh Carlyle, by Robert Scott Tait, April 1855 / © National Portrait Gallery, London"
 	},
 	"45": {
 		"imageUrl": "/frontice_images/volume45.gif",
-		"imageCaption": ""
+		"imageCaption": "Thomas Carlyle, unfinished portrait by G. F. Watts, 1868 / © Ashmolean Museum, University of Oxford"
 	},
 	"46": {
 		"imageUrl": "/frontice_images/volume46.gif",
-		"imageCaption": ""
+		"imageCaption": "Jane Welsh Carlyle, undated photograph / Thomas Carlyle Papers, 1865–1896, Rare Book & Manuscript Library, Columbia University, New York"
 	}
 }
-
