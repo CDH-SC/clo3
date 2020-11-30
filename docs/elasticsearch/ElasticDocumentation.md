@@ -15,19 +15,19 @@ If you have the content of a book searchable but not the title, the N.ES. would 
 ## Running a joint MongoDB-ElasticSearch database:
 - Install ElasticSearch https://www.elastic.co/guide/en/elasticsearch/reference/current/install-elasticsearch.html
 - Install MongoDB https://docs.mongodb.com/manual/installation/
-- Start ElasticSearch in a terminal
-		cd ~/elasticsearch-7.X.X/bin
-		./elasticsearch
-- Start MongoDB in a terminal
-		mongod (-port 27018)
+- Start ElasticSearch in a terminal<br/>
+`cd ~/elasticsearch-7.X.X/bin`<br/>
+`./elasticsearch`
+- Start MongoDB in a terminal<br/>
+`mongod (-port 27018)`<br/>
 The port change is only needed if the default port (27017) does not work properly
 
 ## GUI for Each
 - Install ElasticSearch-HQ https://octolinker-demo.now.sh/ElasticHQ/elasticsearch-HQ
 - Install MongoDB Compass https://docs.mongodb.com/compass/master/install/
 - Start ESHQ in a terminal
-		cd ~/elasticsearch-HQ
-		python3 application.py
+`cd ~/elasticsearch-HQ`
+`python3 application.py`
 - Go to the ElasticSearchHQ GUI in your browser (Default is: http://localhost:5000)
 - Connect to your ElasticSearch Cluster (Default is: http://localhost:9200)
 - Open MongoDB Compass
@@ -62,10 +62,10 @@ The port change is only needed if the default port (27017) does not work properl
 - Copy what is shown in the _id field
 - To delete that document, run the following command in a new terminal:
 `curl -XDELETE 'localhost:9200/[_index]/[_type]/[_id]'`
-- Deleting an Index from ElasticSearch
+- Deleting an Index from ElasticSearch:
 `curl -XDELETE 'localhost:9200/[_index]'`
 
-## ElasticSearch Quiries
+## ElasticSearch Queries
 ### Making a query in Elastic-HQ 
 
 In order to do nested queries, you must have the field mapped as nested when put into ES
