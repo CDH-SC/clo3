@@ -90,11 +90,7 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="closer">
-    <p>
-      <xsl:apply-templates/>
-    </p>
-  </xsl:template>
+  
 
   <xsl:template match="sic">
     <span style="display:none;"><xsl:apply-templates/></span>
@@ -106,10 +102,24 @@
     </docBody>
   </xsl:template>
 
-  <xsl:template match="salute">
+  <xsl:template match="docBody/closer">
     <p>
       <xsl:apply-templates/>
     </p>
+  </xsl:template>
+
+  <xsl:template match="p/closer">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="docBody/salute">
+    <p>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:template>
+
+  <xsl:template match="p/salute">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="p">
