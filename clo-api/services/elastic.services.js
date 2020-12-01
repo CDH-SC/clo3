@@ -133,7 +133,9 @@ exports.advancedSearch = async function(query) {
           terms: query,
           letter: inHit._source
         }
-        results.push(result);
+        // if (inHit._score > 4) { // Score Threshold (Unsure what the value should be because certain queries have lower average scores)
+          results.push(result);
+        // }
       });
     });
     console.log("results",results);
