@@ -17,7 +17,7 @@ The changeDropDown method updates the attribute ID of the text field when its as
 When the user is ready to search, they click the button and the startSearch method is called:<br/>
 ![start_search.png](./images/start_search.png)<br/>
 This method takes all the name attribute IDs from the text fields and the text in the fields and constructs a query string to send to the backend. It uses special characters to ensure the backend knows the difference between a search term and part of the query architecture. A modified version of this query string is displayed to the user with the results:<br/>
-![bigSearch.png](./images/bigSearch.png)<br/>
+![BigSearch.png](./images/BigSearch.png)<br/>
 When results are shown, it uses paging to show results 10 at a time.
 
 ## API
