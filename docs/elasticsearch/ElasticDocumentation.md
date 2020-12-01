@@ -68,8 +68,8 @@ The port change is only needed if the default port (27017) does not work properl
 ## ElasticSearch Queries
 ### Making a query in Elastic-HQ 
 
-In order to do nested queries, you must have the field mapped as nested when put into ES
-following searches for letters with "a" in the body.
+In order to do nested queries, you must have the field mapped as nested when put into ES from Mongo.
+The following searches for letters with "Water-Cure" in the body.
 
 Expanded:
 ``` json
@@ -95,6 +95,12 @@ Expanded:
 
 Condensed: 
 ``` {"size": 45,"query": {"nested": {"path": "letters","query": {"bool": {"must": [{ "match": {"letters.docBody": "Water-Cure"}}]}},"inner_hits" : {}}}}```
+
+#### Note about nested queries: inner_hits
+With nested queries, an inner_hits field must be specified. If the curly brackets are empty, it will return all results, but if you put a size field inside the curly brackets with an integer value, it will return that many results from a given volume. When there are a large amount of documents to look through, it may be wise to put a size limit on inner hits to prevent long query times.
+
+#### Note about ElasticSearch result scores
+When ElasticSearch responds to a query, all of its results include a score value. The higher the score value is, the more relevant a result is to the query. A problem can arise when ElasticSearch returns a set of very relevant results (average scores around 10-12) among a sea of less significant results (average scores around 3-4). While you can filter out results with low scores, it can be difficult if a given query has a low average score. This is an unsolved problem for the CLO Advanced Search, but a theoretical solution could be to perform some sort of statistical analysis on large query responses to find a score threshold for that given query.
 
 ### Boolean Queries
 
@@ -139,12 +145,15 @@ NOT:
 	}
 ```
 
+### match vs. match_phrase
+"match" is best used when there is only one word in the search term for a given field. In contrast, "match_phrase" is used if a search term has multiple words or words combined with hyphens (ex: "Frederick the Great" or "Water-Cure").
+
 ### Elastic JS Queries
 
-Making queries in elastic JS is almost identical to ElasticHQ, except only the field name and search term are strings
+Making queries in elastic JS is almost identical to ElasticHQ, except only the field name and search term are strings 
 
 ``` js
-query: {
+query = {
 		bool: {
 			must: [
 				{ match: 
@@ -153,4 +162,30 @@ query: {
 			]
 		}
 	}
+```
+Nested Query (Note ElasticJS needs the index to be listed for a nested query)
+``` js
+query = {
+	size: 46,
+	index: 'volumes',
+	body: {
+		query: {
+			nested: {
+				path: "letters",
+				query: {
+					bool: {
+						should: [
+							{ match: 
+								{ "Field": "Search Term"} 
+							}
+						]
+					}
+				},
+				inner_hits: {
+					size: 10
+				}
+			}
+		}
+	}
+}
 ```
