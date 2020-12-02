@@ -43,6 +43,7 @@ The [template](https://keepachangelog.com/en/1.0.0/) can be found at that link. 
 ### Depracated
 - 08/20/20: Script Build obsoleted old Docker build
 ### Fixed
+- DNS Cacheing issue with Certbox. This issue happens when the machine that is attempting to install the certification (using certbot) has a DNS cache that is not up to date. To fix this, simply wait a little while, and try the certbot command again. Rebooting might also help. Once your DNS cache becomes accurate, the issue should be resolved.
 ### Security
 
 </details>
