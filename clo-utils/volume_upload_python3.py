@@ -260,7 +260,7 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('06-P5.xml'):
+		if filename.endswith('45-P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
@@ -268,7 +268,7 @@ def main():
 			volume = {}
 
 			# get volume ID from filename
-			volumeID = re.search('\d{2}', filename).group(0)
+			volumeID = re.search(r'\d{2}', filename).group(0)
 
 			# get volume dates from header
 			dates = bs_content.biblFull.find_all('date')
