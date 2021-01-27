@@ -45,4 +45,4 @@ echo
 echo "....finished setting up nodeenv."
 echo
 echo "[CLO3] Activate the environment with:"
-echo "    source $CLO_ROOT/env/bin/activate"
+echo '    source $CLO_ROOT/env/bin/activate'
