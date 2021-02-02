@@ -107,7 +107,7 @@ def main():
                     #     if sheet.cell_value(i,x) == xlrd.empty_cell.value:
                     #         continue
                     #     authors.append(sheet.cell_value(i,x).encode("ascii"))
-                    
+
                     # metadata.append({
                     #     "title": sheet.cell_value(i, 2).encode("ascii"),
                     #     "description": sheet.cell_value(i, 3).encode("ascii"),
@@ -153,7 +153,7 @@ def main():
                         "format": sheet.cell_value(i,19),
                         "publisher": sheet.cell_value(i,20)
                     })
-            
+
             # Now that we have the metadata for the album,
             # we go in and assign each image the appropriate
             # metadata.
@@ -169,7 +169,7 @@ def main():
                         "imageUrl": str(filename),
                         "metadata": []
                     })
-            
+
             upload_album(images, albumId)
             print("Uploaded Album:", albumId)
             print("")
