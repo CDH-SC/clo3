@@ -88,3 +88,15 @@ Custom metadata modal
 .metadataBackdrop {
   background-color: #FFFFFF;
 }
+
+/*
+=================================================
+About Page Styles
+=================================================
+*/
+.aboutButton::before {
+  font-family: FontAwesome;
+  content: '\f0da';
+  font-size: 16px;
+  margin-right: 5px;
+}

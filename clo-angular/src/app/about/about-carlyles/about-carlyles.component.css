@@ -4,3 +4,10 @@
   width: 95%;
   max-width: 1200px;
 }
+
+#p1 {
+  font-size: 18px;
+  background-color: #e7e1d6bb;
+  border-radius: 8px;
+  color: rgb(110, 110, 110);
+}
