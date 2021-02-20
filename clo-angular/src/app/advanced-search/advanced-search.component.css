@@ -35,6 +35,16 @@
   background: #f5ebdc;
 }
 
+.checkbox-fields-to-search {
+	width: 20em;
+	overflow: auto;
+}
+
+
+.checkbox-fields-to-search label {
+	width: 12em;
+}
+
 span {
   font-size: 14px;
   font-weight: bold;
