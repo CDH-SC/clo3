@@ -21,14 +21,15 @@
       <button (click)="addField()">Add Field</button>
       <button (click)="removeField()">Remove Field</button>
       <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
-      <H5>Specify Parts of Letter to Search</H5> 
-	  <fieldset class="checkbox-fields-to-search">
+    </div>
+  </div> 
+ <div class="specify-search">
+    <fieldset class="checkbox-fields-to-search">
 	  <label><input type="checkbox" value='docBody' checked> Letter Body </label> 
 	  <label><input type="checkbox" value='sourceNote' checked> Source Notes </label>
 	  <label><input type="checkbox" value='footnotes' checked> Foot Notes</label>
       <label><input type="checkbox" checked> Image Captions & Metadata </label>	
 	</fieldset>
-	</div>
   </div>
 </div>
       <!-- {{#if volumes}}

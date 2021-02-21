@@ -1,8 +1,16 @@
-#content {
+.container {
   margin: auto;
   padding-top: 25px;
   width: 90%;
   max-width: 1000px;
+  display: flex;
+}
+
+.specify-search {
+	padding-top: 27px;
+	margin: 10px;
+	flex: 1;
+	width: 20%;
 }
 
 .loading {
