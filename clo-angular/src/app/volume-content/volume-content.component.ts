@@ -236,7 +236,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
       if (letter.hasOwnProperty('manuscript')) {
         this.hasManuscript = true;
         for (let i = 0; i < letter.manuscript.length; i++) {
-          this.manuscriptUrl[i] = `assets/manuscripts/${letter.xml_id}/${letter.manuscript[i]}`;
+          this.manuscriptUrl[i] = `assets/manuscripts/${letter.manuscript[i]}`;
         }
         console.log(this.manuscriptUrl);
       } else {
