@@ -18,10 +18,13 @@ with open("IDLetterList.txt", "r") as file:
             words = line.split()
             cloid = words[1]
             itemNum = getItemNum(i-1)
-            filePath = "../../clo-angular/src/assets/rubenstein_manuscripts/" + itemNum
+            filePath = "../../clo-angular/src/assets/manuscripts/rubenstein_manuscripts/" + itemNum
             arr = os.listdir(filePath)
-            arr.sort()
+            for index, x in enumerate(arr):
+                y = 'rubenstein_manuscripts/'+itemNum+'/'+x
+                arr[index] = y
             print(arr)
+            arr.sort()
             dictionary[cloid] = arr
 
 with open("../../clo-xml-archive/manuscripts.json", "w") as outfile:

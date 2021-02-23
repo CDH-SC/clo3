@@ -1,5 +1,3 @@
-#NOTE: this script makes the IDs off by one due to an
-
 from bs4 import BeautifulSoup as bs
 
 filePath = 'rubenstein_list.html'
