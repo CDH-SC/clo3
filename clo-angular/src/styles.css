@@ -94,6 +94,11 @@ Custom metadata modal
 About Page Styles
 =================================================
 */
+.aboutButton:link {
+  color: #5c8c48 !important;
+  font-weight: bold !important;
+}
+
 .aboutButton::before {
   font-family: FontAwesome;
   content: '\f0da';
