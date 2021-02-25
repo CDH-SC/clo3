@@ -68,7 +68,8 @@ const appRoutes: Routes = [
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
   { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
-  { path: 'advanced-search', component: AdvancedSearchComponent }
+  { path: 'advanced-search', component: AdvancedSearchComponent },
+  { path: 'rubenstein', component: RubensteinComponent }
 ];
 
 @NgModule({

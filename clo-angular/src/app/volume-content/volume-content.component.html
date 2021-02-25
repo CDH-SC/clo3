@@ -3,6 +3,7 @@
     <div class="row flex-column-reverse flex-xl-row">
       <div class="col-12 col-xl-10">
         <div class="row justify-content-around">
+
           <app-volume-toc
             *ngIf="letters"
             [volId]="volumeId"
@@ -19,6 +20,7 @@
             (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
+
           <div id="manuscriptViewer">
             <ul>
               <li *ngFor="let url of manuscriptUrl">
@@ -26,6 +28,7 @@
               </li>
             </ul>
           </div>
+
           <app-volume-viewer
             *ngIf="volume"
             [viewContent]="viewContent"
@@ -39,7 +42,8 @@
             (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-viewer>
-        </div>
+
+       </div>
       </div>
       <div class="col-12 col-xl-2">
         <div class="row justify-content-center m-auto">
