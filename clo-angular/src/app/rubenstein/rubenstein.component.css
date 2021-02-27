@@ -38,12 +38,11 @@
 }
 
 p {
-  font-weight: bold;
   text-decoration: none;
-  cursor: pointer;
-  font-family: FontAwesome;
+  font-size: 14px;
+  font-family: 'Georgia', 'Times New Roman', Times, serif !important;
   content: '\f0da';
-  font-size: 16px;
   margin-right: 5px;
-  border-bottom: 1px solid #000000;
+  margin-bottom: 0px;
+  color: #000000;
 }

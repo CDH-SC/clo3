@@ -11,17 +11,33 @@
   width: 100%;
 }
 
+#manuscriptAndLetter {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  column-gap: 20px;
+}
+
+#letterContent {
+  flex: 1 1 auto;
+  width: 60%;
+}
+
+#letterNoManuscript {
+  width: 600px;
+}
+
 #manuscriptViewer {
   display: flex;
   flex-direction: column;
-  width: 600px;
-  height: 750px;
+  width: 500px;
+  height: 625px;
   border: 1px solid #21596f;
   border-radius: 10px;
   background: #f5ecdc;
   font-size: 16px;
   color: #21596f;
-  overflow: auto;
+  overflow-y: scroll;
 }
 
 #manuscriptImage {
@@ -31,6 +47,17 @@
 ul {
   list-style: none;
   padding: 0;
+}
+
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }
 /*
 #viewer {
