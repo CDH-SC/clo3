@@ -11,6 +11,22 @@
   width: 100%;
 }
 
+#manuscriptAndLetter {
+  display: flex;
+  flex-direction: row;
+  align-content: space-between;
+  column-gap: 20px;
+}
+
+#letterContent {
+  flex: 1 1 auto;
+  width: 60%;
+}
+
+#letterNoManuscript {
+  width: 600px;
+}
+
 #manuscriptViewer {
   display: flex;
   flex-direction: column;

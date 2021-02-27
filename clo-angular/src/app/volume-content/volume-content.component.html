@@ -21,6 +21,7 @@
             (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
 
+          <div class="col-12 col-xl-9" id="manuscriptAndLetter">
           <div id="manuscriptViewer">
             <ul>
               <li *ngFor="let url of manuscriptUrl">
@@ -29,7 +30,7 @@
             </ul>
           </div>
 
-          <app-volume-viewer
+          <app-volume-viewer id="letterContent"
             *ngIf="volume"
             [viewContent]="viewContent"
             [volId]="volumeId"
@@ -42,6 +43,7 @@
             (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-viewer>
+          </div>
 
        </div>
       </div>
@@ -75,7 +77,7 @@
             (accountChanged)="cycleLetter($event)"
             (letterCycle)="cycleLetter($event)"
           ></app-volume-toc>
-          <app-volume-viewer
+          <app-volume-viewer id="letterNoManuscript"
             *ngIf="volume"
             [viewContent]="viewContent"
             [volId]="volumeId"
