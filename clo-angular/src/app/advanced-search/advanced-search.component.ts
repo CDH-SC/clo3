@@ -8,6 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ElasticSearchService } from '../_shared/_services/elastic-search.service';
 import { ElasticSearch } from '../_shared/models/elastic-search';
 
+
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -46,6 +47,44 @@ export class AdvancedSearchComponent {
   start = 1;
   end = 10;
 
+  title = 'Fields';
+  masterSelected: boolean;
+  checkList: any;
+  checkedList: any;
+
+  ngOnIt(): void {
+    this.checkList = [
+    {value: "allFields", htmlText: "Search All Fields", checked: true},
+    {value:"docBody", htmlText: "Letter Body", checked: true},
+    {value:"sourceNote", htmlText: "Source Notes", checked: true},
+    {value:"footnotes", htmlText: "Foot Notes", checked: true},
+    {value:"imageCaptionsMetadata", htmlText: "Image Captions & Metadata", checked: true}
+    ];
+  }
+
+  getCheckedItemList() {
+    this.checkedList = [];
+    for (var i=0; i < this.checkList.length; i++) {
+      if (this.checkList[i].checked)
+      this.checkedList.push(this.checkList[i]);
+    }
+    this.checkedList = JSON.stringify(this.checkedList);
+  }
+  // this method is triggered by click event on the select/deselect all item
+  // boolean used to assign all list items checked boolean to false when user unchecked item and vice versa for when they checked item
+  checkUncheckAll() {
+    for(var i = 0; i < this.checkList.length; i++) {
+      this.checkList[i].checked = this.masterSelected;
+    }
+    this.getCheckedItemList();
+  }
+
+  isAllSelected() {
+    this.masterSelected = this.checkList.every(function(item: any) {
+      return item.checked == true;
+    })
+    this.getCheckedItemList();
+  }
   addField() {
     this.queryNumber++;
     this.fields.push("newField"+this.queryNumber+"fields");
@@ -62,6 +101,7 @@ export class AdvancedSearchComponent {
     }
   }
 
+  
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;

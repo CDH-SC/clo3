@@ -23,13 +23,21 @@
       <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
     </div>
   </div> 
- <div class="specify-search">
-    <fieldset class="checkbox-fields-to-search">
-	  <label><input type="checkbox" value='docBody' checked> Letter Body </label> 
-	  <label><input type="checkbox" value='sourceNote' checked> Source Notes </label>
-	  <label><input type="checkbox" value='footnotes' checked> Foot Notes</label>
-      <label><input type="checkbox" checked> Image Captions & Metadata </label>	
-	</fieldset>
+ <div>
+   <ul>
+     <li>
+       <input type="checkbox" ngModel=[(ngModel)]="masterSelected" name="list_name" value="allFields" (change) = "checkUncheckAll()"/> <strong>Select/ Unselect All</strong>
+     </li>
+   </ul>
+   <ul>
+     <li *ngFor="let item of checkList">
+       <input type="checkbox" [(ngModel)]="item.checked" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+       {{item.value}}
+     </li>
+    </ul>
+  </div>
+  <div>
+    <code>{{checkedList}}</code>
   </div>
 </div>
       <!-- {{#if volumes}}
