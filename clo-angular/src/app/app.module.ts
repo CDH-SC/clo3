@@ -22,7 +22,8 @@ import { AboutProjectComponent } from './about/about-project/about-project.compo
 import { AboutPrintedComponent } from './about/about-printed/about-printed.component';
 import { AboutCitingComponent } from './about/about-citing/about-citing.component';
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
-import { AboutAckComponent } from './about/about-ack/about-ack.component';
+import { AboutTechnicalComponent } from './about/about-technical/about-technical.component';
+import { AboutSupportersComponent } from './about/about-supporters/about-supporters.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
@@ -61,7 +62,8 @@ const appRoutes: Routes = [
   { path: 'about-printedEdition', component: AboutPrintedComponent },
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
-  { path: 'about-acknowledgments', component: AboutAckComponent },
+  { path: 'about-supporters', component: AboutSupportersComponent },
+  { path: 'about-technical', component: AboutTechnicalComponent },
   { path: 'volume/:id/:content', component: VolumeContentComponent },
   { path: 'album-viewer/:id', component: AlbumViewerComponent },
   { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
@@ -90,7 +92,6 @@ const appRoutes: Routes = [
     AboutPrintedComponent,
     AboutCitingComponent,
     AboutEditorsComponent,
-    AboutAckComponent,
     VolumeContentComponent,
     AlbumViewerComponent,
     PhotoViewerComponent,
@@ -101,6 +102,8 @@ const appRoutes: Routes = [
     SubjectLettersComponent,
     AdvancedSearchComponent,
     SortByPipe,
+    AboutTechnicalComponent,
+    AboutSupportersComponent,
     RubensteinComponent,
   ],
   imports: [
