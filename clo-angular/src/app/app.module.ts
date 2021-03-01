@@ -44,6 +44,7 @@ import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SubjectTermsComponent } from './subject-terms/subject-terms.component';
 import { SubjectLettersComponent } from './subject-letters/subject-letters.component';
+import { RubensteinComponent } from './rubenstein/rubenstein.component';
 
 const appRoutes: Routes = [
   {
@@ -69,7 +70,8 @@ const appRoutes: Routes = [
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
   { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
-  { path: 'advanced-search', component: AdvancedSearchComponent }
+  { path: 'advanced-search', component: AdvancedSearchComponent },
+  { path: 'rubenstein', component: RubensteinComponent }
 ];
 
 @NgModule({
@@ -102,6 +104,7 @@ const appRoutes: Routes = [
     SortByPipe,
     AboutTechnicalComponent,
     AboutSupportersComponent,
+    RubensteinComponent,
   ],
   imports: [
     BrowserModule,
