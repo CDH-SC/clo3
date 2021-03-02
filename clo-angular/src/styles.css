@@ -1,3 +1,5 @@
+@import '~viewerjs/dist/viewer.css';
+
 html, body {
   height: 100% !important;
 }
@@ -85,4 +87,21 @@ Custom metadata modal
 
 .metadataBackdrop {
   background-color: #FFFFFF;
+}
+
+/*
+=================================================
+About Page Styles
+=================================================
+*/
+.aboutButton:link {
+  color: #5c8c48 !important;
+  font-weight: bold !important;
+}
+
+.aboutButton::before {
+  font-family: FontAwesome;
+  content: '\f0da';
+  font-size: 16px;
+  margin-right: 5px;
 }

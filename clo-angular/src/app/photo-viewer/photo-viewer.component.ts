@@ -52,6 +52,7 @@ export class PhotoViewerComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     const viewer = new Viewer(document.getElementById('image'), {
+      inline: false,
       navbar: false,
       title: false,
       toolbar: {
@@ -92,7 +93,7 @@ export class PhotoViewerComponent implements OnInit, AfterViewChecked {
   }
 
   setNextId(currId: string) {
-    if (parseInt(currId, 10) >= this.album.images.length - 1) {
+    if (parseInt(currId, 10) >= this.album.images.length) {
       return null;
     } else {
       return (parseInt(currId, 10) + 1).toString();

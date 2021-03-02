@@ -153,6 +153,8 @@ def xsltFormat(inputString):
 	# convert html entities to their hex codes
 	inputString = re.sub('&.{1,6}?;', htmlHexConverter, inputString)
 	# converts loose "&" into the hex entity for "&"
+	# with open('log.xml', 'a') as f:
+	# 	f.write(inputString)
 	inputString = re.sub('&\\s|&(?=\\w?[^#])', '&#38;', inputString)
 	# fix any broken links
 	inputString = re.sub("<ref target=\"volume-(\\d{2})\\/([^lt\"]{2}.*?)>(.*?)</ref>", linkFix, inputString)
@@ -177,6 +179,10 @@ def letterUpload(array, letterType, volumeID):
 	print('%d %s found' % (len(array), letterType))
 	letterArray = []
 
+	# get letters with manuscripts from json file
+	with open('%smanuscripts.json' % directory) as g:
+		manuscripts = json.load(g)
+
 	for l in array:
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
@@ -197,7 +203,12 @@ def letterUpload(array, letterType, volumeID):
 			recipient = l.select('person[type="addressee"]')[0].string
 		else: recipient = None
 
-		if l.sourceNote.contents:
+		footnotesArray = l.find_all('note')
+		if footnotesArray:
+			footnotes = footnoteFormat(footnotesArray)
+		else: footnotes = None
+
+		if l.sourceNote:
 			sourceNote = xsltFormat(''.join(map(str, l.sourceNote.contents)))
 		else: sourceNote = None
 		docBody = xsltFormat(str(l.docBody))
@@ -210,10 +221,6 @@ def letterUpload(array, letterType, volumeID):
 			header = "<p>%s</p><p><strong>%s</strong></p>" % (slugline, sender)
 		docBody = header + docBody
 
-		footnotesArray = l.find_all('note')
-		if footnotesArray:
-			footnotes = footnoteFormat(footnotesArray)
-		else: footnotes = None
 
 		letter = {
 			'xml_id': xml_id,
@@ -227,7 +234,13 @@ def letterUpload(array, letterType, volumeID):
 			'docBody': docBody,
 			'footnotes': footnotes,
 		}
+
+		if manuscripts.get(xml_id):
+			letter['manuscript'] = manuscripts.get(xml_id)
+
 		letterArray.append(letter)
+
+	letterArray.sort(key=lambda x: x['docDate'])
 
 	try:
 		db.volumes.update_many(
@@ -247,7 +260,7 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('-P5.xml'):
+		if filename.endswith('.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
@@ -255,7 +268,7 @@ def main():
 			volume = {}
 
 			# get volume ID from filename
-			volumeID = ''.join(re.findall('\d{2}', filename))
+			volumeID = re.search(r'\d{2}', filename).group(0)
 
 			# get volume dates from header
 			dates = bs_content.biblFull.find_all('date')
@@ -271,12 +284,14 @@ def main():
 			hasFootnotes = [
 				'introduction',
 				'acknowledgements',
+				'acknowledgments',
 				'rival_brothers',
 				'janeJournal',
 				'janeNotebook',
 				'simpleStory',
 				'geraldineJewsbury',
 				'ellenTwisleton',
+				'appendix-one',
 			]
 
 

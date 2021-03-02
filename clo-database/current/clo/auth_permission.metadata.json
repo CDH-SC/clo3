@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"clo.auth_permission"}],"uuid":"305ae24ebd41480b8d01537ff4d601c2"}

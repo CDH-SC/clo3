@@ -1,202 +1,272 @@
 <div class="container" id="content">
   <div class="row justify-content-start">
     <div class="col-12">
+      <!-- Header -->
       <div class="row justify-content-between align-items-end orange-border-bottom">
         <h4>A History of <i>The Carlyle Letters Online</i></h4>
         <app-search></app-search>
       </div>
-      <div class="d-flex flex-row justify-content-start pt-2">
-        <div
-          class="d-flex flex-column justify-content-start align-items-start pt-2 w-50"
-        >
-          <h6>Getting under Way</h6>
-          <p>
-            Although informal conversations had been taking place for some time,
-            it was in 1999 that Duke University Press began to explore seriously
-            the possibility of developing an online version of
-            <i>The Collected Letters of Thomas and Jane Welsh Carlyle</i>.
-            Experts were consulted; challenges were debated and assessed; and a
-            National Endowment for the Humanities grant was discussed, written,
-            and awarded. With the project nominally funded, a plan for moving
-            forward with the development of &#8220;eCarlyle&#8221; began to take
-            shape, albeit a plan that was necessarily fraught with
-            technological, textual, and financial indeterminacy.
-          </p>
 
-          <p>
-            One of the earliest conclusions reached in the development process
-            was that neither DOS- nor HTML-centric approaches were going to
-            survive the next phase of technological advances for electronic
-            publications. So it was decided that the first twenty-nine volumes
-            of the edition would be encoded in XML (eXtensible Markup Language),
-            conformant with Textual Encoding Initiative (TEI) guidelines.
-          </p>
-
-          <p>
-            Although there was no way to anticipate what the final product was
-            going to look like, or in what software platform the resource was
-            going to &#8220;live,&#8221; these foundational decisions provided a
-            flexible, forward-looking path that allowed the project to proceed.
-            From the outset, this path was directed toward the creation of a
-            fully searchable, user-friendly, and nonproprietary scholarly tool
-            that could eventually be connected with other digital humanities
-            resources.
-          </p>
-
-          <h6>Anticipating the Future</h6>
-          <p>
-            Early in 2001, in spite of the technical and conceptual difficulties
-            of developing a resource that would rely on technology that did not
-            yet exist, Paolo Mangiafico (Perkins Library, Duke University),
-            David Southern (managing editor of the <i>Collected Letters</i>),
-            and Brent E. Kinser (coordinating editor of eCarlyle) sat in the
-            courtyard of Brightleaf Square in Durham, North Carolina, and tried
-            to anticipate the encoding requirements necessary to transform
-            eCarlyle from ideal into reality.
-          </p>
-
-          <p>
-            They began by adapting the general rubrics of TEI and of Model
-            Editions Partnership (MEP), a project led by David Chesnutt at the
-            University of South Carolina, into a specific set of encoding
-            guidelines for eCarlyle. On the basis of this TEI and MEP framework,
-            the eCarlyle team identified and prioritized features of the printed
-            text that would need to be given XML tags so that the resource could
-            be made to display properly online.
-          </p>
-
-          <p>
-            The eCarlyle guidelines quickly began to take shape. The format for
-            the appropriate headers was defined, and it was decided that time
-            and resources would be devoted to the tagging of all dates,
-            salutations, closings, and signatures. Most important, the team
-            agreed that it was imperative that every reference to another letter
-            or text in the eCarlyle would be rendered as a hyperlink, which
-            would create a vast web of interconnectivity within the resource.
-          </p>
-
-          <p>
-            Because there would be neither time nor resources to tag all
-            features in the text, a wish list for future encoding was also
-            established, which included the tagging of regularized names, ships,
-            places, organizations, and institutions.
-          </p>
-
-          <h6>Understanding the Past</h6>
-          <p>
-            Looking back, it now seems clear that the decisions made at
-            Brightleaf that spring represented an important shift in the editing
-            of text. Issues of transmission&#8212;<br />what the editor wishes
-            the reader to know&#8212;had evolved into issues of
-            functionality&#8212;what the editor wishes the user to do. In
-            identifying the features to be tagged, the eCarlyle team was in fact
-            deciding what they would teach the text about itself.
-          </p>
-
-          <p>
-            What then seemed of secondary importance now seems paramount, for
-            the concept of textual self-knowledge lies at the center of
-            electronic textual editing. What the text knows about itself defines
-            the scope of its functionality, which defines its ability to invite
-            discovery, an essential quality of electronic resources meant to
-            serve as primary vehicles for scholarly endeavor.
-          </p>
+      <!-- Content -->
+      <div class="d-flex flex-container justify-content-start pt-2">
+      
+        <!-- Image -->
+        <div class="about-image d-flex flex-column">
+          <img src="../../../assets/about-page/arched_house--small_cropped.jpg" alt="Exterior of house" id="about-image"/>
         </div>
-        <div
-          class="d-flex flex-column justify-content-start align-items-start p-2 w-50"
-        >
-          <h6>Encoding and Proofreading</h6>
-          <p>
-            Once the initial guidelines for the encoding of eCarlyle were
-            established, a search was made for an appropriate company to perform
-            the initial digitizing and encoding of the first twenty-nine
-            volumes, and in 2001 DNC Data Systems of Mumbai, India, was awarded
-            a contract. After an iterative process of refining the work of DNC
-            came the task of proofreading both the text and the encoding. During
-            the initial proofreading process, Kinser developed a set of
-            editorial guidelines and assembled a team of copyeditors to assist
-            with the immense task of establishing the reliability and the
-            consistency of the text and the XML tags of eCarlyle.
-          </p>
 
-          <p>
-            Through a first editorial pass and then a second, the encoded
-            volumes were prepared for migration to a display platform.
-            Unfortunately, the only extant search engine and indexing tool that
-            came close to achieving the necessary level of functionality,
-            Dynaweb, was approaching obsolescence. Fortunately, in January 2003,
-            again with the inestimable help of Mangiafico, the eCarlyle files
-            were mounted into Dynaweb, and they worked.
-          </p>
+        <div class="about-text d-flex flex-column justify-content-start align-items-start pt-2">
+          <!-- Getting Under Way -->
+          <a
+            class="btn btn-link p-0 aboutButton"
+            data-toggle="collapse"
+            href="#underWay"
+            role="button"
+            aria-expanded="false"
+            aria-controls="underWay"
+          >Getting Under Way</a>
 
-          <h6>The Dynaweb Prototype</h6>
-          <p>
-            The prototype version of eCarlyle was an inelegant but mostly
-            functional resource that quickly became a valuable tool for the few
-            editors and devoted readers who were allowed access to it. The links
-            among the letters were useful as predicted, and rudimentary style
-            sheets brought a modicum of aesthetic appearance. However, little
-            was done to improve the prototype, since it was never intended as
-            the permanent home for eCarlyle. The press and the editors remained
-            committed to the future and to the development of a fully functional
-            version of the resource.
-          </p>
+          <div class="collapse" id="underWay">
+            <p>
+              Although informal conversations had been taking place for some time,
+              it was in 1999 that Duke University Press began to explore seriously
+              the possibility of developing an online version of
+              <i>The Collected Letters of Thomas and Jane Welsh Carlyle</i>.
+              Experts were consulted; challenges were debated and assessed; and a
+              National Endowment for the Humanities grant was discussed, written,
+              and awarded. With the project nominally funded, a plan for moving
+              forward with the development of &#8220;eCarlyle&#8221; began to take
+              shape, albeit a plan that was necessarily fraught with
+              technological, textual, and financial indeterminacy.
+            </p>
+  
+            <p>
+              One of the earliest conclusions reached in the development process
+              was that neither DOS- nor HTML-centric approaches were going to
+              survive the next phase of technological advances for electronic
+              publications. So it was decided that the first twenty-nine volumes
+              of the edition would be encoded in XML (eXtensible Markup Language),
+              conformant with Textual Encoding Initiative (TEI) guidelines.
+            </p>
+  
+            <p>
+              Although there was no way to anticipate what the final product was
+              going to look like, or in what software platform the resource was
+              going to &#8220;live,&#8221; these foundational decisions provided a
+              flexible, forward-looking path that allowed the project to proceed.
+              From the outset, this path was directed toward the creation of a
+              fully searchable, user-friendly, and nonproprietary scholarly tool
+              that could eventually be connected with other digital humanities
+              resources.
+            </p>
+          </div>
 
-          <h6>Technology Catches the Vision</h6>
-          <p>
-            After the prototype was created in 2003, the major obstacle to
-            completing the development phase became finding a replacement for
-            Dynaweb. What followed, as the project was forced to wait on
-            technology, was a three year period of &#8220;tweaking&#8221; the
-            encoding of the first twenty-nine volumes as others worked to
-            develop technological solutions to the Dynaweb problem. In addition,
-            volumes 30&#8211;32 of the print edition were encoded by DNC, then
-            edited and proofread by Kinser. In 2006, finally, technology caught
-            up with the vision. At first it seemed as though the open-source
-            indexing and query tool XTF (eXtensible Textual Framework), designed
-            primarily by Kirk Hastings and Martin Haye for the University of
-            California Digital Library, would be used to create the new digital
-            home for eCarlyle. Although XTF was not ultimately selected, its
-            capabilities announced an exciting new stage in the project&#8217;s
-            history.
-          </p>
+          <!-- Anticipating the Future -->
+          <a
+            class="btn btn-link p-0 aboutButton"
+            data-toggle="collapse"
+            href="#anticipatingFuture"
+            role="button"
+            aria-expanded="false"
+            aria-controls="anticipatingFuture"
+          >Anticipating the Future</a>
 
-          <p>
-            Simultaneously, two independent XML content servers&#8212;Mark Logic
-            Corporation and iFactory (RDW Group)&#8212;and HighWire Press of
-            Stanford University Libraries presented solutions to the problems
-            associated with the online display and the database management of
-            eCarlyle. In June 2006 the contract to build a new digital home for
-            the newly named <i>Carlyle Letters Online</i> was awarded to
-            HighWire Press, and in July the Web design firm Methodfuel was
-            brought onto the <i>CLO</i> team in order to render into HTML the
-            visual designs conceived by art director Sue Hall and the joint Duke
-            University Press&#8211;HighWire team.
-          </p>
+          <div class="collapse" id="anticipatingFuture">
+            <p>
+              Early in 2001, in spite of the technical and conceptual difficulties
+              of developing a resource that would rely on technology that did not
+              yet exist, Paolo Mangiafico (Perkins Library, Duke University),
+              David Southern (managing editor of the <i>Collected Letters</i>),
+              and Brent E. Kinser (coordinating editor of eCarlyle) sat in the
+              courtyard of Brightleaf Square in Durham, North Carolina, and tried
+              to anticipate the encoding requirements necessary to transform
+              eCarlyle from ideal into reality.
+            </p>
+  
+            <p>
+              They began by adapting the general rubrics of TEI and of Model
+              Editions Partnership (MEP), a project led by David Chesnutt at the
+              University of South Carolina, into a specific set of encoding
+              guidelines for eCarlyle. On the basis of this TEI and MEP framework,
+              the eCarlyle team identified and prioritized features of the printed
+              text that would need to be given XML tags so that the resource could
+              be made to display properly online.
+            </p>
+  
+            <p>
+              The eCarlyle guidelines quickly began to take shape. The format for
+              the appropriate headers was defined, and it was decided that time
+              and resources would be devoted to the tagging of all dates,
+              salutations, closings, and signatures. Most important, the team
+              agreed that it was imperative that every reference to another letter
+              or text in the eCarlyle would be rendered as a hyperlink, which
+              would create a vast web of interconnectivity within the resource.
+            </p>
+  
+            <p>
+              Because there would be neither time nor resources to tag all
+              features in the text, a wish list for future encoding was also
+              established, which included the tagging of regularized names, ships,
+              places, organizations, and institutions.
+            </p>
+          </div>
 
-          <p>
-            During the following year, desired functionalities were defined,
-            conceptual decisions were negotiated, and technological problems
-            were overcome, and on 13 July 2007, at a meeting of Carlyle scholars
-            at a conference in Philadelphia, the coordinating editor of the
-            project announced that the <i>Carlyle Letters Online</i> had entered
-            a beta-testing phase, with the hard launch scheduled for the end of
-            August. After nearly a decade of good service, at the end of July
-            2016, the HighWire version of the <i>CLO</i> was decommissioned.
-            With the end of the print edition (volume 48) in sight, it had
-            become clear that in the interests of sustainability, editorial
-            control, and connectivity with other resources, particularly in the
-            context of the Victorian Lives and Letters Consortium, the time had
-            come to migrate the <i>CLO</i> to a new platform and a new host at
-            the University of South Carolina Center for Digital Humanities. Like
-            its predecessor, however, this new version of the <i>CLO</i> does
-            not represent a final product. Work continues to focus on the future
-            and next phases. The process of perpetually editing and improving
-            the <i>CLO</i> remains a conflux of past, present, and future in the
-            service of scholarly endeavor.
-          </p>
+          <!-- Understanding the Past -->
+          <a
+            class="btn btn-link p-0 aboutButton"
+            data-toggle="collapse"
+            href="#understandingPast"
+            role="button"
+            aria-expanded="false"
+            aria-controls="understandingPast"
+          >Understanding the Past</a>
 
-          <p><i>B.E.K.</i></p>
+          <div class="collapse" id="understandingPast">
+            <p>
+              Looking back, it now seems clear that the decisions made at
+              Brightleaf that spring represented an important shift in the editing
+              of text. Issues of transmission&#8212;<br />what the editor wishes
+              the reader to know&#8212;had evolved into issues of
+              functionality&#8212;what the editor wishes the user to do. In
+              identifying the features to be tagged, the eCarlyle team was in fact
+              deciding what they would teach the text about itself.
+            </p>
+  
+            <p>
+              What then seemed of secondary importance now seems paramount, for
+              the concept of textual self-knowledge lies at the center of
+              electronic textual editing. What the text knows about itself defines
+              the scope of its functionality, which defines its ability to invite
+              discovery, an essential quality of electronic resources meant to
+              serve as primary vehicles for scholarly endeavor.
+            </p>
+          </div>
+
+          <!-- Encoding and Proofreading -->
+          <a
+            class="btn btn-link p-0 aboutButton"
+            data-toggle="collapse"
+            href="#encoding"
+            role="button"
+            aria-expanded="false"
+            aria-controls="encoding"
+          >Encoding and Proofreading</a>
+
+          <div class="collapse" id="encoding">
+            <p>
+              Once the initial guidelines for the encoding of eCarlyle were
+              established, a search was made for an appropriate company to perform
+              the initial digitizing and encoding of the first twenty-nine
+              volumes, and in 2001 DNC Data Systems of Mumbai, India, was awarded
+              a contract. After an iterative process of refining the work of DNC
+              came the task of proofreading both the text and the encoding. During
+              the initial proofreading process, Kinser developed a set of
+              editorial guidelines and assembled a team of copyeditors to assist
+              with the immense task of establishing the reliability and the
+              consistency of the text and the XML tags of eCarlyle.
+            </p>
+  
+            <p>
+              Through a first editorial pass and then a second, the encoded
+              volumes were prepared for migration to a display platform.
+              Unfortunately, the only extant search engine and indexing tool that
+              came close to achieving the necessary level of functionality,
+              Dynaweb, was approaching obsolescence. Fortunately, in January 2003,
+              again with the inestimable help of Mangiafico, the eCarlyle files
+              were mounted into Dynaweb, and they worked.
+            </p>
+          </div>
+
+          <!-- The Dynaweb Prototype -->
+          <a
+            class="btn btn-link p-0 aboutButton"
+            data-toggle="collapse"
+            href="#dynawebPrototype"
+            role="button"
+            aria-expanded="false"
+            aria-controls="dynawebPrototype"
+          >The Dynaweb Prototype</a>
+
+          <div class="collapse" id="dynawebPrototype">
+            <p>
+              The prototype version of eCarlyle was an inelegant but mostly
+              functional resource that quickly became a valuable tool for the few
+              editors and devoted readers who were allowed access to it. The links
+              among the letters were useful as predicted, and rudimentary style
+              sheets brought a modicum of aesthetic appearance. However, little
+              was done to improve the prototype, since it was never intended as
+              the permanent home for eCarlyle. The press and the editors remained
+              committed to the future and to the development of a fully functional
+              version of the resource.
+            </p>
+          </div>
+
+          <!-- Technology Catches the Vision -->
+          <a
+            class="btn btn-link p-0 aboutButton"
+            data-toggle="collapse"
+            href="#technologyVision"
+            role="button"
+            aria-expanded="false"
+            aria-controls="technologyVision"
+          >Technology Catches the Vision</a>
+
+          <div class="collapse" id="technologyVision">
+            <p>
+              After the prototype was created in 2003, the major obstacle to
+              completing the development phase became finding a replacement for
+              Dynaweb. What followed, as the project was forced to wait on
+              technology, was a three year period of &#8220;tweaking&#8221; the
+              encoding of the first twenty-nine volumes as others worked to
+              develop technological solutions to the Dynaweb problem. In addition,
+              volumes 30&#8211;32 of the print edition were encoded by DNC, then
+              edited and proofread by Kinser. In 2006, finally, technology caught
+              up with the vision. At first it seemed as though the open-source
+              indexing and query tool XTF (eXtensible Textual Framework), designed
+              primarily by Kirk Hastings and Martin Haye for the University of
+              California Digital Library, would be used to create the new digital
+              home for eCarlyle. Although XTF was not ultimately selected, its
+              capabilities announced an exciting new stage in the project&#8217;s
+              history.
+            </p>
+  
+            <p>
+              Simultaneously, two independent XML content servers&#8212;Mark Logic
+              Corporation and iFactory (RDW Group)&#8212;and HighWire Press of
+              Stanford University Libraries presented solutions to the problems
+              associated with the online display and the database management of
+              eCarlyle. In June 2006 the contract to build a new digital home for
+              the newly named <i>Carlyle Letters Online</i> was awarded to
+              HighWire Press, and in July the Web design firm Methodfuel was
+              brought onto the <i>CLO</i> team in order to render into HTML the
+              visual designs conceived by art director Sue Hall and the joint Duke
+              University Press&#8211;HighWire team.
+            </p>
+  
+            <p>
+              During the following year, desired functionalities were defined,
+              conceptual decisions were negotiated, and technological problems
+              were overcome, and on 13 July 2007, at a meeting of Carlyle scholars
+              at a conference in Philadelphia, the coordinating editor of the
+              project announced that the <i>Carlyle Letters Online</i> had entered
+              a beta-testing phase, with the hard launch scheduled for the end of
+              August. After nearly a decade of good service, at the end of July
+              2016, the HighWire version of the <i>CLO</i> was decommissioned.
+              With the end of the print edition (volume 48) in sight, it had
+              become clear that in the interests of sustainability, editorial
+              control, and connectivity with other resources, particularly in the
+              context of the Victorian Lives and Letters Consortium, the time had
+              come to migrate the <i>CLO</i> to a new platform and a new host at
+              the University of South Carolina Center for Digital Humanities. Like
+              its predecessor, however, this new version of the <i>CLO</i> does
+              not represent a final product. Work continues to focus on the future
+              and next phases. The process of perpetually editing and improving
+              the <i>CLO</i> remains a conflux of past, present, and future in the
+              service of scholarly endeavor.
+            </p>
+  
+            <p><i>B.E.K.</i></p>
+          </div>
         </div>
       </div>
     </div>

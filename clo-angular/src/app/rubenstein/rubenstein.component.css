@@ -1,0 +1,48 @@
+#content {
+  margin: auto;
+  padding-top: 25px;
+  width: 80%;
+}
+
+.volumeButton, .volumeLink {
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.volumeButton::before {
+  font-family: FontAwesome;
+  content: '\f0da';
+  font-size: 16px;
+  margin-right: 5px;
+}
+
+.volumeLink {
+  border-bottom: 1px solid #000000;
+}
+
+.volumeButton:link, .volumeButton:visited {
+  color: #c17953 !important;
+}
+
+.volumeButton:hover, .volumeButton:active, .volumeButton:focus {
+  color: #a59657 !important;
+}
+
+.volumeLink:link, .volumeLink:visited {
+  color: #21596F !important;
+}
+
+.volumeLink:hover, .volumeLink:active, .volumeLink:focus {
+  color: #a59657 !important;
+}
+
+p {
+  text-decoration: none;
+  font-size: 14px;
+  font-family: 'Georgia', 'Times New Roman', Times, serif !important;
+  content: '\f0da';
+  margin-right: 5px;
+  margin-bottom: 0px;
+  color: #000000;
+}

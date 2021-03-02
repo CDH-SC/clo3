@@ -7,7 +7,7 @@
   <div class="row justify-content-center">
     <div class="imageViewer">
       <div class="image">
-        <img src="{{ imageUrl }}" id="image"/>
+        <img src="./{{ imageUrl }}" id="image">
       </div>
       <div class="actionBar">
         <button type="button" class="actionButton" (click)="goToStart()">
@@ -42,29 +42,25 @@
           <td class="col1">Description:</td>
           <td class="col2">{{ imageMetadata.description }}</td>
         </tr>
-        <tr *ngIf="album._id === 0">
-          <td class ="col1">Caption:</td>
-          <td class = "col2"></td>
-        </tr>
-        
+
         <tr *ngIf="album._id === 0">
           <td class ="col1">Link to Volume:</td>
           <td class ="col2">
-            <tr *ngIf="nextId >= 9">
+            <tr *ngIf="nextId > 9">
               <a
-              routerLink="/../volume/{{ nextId }}/frontice_piece"
+              routerLink="/../volume/{{ nextId }}/frontispiece"
               routerLinkActive="active">
               Volume {{ nextId }}</a>
             </tr>
             <tr *ngIf="nextId <= 9">
               <a
-              routerLink="/../volume/0{{ nextId }}/frontice_piece"
+              routerLink="/../volume/0{{ nextId }}/frontispiece"
               routerLinkActive="active">
               Volume 0{{ nextId }}</a>
             </tr>
           </td>
         </tr>
-          
+
         <tr *ngIf="imageMetadata.subjects.length">
           <td class="col1">Subjects:</td>
           <td class="col2">

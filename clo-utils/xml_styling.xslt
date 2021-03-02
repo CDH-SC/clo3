@@ -55,9 +55,12 @@
   </xsl:template>
 
   <xsl:template match="hi">
-
     <xsl:if test='@rend="italic"'>
       <i><xsl:apply-templates/></i>
+    </xsl:if>
+
+    <xsl:if test='@rend="bold"'>
+      <strong><xsl:apply-template/></strong>
     </xsl:if>
   </xsl:template>
 
@@ -87,11 +90,7 @@
     </p>
   </xsl:template>
 
-  <xsl:template match="closer">
-    <p>
-      <xsl:apply-templates/>
-    </p>
-  </xsl:template>
+  
 
   <xsl:template match="sic">
     <span style="display:none;"><xsl:apply-templates/></span>
@@ -103,10 +102,24 @@
     </docBody>
   </xsl:template>
 
-  <xsl:template match="salute">
+  <xsl:template match="docBody/closer">
     <p>
       <xsl:apply-templates/>
     </p>
+  </xsl:template>
+
+  <xsl:template match="p/closer">
+    <xsl:apply-templates/>
+  </xsl:template>
+
+  <xsl:template match="docBody/salute">
+    <p>
+      <xsl:apply-templates/>
+    </p>
+  </xsl:template>
+
+  <xsl:template match="p/salute">
+    <xsl:apply-templates/>
   </xsl:template>
 
   <xsl:template match="p">
@@ -137,11 +150,14 @@
     <div class="lg">
       <xsl:apply-templates select="@* | node()"/>
     </div>
-    <br/>
+    <!-- <br/> -->
   </xsl:template>
 
   <xsl:template match="lb">
     <br/>
+    <span>
+      <xsl:apply-templates select="@* | node()"/>
+    </span>
   </xsl:template>
 
   <xsl:template match="l">
@@ -207,10 +223,9 @@
   <xsl:template match="figure/p">
 
     <xsl:if test="string(.)">
-      <span style="font-size:10px">
+      <p style="font-size:10px">
         <xsl:apply-templates select="@* | node()"/>
-      </span>
-      <br/>
+      </p>
     </xsl:if>
   </xsl:template>
 
@@ -277,7 +292,6 @@
   </xsl:template>
 
   <xsl:template match="hi">
-
     <xsl:if test='@rend="italic"'>
       <i><xsl:apply-templates/></i>
     </xsl:if>
@@ -288,6 +302,10 @@
 
       <xsl:variable name="upper" select="translate($lower, 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')"/>
       <small><xsl:value-of select="normalize-space($upper)"/></small>
+    </xsl:if>
+
+    <xsl:if test='@rend="bold"'>
+      <strong><xsl:apply-template/></strong>
     </xsl:if>
   </xsl:template>
 

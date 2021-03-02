@@ -2,8 +2,11 @@
   <div class='d-flex justify-content-around align-items-center' id='nav-links'>
     <a routerLink="/home" routerLinkActive="active">Home</a>
     <a routerLink="/browse-volume" routerLinkActive="active">Browse by Date and/or Volume</a>
-    <a routerLink="/subject-terms" routerLinkActive="active">Browse by Subject Terms</a>
-    <a routerLink="/photo-album" routerLinkActive="active">Carlyle Family Photograph Albums</a>
+    <!--a routerLink="/rubenstein" routerLinkActive="active">Rubenstein Manuscripts</a>
+
+    <!-- <a routerLink="/subject-terms" routerLinkActive="active">Browse by Subject Terms</a> -->
+    <a routerLink="/photo-album" routerLinkActive="active">Carlyle Photograph Albums</a>
+
     <!-- <a routerLink="/browse-recipient" routerLinkActive="active">Browse by Recipient</a>
     <a routerLink="/browse-subject" routerLinkActive="active">Browse by Subject</a> -->
     <div class="d-inline-block" ngbDropdown #aboutDrop="ngbDropdown">
@@ -13,16 +16,13 @@
       (mouseenter)="aboutDrop.open()">About CLO</button>
       <div ngbDropdownMenu aria-labelledby="aboutDropdown" id="aboutDropdownList"
       (mouseleave)="aboutDrop.close()">
-        <a routerLink="/about-carlyles" routerLinkActive="active"
-        class="dropdown-item">The Carlyles</a>
-        <a routerLink="/about-project" routerLinkActive="active"
-        class="dropdown-item">Online Project</a>
-        <a routerLink="/about-photoAlbums" routerLinkActive="active"
-        class="dropdown-item">Photo Albums</a>
+        <a routerLink="/about-carlyles" routerLinkActive="active" class="dropdown-item">The Carlyles</a>
+        <a routerLink="/about-project" routerLinkActive="active" class="dropdown-item">Online Project</a>
         <a routerLink="/about-printedEdition" routerLinkActive="active" class="dropdown-item">Printed Edition</a>
         <a routerLink="/about-citing" routerLinkActive="active" class="dropdown-item">Citing/Textual Note</a>
         <a routerLink="/about-editors" routerLinkActive="active" class="dropdown-item">Editors</a>
-        <a routerLink="/about-acknowledgments" routerLinkActive="active" class="dropdown-item">Acknowledgments</a>
+        <a routerLink="/about-supporters" routerLinkActive="active" class="dropdown-item">Supporters</a>
+        <a routerLink="/about-technical" routerLinkActive="active" class="dropdown-item">Technical Team</a>
       </div>
     </div>
   </div>

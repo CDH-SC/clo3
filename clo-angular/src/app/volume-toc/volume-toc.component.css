@@ -38,7 +38,15 @@
 }
 
 .pl-2 {
-  padding-left: 0!important;  
+  padding-left: 0!important;
+}
+
+a.pl-2 {
+  color: #21596f!important;
+}
+
+a.mr-auto, a.ml-auto {
+  color: #c17953!important;
 }
 
 .drop::before {

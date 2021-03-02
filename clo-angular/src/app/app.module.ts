@@ -19,11 +19,11 @@ import { TwitterComponent } from './twitter/twitter.component';
 import { SearchComponent } from './search/search.component';
 import { AboutCarlylesComponent } from './about/about-carlyles/about-carlyles.component';
 import { AboutProjectComponent } from './about/about-project/about-project.component';
-import { AboutPhotosComponent } from './about/about-photos/about-photos.component';
 import { AboutPrintedComponent } from './about/about-printed/about-printed.component';
 import { AboutCitingComponent } from './about/about-citing/about-citing.component';
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
-import { AboutAckComponent } from './about/about-ack/about-ack.component';
+import { AboutTechnicalComponent } from './about/about-technical/about-technical.component';
+import { AboutSupportersComponent } from './about/about-supporters/about-supporters.component';
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
@@ -36,6 +36,7 @@ import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { SubjectTermService } from './_shared/_services/subject-terms.service';
 import { SortByPipe } from './_shared/pipes/sortBy.pipe';
+// import { NgxViewerModule } from 'ngx-viewer';
 
 import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
 import { VolumeTocComponent } from './volume-toc/volume-toc.component';
@@ -43,6 +44,7 @@ import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SubjectTermsComponent } from './subject-terms/subject-terms.component';
 import { SubjectLettersComponent } from './subject-letters/subject-letters.component';
+import { RubensteinComponent } from './rubenstein/rubenstein.component';
 
 const appRoutes: Routes = [
   {
@@ -57,18 +59,19 @@ const appRoutes: Routes = [
   { path: 'browse-subject', component: BrowseSubjectComponent },
   { path: 'about-carlyles', component: AboutCarlylesComponent },
   { path: 'about-project', component: AboutProjectComponent },
-  { path: 'about-photoAlbums', component: AboutPhotosComponent },
   { path: 'about-printedEdition', component: AboutPrintedComponent },
   { path: 'about-citing', component: AboutCitingComponent },
   { path: 'about-editors', component: AboutEditorsComponent },
-  { path: 'about-acknowledgments', component: AboutAckComponent },
+  { path: 'about-supporters', component: AboutSupportersComponent },
+  { path: 'about-technical', component: AboutTechnicalComponent },
   { path: 'volume/:id/:content', component: VolumeContentComponent },
   { path: 'album-viewer/:id', component: AlbumViewerComponent },
   { path: 'photo-viewer/:album/:id', component: PhotoViewerComponent },
   { path: 'search-results/:search', component: SearchResultsComponent },
   { path: 'subject-terms', component: SubjectTermsComponent },
   { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
-  { path: 'advanced-search', component: AdvancedSearchComponent }
+  { path: 'advanced-search', component: AdvancedSearchComponent },
+  { path: 'rubenstein', component: RubensteinComponent }
 ];
 
 @NgModule({
@@ -86,11 +89,9 @@ const appRoutes: Routes = [
     SearchComponent,
     AboutCarlylesComponent,
     AboutProjectComponent,
-    AboutPhotosComponent,
     AboutPrintedComponent,
     AboutCitingComponent,
     AboutEditorsComponent,
-    AboutAckComponent,
     VolumeContentComponent,
     AlbumViewerComponent,
     PhotoViewerComponent,
@@ -101,6 +102,9 @@ const appRoutes: Routes = [
     SubjectLettersComponent,
     AdvancedSearchComponent,
     SortByPipe,
+    AboutTechnicalComponent,
+    AboutSupportersComponent,
+    RubensteinComponent,
   ],
   imports: [
     BrowserModule,
@@ -111,6 +115,7 @@ const appRoutes: Routes = [
     ),
     NgbModule,
     FontAwesomeModule,
+    // NgxViewerModule,
   ],
   providers: [
     VolumeService,

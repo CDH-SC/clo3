@@ -80,12 +80,12 @@ def main():
         idMatch = re.findall("(\d{2})", subdir)
         if idMatch:
             albumId = idMatch[0]
-            print "Working on Album:", albumId
-            albumFiles = sorted(os.listdir(subdir), key=lambda f: int(filter(str.isdigit, f)))
-            print albumFiles[0]
+            print("Working on Album:", albumId)
+            albumFiles = sorted(os.listdir(subdir), key=lambda f: int("".join(filter(str.isdigit, f))))
+            print(albumFiles[0])
             metadataFile = subdir + '/' + albumFiles[0] if re.match('Volume.\.xlsx', albumFiles[0]) is not None else None
             if metadataFile:
-                print "\tExtracting metadata from:", metadataFile
+                print("\tExtracting metadata from:", metadataFile)
                 wb = xlrd.open_workbook(metadataFile)
                 sheet = wb.sheet_by_index(0)
                 metadata = []
@@ -107,7 +107,7 @@ def main():
                     #     if sheet.cell_value(i,x) == xlrd.empty_cell.value:
                     #         continue
                     #     authors.append(sheet.cell_value(i,x).encode("ascii"))
-                    
+
                     # metadata.append({
                     #     "title": sheet.cell_value(i, 2).encode("ascii"),
                     #     "description": sheet.cell_value(i, 3).encode("ascii"),
@@ -153,7 +153,7 @@ def main():
                         "format": sheet.cell_value(i,19),
                         "publisher": sheet.cell_value(i,20)
                     })
-            
+
             # Now that we have the metadata for the album,
             # we go in and assign each image the appropriate
             # metadata.
@@ -169,11 +169,11 @@ def main():
                         "imageUrl": str(filename),
                         "metadata": []
                     })
-            
+
             upload_album(images, albumId)
-            print "Uploaded Album:", albumId
-            print ""
+            print("Uploaded Album:", albumId)
+            print("")
 
 if __name__ == '__main__':
     main()
-    print "Elapsed time:", datetime.now() - startTime
+    print("Elapsed time:", datetime.now() - startTime)

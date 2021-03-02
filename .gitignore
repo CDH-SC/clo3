@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*nohup.out
 
 # VS Code Settings File
 .vscode
@@ -64,3 +65,11 @@ typings/
 # Environment Variables
 *.env 
 .env
+env/
+
+# clo3-specific 
+clo-api/bin/elasticsearch-7.8.0/
+clo-api/bin/elasticsearch-7.8.0/*
+clo-angular/package-lock.json
+clo-api/package-lock.json
+README.md.backup

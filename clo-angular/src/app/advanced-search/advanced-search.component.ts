@@ -117,6 +117,7 @@ export class AdvancedSearchComponent {
     }
   }
 
+  // Not sure if still needed
   // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
   compareValues(key, order = 'asc') {
     return function innerSort(a, b) {
