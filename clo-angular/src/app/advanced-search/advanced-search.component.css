@@ -4,14 +4,26 @@
   width: 90%;
   max-width: 1000px;
   display: flex;
+  flex-direction: column;
+  align-content: flex-start;
 }
 
-.specify-search {
-	padding-top: 27px;
-	margin: 10px;
-	flex: 1;
-	width: 20%;
+.container-narrow-results {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  align-items: space-between;
 }
+
+.container-narrow-by-date-range {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  align-items: flex-end;
+}
+
 
 .loading {
   width: 200px;
@@ -28,6 +40,7 @@
   margin-right: 10px;
 }
 
+
 .viewer-box {
   display: flex;
   flex-direction: column;
@@ -43,15 +56,6 @@
   background: #f5ebdc;
 }
 
-.checkbox-fields-to-search {
-	width: 20em;
-	overflow: auto;
-}
-
-
-.checkbox-fields-to-search label {
-	width: 12em;
-}
 
 span {
   font-size: 14px;

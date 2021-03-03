@@ -1,45 +1,85 @@
 
 <div class="container" id="content">
-  <div class="row justify-content-start">
-    <div class="col-12">
+
+
+    <!-- <div class="col-12"> -->
+    <div>
       <H3>Advanced Search</H3>
-      <form id="searchTerms">
-          <div *ngFor='let query of queries; let i = index'>
-             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
-                <option value='AND'>AND</option>
-                <option value='OR-'>OR</option>
-                <option value='NOT'>NOT</option>
-            </select>
-            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
-                <option value='docBody'>Letter Body</option>
-                <option value='sourceNote'>Source Notes</option>
-                <option value='footnotes'>Foot Notes</option>
-            </select>
-            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/><br/>
-         </div> 
-      </form>
-      <button (click)="addField()">Add Field</button>
-      <button (click)="removeField()">Remove Field</button>
-      <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
     </div>
-  </div> 
- <div>
+    <!-- </div> -->
+    
+    <form id="searchTerms">
+      <div *ngFor='let query of queries; let i = index' class="search-box">
+            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/>
+            <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+              <option value='AND'>AND</option>
+              <option value='OR-'>OR</option>
+              <option value='NOT'>NOT</option>
+          </select>
+        </div> 
+      </form>
+      <div>
+            <button (click)="addField()">Add Field</button>
+            <button (click)="removeField()">Remove Field</button>
+            <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
+      </div>
+
+      <div class="container-narrow-results">
+
+        <div class="narrow-by-author">
+          <p> <strong> Senders </strong> </p>
+          <input type="checkbox" value='allAuthors' checked> <strong> Include All </strong> <br>
+          <input type="checkbox" checked> Thomas Carlyle <br>
+          <input type="checkbox" checked> Jane Welsh Carlyle <br>
+        </div>
+
+        <div class="narrow-by-recipient">
+          <p class="recipient"> <strong> Recipients </strong> </p>
+          <input type="checkbox" value='allRecipients' checked> <strong> Include All </strong> <br>
+          <input type="search">
+        </div>
+        <div class="narrow-by-fields">
+          <p class="fields"> <strong> Fields </strong> </p>
+           <input type="checkbox" value='allFields' checked> <strong> Select/ Unselect All Fields </strong> <br>
+           <input type="checkbox" value='docBody' checked> Letter Body <br>
+           <input type="checkbox" value='sourceNote' checked> Source Notes <br>
+           <input type="checkbox" value='footnotes' checked> Foot Notes <br>
+           <input type="checkbox" value='imageCaptionAndMetadata' checked> Image Caption and Metadata
+        </div>
+
+        <div class="container-narrow-by-date-range">
+          <p><strong> Get Results </strong></p>
+          <div class="date-range-min">
+              <label for="start-date"> dated between... </label>
+              <input type="search" id="minDate" name="start-date">
+          </div>
+          <div class="date-range-max">
+              <label for="end-date"> and... </label>
+              <input type="search" id="maxDate" name="end-date"> 
+          </div>
+        </div>
+
+      </div>
+
+</div>
+
+<!--
    <ul>
-     <li>
-       <input type="checkbox" ngModel=[(ngModel)]="masterSelected" name="list_name" value="allFields" (change) = "checkUncheckAll()"/> <strong>Select/ Unselect All</strong>
+   
+   <li>
+        <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="allFields" (change) = "checkUncheckAll()"/> <strong>Select/ Unselect All</strong>
      </li>
    </ul>
    <ul>
-     <li *ngFor="let item of checkList">
-       <input type="checkbox" [(ngModel)]="item.checked" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
+     li *ngFor="let item of checkList"> 
+     <input type="checkbox" [(ngModel)]="item.checked" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
        {{item.value}}
-     </li>
+     </li> 
     </ul>
   </div>
-  <div>
-    <code>{{checkedList}}</code>
-  </div>
-</div>
+   <code>{{checkedList}}</code>
+-->
+
       <!-- {{#if volumes}}
           <hr/>
           {{#each volumes}}

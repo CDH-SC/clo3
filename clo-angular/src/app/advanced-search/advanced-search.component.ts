@@ -7,6 +7,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { ElasticSearchService } from '../_shared/_services/elastic-search.service';
 import { ElasticSearch } from '../_shared/models/elastic-search';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 
 
 @Component({
@@ -46,14 +47,9 @@ export class AdvancedSearchComponent {
 
   start = 1;
   end = 10;
-
-  title = 'Fields';
-  masterSelected: boolean;
-  checkList: any;
-  checkedList: any;
-
-  ngOnIt(): void {
-    this.checkList = [
+/* Commented out, tried to use two-way binding, haven't got it in correct format to use yet...
+ checkList: {
+    [
     {value: "allFields", htmlText: "Search All Fields", checked: true},
     {value:"docBody", htmlText: "Letter Body", checked: true},
     {value:"sourceNote", htmlText: "Source Notes", checked: true},
@@ -85,6 +81,9 @@ export class AdvancedSearchComponent {
     })
     this.getCheckedItemList();
   }
+
+  */
+ 
   addField() {
     this.queryNumber++;
     this.fields.push("newField"+this.queryNumber+"fields");
