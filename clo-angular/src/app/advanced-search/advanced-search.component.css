@@ -12,17 +12,28 @@
   padding-top: 25px;
   display: flex;
   flex-direction: row;
-  align-content: center;
+  align-content: space-around;
   justify-content: space-between;
-  align-items: space-between;
+  align-items: baseline;
+  align-content: flex-start;
 }
 
-.container-narrow-by-date-range {
+.narrow-by-date {
   display: flex;
   flex-direction: column;
-  align-content: flex-start;
-  align-items: flex-end;
+  justify-content: flex-end !important;
+  justify-items: flex-end !important;
 }
+
+#input-box {
+  background-color: transparent;
+  border-radius: 25px;
+  border: 1px solid  #c17953;
+  ;
+
+}
+
+
 
 
 .loading {

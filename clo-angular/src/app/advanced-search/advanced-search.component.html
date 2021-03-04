@@ -21,7 +21,7 @@
       <div>
             <button (click)="addField()">Add Field</button>
             <button (click)="removeField()">Remove Field</button>
-            <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
+            <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
       </div>
 
       <div class="container-narrow-results">
@@ -36,7 +36,7 @@
         <div class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong> </p>
           <input type="checkbox" value='allRecipients' checked> <strong> Include All </strong> <br>
-          <input type="search">
+          <input type="search" id="input-box">
         </div>
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong> </p>
@@ -46,19 +46,17 @@
            <input type="checkbox" value='footnotes' checked> Foot Notes <br>
            <input type="checkbox" value='imageCaptionAndMetadata' checked> Image Caption and Metadata
         </div>
-
-        <div class="container-narrow-by-date-range">
-          <p><strong> Get Results </strong></p>
-          <div class="date-range-min">
+          <div class="narrow-by-dates">
+          <p><strong> Time Period </strong></p>
+          <div>
               <label for="start-date"> dated between... </label>
-              <input type="search" id="minDate" name="start-date">
+              <input type="search" name="start-date" id="input-box" placeholder="1837">  <br>
           </div>
-          <div class="date-range-max">
+          <div>
               <label for="end-date"> and... </label>
-              <input type="search" id="maxDate" name="end-date"> 
-          </div>
-        </div>
-
+              <input type="search" id="input-box" name="end-date" placeholder="1901"> 
+            </div>
+            </div>
       </div>
 
 </div>
@@ -102,11 +100,11 @@
   id="content"
 >
   <div class="row justify-content-start orange-border-bottom">
-    <h4>Search Results for: <!-- "{{ searchQuery }}" --></h4>
+    <strong>Search Results for: <!-- "{{ searchQuery }}" --></strong>
     <ul style="list-style-type: none;">
-      <li><h4>AND: {{ displayQuery[0] }}</h4></li>
-      <li><h4>OR: {{ displayQuery[1] }}</h4></li>
-      <li><h4>NOT: {{ displayQuery[2] }}</h4></li>
+      <li><strong>AND: {{ displayQuery[0] }}</strong></li>
+      <li><strong>OR: {{ displayQuery[1] }}</strong></li>
+      <li><strong>NOT: {{ displayQuery[2] }}</strong></li>
     </ul>
   </div>
   <ng-container *ngIf="results.data.length == 0">
