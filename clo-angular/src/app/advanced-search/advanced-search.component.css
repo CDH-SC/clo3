@@ -12,28 +12,32 @@
   padding-top: 25px;
   display: flex;
   flex-direction: row;
-  align-content: space-around;
+  align-content: flex-end;
   justify-content: space-between;
-  align-items: baseline;
-  align-content: flex-start;
+  align-items: flex-start;
+  justify-items: center;
 }
 
-.narrow-by-date {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end !important;
-  justify-items: flex-end !important;
+
+
+#dates-input-box {
+  width: 49px !important;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid #c17953;
 }
 
 #input-box {
   background-color: transparent;
-  border-radius: 25px;
-  border: 1px solid  #c17953;
-  ;
-
+  border-radius: 3px;
+  border: 1px solid #c17953;
 }
 
-
+#search-box {
+  background-color: transparent;
+  border-radius: 3px;
+  border: 1px solid #c17953
+}
 
 
 .loading {

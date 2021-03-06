@@ -9,20 +9,39 @@
     <!-- </div> -->
     
     <form id="searchTerms">
-      <div *ngFor='let query of queries; let i = index' class="search-box">
-            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/>
+      <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label>
+      <div *ngFor='let query of queries; 
+          let i = index; 
+            let first = isFirst; 
+              let last = isLast;'>
+            <input 
+            style="  background-color: transparent;
+            border-radius: 3px;
+            border: 1px solid forestgreen;"
+             class="search-box"  
+              type='string'  
+                size=80  
+                  [attr.id]="query[2][i]" 
+                    name='ANDdocBody'/> 
             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
               <option value='AND'>AND</option>
               <option value='OR-'>OR</option>
               <option value='NOT'>NOT</option>
           </select>
         </div> 
-      </form>
-      <div>
+    </form>
+    <div>
+      <button (click)="addField()">Add Field</button>
+      <button (click)="removeField()">Remove Field</button>
+    </div>  
+
+<!--
+         <div class="add-remove-field">
             <button (click)="addField()">Add Field</button>
             <button (click)="removeField()">Remove Field</button>
             <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
-      </div>
+          </div>
+-->
 
       <div class="container-narrow-results">
 
@@ -36,7 +55,7 @@
         <div class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong> </p>
           <input type="checkbox" value='allRecipients' checked> <strong> Include All </strong> <br>
-          <input type="search" id="input-box">
+          <input type="search" id="input-box" placeholder="Charles Dickens">
         </div>
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong> </p>
@@ -47,16 +66,12 @@
            <input type="checkbox" value='imageCaptionAndMetadata' checked> Image Caption and Metadata
         </div>
           <div class="narrow-by-dates">
-          <p><strong> Time Period </strong></p>
-          <div>
+          <p class="time-period-heading"><strong> Time Period </strong></p>
               <label for="start-date"> dated between... </label>
-              <input type="search" name="start-date" id="input-box" placeholder="1837">  <br>
-          </div>
-          <div>
+              <input type="search" name="start-date" id="dates-input-box" placeholder="1837">  <br>
               <label for="end-date"> and... </label>
-              <input type="search" id="input-box" name="end-date" placeholder="1901"> 
-            </div>
-            </div>
+              <input type="search" id="dates-input-box" name="end-date" placeholder="1901"> 
+          </div>
       </div>
 
 </div>
