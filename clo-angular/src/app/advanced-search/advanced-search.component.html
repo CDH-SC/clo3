@@ -2,11 +2,8 @@
 <div class="container" id="content">
 
 
-    <!-- <div class="col-12"> -->
-    <div>
+  <div class="col-12"> 
       <H3>Advanced Search</H3>
-    </div>
-    <!-- </div> -->
     
     <form id="searchTerms">
       <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label>
@@ -14,35 +11,30 @@
           let i = index; 
             let first = isFirst; 
               let last = isLast;'>
-            <input 
-            style="  background-color: transparent;
-            border-radius: 3px;
-            border: 1px solid brown;"
-             class="search-box"  
-              type='string'  
-                size=80  
+            <input style="  background-color: transparent; border-radius: 3px; border: 1px solid brown;" class="search-box" type='string' size=80 
                   [attr.id]="query[2][i]" 
                     name='ANDdocBody'
                       placeholder="oxford liberalism"/> 
+            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
+              <option value='docBody'>Letter Body</option>
+              <option value='sourceNote'>Source Notes</option>
+              <option value='footnotes'>Foot Notes</option>
+              <option value='imageCaptionAndMetadata'>Image Caption & Metadata</option>
+            </select>
             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
               <option value='AND'>AND</option>
               <option value='OR-'>OR</option>
               <option value='NOT'>NOT</option>
           </select>
+          <button type="button" (click)='searchInAllFields()'>I want to search for this term in all the fields.</button>
         </div> 
     </form>
-    <div>
+
       <button (click)="addField()">Add Field</button>
       <button (click)="removeField()">Remove Field</button>
-    </div>  
+  </div> 
 
-<!--
-         <div class="add-remove-field">
-            <button (click)="addField()">Add Field</button>
-            <button (click)="removeField()">Remove Field</button>
-            <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
-          </div>
--->
+</div>
 
       <div class="container-narrow-results">
 
@@ -75,7 +67,6 @@
           </div>
       </div>
 
-</div>
 
 <!--
    <ul>

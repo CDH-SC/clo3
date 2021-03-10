@@ -47,7 +47,8 @@ export class AdvancedSearchComponent {
 
   start = 1;
   end = 10;
-/* Commented out, tried to use two-way binding, haven't got it in correct format to use yet...
+
+  /* Commented out, tried to use two-way binding, haven't got it in correct format to use yet...
  checkList: {
     [
     {value: "allFields", htmlText: "Search All Fields", checked: true},
@@ -83,7 +84,27 @@ export class AdvancedSearchComponent {
   }
 
   */
- 
+  getBoolOp() {
+    var boolInputID = "newField".concat((this.queryNumber).toString().concat("boolOp"));
+    return (<HTMLInputElement>document.getElementById(boolInputID)).value;
+  }
+
+  getField() {
+    var fieldInputID = "newField".concat((this.queryNumber).toString().concat("fields"));
+    return (<HTMLInputElement>document.getElementById(fieldInputID)).value;
+  }
+
+  getSearchTerm() {
+    var searchInputID = "newField".concat((this.queryNumber).toString());
+    return (<HTMLInputElement>document.getElementById(searchInputID)).value;
+  }
+
+  printQueries() {
+  console.log("this.field: " + this.getField());
+  console.log("this.boolOp: " + this.getBoolOp());
+  console.log("this.inputs: " + this.getSearchTerm());
+  }
+
   addField() {
     this.queryNumber++;
     this.fields.push("newField"+this.queryNumber+"fields");
@@ -115,6 +136,41 @@ export class AdvancedSearchComponent {
       document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
     }
   }
+
+  generateCorrespondingParams(theSearchTerm: string, theBoolOp: string, theField: string)
+  {
+    var searchTermID = "newField".concat((this.queryNumber).toString());
+    (<HTMLInputElement>document.getElementById(searchTermID)).value = theSearchTerm;
+    var boolOpID = "newField".concat((this.queryNumber).toString().concat("boolOp"));
+    (<HTMLInputElement>document.getElementById(boolOpID)).value = theBoolOp;
+    var fieldID = "newField".concat((this.queryNumber).toString().concat("fields"));
+    (<HTMLInputElement>document.getElementById(fieldID)).value = theField;
+  }
+  searchInAllFields() {
+
+    /* use: user wants to search the term in all fields, so the idea is I'm trying to...
+     * generate two or for with the same input text from user & the same boolean operator selected but different fields selected
+     * 
+     * the "get" methods return the corresponding items in this queries objects (the field) user entered
+     * so...
+     *  when user types "carlyle," selects "Letter Body," and selects "AND," the variables made here will contain that info
+     *  having difficulties setting the correct values though
+     *
+     * Question: do i need to create the events in this method?... 
+     * ... tried using .setAttribute(...) method to automatically generate the new values but that didn't work
+     * 
+     */
+   
+    let searchTerm = this.getSearchTerm();
+    let boolOp = this.getBoolOp();
+    let field = this.getField();
+    
+    for (let i = 0; i<3; i++)
+    {
+      this.addField();
+    }
+  }
+
 
   // Not sure if still needed
   // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
