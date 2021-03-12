@@ -18,9 +18,43 @@
   justify-items: center;
 }
 
+.multiselect {
+  width: 200px;
+}
 
+.selectBox {
+  position: relative;
+}
 
-#dates-input-box {
+.selectBox select {
+  width: 100%; /* width takes up 100% of it's ancestor's width space */
+  font-weight: bold; /* need "Authors," label to pop out more than the text of selectable authors */
+}
+
+.over-select {
+  position: absolute; /* will be used to position this div on top of selectBox div */
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/* typescript file contains logic to determine which of the following two styles are displayed (none/display) */
+#sender-checkboxes {
+  display: none;
+  border: 1px solid brown;
+}
+
+#sender-checkboxes label {
+  display: block;
+  color: #c17953;
+}
+
+#sender-checkboces label:hover {
+  background-color: #f8f1e5;
+}
+
+dates-input-box {
   width: 49px !important;
   background-color: transparent;
   border-radius: 3px;

@@ -1,49 +1,59 @@
 
 <div class="container" id="content">
 
-
   <div class="col-12"> 
       <H3>Advanced Search</H3>
     
     <form id="searchTerms">
       <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label>
       <div *ngFor='let query of queries; 
-          let i = index; 
-            let first = isFirst; 
-              let last = isLast;'>
-            <input style="  background-color: transparent; border-radius: 3px; border: 1px solid brown;" class="search-box" type='string' size=80 
-                  [attr.id]="query[2][i]" 
-                    name='ANDdocBody'
-                      placeholder="oxford liberalism"/> 
+              let i = index; 
+                let first = isFirst; 
+                  let last = isLast;'>
+              <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+                <option value='AND'>AND</option>
+                <option value='OR-'>OR</option>
+                <option value='NOT'>NOT</option>
+            </select>
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
               <option value='docBody'>Letter Body</option>
               <option value='sourceNote'>Source Notes</option>
               <option value='footnotes'>Foot Notes</option>
-              <option value='imageCaptionAndMetadata'>Image Caption & Metadata</option>
+              <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option>
             </select>
-            <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
-              <option value='AND'>AND</option>
-              <option value='OR-'>OR</option>
-              <option value='NOT'>NOT</option>
-          </select>
-          <button type="button" (click)='searchInAllFields()'>I want to search for this term in all the fields.</button>
-        </div> 
-    </form>
-
+            <input style="background-color: transparent; border-radius: 3px; border: 1px solid brown;" class="search-box" type='string' size=80 
+            [attr.id]="query[2][i]" 
+              name='ANDdocBody'
+                placeholder="oxford liberalism"/> 
+               <span> <input type="checkbox"/>  Search all fields for this term </span>
+            <!-- the following div will display a list of options in checkbox format to select so user can search multiple senders for a term -->
+        
+        <!--
+            <div class="multiselect"> top ancestor div constrained by width 
+              <div class="selectBox" (onclick)="showSenderCheckboxes()">  div positioned relative to its ancestor, it will take up entire width space available (constrained by multiselect width space)
+                <select>
+                  <option> Authors </option>
+                  <div class="overSelect"></div> empty div overlapping closest immediate ancestor div
+                </div> close selectBox div, method triggers the senders-checkbox to display and hides it when they click on multiselect element with checkbox already displayed 
+                  <div id="sender-checkboxes"> no display for the div itself (leveraged in logic to toggle between the two "displays"), the labels, however, display as blocks 
+                    <label for="tc">
+                      <input type="checkbox" id="tc"/> Thomas Carlyle</label>
+                      <label for="jwc">
+                        <input type="checkbox" id="jwc"/> Jane Welsh Carlyle</label>
+                        <label for="tcjwc">
+                          <input type="checkbox" id="tcjwc"/>Thomas Carlyle & Jane Welsh Carlyle</label>
+                  </div> 
+              </div> 
+          -->
+            </div> <!-- close ngFor's div -->
+          </form>
       <button (click)="addField()">Add Field</button>
       <button (click)="removeField()">Remove Field</button>
-  </div> 
-
+     </div> 
 </div>
 
+<!--
       <div class="container-narrow-results">
-
-        <div class="narrow-by-author">
-          <p> <strong> Senders </strong> </p>
-          <input type="checkbox" value='allAuthors' checked> <strong> Include All </strong> <br>
-          <input type="checkbox" checked> Thomas Carlyle <br>
-          <input type="checkbox" checked> Jane Welsh Carlyle <br>
-        </div>
 
         <div class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong> </p>
@@ -68,7 +78,7 @@
       </div>
 
 
-<!--
+
    <ul>
    
    <li>
@@ -83,9 +93,8 @@
     </ul>
   </div>
    <code>{{checkedList}}</code>
--->
 
-      <!-- {{#if volumes}}
+      {{#if volumes}}
           <hr/>
           {{#each volumes}}
               <div class="volume">
@@ -100,7 +109,7 @@
           <div>No data to display.</div>
       {{/if}}
 
-       -->
+     -->
  <div
   class="container-fluid"
   *ngIf="(searchResults | async) as results"
@@ -109,7 +118,7 @@
   <div class="row justify-content-start orange-border-bottom">
     <strong>Search Results for: <!-- "{{ searchQuery }}" --></strong>
     <ul style="list-style-type: none;">
-      <li><strong>AND: {{ displayQuery[0] }}</strong></li>
+      <li><strong>Results that contain {{ displayQuery[0] }}</strong></li>
       <li><strong>OR: {{ displayQuery[1] }}</strong></li>
       <li><strong>NOT: {{ displayQuery[2] }}</strong></li>
     </ul>

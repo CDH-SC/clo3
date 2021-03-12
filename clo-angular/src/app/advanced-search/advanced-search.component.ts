@@ -8,6 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ElasticSearchService } from '../_shared/_services/elastic-search.service';
 import { ElasticSearch } from '../_shared/models/elastic-search';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { identifierModuleUrl } from '@angular/compiler';
 
 
 @Component({
@@ -32,6 +33,10 @@ export class AdvancedSearchComponent {
     // this.router.navigate(['search-results/', route]);
   }
 
+  CONST_LETTERBODY = "docBody";
+  CONST_SOURCENOTE = "sourceNote";
+  CONST_FOOTNOTES = "footnotes";
+
   fields = ["newField1fields"];
   boolOps = ["newField1boolOp"];
   inputs = ["newField1"];
@@ -39,7 +44,7 @@ export class AdvancedSearchComponent {
   queries = [this.query];
   queryNumber = 1;
   searchResults: any;
-
+  
   displayQuery = ["","",""];
 
   page = 1;
@@ -47,6 +52,7 @@ export class AdvancedSearchComponent {
 
   start = 1;
   end = 10;
+
 
   /* Commented out, tried to use two-way binding, haven't got it in correct format to use yet...
  checkList: {
@@ -99,11 +105,6 @@ export class AdvancedSearchComponent {
     return (<HTMLInputElement>document.getElementById(searchInputID)).value;
   }
 
-  printQueries() {
-  console.log("this.field: " + this.getField());
-  console.log("this.boolOp: " + this.getBoolOp());
-  console.log("this.inputs: " + this.getSearchTerm());
-  }
 
   addField() {
     this.queryNumber++;
@@ -146,6 +147,7 @@ export class AdvancedSearchComponent {
     var fieldID = "newField".concat((this.queryNumber).toString().concat("fields"));
     (<HTMLInputElement>document.getElementById(fieldID)).value = theField;
   }
+
   searchInAllFields() {
 
     /* use: user wants to search the term in all fields, so the idea is I'm trying to...
@@ -170,7 +172,6 @@ export class AdvancedSearchComponent {
       this.addField();
     }
   }
-
 
   // Not sure if still needed
   // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
@@ -198,7 +199,65 @@ export class AdvancedSearchComponent {
     };
   }
 
-  //checks if a boolean-searchfield combination has been added already
+  // checks if displayQuery[] index for AND is non-empty 
+  isANDSentence(indexOfANDString: string) { if (indexOfANDString != "") return true; }
+
+  // checks if displayQuery[] index for OR is non-empty 
+  isORSentence(indexOfORStr: string) { if (indexOfORStr != "") return true; }
+
+  // checks if displayQuery[] index for NOT is non-empty
+  isNOTSentence(indexOfNOTStr: string){ if (indexOfNOTStr != "") return true; }
+
+  searchOnlyOneField(indexOfSearchStr: string)
+  {
+    if (indexOfSearchStr.includes(this.CONST_LETTERBODY))
+    {
+      if (indexOfSearchStr.includes(this.CONST_FOOTNOTES) || indexOfSearchStr.includes(this.CONST_SOURCENOTE)) 
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    else if (indexOfSearchStr.includes(this.CONST_SOURCENOTE))
+    {
+      if (indexOfSearchStr.includes(this.CONST_LETTERBODY) || indexOfSearchStr.includes(this.CONST_FOOTNOTES))
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+    else if (indexOfSearchStr.includes(this.CONST_FOOTNOTES))
+    {
+      if (indexOfSearchStr.includes(this.CONST_LETTERBODY) || indexOfSearchStr.includes(this.CONST_SOURCENOTE))
+      {
+        return false;
+      }
+      else
+      {
+        return true;
+      }
+    }
+  }
+  constructLetterBodiesSentenceAND(searchString: string)
+  {
+    searchString = searchString.replace(/docBody-/g,''); // replace all occurences of field name with empty string
+    searchString = searchString.replace(/_/g, ', '); // put comma and space in between each term
+    searchString = searchString.replace(new RegExp(', ' + '$'), ''); // replace last occurence of comma with a period since last occurence occurs after final term
+    let searchStringLastIndex = searchString.lastIndexOf(',');
+    let firstTermToPenultimateTerm = searchString.substring(0, searchString.lastIndexOf(',')+1);
+    let lastTerm = searchString.substring(searchString.lastIndexOf(',')+1, searchString.length);
+    let subStrAND = " and";
+    let finalPhrase = " in the letter bodies."
+    searchString = firstTermToPenultimateTerm + subStrAND + lastTerm + finalPhrase;
+    this.displayQuery[0] = searchString;
+}
+  //  checks if a boolean-searchfield combination has been added already
   checkQuery(resultArray,inputName) {
     if(resultArray.length < 1) {
       return [false,0];
@@ -249,6 +308,56 @@ export class AdvancedSearchComponent {
     this.displayQuery[0] = ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
+    let ANDIndex = this.displayQuery[0];
+    let ORIndex = this.displayQuery[1];
+    let NOTIndex = this.displayQuery[2];
+    /*
+     * if the only index in displayQuery that's non-empty is AND index
+     *      construct AND sentence
+     * else if the only index in displayQuery that's non-empty is OR index
+     *      construct OR sentence
+     */
+    if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
+    {
+      if (this.searchOnlyOneField(ANDIndex))
+      {
+        let sentenceType;
+        if(ANDIndex.includes(this.CONST_LETTERBODY))
+        {
+          sentenceType = 0;
+        }
+        else if (ANDIndex.includes(this.CONST_SOURCENOTE))
+        {
+          sentenceType = 1;
+        }
+        else if (ANDIndex.includes(this.CONST_FOOTNOTES))
+        {
+          sentenceType = 2;
+        }
+        // store and sentence in displayQuery[0]
+        switch(sentenceType)
+        {
+          case 0 : // just includes letter body searches
+          {
+            this.constructLetterBodiesSentenceAND(ANDIndex);
+            break;
+          }
+          case 1 : // just includes source note searches
+          {
+            break;
+          }
+          case 2 : // just includes footnotes searches
+          {
+            break;
+          }
+          default :
+          {
+            break;
+          }
+          }
+        } 
+      }
+    
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
