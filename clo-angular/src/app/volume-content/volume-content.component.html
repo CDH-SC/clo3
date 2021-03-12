@@ -25,7 +25,9 @@
           <div id="manuscriptViewer">
             <ul>
               <li *ngFor="let url of manuscriptUrl">
-                <img id="manuscriptImage" src="{{ url }}">
+                <lib-ngx-image-zoom id="manuscriptImage" [thumbImage]="url">
+                </lib-ngx-image-zoom>
+                <!-- <img id="manuscriptImage" src="{{ url }}" data-magnify-src="{{ url }}"> -->
               </li>
             </ul>
           </div>

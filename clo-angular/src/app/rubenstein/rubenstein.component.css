@@ -1,7 +1,31 @@
 #content {
   margin: auto;
   padding-top: 25px;
-  width: 80%;
+  width: 95%;
+  max-width: 1200px;
+}
+
+.about-image {
+  width: 25%;
+  display: flex;
+  align-self: flex-end;
+  align-items: flex-end;
+  float: right;
+  padding-right: 1rem;
+  margin-top: 80px;
+  margin-left: 80px;
+}
+
+#about-image {
+  height: auto;
+  width: 100%;
+  max-width: 200px;
+  margin-bottom:18px;
+  border: 2px solid black;
+}
+
+.about-text {
+  width: 75%;
 }
 
 .volumeButton, .volumeLink {
@@ -45,4 +69,10 @@ p {
   margin-right: 5px;
   margin-bottom: 0px;
   color: #000000;
+}
+
+.links {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
 }
