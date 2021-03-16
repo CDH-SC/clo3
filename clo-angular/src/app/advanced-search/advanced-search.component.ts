@@ -32,19 +32,27 @@ export class AdvancedSearchComponent {
     console.log(route);
     // this.router.navigate(['search-results/', route]);
   }
-
+  CONST_NEW_FIELD = "newField";
+  CONST_SENDER = "sender";
+  CONST_FIELDS = "fields";
+  CONST_BOOL_OPS = "boolOp";
   CONST_LETTERBODY = "docBody";
   CONST_SOURCENOTE = "sourceNote";
   CONST_FOOTNOTES = "footnotes";
-
+  CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
+  
   fields = ["newField1fields"];
   boolOps = ["newField1boolOp"];
   inputs = ["newField1"];
-  query = [this.boolOps,this.fields,this.inputs];
+  sender = ["newField1sender"];
+//  query = [this.boolOps,this.fields,this.inputs];
+  query = [this.boolOps, this.fields, this.inputs, this.sender];
   queries = [this.query];
   queryNumber = 1;
   searchResults: any;
   
+ 
+
   displayQuery = ["","",""];
 
   page = 1;
@@ -53,43 +61,6 @@ export class AdvancedSearchComponent {
   start = 1;
   end = 10;
 
-
-  /* Commented out, tried to use two-way binding, haven't got it in correct format to use yet...
- checkList: {
-    [
-    {value: "allFields", htmlText: "Search All Fields", checked: true},
-    {value:"docBody", htmlText: "Letter Body", checked: true},
-    {value:"sourceNote", htmlText: "Source Notes", checked: true},
-    {value:"footnotes", htmlText: "Foot Notes", checked: true},
-    {value:"imageCaptionsMetadata", htmlText: "Image Captions & Metadata", checked: true}
-    ];
-  }
-
-  getCheckedItemList() {
-    this.checkedList = [];
-    for (var i=0; i < this.checkList.length; i++) {
-      if (this.checkList[i].checked)
-      this.checkedList.push(this.checkList[i]);
-    }
-    this.checkedList = JSON.stringify(this.checkedList);
-  }
-  // this method is triggered by click event on the select/deselect all item
-  // boolean used to assign all list items checked boolean to false when user unchecked item and vice versa for when they checked item
-  checkUncheckAll() {
-    for(var i = 0; i < this.checkList.length; i++) {
-      this.checkList[i].checked = this.masterSelected;
-    }
-    this.getCheckedItemList();
-  }
-
-  isAllSelected() {
-    this.masterSelected = this.checkList.every(function(item: any) {
-      return item.checked == true;
-    })
-    this.getCheckedItemList();
-  }
-
-  */
   getBoolOp() {
     var boolInputID = "newField".concat((this.queryNumber).toString().concat("boolOp"));
     return (<HTMLInputElement>document.getElementById(boolInputID)).value;
@@ -108,10 +79,12 @@ export class AdvancedSearchComponent {
 
   addField() {
     this.queryNumber++;
-    this.fields.push("newField"+this.queryNumber+"fields");
-    this.boolOps.push("newField"+this.queryNumber+"boolOp");
-    this.inputs.push("newField"+this.queryNumber);
-    let newQuery = [this.boolOps,this.fields,this.inputs];
+    this.fields.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
+    this.boolOps.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_BOOL_OPS);
+    this.inputs.push(this.CONST_NEW_FIELD+this.queryNumber);
+    // let newQuery = [this.boolOps,this.fields,this.inputs];
+    this.sender.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
+    let newQuery = [this.boolOps, this.fields, this.inputs, this.sender];
     this.queries.push(newQuery);
   }
 
@@ -135,6 +108,10 @@ export class AdvancedSearchComponent {
       var inputID = id.replace("fields","");
       var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
       document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
+    } else if (id.includes(this.CONST_SENDER)) {
+      var inputID = id.replace(this.CONST_SENDER, "");
+      var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
+     // document.getElementById(inputID).setAttribute()
     }
   }
 
@@ -244,17 +221,34 @@ export class AdvancedSearchComponent {
       }
     }
   }
-  constructLetterBodiesSentenceAND(searchString: string)
+  constructANDSentence(searchString: string)
   {
-    searchString = searchString.replace(/docBody-/g,''); // replace all occurences of field name with empty string
+    let finalPhrase = "";
+    //  if (searchString.includes('docBody')) 
+    if (searchString.includes(this.CONST_LETTERBODY))
+    {
+      searchString = searchString.replace(/docBody-/g,''); //  replace all occurences of field name with empty string
+      finalPhrase = " in the letter body.";
+    }
+    //  else if (searchString.includes("sourceNote"))
+    else if (searchString.includes(this.CONST_SOURCENOTE))
+    {
+      searchString = searchString.replace(/sourceNote-/g,'');
+      finalPhrase = " in the source note."
+    }
+    //  else if (searchString.includes("footnotes"))
+    else if (searchString.includes(this.CONST_FOOTNOTES))
+    {
+      searchString = searchString.replace(/footnotes-/g,'');
+      finalPhrase = " in the footnotes";
+    }
     searchString = searchString.replace(/_/g, ', '); // put comma and space in between each term
     searchString = searchString.replace(new RegExp(', ' + '$'), ''); // replace last occurence of comma with a period since last occurence occurs after final term
     let searchStringLastIndex = searchString.lastIndexOf(',');
     let firstTermToPenultimateTerm = searchString.substring(0, searchString.lastIndexOf(',')+1);
     let lastTerm = searchString.substring(searchString.lastIndexOf(',')+1, searchString.length);
     let subStrAND = " and";
-    let finalPhrase = " in the letter bodies."
-    searchString = firstTermToPenultimateTerm + subStrAND + lastTerm + finalPhrase;
+    searchString = "Results that contain " + firstTermToPenultimateTerm + subStrAND + lastTerm + finalPhrase;
     this.displayQuery[0] = searchString;
 }
   //  checks if a boolean-searchfield combination has been added already
@@ -292,20 +286,41 @@ export class AdvancedSearchComponent {
     for(var i = 0; i < result.length; i++) {
       if(result[i][0].includes("AND")) {
         for(var j = 0; j < result[i][1].length; j++) {
+          if (result[i][0].substring(3).includes("allFields"))
+          {
+            ANDString += "docBody" + "-" + result[i][1][j] + "_";
+            ANDString += "sourceNote" + "-" + result[i][1][j] + "_";
+            ANDString += "footnotes" + "-" + result[i][1][j] + "_";
+            continue;
+          }
           ANDString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
         }
       } else if(result[i][0].includes("OR")) {
         for(var j = 0; j < result[i][1].length; j++) {
+          if (result[i][0].substring(3).includes("allFields"))
+          {
+            ORString += "docBody" + "-" + result[i][1][j] + "_";
+            ORString += "sourceNote" + "-" + result[i][1][j] + "_";
+            ORString += "footnotes" + "-" + result[i][1][j] + "_";
+            continue;
+          }
           ORString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
         }
       } else if(result[i][0].includes("NOT")) {
         for(var j = 0; j < result[i][1].length; j++) {
+          if (result[i][0].substring(3).includes("allFields"))
+          {
+            NOTString += "docBody" + "-" + result[i][1][j] + "_";
+            NOTString += "sourceNote" + "-" + result[i][1][j] + "_";
+            NOTString += "footnotes" + "-" + result[i][1][j] + "_";
+            continue;
+          }
           NOTString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
         }        
       }
     }
     queryString = ANDString + ORString + NOTString
-    this.displayQuery[0] = ANDString.substring(6);
+    this.displayQuery[0] = "AND: " + ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
     let ANDIndex = this.displayQuery[0];
@@ -317,45 +332,15 @@ export class AdvancedSearchComponent {
      * else if the only index in displayQuery that's non-empty is OR index
      *      construct OR sentence
      */
+
+     
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
+      this.displayQuery[1] = this.displayQuery[2] = "";
       if (this.searchOnlyOneField(ANDIndex))
       {
-        let sentenceType;
-        if(ANDIndex.includes(this.CONST_LETTERBODY))
-        {
-          sentenceType = 0;
-        }
-        else if (ANDIndex.includes(this.CONST_SOURCENOTE))
-        {
-          sentenceType = 1;
-        }
-        else if (ANDIndex.includes(this.CONST_FOOTNOTES))
-        {
-          sentenceType = 2;
-        }
-        // store and sentence in displayQuery[0]
-        switch(sentenceType)
-        {
-          case 0 : // just includes letter body searches
-          {
-            this.constructLetterBodiesSentenceAND(ANDIndex);
-            break;
-          }
-          case 1 : // just includes source note searches
-          {
-            break;
-          }
-          case 2 : // just includes footnotes searches
-          {
-            break;
-          }
-          default :
-          {
-            break;
-          }
-          }
-        } 
+        this.constructANDSentence(ANDIndex);
+      } 
       }
     
     this.searchResults = this.searchService.advancedSearch(queryString);

@@ -11,40 +11,31 @@
                 let first = isFirst; 
                   let last = isLast;'>
               <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+                <option disabled selected hidden>Logical Operand</option>
                 <option value='AND'>AND</option>
                 <option value='OR-'>OR</option>
                 <option value='NOT'>NOT</option>
             </select>
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
+              <option disabled selected hidden>Fields to Search</option>
               <option value='docBody'>Letter Body</option>
               <option value='sourceNote'>Source Notes</option>
               <option value='footnotes'>Foot Notes</option>
-              <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option>
+             <!-- <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option> -->
+              <option value='allFields'>All Fields</option>
             </select>
             <input style="background-color: transparent; border-radius: 3px; border: 1px solid brown;" class="search-box" type='string' size=80 
             [attr.id]="query[2][i]" 
               name='ANDdocBody'
                 placeholder="oxford liberalism"/> 
-               <span> <input type="checkbox"/>  Search all fields for this term </span>
-            <!-- the following div will display a list of options in checkbox format to select so user can search multiple senders for a term -->
-        
-        <!--
-            <div class="multiselect"> top ancestor div constrained by width 
-              <div class="selectBox" (onclick)="showSenderCheckboxes()">  div positioned relative to its ancestor, it will take up entire width space available (constrained by multiselect width space)
-                <select>
-                  <option> Authors </option>
-                  <div class="overSelect"></div> empty div overlapping closest immediate ancestor div
-                </div> close selectBox div, method triggers the senders-checkbox to display and hides it when they click on multiselect element with checkbox already displayed 
-                  <div id="sender-checkboxes"> no display for the div itself (leveraged in logic to toggle between the two "displays"), the labels, however, display as blocks 
-                    <label for="tc">
-                      <input type="checkbox" id="tc"/> Thomas Carlyle</label>
-                      <label for="jwc">
-                        <input type="checkbox" id="jwc"/> Jane Welsh Carlyle</label>
-                        <label for="tcjwc">
-                          <input type="checkbox" id="tcjwc"/>Thomas Carlyle & Jane Welsh Carlyle</label>
-                  </div> 
-              </div> 
-          -->
+                        
+                <select [attr.id] = "query[3][i]" (change)='changeDropDown($event)'>
+                  <option disabled selected hidden>Sender</option>
+                  <option value='TC'>Thomas Carylye </option> 
+                  <option value='JWC'>Jane Welsh Carylye</option>
+                  <option value="TC, CD, AND JF">Thomas Carylye, Catherine Dickens, and JF</option>
+                        </select>
+
             </div> <!-- close ngFor's div -->
           </form>
       <button (click)="addField()">Add Field</button>
@@ -115,12 +106,12 @@
   *ngIf="(searchResults | async) as results"
   id="content"
 >
+
   <div class="row justify-content-start orange-border-bottom">
-    <strong>Search Results for: <!-- "{{ searchQuery }}" --></strong>
     <ul style="list-style-type: none;">
-      <li><strong>Results that contain {{ displayQuery[0] }}</strong></li>
-      <li><strong>OR: {{ displayQuery[1] }}</strong></li>
-      <li><strong>NOT: {{ displayQuery[2] }}</strong></li>
+      <li><strong>{{ displayQuery[0] }}</strong></li>
+      <li><strong>{{ displayQuery[1] }}</strong></li>
+      <li><strong>{{ displayQuery[2] }}</strong></li>
     </ul>
   </div>
   <ng-container *ngIf="results.data.length == 0">
