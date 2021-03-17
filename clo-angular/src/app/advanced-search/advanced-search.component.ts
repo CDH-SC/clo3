@@ -45,8 +45,8 @@ export class AdvancedSearchComponent {
   boolOps = ["newField1boolOp"];
   inputs = ["newField1"];
   sender = ["newField1sender"];
-//  query = [this.boolOps,this.fields,this.inputs];
-  query = [this.boolOps, this.fields, this.inputs, this.sender];
+  query = [this.boolOps,this.fields,this.inputs];
+  //  query = [this.boolOps, this.fields, this.inputs, this.sender];
   queries = [this.query];
   queryNumber = 1;
   searchResults: any;
@@ -79,12 +79,12 @@ export class AdvancedSearchComponent {
 
   addField() {
     this.queryNumber++;
-    this.fields.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
-    this.boolOps.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_BOOL_OPS);
-    this.inputs.push(this.CONST_NEW_FIELD+this.queryNumber);
-    // let newQuery = [this.boolOps,this.fields,this.inputs];
-    this.sender.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
-    let newQuery = [this.boolOps, this.fields, this.inputs, this.sender];
+    this.fields.push("newField"+this.queryNumber+"fields");
+    this.boolOps.push("newField"+this.queryNumber+"boolOp");
+    this.inputs.push("newField"+this.queryNumber);
+    let newQuery = [this.boolOps,this.fields,this.inputs];
+    //  this.sender.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
+    //  let newQuery = [this.boolOps, this.fields, this.inputs, this.sender];
     this.queries.push(newQuery);
   }
 
@@ -108,13 +108,14 @@ export class AdvancedSearchComponent {
       var inputID = id.replace("fields","");
       var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
       document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
-    } else if (id.includes(this.CONST_SENDER)) {
-      var inputID = id.replace(this.CONST_SENDER, "");
-      var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
-     // document.getElementById(inputID).setAttribute()
+    /*  } else if (id.includes(this.CONST_SENDER)) {
+       var inputID = id.replace(this.CONST_SENDER, "");
+       var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
+       document.getElementById(inputID).setAttribute()
+    */
     }
   }
-
+/*
   generateCorrespondingParams(theSearchTerm: string, theBoolOp: string, theField: string)
   {
     var searchTermID = "newField".concat((this.queryNumber).toString());
@@ -124,31 +125,7 @@ export class AdvancedSearchComponent {
     var fieldID = "newField".concat((this.queryNumber).toString().concat("fields"));
     (<HTMLInputElement>document.getElementById(fieldID)).value = theField;
   }
-
-  searchInAllFields() {
-
-    /* use: user wants to search the term in all fields, so the idea is I'm trying to...
-     * generate two or for with the same input text from user & the same boolean operator selected but different fields selected
-     * 
-     * the "get" methods return the corresponding items in this queries objects (the field) user entered
-     * so...
-     *  when user types "carlyle," selects "Letter Body," and selects "AND," the variables made here will contain that info
-     *  having difficulties setting the correct values though
-     *
-     * Question: do i need to create the events in this method?... 
-     * ... tried using .setAttribute(...) method to automatically generate the new values but that didn't work
-     * 
-     */
-   
-    let searchTerm = this.getSearchTerm();
-    let boolOp = this.getBoolOp();
-    let field = this.getField();
-    
-    for (let i = 0; i<3; i++)
-    {
-      this.addField();
-    }
-  }
+*/
 
   // Not sure if still needed
   // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
@@ -320,7 +297,7 @@ export class AdvancedSearchComponent {
       }
     }
     queryString = ANDString + ORString + NOTString
-    this.displayQuery[0] = "AND: " + ANDString.substring(6);
+    this.displayQuery[0] =  ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
     let ANDIndex = this.displayQuery[0];
@@ -333,7 +310,7 @@ export class AdvancedSearchComponent {
      *      construct OR sentence
      */
 
-     
+    console.log("Actual Query String: " + queryString);     
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
       this.displayQuery[1] = this.displayQuery[2] = "";

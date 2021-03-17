@@ -11,13 +11,13 @@
                 let first = isFirst; 
                   let last = isLast;'>
               <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
-                <option disabled selected hidden>Logical Operand</option>
+                <option disabled selected hidden>Logic</option>
                 <option value='AND'>AND</option>
                 <option value='OR-'>OR</option>
                 <option value='NOT'>NOT</option>
             </select>
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
-              <option disabled selected hidden>Fields to Search</option>
+           <!--  <option disabled selected hidden>Fields</option>  --> 
               <option value='docBody'>Letter Body</option>
               <option value='sourceNote'>Source Notes</option>
               <option value='footnotes'>Foot Notes</option>
@@ -28,14 +28,14 @@
             [attr.id]="query[2][i]" 
               name='ANDdocBody'
                 placeholder="oxford liberalism"/> 
-                        
+                <!--
                 <select [attr.id] = "query[3][i]" (change)='changeDropDown($event)'>
-                  <option disabled selected hidden>Sender</option>
+                  <option disabled selected hidden>Author</option>
                   <option value='TC'>Thomas Carylye </option> 
                   <option value='JWC'>Jane Welsh Carylye</option>
                   <option value="TC, CD, AND JF">Thomas Carylye, Catherine Dickens, and JF</option>
-                        </select>
-
+                </select>       
+                -->
             </div> <!-- close ngFor's div -->
           </form>
       <button (click)="addField()">Add Field</button>
