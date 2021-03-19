@@ -32,10 +32,8 @@ export class AdvancedSearchComponent {
     console.log(route);
     // this.router.navigate(['search-results/', route]);
   }
-  CONST_NEW_FIELD = "newField";
-  CONST_SENDER = "sender";
-  CONST_FIELDS = "fields";
-  CONST_BOOL_OPS = "boolOp";
+
+
   CONST_LETTERBODY = "docBody";
   CONST_SOURCENOTE = "sourceNote";
   CONST_FOOTNOTES = "footnotes";
