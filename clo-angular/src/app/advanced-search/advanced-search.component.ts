@@ -199,31 +199,32 @@ export class AdvancedSearchComponent {
   constructANDSentence(searchString: string)
   {
     let finalPhrase = "";
+
     //  if (searchString.includes('docBody')) 
     if (searchString.includes(this.CONST_LETTERBODY))
     {
       searchString = searchString.replace(/docBody-/g,''); //  replace all occurences of field name with empty string
-      finalPhrase = " in the letter body.";
+      finalPhrase = " in the letter body, ";
     }
     //  else if (searchString.includes("sourceNote"))
     else if (searchString.includes(this.CONST_SOURCENOTE))
     {
       searchString = searchString.replace(/sourceNote-/g,'');
-      finalPhrase = " in the source note."
+      finalPhrase = " in the source note, "
     }
     //  else if (searchString.includes("footnotes"))
     else if (searchString.includes(this.CONST_FOOTNOTES))
     {
       searchString = searchString.replace(/footnotes-/g,'');
-      finalPhrase = " in the footnotes";
+      finalPhrase = " in the footnotes, ";
     }
-    searchString = searchString.replace(/_/g, ', '); // put comma and space in between each term
-    searchString = searchString.replace(new RegExp(', ' + '$'), ''); // replace last occurence of comma with a period since last occurence occurs after final term
+    searchString = searchString.replace(/_/g, ' ' + finalPhrase); // put comma and space in between each term
+    searchString = searchString.replace(new RegExp(', ' + '$'), '.'); 
     let searchStringLastIndex = searchString.lastIndexOf(',');
     let firstTermToPenultimateTerm = searchString.substring(0, searchString.lastIndexOf(',')+1);
     let lastTerm = searchString.substring(searchString.lastIndexOf(',')+1, searchString.length);
     let subStrAND = " and";
-    searchString = "Results that contain " + firstTermToPenultimateTerm + subStrAND + lastTerm + finalPhrase;
+    searchString = "Results that contain "+ firstTermToPenultimateTerm + subStrAND + lastTerm;
     this.displayQuery[0] = searchString;
 }
   //  checks if a boolean-searchfield combination has been added already
@@ -298,6 +299,11 @@ export class AdvancedSearchComponent {
     this.displayQuery[0] =  ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
+    console.log("Before constructing sentences, the indices of displayQuery array are as follows:\n")
+    for (let i = 0; i < this.displayQuery.length; i++) 
+    {
+      console.log("this.displayQuery["+i+"] = " + this.displayQuery[i]);
+    }
     let ANDIndex = this.displayQuery[0];
     let ORIndex = this.displayQuery[1];
     let NOTIndex = this.displayQuery[2];
@@ -307,16 +313,16 @@ export class AdvancedSearchComponent {
      * else if the only index in displayQuery that's non-empty is OR index
      *      construct OR sentence
      */
-
-    console.log("Actual Query String: " + queryString);     
+ 
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
-      this.displayQuery[1] = this.displayQuery[2] = "";
+      //this.displayQuery[1] = this.displayQuery[2] = "";
       if (this.searchOnlyOneField(ANDIndex))
       {
         this.constructANDSentence(ANDIndex);
       } 
       }
+      console.log("Query String sent to elastic search: " + queryString);    
     
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
