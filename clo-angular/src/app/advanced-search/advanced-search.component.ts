@@ -34,9 +34,9 @@ export class AdvancedSearchComponent {
   }
 
 
-  CONST_LETTERBODY = "docBody";
-  CONST_SOURCENOTE = "sourceNote";
-  CONST_FOOTNOTES = "footnotes";
+  CONST_LETTERBODY = "docBody-";
+  CONST_SOURCENOTE = "sourceNote-";
+  CONST_FOOTNOTES = "footnotes-";
   CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
   
   fields = ["newField1fields"];
@@ -198,34 +198,75 @@ export class AdvancedSearchComponent {
   }
   constructANDSentence(searchString: string)
   {
-    let finalPhrase = "";
+    let docBodyPhrase = " in the letter body,";
+    let sourceNotePhrase = " in the source note,";
+    let footnotesPhrase = " in the footnotes,";
+    /* create array splitting indices by the character at end of each search term 
+     * if user searches for 'oxford liberalism' in letter body and 'emerson' in the footnotes the search string is currently: docBody-oxford liberalism_footnotes-emerson_
+     * after splitting the array to partition by each distinct search, the searchArray indices will be as follows...
+     * 
+     *  searchArray[0]:   "docBody-oxford liberalism"
+     *  searchArray[1]:   "footnotes-emerson"
+     *  searchArray[2]:   ""
+     */
 
-    //  if (searchString.includes('docBody')) 
-    if (searchString.includes(this.CONST_LETTERBODY))
+    let searchArray = searchString.split('_'); searchArray.pop(); // we split on underscore, the last underscore was after the last letter of last term, so this index containing an empty string will not be needed 
+    
+    // for each index, we need to give it a phrase corresponding to the search term so initialize an empty string at first
+    let subStrPhrase = '';
+    /* for each index...
+     * 1) we need to decide which subStrPhrase is associated with it
+     * 2) then we need to replace the "<field>-" part and replace it with an opening single quote since we will have chopped of the string to where the first index is the search term
+     * 3) then we need to add the associated phrase after the actual term, which phrase for which index determined in following loop
+     * 4) lastly, we need to add an ending single quote around each search term
+     */
+     for (let i=0; i < searchArray.length; i++)
+     {
+       // the if-else block executes steps 1-3, after the loop the index will contain the corresponding subStrPhrase so we can just append the particular phrase after the block
+       if (searchArray[i].includes(this.CONST_LETTERBODY))
+       {
+         subStrPhrase = docBodyPhrase;
+         searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
+       }
+       else if (searchArray[i].includes(this.CONST_SOURCENOTE))
+       {
+         subStrPhrase = sourceNotePhrase;
+         searchArray[i] = searchArray[i].replace(this.CONST_SOURCENOTE, " '");
+       }
+       else if (searchArray[i].includes(this.CONST_FOOTNOTES))
+       {
+         subStrPhrase = footnotesPhrase;
+         searchArray[i] = searchArray[i].replace(this.CONST_FOOTNOTES, " '");
+       }
+       searchArray[i] += subStrPhrase;
+       /* step 4 also done for each index, regardless of the phrase since each phrase has the word "in,"... " '<term1> in " (and so on till termN) where we need a closing single quote nearby:
+       *   " '<term1> in "    ->    "'<term1>' in "
+       *   " '<term2> in "    ->    "'<term2>' in "
+       *   " '<term3> in "    ->    "'<term3>' in "
+       *   ...
+       *   " '<termN> in "    ->    "'<termN>' in "
+       */
+      searchArray[i] = searchArray[i].replace(" in", "' in");
+     }
+
+    let ANDSentence = "Results that contain";
+    
+    // append indices of searchArray to the sentence
+    for (let i=0; i < searchArray.length; i++)
     {
-      searchString = searchString.replace(/docBody-/g,''); //  replace all occurences of field name with empty string
-      finalPhrase = " in the letter body, ";
+      ANDSentence += searchArray[i];
     }
-    //  else if (searchString.includes("sourceNote"))
-    else if (searchString.includes(this.CONST_SOURCENOTE))
-    {
-      searchString = searchString.replace(/sourceNote-/g,'');
-      finalPhrase = " in the source note, "
-    }
-    //  else if (searchString.includes("footnotes"))
-    else if (searchString.includes(this.CONST_FOOTNOTES))
-    {
-      searchString = searchString.replace(/footnotes-/g,'');
-      finalPhrase = " in the footnotes, ";
-    }
-    searchString = searchString.replace(/_/g, ' ' + finalPhrase); // put comma and space in between each term
-    searchString = searchString.replace(new RegExp(', ' + '$'), '.'); 
-    let searchStringLastIndex = searchString.lastIndexOf(',');
-    let firstTermToPenultimateTerm = searchString.substring(0, searchString.lastIndexOf(',')+1);
-    let lastTerm = searchString.substring(searchString.lastIndexOf(',')+1, searchString.length);
+    ANDSentence = ANDSentence.replace(new RegExp(',' + '$'), '.'); // last index has a comma at the end, change the last occurence of a comma to a period
+  
+    // need to put an "and" after the last occurence of comma now
+    let firstTermToPenultimateTerm = ANDSentence.substring(0, ANDSentence.lastIndexOf(',')+1);
     let subStrAND = " and";
-    searchString = "Results that contain "+ firstTermToPenultimateTerm + subStrAND + lastTerm;
-    this.displayQuery[0] = searchString;
+    let lastTerm = ANDSentence.substring(ANDSentence.lastIndexOf(',')+1, ANDSentence.length);
+    if (ANDSentence.includes(","))
+    {
+      ANDSentence = firstTermToPenultimateTerm + subStrAND + lastTerm;
+    }
+    this.displayQuery[0] = ANDSentence;
 }
   //  checks if a boolean-searchfield combination has been added already
   checkQuery(resultArray,inputName) {
@@ -316,12 +357,8 @@ export class AdvancedSearchComponent {
  
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
-      //this.displayQuery[1] = this.displayQuery[2] = "";
-      if (this.searchOnlyOneField(ANDIndex))
-      {
-        this.constructANDSentence(ANDIndex);
-      } 
-      }
+        this.constructANDSentence(ANDIndex); 
+    }
       console.log("Query String sent to elastic search: " + queryString);    
     
     this.searchResults = this.searchService.advancedSearch(queryString);
