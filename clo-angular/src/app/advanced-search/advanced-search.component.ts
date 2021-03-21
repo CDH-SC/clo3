@@ -269,7 +269,7 @@ export class AdvancedSearchComponent {
     this.displayQuery[0] = ANDSentence;
 }
 
-  constructORsentence(searchString: string) {
+  constructORSentence(searchString: string) {
     let docBodyPhrase = " in the letter body,";
     let sourceNotePhrase = " in the source note,";
     let footnotesPhrase = " in the footnotes,";
@@ -315,13 +315,13 @@ export class AdvancedSearchComponent {
        searchArray[i] = searchArray[i].replace(" in", "' in");
      }
 
-    let ORsentence = "Results that contain";
+    let ORSentence = "Results that contain";
     for (let i=0; i < searchArray.length; i++)
     {
       ORSentence += searchArray[i];
     }
     ORSentence = ORSentence.replace(new RegExp(',' + '$'), '.');
-    this.displayQuery[1] = ORsentence;
+    this.displayQuery[1] = ORSentence;
   }
   //  checks if a boolean-searchfield combination has been added already
   checkQuery(resultArray,inputName) {
@@ -413,6 +413,10 @@ export class AdvancedSearchComponent {
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
         this.constructANDSentence(ANDIndex);
+    }
+    else if (this.isORSentence(ORIndex) && (!(this.isANDSentence(ANDIndex)) && !(this.isNOTSentence(NOTIndex))))
+    {
+      this.constructORSentence(ORIndex);
     }
       console.log("Query String sent to elastic search: " + queryString);
 
