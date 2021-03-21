@@ -38,7 +38,7 @@ export class AdvancedSearchComponent {
   CONST_SOURCENOTE = "sourceNote-";
   CONST_FOOTNOTES = "footnotes-";
   CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
-  
+
   fields = ["newField1fields"];
   boolOps = ["newField1boolOp"];
   inputs = ["newField1"];
@@ -48,8 +48,8 @@ export class AdvancedSearchComponent {
   queries = [this.query];
   queryNumber = 1;
   searchResults: any;
-  
- 
+
+
 
   displayQuery = ["","",""];
 
@@ -93,7 +93,7 @@ export class AdvancedSearchComponent {
     }
   }
 
-  
+
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
@@ -151,10 +151,10 @@ export class AdvancedSearchComponent {
     };
   }
 
-  // checks if displayQuery[] index for AND is non-empty 
+  // checks if displayQuery[] index for AND is non-empty
   isANDSentence(indexOfANDString: string) { if (indexOfANDString != "") return true; }
 
-  // checks if displayQuery[] index for OR is non-empty 
+  // checks if displayQuery[] index for OR is non-empty
   isORSentence(indexOfORStr: string) { if (indexOfORStr != "") return true; }
 
   // checks if displayQuery[] index for NOT is non-empty
@@ -164,7 +164,7 @@ export class AdvancedSearchComponent {
   {
     if (indexOfSearchStr.includes(this.CONST_LETTERBODY))
     {
-      if (indexOfSearchStr.includes(this.CONST_FOOTNOTES) || indexOfSearchStr.includes(this.CONST_SOURCENOTE)) 
+      if (indexOfSearchStr.includes(this.CONST_FOOTNOTES) || indexOfSearchStr.includes(this.CONST_SOURCENOTE))
       {
         return false;
       }
@@ -201,17 +201,17 @@ export class AdvancedSearchComponent {
     let docBodyPhrase = " in the letter body,";
     let sourceNotePhrase = " in the source note,";
     let footnotesPhrase = " in the footnotes,";
-    /* create array splitting indices by the character at end of each search term 
+    /* create array splitting indices by the character at end of each search term
      * if user searches for 'oxford liberalism' in letter body and 'emerson' in the footnotes the search string is currently: docBody-oxford liberalism_footnotes-emerson_
      * after splitting the array to partition by each distinct search, the searchArray indices will be as follows...
-     * 
+     *
      *  searchArray[0]:   "docBody-oxford liberalism"
      *  searchArray[1]:   "footnotes-emerson"
      *  searchArray[2]:   ""
      */
 
-    let searchArray = searchString.split('_'); searchArray.pop(); // we split on underscore, the last underscore was after the last letter of last term, so this index containing an empty string will not be needed 
-    
+    let searchArray = searchString.split('_'); searchArray.pop(); // we split on underscore, the last underscore was after the last letter of last term, so this index containing an empty string will not be needed
+
     // for each index, we need to give it a phrase corresponding to the search term so initialize an empty string at first
     let subStrPhrase = '';
     /* for each index...
@@ -250,14 +250,14 @@ export class AdvancedSearchComponent {
      }
 
     let ANDSentence = "Results that contain";
-    
+
     // append indices of searchArray to the sentence
     for (let i=0; i < searchArray.length; i++)
     {
       ANDSentence += searchArray[i];
     }
     ANDSentence = ANDSentence.replace(new RegExp(',' + '$'), '.'); // last index has a comma at the end, change the last occurence of a comma to a period
-  
+
     // need to put an "and" after the last occurence of comma now
     let firstTermToPenultimateTerm = ANDSentence.substring(0, ANDSentence.lastIndexOf(',')+1);
     let subStrAND = " and";
@@ -268,6 +268,61 @@ export class AdvancedSearchComponent {
     }
     this.displayQuery[0] = ANDSentence;
 }
+
+  constructORsentence(searchString: string) {
+    let docBodyPhrase = " in the letter body,";
+    let sourceNotePhrase = " in the source note,";
+    let footnotesPhrase = " in the footnotes,";
+
+    let searchArray = searchString.split('_');
+    searchArray.pop();
+
+    let subStrPhrase = '';
+     for (let i=0; i < searchArray.length; i++)
+     {
+       if (searchArray[i].includes(this.CONST_LETTERBODY))
+       {
+         subStrPhrase = docBodyPhrase;
+         //if it is the first search term, don't add "or" in front of it
+         if(i===0) {
+           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
+         }
+         else {
+           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " or '");
+         }
+       }
+       else if (searchArray[i].includes(this.CONST_SOURCENOTE))
+       {
+         subStrPhrase = sourceNotePhrase;
+         if(i===0) {
+           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
+         }
+         else {
+           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " or '");
+         }
+       }
+       else if (searchArray[i].includes(this.CONST_FOOTNOTES))
+       {
+         subStrPhrase = footnotesPhrase;
+         if(i===0) {
+           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
+         }
+         else {
+           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " or '");
+         }
+       }
+       searchArray[i] += subStrPhrase;
+       searchArray[i] = searchArray[i].replace(" in", "' in");
+     }
+
+    let ORsentence = "Results that contain";
+    for (let i=0; i < searchArray.length; i++)
+    {
+      ORSentence += searchArray[i];
+    }
+    ORSentence = ORSentence.replace(new RegExp(',' + '$'), '.');
+    this.displayQuery[1] = ORsentence;
+  }
   //  checks if a boolean-searchfield combination has been added already
   checkQuery(resultArray,inputName) {
     if(resultArray.length < 1) {
@@ -333,7 +388,7 @@ export class AdvancedSearchComponent {
             continue;
           }
           NOTString += result[i][0].substring(3) + "-" + result[i][1][j] + "_";
-        }        
+        }
       }
     }
     queryString = ANDString + ORString + NOTString
@@ -341,7 +396,7 @@ export class AdvancedSearchComponent {
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
     console.log("Before constructing sentences, the indices of displayQuery array are as follows:\n")
-    for (let i = 0; i < this.displayQuery.length; i++) 
+    for (let i = 0; i < this.displayQuery.length; i++)
     {
       console.log("this.displayQuery["+i+"] = " + this.displayQuery[i]);
     }
@@ -354,13 +409,13 @@ export class AdvancedSearchComponent {
      * else if the only index in displayQuery that's non-empty is OR index
      *      construct OR sentence
      */
- 
+
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
-        this.constructANDSentence(ANDIndex); 
+        this.constructANDSentence(ANDIndex);
     }
-      console.log("Query String sent to elastic search: " + queryString);    
-    
+      console.log("Query String sent to elastic search: " + queryString);
+
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
