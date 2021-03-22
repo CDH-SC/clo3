@@ -1,9 +1,12 @@
 
 <div class="container" id="content">
 
-  <div class="col-12"> 
+<!--   <div class="col-12">   -->
+    <div>
       <H3>Advanced Search</H3>
-    
+    </div>
+ <!--   </div>   --> 
+
     <form id="searchTerms">
       <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label>
       <div *ngFor='let query of queries; 
@@ -16,31 +19,67 @@
                 <option value='OR-'>OR</option>
                 <option value='NOT'>NOT</option>
             </select>
+            <!--
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
-           <!--  <option disabled selected hidden>Fields</option>  --> 
+               <option disabled selected hidden>Fields</option> 
               <option value='docBody'>Letter Body</option>
               <option value='sourceNote'>Source Notes</option>
               <option value='footnotes'>Foot Notes</option>
-             <!-- <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option> -->
+              <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option>
               <option value='allFields'>All Fields</option>
             </select>
-            <input style="background-color: transparent; border-radius: 3px; border: 1px solid brown;" class="search-box" type='string' size=80 
-            [attr.id]="query[2][i]" 
-              name='ANDdocBody'
-                placeholder="oxford liberalism"/> 
-                <!--
-                <select [attr.id] = "query[3][i]" (change)='changeDropDown($event)'>
-                  <option disabled selected hidden>Author</option>
-                  <option value='TC'>Thomas Carylye </option> 
-                  <option value='JWC'>Jane Welsh Carylye</option>
-                  <option value="TC, CD, AND JF">Thomas Carylye, Catherine Dickens, and JF</option>
-                </select>       
-                -->
-            </div> <!-- close ngFor's div -->
-          </form>
+          -->
+            <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;"
+             class="search-box" type='string' size=80 
+                [attr.id]="query[2][i]" 
+                  name='ANDdocBody'
+                    placeholder="oxford liberalism"/> 
+      </div> <!-- close ngFor's div -->
+    </form>
+
+    <div>
       <button (click)="addField()">Add Field</button>
       <button (click)="removeField()">Remove Field</button>
-     </div> 
+    </div>
+      <div class="container-narrow-results">
+
+
+        <div class="narrow-by-author">
+          <p><strong>Senders</strong></p>
+          
+          <input type="checkbox" value="allAuthors" checked><strong> Select/ Unselect All Senders </strong>  <br>
+          <input type="checkbox" value="TC" checked> Thomas Carlyle  <br>
+          <input type="checkbox" value="JWC" checked> Jane Welsch Carlyle  <br>
+          <input type="checkbox" value="TC CD AND JF" checked>Thomas Carlyle, CD & JF  <br>   
+        </div>
+
+        <div class="narrow-by-recipient">
+          <p class="recipient"> <strong> Recipients </strong>  </p>
+            
+          <input type="checkbox" value='allRecipients' checked> <strong> Select/ Unselect All Recipients </strong>  <br>
+          <input type="search" id="input-box" placeholder="john stuart mill">
+        </div>
+
+        <div class="narrow-by-fields">
+          <p class="fields"> <strong> Fields </strong>  </p>
+
+          <input type="checkbox" value='allFields' checked> <strong> Select/ Unselect All Fields </strong>  <br>
+          <input type="checkbox" value='docBody' checked> Letter Body  <br>
+          <input type="checkbox" value='sourceNote' checked> Source Notes  <br>
+          <input type="checkbox" value='footnotes' checked> Footnotes  <br>
+          <!-- need to change value of following item to correspond w/ image caption's & metadata's id in particular Mongo collection  -->
+          <input type="checkbox" value='imageCaptionAndMetadata' checked>  Image Caption & Metadata   <br>
+        </div>
+
+        <div class="narrow-by-dates">
+          <p class="time-period-heading"><strong> Time Period </strong></p>
+              <label for="start-date"> dated between... </label>
+              <input type="search" name="start-date" id="dates-input-box" placeholder="1837">  <br>
+              <label for="end-date"> and... </label>
+              <input type="search" id="dates-input-box" name="end-date" placeholder="1901"> 
+          </div>
+
+      </div>
 </div>
 
 <!--

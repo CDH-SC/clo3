@@ -93,6 +93,20 @@ export class AdvancedSearchComponent {
     }
   }
 
+  changeField(event: any) {
+    let val = event.srcElement.value;
+    let id = event.srcElement.id;
+    if (id.includes("fields"))
+    {
+      var inputID = id.replace("fields","");
+      var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
+      console.log("Attribute before changing: " + inputName);
+      document.getElementById(inputID).setAttribute("name",event.target.value);
+      console.log("Attribute after changing should be the event's target value - which is: " + event.target.value);
+      //this.fields = document.getElementById(inputID);
+      console.log("Field changed to: " + document.getElementById(inputID));
+    }
+  }
 
   changeDropDown(event: any) {
     let val = event.srcElement.value;
