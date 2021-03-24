@@ -76,3 +76,16 @@ p {
   margin-bottom: 15px;
   font-size: 16px;
 }
+
+.sidelinks {
+  font-size:14px;
+}
+
+.sidedescription {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h4 {
+  margin-bottom: 20px;
+}
