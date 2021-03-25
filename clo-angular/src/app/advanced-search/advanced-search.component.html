@@ -19,7 +19,7 @@
                 <option value='OR-'>OR</option>
                 <option value='NOT'>NOT</option>
             </select>
-            <!--
+            
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
                <option disabled selected hidden>Fields</option> 
               <option value='docBody'>Letter Body</option>
@@ -28,7 +28,7 @@
               <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option>
               <option value='allFields'>All Fields</option>
             </select>
-          -->
+          
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;"
              class="search-box" type='string' size=80 
                 [attr.id]="query[2][i]" 
@@ -41,16 +41,18 @@
       <button (click)="addField()">Add Field</button>
       <button (click)="removeField()">Remove Field</button>
     </div>
+
       <div class="container-narrow-results">
 
 
         <div class="narrow-by-author">
           <p><strong>Senders</strong></p>
           
+          
           <input type="checkbox" value="allAuthors" checked><strong> Select/ Unselect All Senders </strong>  <br>
-          <input type="checkbox" value="TC" checked> Thomas Carlyle  <br>
-          <input type="checkbox" value="JWC" checked> Jane Welsch Carlyle  <br>
-          <input type="checkbox" value="TC CD AND JF" checked>Thomas Carlyle, CD & JF  <br>   
+          <input type="checkbox" value="TC" checked> {{ tcStr }}  <br>
+          <input type="checkbox" value="JWC" checked> {{ jwcStr }}  <br>
+          <input type="checkbox" value="TC CD AND JF" checked>{{ tccdjfStr }}  <br>   
         </div>
 
         <div class="narrow-by-recipient">
@@ -63,12 +65,46 @@
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
 
-          <input type="checkbox" value='allFields' checked> <strong> Select/ Unselect All Fields </strong>  <br>
-          <input type="checkbox" value='docBody' checked> Letter Body  <br>
-          <input type="checkbox" value='sourceNote' checked> Source Notes  <br>
-          <input type="checkbox" value='footnotes' checked> Footnotes  <br>
-          <!-- need to change value of following item to correspond w/ image caption's & metadata's id in particular Mongo collection  -->
-          <input type="checkbox" value='imageCaptionAndMetadata' checked>  Image Caption & Metadata   <br>
+          
+            <input 
+              type="checkbox"
+                [(ngModel)] = "fieldsSearching[0]"
+                  checked/>
+                <strong> {{ allFieldsStr }} </strong>  <br>
+          
+
+          
+            <input type="checkbox" 
+              [(ngModel)] = "fieldsSearching[1]"
+                 checked/>
+                {{ letterBodyStr }} <br>
+          
+
+          
+          <input type="checkbox"
+            [(ngModel)] = "fieldsSearching[2]"
+              checked/>
+              {{ sourceNoteStr }}  <br>
+          
+
+          
+          <input type="checkbox"
+            [(ngModel)] = "fieldsSearching[3]"
+              checked> 
+              {{ footnotesStr }} <br>
+        
+
+        <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images -->
+               
+      <!--                  
+        <label>
+          <input type="checkbox" 
+            value='imageCaptionAndMetadata' 
+              checked> 
+                 Image Caption & Metadata   <br>
+        </label>  
+      -->
+
         </div>
 
         <div class="narrow-by-dates">

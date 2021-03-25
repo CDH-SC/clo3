@@ -9,7 +9,7 @@ import { ElasticSearchService } from '../_shared/_services/elastic-search.servic
 import { ElasticSearch } from '../_shared/models/elastic-search';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { identifierModuleUrl } from '@angular/compiler';
-
+// import {MatCheckboxModule} from '@angular/material';
 
 @Component({
   selector: 'app-advanced-search',
@@ -34,12 +34,52 @@ export class AdvancedSearchComponent {
   }
 
 
+  
   CONST_LETTERBODY = "docBody-";
   CONST_SOURCENOTE = "sourceNote-";
   CONST_FOOTNOTES = "footnotes-";
+  
+  allFieldsStr = "Select/ Unselect All Fields"
+  letterBodyStr = "Letter Body";
+  sourceNoteStr = "Source Note";
+  footnotesStr = "Footnotes";
+  
+  boolAllFields = true;
+  boolLetterBody = true;
+  boolSourceNote = true;
+  boolFootnotes = true;
+
+  tcStr = "Thomas Carlyle";
+  jwcStr =  "Jane Welsch Carlyle"
+  tccdjfStr = "Thomas Carlyle, CD & JF"
+  isChecked: number = 1;
+  getIsChecked() {
+    return this.isChecked == 1; //  return true/false based on whether or not a checkbox item is checked
+  }
+  setIsChecked(newValue:boolean) {
+    this.isChecked = newValue ? 1 : 0
+  }
+
+  // below is a list containing which fields a user wants to search
+  fieldsSearching = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
+  
+
+
+  printFieldsSearching() {
+    for (let i=0; i < this.fieldsSearching.length; i++)
+    {
+      console.log("fieldsSearching array (index + " + i +"= " + this.fieldsSearching[i]);
+    }
+  }
+  
+  getisActiveBool() {
+
+  }
+
   CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
 
   fields = ["newField1fields"];
+  
   boolOps = ["newField1boolOp"];
   inputs = ["newField1"];
   sender = ["newField1sender"];
@@ -93,21 +133,6 @@ export class AdvancedSearchComponent {
     }
   }
 
-  changeField(event: any) {
-    let val = event.srcElement.value;
-    let id = event.srcElement.id;
-    if (id.includes("fields"))
-    {
-      var inputID = id.replace("fields","");
-      var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
-      console.log("Attribute before changing: " + inputName);
-      document.getElementById(inputID).setAttribute("name",event.target.value);
-      console.log("Attribute after changing should be the event's target value - which is: " + event.target.value);
-      //this.fields = document.getElementById(inputID);
-      console.log("Field changed to: " + document.getElementById(inputID));
-    }
-  }
-
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
@@ -120,13 +145,10 @@ export class AdvancedSearchComponent {
       var inputID = id.replace("fields","");
       var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
       document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
-    /*  } else if (id.includes(this.CONST_SENDER)) {
-       var inputID = id.replace(this.CONST_SENDER, "");
-       var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
-       document.getElementById(inputID).setAttribute()
-    */
     }
   }
+
+
 /*
   generateCorrespondingParams(theSearchTerm: string, theBoolOp: string, theField: string)
   {
@@ -352,11 +374,16 @@ export class AdvancedSearchComponent {
   }
 
   startSearch() {
+    for (let i=0; i < this.fieldsSearching.length; i++) {
+      console.log(this.fieldsSearching[i])
+      console.log("\n");
+    }
     var result = [];
     for(var i = 0; i < this.queryNumber; i++) {
       var currInputId = "newField".concat((i+1).toString());
       var currInputName = (<HTMLInputElement>document.getElementById(currInputId)).name;
       var currInputValue = (<HTMLInputElement>document.getElementById(currInputId)).value;
+      //  console.log(currInputValue);
       var check = this.checkQuery(result,currInputName);
       if(check[0]) {
         result[check[1]][1].push(currInputValue);
@@ -369,6 +396,7 @@ export class AdvancedSearchComponent {
     var ANDString = "$AND:_"
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
+
     for(var i = 0; i < result.length; i++) {
       if(result[i][0].includes("AND")) {
         for(var j = 0; j < result[i][1].length; j++) {
@@ -409,11 +437,13 @@ export class AdvancedSearchComponent {
     this.displayQuery[0] =  ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
+    /*
     console.log("Before constructing sentences, the indices of displayQuery array are as follows:\n")
     for (let i = 0; i < this.displayQuery.length; i++)
     {
       console.log("this.displayQuery["+i+"] = " + this.displayQuery[i]);
     }
+    */
     let ANDIndex = this.displayQuery[0];
     let ORIndex = this.displayQuery[1];
     let NOTIndex = this.displayQuery[2];
@@ -430,9 +460,9 @@ export class AdvancedSearchComponent {
     }
     else if (this.isORSentence(ORIndex) && (!(this.isANDSentence(ANDIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
-      this.constructORSentence(ORIndex);
+      this.constructORSentence(ORIndex); // 
     }
-      console.log("Query String sent to elastic search: " + queryString);
+    //  console.log("Query String sent to elastic search: " + queryString);
 
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
