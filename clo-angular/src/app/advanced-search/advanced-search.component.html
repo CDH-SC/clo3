@@ -64,46 +64,46 @@
 
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
+        
 
-          
+        
             <input 
               type="checkbox"
-                [(ngModel)] = "fieldsSearching[0]"
+                [(ngModel)] = "fields[0]"
                   checked/>
-                <strong> {{ allFieldsStr }} </strong>  <br>
+                <strong> {{ fieldsStr[0] }} </strong>  <br>
           
 
           
             <input type="checkbox" 
-              [(ngModel)] = "fieldsSearching[1]"
+              [(ngModel)] = "fields[1]"
                  checked/>
-                {{ letterBodyStr }} <br>
+                 {{ fieldsStr[1] }} <br>
           
 
           
-          <input type="checkbox"
-            [(ngModel)] = "fieldsSearching[2]"
-              checked/>
-              {{ sourceNoteStr }}  <br>
+            <input type="checkbox"
+              [(ngModel)] = "fields[2]"
+                checked/>
+                 {{ fieldsStr[2] }}  <br>
           
 
           
-          <input type="checkbox"
-            [(ngModel)] = "fieldsSearching[3]"
-              checked> 
-              {{ footnotesStr }} <br>
+            <input type="checkbox"
+              [(ngModel)] = "fields[3]"
+                checked> 
+                 {{ fieldsStr[3] }} <br>
         
 
-        <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images -->
+     <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images  -->
                
-      <!--                  
+                      
         <label>
           <input type="checkbox" 
             value='imageCaptionAndMetadata' 
               checked> 
                  Image Caption & Metadata   <br>
         </label>  
-      -->
 
         </div>
 
