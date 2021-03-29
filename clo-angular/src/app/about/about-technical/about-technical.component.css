@@ -19,6 +19,14 @@
 	align-items: flex-start;
 	padding-left: 3rem;
 }
+
+.flex-row {
+	flex-wrap: wrap;
+}
+
+h6 {
+	color: #517b89 !important;
+}
   
 #about-image {
 	height: auto;
@@ -29,6 +37,18 @@
 
 #about-logo {
 	width: 100px;
+}
+
+#portrait {
+	height: auto;
+	width: auto;
+	max-width: 160px;
+	max-height: 160px;
+	border: 2px solid black;
+}
+
+#team-members {
+	padding-right: 3rem;
 }
   
 @media (max-width: 800px) {
