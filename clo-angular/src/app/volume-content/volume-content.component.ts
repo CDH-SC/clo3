@@ -490,4 +490,8 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
     }
     this.volumeKeys = this.volumeKeys.sort((a, b) => a.index - b.index)
   }
+
+  rotate() {
+
+  }
 }

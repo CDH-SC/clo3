@@ -22,14 +22,19 @@
           ></app-volume-toc>
 
           <div class="col-12 col-xl-9" id="manuscriptAndLetter">
+          <div>
           <div id="manuscriptViewer">
             <ul>
               <li *ngFor="let url of manuscriptUrl">
-                <lib-ngx-image-zoom id="manuscriptImage" [thumbImage]="url">
+                <img src="../../assets/rotate.png" id="rotateButton" (click)="rotate()">
+                <lib-ngx-image-zoom id="manuscriptImage" style="color:black" [thumbImage]="url" [zoomMode]="'click'" [enableLens]="true" [lensWidth]="200" [lensHeight]="200" [circularLens]="true">
                 </lib-ngx-image-zoom>
-                <!-- <img id="manuscriptImage" src="{{ url }}" data-magnify-src="{{ url }}"> -->
               </li>
             </ul>
+          </div>
+          <div id="imageButtons">
+          <p>Click to zoom</p>
+          </div>
           </div>
 
           <app-volume-viewer id="letterContent"
