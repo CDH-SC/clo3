@@ -74,7 +74,7 @@ export class AdvancedSearchComponent {
   boolOps = ["newField1boolOp"];
   inputs = ["newField1"];
   sender = ["newField1sender"];
-  query = [this.boolOps,this.fields,this.inputs];
+  query = [this.boolOps,this.inputs];
   //  query = [this.boolOps, this.fields, this.inputs, this.sender];
   queries = [this.query,this.fields];
   queryNumber = 1;
@@ -111,7 +111,7 @@ export class AdvancedSearchComponent {
     //  this.fields.push("newField"+this.queryNumber+"fields");
     this.boolOps.push("newField"+this.queryNumber+"boolOp");
     this.inputs.push("newField"+this.queryNumber);
-    let newQuery = [this.boolOps,this.fields,this.inputs];
+    let newQuery = [this.boolOps,this.inputs];
     //  this.sender.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
     //  let newQuery = [this.boolOps, this.fields, this.inputs, this.sender];
     this.queries.push(newQuery);
@@ -371,16 +371,17 @@ export class AdvancedSearchComponent {
   */
  
     for (let i=0; i < this.fields.length; i++) {
-      console.log(this.fields[i])
+      console.log(this.fields[i]);
       console.log("\n");
     }
     
     var result = [];
+    console.log("Amount of queries:\t" + this.queryNumber);
     for(var i = 0; i < this.queryNumber; i++) {
       var currInputId = "newField".concat((i+1).toString());
       var currInputName = (<HTMLInputElement>document.getElementById(currInputId)).name;
       var currInputValue = (<HTMLInputElement>document.getElementById(currInputId)).value;
-      //  console.log(currInputValue);
+      console.log("currInput Id:\t" + currInputId +"\ncurrInputName:\t" + currInputName +"\ncurrInputValue:\t" + currInputValue);
       var check = this.checkQuery(result,currInputName);
       if(check[0]) {
         result[check[1]][1].push(currInputValue);
@@ -410,14 +411,17 @@ export class AdvancedSearchComponent {
          {
          if (k==0 && this.fields[k] == true)
          {
-            ANDString += this.queryStrFields[k+1] + "-" + result[i][1][j] + "_";
+            ANDString += this.queryStrFields[k+1] + "-" +  + "_";
             ANDString += this.queryStrFields[k+2] + "-" + result[i][1][j] + "_";
             ANDString += this.queryStrFields[k+3] + "-" + result[i][1][j] + "_";
             break; // no need to check other booleans since first index means user wants to search all fields
-         } else if(this.fields[k] == true)
-         {
+         } else if(this.fields[0] == false)
+           {
+            if (this.fields[k] == true)
+            {
             ANDString += this.queryStrFields[k] + "-" + result[i][1][j] + "_";
-         }
+            }
+          }
         }
       }
     }

@@ -19,7 +19,7 @@
                 <option value='OR-'>OR</option>
                 <option value='NOT'>NOT</option>
             </select>
-            
+            <!--
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
                <option disabled selected hidden>Fields</option> 
               <option value='docBody'>Letter Body</option>
@@ -28,10 +28,10 @@
               <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option>
               <option value='allFields'>All Fields</option>
             </select>
-          
+          -->
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;"
              class="search-box" type='string' size=80 
-                [attr.id]="query[2][i]" 
+                [attr.id]="query[1][i]" 
                   name='ANDdocBody'
                     placeholder="oxford liberalism"/> 
       </div> <!-- close ngFor's div -->
