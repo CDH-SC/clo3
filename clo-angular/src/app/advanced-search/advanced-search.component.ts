@@ -34,53 +34,45 @@ export class AdvancedSearchComponent {
   }
 
 
-  
+  CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
   CONST_LETTERBODY = "docBody-";
   CONST_SOURCENOTE = "sourceNote-";
   CONST_FOOTNOTES = "footnotes-";
-  
+
+  //  the following strings are for html checkbox items
   allFieldsStr = "Select/ Unselect All Fields"
   letterBodyStr = "Letter Body";
   sourceNoteStr = "Source Note";
   footnotesStr = "Footnotes";
+  tcStr = "Thomas Carlyle";
+  jwcStr =  "Jane Welsch Carlyle"
+  tccdjfStr = "Thomas Carlyle, CD & JF"
   
+  //  the following bools are associated w/ checkbox items
   boolAllFields = true;
   boolLetterBody = true;
   boolSourceNote = true;
   boolFootnotes = true;
 
-  tcStr = "Thomas Carlyle";
-  jwcStr =  "Jane Welsch Carlyle"
-  tccdjfStr = "Thomas Carlyle, CD & JF"
+
+    //  Array naming convention noted below...
+
+/*
+ *   "query<attrName>Str" :  arrays used to map attribute booleans (represent checkbox is/ is not selected) to corresponding string elastic is expecting
+ *        "<attrName>Str" : arrays used to leverage property binding to display checkbox items in HTML
+*/
   
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
-
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
-  queryStrFields = ["allFields", "docBody", "sourceNote", "footnotes"];
-  fieldsMap = new Map<String, Boolean>();
+  queryFieldsStr = ["allFields", "docBody", "sourceNote", "footnotes"];
 
-
+  boolOps = ["searchTerm1boolOp"];
+  inputs = ["searchTerm1"];
   
-  trackByIndex(index: number, obj: any): any {
-    return index;
-  }
-
-
-
-  CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
-
-  // fields = ["newField1fields"];
-  
-  boolOps = ["newField1boolOp"];
-  inputs = ["newField1"];
-  sender = ["newField1sender"];
-  query = [this.boolOps,this.inputs];
-  //  query = [this.boolOps, this.fields, this.inputs, this.sender];
-  queries = [this.query,this.fields];
+  query = [this.boolOps, this.inputs];
+  queries = [this.query];
   queryNumber = 1;
   searchResults: any;
-
-
 
   displayQuery = ["","",""];
 
@@ -90,30 +82,13 @@ export class AdvancedSearchComponent {
   start = 1;
   end = 10;
 
-  getBoolOp() {
-    var boolInputID = "newField".concat((this.queryNumber).toString().concat("boolOp"));
-    return (<HTMLInputElement>document.getElementById(boolInputID)).value;
-  }
-
-  getField() {
-    var fieldInputID = "newField".concat((this.queryNumber).toString().concat("fields"));
-    return (<HTMLInputElement>document.getElementById(fieldInputID)).value;
-  }
-
-  getSearchTerm() {
-    var searchInputID = "newField".concat((this.queryNumber).toString());
-    return (<HTMLInputElement>document.getElementById(searchInputID)).value;
-  }
 
 
   addField() {
     this.queryNumber++;
-    //  this.fields.push("newField"+this.queryNumber+"fields");
-    this.boolOps.push("newField"+this.queryNumber+"boolOp");
-    this.inputs.push("newField"+this.queryNumber);
+    this.boolOps.push("searchTerm"+this.queryNumber+"boolOp");
+    this.inputs.push("searchTerm"+this.queryNumber);
     let newQuery = [this.boolOps,this.inputs];
-    //  this.sender.push(this.CONST_NEW_FIELD+this.queryNumber+this.CONST_SENDER);
-    //  let newQuery = [this.boolOps, this.fields, this.inputs, this.sender];
     this.queries.push(newQuery);
   }
 
@@ -127,45 +102,17 @@ export class AdvancedSearchComponent {
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
-    // console.log(val,id);
     if(id.includes("boolOp")) {
       var inputID = id.replace("boolOp","");
       var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
-      document.getElementById(inputID).setAttribute("name",event.target.value + inputName.substring(3));
-    } else if (id.includes("fields")) {
-      var inputID = id.replace("fields","");
-      var inputName = (<HTMLInputElement>document.getElementById(inputID)).name;
-      document.getElementById(inputID).setAttribute("name",inputName.substring(0,3) + event.target.value);
-    }
+      document.getElementById(inputID).setAttribute("name",event.target.value);
+    //  document.getElementById(inputID).setAttribute("name",event.target.value + inputName.substring(3));
+    } 
   }
 
-
-  // Not sure if still needed
-  // https://www.sitepoint.com/sort-an-array-of-objects-in-javascript/
-  compareValues(key, order = 'asc') {
-    return function innerSort(a, b) {
-      if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
-        // property doesn't exist on either object
-        return 0;
-      }
-
-      const varA = (typeof a[key] === 'string')
-        ? a[key].toUpperCase() : a[key];
-      const varB = (typeof b[key] === 'string')
-        ? b[key].toUpperCase() : b[key];
-
-      let comparison = 0;
-      if (varA > varB) {
-        comparison = 1;
-      } else if (varA < varB) {
-        comparison = -1;
-      }
-      return (
-        (order === 'desc') ? (comparison * -1) : comparison
-      );
-    };
+  wantsToSearchAllFields() {
+    return this.fields[0];
   }
-
   // checks if displayQuery[] index for AND is non-empty
   isANDSentence(indexOfANDString: string) { if (indexOfANDString != "") return true; }
 
@@ -339,15 +286,7 @@ export class AdvancedSearchComponent {
     this.displayQuery[1] = ORSentence;
   }
 
-  defineMapping(emptyMap, keys:string[], vals:boolean[]) {
-  // boolsVal parameter is the fields array representing whether or not user wants to search a particular term (TRUE/FALSE: *that* checkbox item is selected.)
-  // keysStr parameter is queryStrFields array denoting the expected format of each field needed for query strings (for example, we displayed "Letter Body" but the field name Elastic is expecting is "docBody")
-  
-  for (let i=0; i < keys.length; i++)
-  {
-    emptyMap.set(keys[i], vals[i]);
-  }
-}
+
   //  checks if a boolean-searchfield combination has been added already
   checkQuery(resultArray,inputName) {
     if(resultArray.length < 1) {
@@ -362,6 +301,7 @@ export class AdvancedSearchComponent {
     }
   }
 
+
   startSearch() {
 
   /* 
@@ -370,108 +310,96 @@ export class AdvancedSearchComponent {
   
   */
  
-    for (let i=0; i < this.fields.length; i++) {
-      console.log(this.fields[i]);
-      console.log("\n");
-    }
+ 
     
     var result = [];
-    console.log("Amount of queries:\t" + this.queryNumber);
+    var aQueryID = "";
+    var aQueryName = "";
+    var aQueryValue = "";
     for(var i = 0; i < this.queryNumber; i++) {
-      var currInputId = "newField".concat((i+1).toString());
-      var currInputName = (<HTMLInputElement>document.getElementById(currInputId)).name;
-      var currInputValue = (<HTMLInputElement>document.getElementById(currInputId)).value;
-      console.log("currInput Id:\t" + currInputId +"\ncurrInputName:\t" + currInputName +"\ncurrInputValue:\t" + currInputValue);
-      var check = this.checkQuery(result,currInputName);
+      aQueryID = "searchTerm".concat((i+1).toString());
+      aQueryName = (<HTMLInputElement>document.getElementById(aQueryID)).name;
+      aQueryValue = (<HTMLInputElement>document.getElementById(aQueryID)).value;
+      var check = this.checkQuery(result,aQueryName);
       if(check[0]) {
-        result[check[1]][1].push(currInputValue);
+        result[check[1]][1].push(aQueryValue);
       } else {
-        result.push([currInputName, [currInputValue]]);
+        result.push([aQueryName, [aQueryValue]]);
       }
     }
+    
     console.log(result);
+    var boolOp; // used in loops below to determine which boolean goes with *this* array of terms (second index of result array)
     var queryString = ""
     var ANDString = "$AND:_"
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
 
+  
     for(var i = 0; i < result.length; i++) {
-      if(result[i][0].includes("AND")) {
-        for(var j = 0; j < result[i][1].length; j++) {
-          /*
-          if (result[i][0].substring(3).includes("allFields"))
+      boolOp = result[i][0];
+      for (let j = 0; j < result[i][1].length; j++)
+      {
+      switch(boolOp) {
+        case "AND":
+          if (this.wantsToSearchAllFields())
           {
-            ANDString += "docBody" + "-" + result[i][1][j] + "_";
-            ANDString += "sourceNote" + "-" + result[i][1][j] + "_";
-            ANDString += "footnotes" + "-" + result[i][1][j] + "_";
-            continue;
+             ANDString += "docBody" + "-" + result[i][1][j] + "_" + "sourceNote" + "-" + result[i][1][j] + "_" + "footnotes" + "-" + result[i][1][j] + "_";
           }
-          */
-         for (var k = 0; k < this.fields.length; k++)
-         {
-         if (k==0 && this.fields[k] == true)
-         {
-            ANDString += this.queryStrFields[k+1] + "-" +  + "_";
-            ANDString += this.queryStrFields[k+2] + "-" + result[i][1][j] + "_";
-            ANDString += this.queryStrFields[k+3] + "-" + result[i][1][j] + "_";
-            break; // no need to check other booleans since first index means user wants to search all fields
-         } else if(this.fields[0] == false)
-           {
-            if (this.fields[k] == true)
+          else // user selected some fields, but doesn't want to search all fields
+          {
+            for (let k = 1; k <= this.fields.length; k++)
             {
-            ANDString += this.queryStrFields[k] + "-" + result[i][1][j] + "_";
+              if (!this.fields[k])
+                continue;
+              else
+                ANDString += this.queryFieldsStr[k] + "-" + result[i][1][j] + "_";
             }
           }
+        break;
+        case "OR":
+          if (this.wantsToSearchAllFields())
+          {
+              ORString += "docBody" + "-" + result[i][1][j] + "_" + "sourceNote" + "-" + result[i][1][j] + "_" + "footnotes" + "-" + result[i][1][j] + "_";
+          }
+          else // user selected some fields, but doesn't want to search all fields
+          {
+            for (let k = 1; k <= this.fields.length; k++)
+            {
+              if (!this.fields[k])
+                continue;
+              else
+                ORString += this.queryFieldsStr[k] + "-" + result[i][1][j] + "_";
+          }
         }
-      }
+        break;
+        case "NOT":
+          if (this.wantsToSearchAllFields())
+          {
+              NOTString += "docBody" + "-" + result[i][1][j] + "_" + "sourceNote" + "-" + result[i][1][j] + "_" + "footnotes" + "-" + result[i][1][j] + "_";
+          }
+          else // user selected some fields, but doesn't want to search all fields
+         {
+          for (let k = 1; k <= this.fields.length; k++)
+          {
+            if (!this.fields[k])
+              continue;
+            else
+             NOTString += this.queryFieldsStr[k] + "-" + result[i][1][j] + "_";
+          }
+        }
+        default:
+        }
     }
-    else if(result[i][0].includes("OR")) {
-        for(var j = 0; j < result[i][1].length; j++) {
-          for (var k = 0; k < this.fields.length; k++)
-          {
-          if (k==0 && this.fields[k] == true)
-          {
-             ORString += this.queryStrFields[k+1] + "-" + result[i][1][j] + "_";
-             ORString += this.queryStrFields[k+2] + "-" + result[i][1][j] + "_";
-             ORString += this.queryStrFields[k+3] + "-" + result[i][1][j] + "_";
-             break;
-          } else if(this.fields[k] == true)
-          {
-             ORString += this.queryStrFields[k] + "-" + result[i][1][j] + "_";
-          }
-         }
-        }
-      } else if(result[i][0].includes("NOT")) {
-        for(var j = 0; j < result[i][1].length; j++) {
-          for (var k = 0; k < this.fields.length; k++)
-          {
-          if (k==0 && this.fields[k] == true)
-          {
-             ANDString += this.queryStrFields[k+1] + "-" + result[i][1][j] + "_";
-             ANDString += this.queryStrFields[k+2] + "-" + result[i][1][j] + "_";
-             ANDString += this.queryStrFields[k+3] + "-" + result[i][1][j] + "_";
-             break;
-          } else if(this.fields[k] == true)
-          {
-             ANDString += this.queryStrFields[k] + "-" + result[i][1][j] + "_";
-          }
-         }
-      }
-
-    } // close if statement
-   } // close for loop
+    continue;
+  }
     
     queryString = ANDString + ORString + NOTString
     this.displayQuery[0] =  ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
     this.displayQuery[2] = NOTString.substring(6);
-    /*
-    console.log("Before constructing sentences, the indices of displayQuery array are as follows:\n")
-    for (let i = 0; i < this.displayQuery.length; i++)
-    {
-      console.log("this.displayQuery["+i+"] = " + this.displayQuery[i]);
-    }
-    */
+    
+
     let ANDIndex = this.displayQuery[0];
     let ORIndex = this.displayQuery[1];
     let NOTIndex = this.displayQuery[2];
@@ -480,7 +408,7 @@ export class AdvancedSearchComponent {
      *      construct AND sentence
      * else if the only index in displayQuery that's non-empty is OR index
      *      construct OR sentence
-     */
+     
 
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
@@ -490,14 +418,17 @@ export class AdvancedSearchComponent {
     {
       this.constructORSentence(ORIndex); // 
     }
+*/
+  
 
-    console.log("Query String sent to elastic search: " + queryString);
+  console.log("Query String sent to elastic search: " + queryString);
 
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
     })
     this.searchQuery = queryString;
+
   }
 
   safeHTML(content: string) {

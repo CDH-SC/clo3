@@ -15,9 +15,9 @@
                   let last = isLast;'>
               <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
                 <option disabled selected hidden>Logic</option>
-                <option value='AND'>AND</option>
-                <option value='OR-'>OR</option>
-                <option value='NOT'>NOT</option>
+                <option value='AND'>Results must contain</option>
+                <option value='OR'>Results may contain</option>
+                <option value='NOT'>Results must not contain</option>
             </select>
             <!--
             <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
@@ -32,14 +32,14 @@
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;"
              class="search-box" type='string' size=80 
                 [attr.id]="query[1][i]" 
-                  name='ANDdocBody'
+                  name='aSearchTerm'
                     placeholder="oxford liberalism"/> 
       </div> <!-- close ngFor's div -->
     </form>
 
     <div>
-      <button (click)="addField()">Add Field</button>
-      <button (click)="removeField()">Remove Field</button>
+      <button (click)="addField()">Add Term</button>
+      <button (click)="removeField()">Remove Term</button>
     </div>
 
       <div class="container-narrow-results">
@@ -66,7 +66,7 @@
           <p class="fields"> <strong> Fields </strong>  </p>
         
 
-        
+  
             <input 
               type="checkbox"
                 [(ngModel)] = "fields[0]"
@@ -93,7 +93,7 @@
               [(ngModel)] = "fields[3]"
                 checked> 
                  {{ fieldsStr[3] }} <br>
-        
+    
 
      <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images  -->
                
@@ -184,9 +184,9 @@
 
   <div class="row justify-content-start orange-border-bottom">
     <ul style="list-style-type: none;">
-      <li><strong>{{ displayQuery[0] }}</strong></li>
-      <li><strong>{{ displayQuery[1] }}</strong></li>
-      <li><strong>{{ displayQuery[2] }}</strong></li>
+      <li><strong>AND: {{ displayQuery[0] }}</strong></li>
+      <li><strong>OR: {{ displayQuery[1] }}</strong></li>
+      <li><strong>NOT: {{ displayQuery[2] }}</strong></li>
     </ul>
   </div>
   <ng-container *ngIf="results.data.length == 0">
