@@ -33,11 +33,22 @@ export class AdvancedSearchComponent {
     // this.router.navigate(['search-results/', route]);
   }
 
-
+  /*
+   *    1. is elastic expecting currently only search strings like "<feildName>-<fieldValue>_<fieldName><fieldVal...>_ 
+   *         where field name is either "docBody," "sourceNote," or "footnotes," or can i go ahead & start making it function w/ all applicable field names?
+   *
+   *    2. the images are in album collection, is the search currently only looking through the letters collection? If so, how do I add onto it to where it searches albums when
+   *       "Image Caption & Metadata" field is selected?... and what in an album object even is the caption? It appears to be at least within the Metadata object
+   *        of each album object... if this is the case, shouldn't we just search the metadata object or are they expecting it to just search the caption?
+   * 
+   *    3. worried about the size of file, how would i seperate the component into two, one for the search and one for search results (like basic search's componenets)?
+   *
+   *    4. how would i make the checkbox html more concise by using *ngFor and one-way property binding?
+   */
   CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
-  CONST_LETTERBODY = "docBody-";
-  CONST_SOURCENOTE = "sourceNote-";
-  CONST_FOOTNOTES = "footnotes-";
+  CONST_LETTERBODY = "docBody";
+  CONST_SOURCENOTE = "sourceNote";
+  CONST_FOOTNOTES = "footnotes";
 
   //  the following strings are for html checkbox items
   allFieldsStr = "Select/ Unselect All Fields"
@@ -45,8 +56,8 @@ export class AdvancedSearchComponent {
   sourceNoteStr = "Source Note";
   footnotesStr = "Footnotes";
   tcStr = "Thomas Carlyle";
-  jwcStr =  "Jane Welsch Carlyle"
-  tccdjfStr = "Thomas Carlyle, CD & JF"
+  jwcStr =  "Jane Welsch Carlyle";
+  tccdjfStr = "Thomas Carlyle, CD & JF";
   
   //  the following bools are associated w/ checkbox items
   boolAllFields = true;
@@ -64,7 +75,7 @@ export class AdvancedSearchComponent {
   
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
-  queryFieldsStr = ["allFields", "docBody", "sourceNote", "footnotes"];
+  queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
 
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
@@ -110,7 +121,8 @@ export class AdvancedSearchComponent {
     } 
   }
 
-  wantsToSearchAllFields() {
+  searchField(fieldIndexBool) {return this.fields[fieldIndexBool]; }
+  searchAllFields() {
     return this.fields[0];
   }
   // checks if displayQuery[] index for AND is non-empty
@@ -301,21 +313,42 @@ export class AdvancedSearchComponent {
     }
   }
 
+  makeSearchString(boolString, currTermOfQuery)
+  {
+    // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
+    var retString = "";
+    if (this.searchAllFields())
+    {
+      for (let k = 0; k < this.queryFieldsStr.length; k++)
+      {
+        //  debugger;
+        retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
+      }
+    }
+    else // wants to search all fields but not all of them
+    {
+      for (let k = 0; k < this.queryFieldsStr.length; k++)
+      {
+        if (!this.fields[k+1])
+          continue;
+        else 
+          retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
+      }
+    }
+    console.log("Should append:\t" + retString + "\n...to " + boolString + "string");
+    return retString;
+  }
 
   startSearch() {
-
-  /* 
-     for (fieldSearching in fieldsSearching)
-     append fieldSearching + "-" + <theSearchTerm> + "_" to AND/OR/NOT string
-  
-  */
- 
- 
     
     var result = [];
     var aQueryID = "";
     var aQueryName = "";
     var aQueryValue = "";
+
+
+
+
     for(var i = 0; i < this.queryNumber; i++) {
       aQueryID = "searchTerm".concat((i+1).toString());
       aQueryName = (<HTMLInputElement>document.getElementById(aQueryID)).name;
@@ -327,7 +360,7 @@ export class AdvancedSearchComponent {
         result.push([aQueryName, [aQueryValue]]);
       }
     }
-    
+
     console.log(result);
     var boolOp; // used in loops below to determine which boolean goes with *this* array of terms (second index of result array)
     var queryString = ""
@@ -335,59 +368,20 @@ export class AdvancedSearchComponent {
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
 
-  
     for(var i = 0; i < result.length; i++) {
       boolOp = result[i][0];
       for (let j = 0; j < result[i][1].length; j++)
       {
       switch(boolOp) {
         case "AND":
-          if (this.wantsToSearchAllFields())
-          {
-             ANDString += "docBody" + "-" + result[i][1][j] + "_" + "sourceNote" + "-" + result[i][1][j] + "_" + "footnotes" + "-" + result[i][1][j] + "_";
-          }
-          else // user selected some fields, but doesn't want to search all fields
-          {
-            for (let k = 1; k <= this.fields.length; k++)
-            {
-              if (!this.fields[k])
-                continue;
-              else
-                ANDString += this.queryFieldsStr[k] + "-" + result[i][1][j] + "_";
-            }
-          }
-        break;
+          ANDString += this.makeSearchString(ANDString, result[i][1][j]);
+          break;
         case "OR":
-          if (this.wantsToSearchAllFields())
-          {
-              ORString += "docBody" + "-" + result[i][1][j] + "_" + "sourceNote" + "-" + result[i][1][j] + "_" + "footnotes" + "-" + result[i][1][j] + "_";
-          }
-          else // user selected some fields, but doesn't want to search all fields
-          {
-            for (let k = 1; k <= this.fields.length; k++)
-            {
-              if (!this.fields[k])
-                continue;
-              else
-                ORString += this.queryFieldsStr[k] + "-" + result[i][1][j] + "_";
-          }
-        }
-        break;
+          ORString += this.makeSearchString(ORString, result[i][1][j]);
+          break;
         case "NOT":
-          if (this.wantsToSearchAllFields())
-          {
-              NOTString += "docBody" + "-" + result[i][1][j] + "_" + "sourceNote" + "-" + result[i][1][j] + "_" + "footnotes" + "-" + result[i][1][j] + "_";
-          }
-          else // user selected some fields, but doesn't want to search all fields
-         {
-          for (let k = 1; k <= this.fields.length; k++)
-          {
-            if (!this.fields[k])
-              continue;
-            else
-             NOTString += this.queryFieldsStr[k] + "-" + result[i][1][j] + "_";
-          }
-        }
+          NOTString += this.makeSearchString(NOTString, result[i][1][j]);
+          break;
         default:
         }
     }
