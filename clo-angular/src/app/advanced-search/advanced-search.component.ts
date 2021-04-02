@@ -46,26 +46,40 @@ export class AdvancedSearchComponent {
    *    4. how would i make the checkbox html more concise by using *ngFor and one-way property binding?
    */
   CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
+  
   CONST_LETTERBODY = "docBody";
   CONST_SOURCENOTE = "sourceNote";
   CONST_FOOTNOTES = "footnotes";
+
+  CONST_AUTHORS = "docAuthor";
+  CONST_TC = "Thomas Carlyle";
+  CONST_JC = "Jane Carylyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
+  CONST_MW = "Margaret Welsh"; 
+  CONST_TCJC = "Thomas Carlyle Jane Welsh Carlyle";
 
   //  the following strings are for html checkbox items
   allFieldsStr = "Select/ Unselect All Fields"
   letterBodyStr = "Letter Body";
   sourceNoteStr = "Source Note";
   footnotesStr = "Footnotes";
+
+  allAuthorsStr = "Select/ Unselect All Senders";
   tcStr = "Thomas Carlyle";
-  jwcStr =  "Jane Welsch Carlyle";
+  jcStr =  "Jane Carlyle";
   tccdjfStr = "Thomas Carlyle, CD & JF";
-  
+  mwStr = "Margaret Welsch";
+  tcjcStr = "Thomas & Jane Carylyle" // corresponds to db value: "Thomas Carlyle Jane Welsch Carlyle"
   //  the following bools are associated w/ checkbox items
   boolAllFields = true;
   boolLetterBody = true;
   boolSourceNote = true;
   boolFootnotes = true;
 
-
+  boolTC = true;
+  boolJC = true;
+  boolTCJC = true;
+  boolMW = true;
+  searchAllAuthors = true;
     //  Array naming convention noted below...
 
 /*
@@ -73,10 +87,16 @@ export class AdvancedSearchComponent {
  *        "<attrName>Str" : arrays used to leverage property binding to display checkbox items in HTML
 */
   
+  docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jcStr, this.mwStr, this.tcjcStr];
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
+  
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
+  authors = [this.searchAllAuthors, this.boolTC, this.boolJC, this.boolMW, this.boolTCJC];
+ 
   queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
-
+  queryAuthorsStr = ["", this.CONST_TC, this.CONST_JC, this.CONST_MW, this.CONST_TCJC];
+ 
+  
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
   
@@ -121,10 +141,19 @@ export class AdvancedSearchComponent {
     } 
   }
 
-  searchField(fieldIndexBool) {return this.fields[fieldIndexBool]; }
+  //  true/false indicates if user wants to search all of the fields
   searchAllFields() {
     return this.fields[0];
   }
+
+  searchAll(aBoolArray) 
+  {
+    return aBoolArray[0];
+  }
+  /*
+   *  the following helper methods help us determine strings have fields and values in them, indicating which sentences we need make for html display
+   */
+
   // checks if displayQuery[] index for AND is non-empty
   isANDSentence(indexOfANDString: string) { if (indexOfANDString != "") return true; }
 
@@ -134,43 +163,8 @@ export class AdvancedSearchComponent {
   // checks if displayQuery[] index for NOT is non-empty
   isNOTSentence(indexOfNOTStr: string){ if (indexOfNOTStr != "") return true; }
 
-  searchOnlyOneField(indexOfSearchStr: string)
-  {
-    if (indexOfSearchStr.includes(this.CONST_LETTERBODY))
-    {
-      if (indexOfSearchStr.includes(this.CONST_FOOTNOTES) || indexOfSearchStr.includes(this.CONST_SOURCENOTE))
-      {
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-    }
-    else if (indexOfSearchStr.includes(this.CONST_SOURCENOTE))
-    {
-      if (indexOfSearchStr.includes(this.CONST_LETTERBODY) || indexOfSearchStr.includes(this.CONST_FOOTNOTES))
-      {
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-    }
-    else if (indexOfSearchStr.includes(this.CONST_FOOTNOTES))
-    {
-      if (indexOfSearchStr.includes(this.CONST_LETTERBODY) || indexOfSearchStr.includes(this.CONST_SOURCENOTE))
-      {
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-    }
-  }
-  constructANDSentence(searchString: string)
+  
+  makeANDSentence(searchString: string)
   {
     let docBodyPhrase = " in the letter body,";
     let sourceNotePhrase = " in the source note,";
@@ -243,7 +237,7 @@ export class AdvancedSearchComponent {
     this.displayQuery[0] = ANDSentence;
 }
 
-  constructORSentence(searchString: string) {
+  makeORSentence(searchString: string) {
     let docBodyPhrase = " in the letter body,";
     let sourceNotePhrase = " in the source note,";
     let footnotesPhrase = " in the footnotes,";
@@ -298,25 +292,37 @@ export class AdvancedSearchComponent {
     this.displayQuery[1] = ORSentence;
   }
 
-
-  //  checks if a boolean-searchfield combination has been added already
-  checkQuery(resultArray,inputName) {
-    if(resultArray.length < 1) {
-      return [false,0];
-    } else {
-      for(var i = 0; i < resultArray.length; i++) {
-        if(resultArray[i][0].includes(inputName)) {
-          return [true,i];
-        }
-      }
-      return [false,resultArray.length];
+  //  return search string of authors
+  appendAuthorsToSearchString()
+  {
+      /*
+       * remember, string format must be <fieldName1>-<fieldValue1>_<fieldName2>-<fieldValue2>_ ... ... <fieldNameN>-<fieldValueN>_
+       * in db, fieldName = docAuthor for the senders
+       */
+    var retString = "";
+    if (this.searchAll(this.authors))
+    {
+      for (let i = 0; i < this.authors.length; i++)
+      {
+        retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
+      } 
     }
+    else
+    {
+      for (let i = 1; i <= this.authors.length; i++)
+      {
+        if (!this.authors[i])
+          continue;
+        retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
+      }
+    }
+    return retString;
   }
-
   makeSearchString(boolString, currTermOfQuery)
   {
     // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
     var retString = "";
+    retString += this.appendAuthorsToSearchString();
     if (this.searchAllFields())
     {
       for (let k = 0; k < this.queryFieldsStr.length; k++)
@@ -335,8 +341,23 @@ export class AdvancedSearchComponent {
           retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
       }
     }
-    console.log("Should append:\t" + retString + "\n...to " + boolString + "string");
+    //  console.log("Should append:\t" + retString + "\n...to " + boolString + "string");
     return retString;
+  }
+
+
+  //  checks if a boolean-searchfield combination has been added already
+  checkQuery(resultArray,inputName) {
+    if(resultArray.length < 1) {
+      return [false,0];
+    } else {
+      for(var i = 0; i < resultArray.length; i++) {
+        if(resultArray[i][0].includes(inputName)) {
+          return [true,i];
+        }
+      }
+      return [false,resultArray.length];
+    }
   }
 
   startSearch() {
@@ -399,23 +420,23 @@ export class AdvancedSearchComponent {
     let NOTIndex = this.displayQuery[2];
     /*
      * if the only index in displayQuery that's non-empty is AND index
-     *      construct AND sentence
+     *      make AND sentence
      * else if the only index in displayQuery that's non-empty is OR index
-     *      construct OR sentence
+     *      make OR sentence
      
 
     if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
-        this.constructANDSentence(ANDIndex);
+        this.makeANDSentence(ANDIndex);
     }
     else if (this.isORSentence(ORIndex) && (!(this.isANDSentence(ANDIndex)) && !(this.isNOTSentence(NOTIndex))))
     {
-      this.constructORSentence(ORIndex); // 
+      this.makeORSentence(ORIndex); // 
     }
 */
   
 
-  console.log("Query String sent to elastic search: " + queryString);
+  // console.log("Query String sent to elastic search: " + queryString);
 
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {

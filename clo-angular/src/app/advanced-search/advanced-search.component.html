@@ -49,10 +49,16 @@
           <p><strong>Senders</strong></p>
           
           
-          <input type="checkbox" value="allAuthors" checked><strong> Select/ Unselect All Senders </strong>  <br>
-          <input type="checkbox" value="TC" checked> {{ tcStr }}  <br>
-          <input type="checkbox" value="JWC" checked> {{ jwcStr }}  <br>
-          <input type="checkbox" value="TC CD AND JF" checked>{{ tccdjfStr }}  <br>   
+          <input type="checkbox" 
+          [(ngModel)] = "authors[0]" checked/><strong> {{ docAuthorsStr[0] }} </strong>  <br>
+          <input type="checkbox" 
+          [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }}  <br>
+          <input type="checkbox" 
+          [(ngModel)] = "authors[2]" checked/> {{ docAuthorsStr[2] }}  <br>
+          <input type="checkbox" 
+          [(ngModel)] = "authors[3]" checked/>{{ docAuthorsStr[3] }}  <br>  
+          <input type="checkbox" 
+          [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
         <div class="narrow-by-recipient">
@@ -60,49 +66,34 @@
           <input type="search" id="input-box" placeholder="john stuart mill">
         </div>
 
+
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
-        
 
-  
-            <input 
-              type="checkbox"
-                [(ngModel)] = "fields[0]"
-                  checked/>
+            <input type="checkbox"
+                [(ngModel)] = "fields[0]" checked/>
                 <strong> {{ fieldsStr[0] }} </strong>  <br>
-          
-
-          
             <input type="checkbox" 
-              [(ngModel)] = "fields[1]"
-                 checked/>
-                 {{ fieldsStr[1] }} <br>
-          
-
-          
+                [(ngModel)] = "fields[1]" checked/>
+                 {{ fieldsStr[1] }} <br>          
             <input type="checkbox"
-              [(ngModel)] = "fields[2]"
-                checked/>
-                 {{ fieldsStr[2] }}  <br>
-          
-
-          
+              [(ngModel)] = "fields[2]" checked/>
+                 {{ fieldsStr[2] }}  <br>          
             <input type="checkbox"
-              [(ngModel)] = "fields[3]"
-                checked> 
+              [(ngModel)] = "fields[3]" checked> 
                  {{ fieldsStr[3] }} <br>
     
 
      <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images  -->
                
-                      
+      <!--              
         <label>
           <input type="checkbox" 
             value='imageCaptionAndMetadata' 
               checked> 
                  Image Caption & Metadata   <br>
         </label>  
-
+      -->  
         </div>
 
         <div class="narrow-by-dates">
