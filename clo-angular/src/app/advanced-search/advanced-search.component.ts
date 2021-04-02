@@ -96,13 +96,18 @@ export class AdvancedSearchComponent {
   queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JC, this.CONST_MW, this.CONST_TCJC];
  
-  
+
+
+  recipient = ["recipient1"];
+  recipients = [this.recipient];
+
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
   
   query = [this.boolOps, this.inputs];
   queries = [this.query];
   queryNumber = 1;
+  recipientNumber = 1;
   searchResults: any;
 
   displayQuery = ["","",""];
@@ -130,6 +135,18 @@ export class AdvancedSearchComponent {
     }
   }
 
+  addRecipient() {
+    this.recipientNumber++;
+    this.recipient.push("recipient" + this.recipientNumber);
+    let newRecipient = [this.recipient]
+  }
+
+  removeRecipient() {
+    if (this.recipients.length > 1) {
+      this.recipients.splice(this.recipientNumber);
+      this.recipientNumber--;
+    }
+  }
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
@@ -367,8 +384,11 @@ export class AdvancedSearchComponent {
     var aQueryName = "";
     var aQueryValue = "";
 
-
-
+    console.log("Recipients chosen...");
+    for (let i=0; i < this.recipients.length; i++) {
+      console.log(this.recipients[0][i]);
+    }
+    debugger;
 
     for(var i = 0; i < this.queryNumber; i++) {
       aQueryID = "searchTerm".concat((i+1).toString());

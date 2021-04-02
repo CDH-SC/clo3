@@ -61,11 +61,19 @@
           [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
-        <div class="narrow-by-recipient">
+        <div *ngFor="let recipient of recipients;" class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong>  </p>
-          <input type="search" id="input-box" placeholder="john stuart mill">
+          <input type="search" 
+            class="input-box" placeholder="john stuart mill">
         </div>
-
+        <!--
+            [(ngModel)]="aRecipient" 
+        -->
+        <div>
+          <button (click)="addRecipient()">Add Recipient</button>
+          <button (click)="removeRecipient()">Remove Recipient</button>
+        </div>
+      
 
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
