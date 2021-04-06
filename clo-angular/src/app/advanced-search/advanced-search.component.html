@@ -50,7 +50,7 @@
           
           
           <input type="checkbox" 
-          [(ngModel)] = "authors[0]" checked/><strong> {{ docAuthorsStr[0] }} </strong>  <br>
+          (change) = "checkUncheckAllAuthors($event)" checked/><strong> {{ docAuthorsStr[0] }} </strong>  <br>
           <input type="checkbox" 
           [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }}  <br>
           <input type="checkbox" 
@@ -61,25 +61,26 @@
           [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
-        <div *ngFor="let recipient of recipients;" class="narrow-by-recipient">
+       <!--  <div *ngFor="let aRecipient of recipient;" class="narrow-by-recipient">   -->
+         <div class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong>  </p>
-          <input type="search" 
+          <input type="search" style="background-color: transparent; border-radius: 3px; border: 1px solid brown;"
             class="input-box" placeholder="john stuart mill">
-        </div>
+          </div>
+        <!-- </div> -->
+   
         <!--
-            [(ngModel)]="aRecipient" 
-        -->
         <div>
           <button (click)="addRecipient()">Add Recipient</button>
           <button (click)="removeRecipient()">Remove Recipient</button>
         </div>
-      
+        -->
 
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
 
             <input type="checkbox"
-                [(ngModel)] = "fields[0]" checked/>
+                (change) = "checkUncheckAllFields($event)" checked/>
                 <strong> {{ fieldsStr[0] }} </strong>  <br>
             <input type="checkbox" 
                 [(ngModel)] = "fields[1]" checked/>

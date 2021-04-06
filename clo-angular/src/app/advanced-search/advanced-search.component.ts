@@ -33,6 +33,48 @@ export class AdvancedSearchComponent {
     // this.router.navigate(['search-results/', route]);
   }
 
+// Accomplished this week:
+
+/*
+ * 1.  resolved issue preventing user from searching multiple terms
+ * 2.  added sender searches - issue when user selects Thomas Carlyle AND another sender/more sender(s)
+ * 3.  Added functionality for select/ unselect all checkbox items
+ * 4.  changed display for booleans to RESULTS MUST CONTAIN/ RESULTS MAY CONTAIN/ RESULTS MUST NOT CONTAIN
+ * 5.  cleaned up the code a bit to make it easier to read
+ */
+
+//  TODO: fix issue - if a user selects thomas carlyle AND another sender/ more senders, page becomes unresponsive
+//  TODO: consolidate the checkUncheckAll... methods
+
+  /*
+   *  TODO: Enhance Advanced Search features  
+   *     
+   *     1. Specify Fields
+   *        1. checkbox/options? 
+   *           ... wondering if Brent's feedback about him expecting the type options to be "in-line" means we should go back to 
+   *               having the fields specified per search term and add an "All Fields" option or did he mean that he likes the checkbox
+   *               and how one selection of fields applies to all terms but he just wants one checkbox item for "All Fields" in line?
+   *            
+   *            - add "Albums" collection to elastic search so that our "Image Caption & Metadata" checkbox item works
+   * 
+   *     2. Specify Senders
+   *        1. add sender(s) selections to search string (DONE)
+   *        2. add index to elastic search for senders so elastic can take the senders part of string in as input and actually 
+   *           search for the specified senders
+   * 
+   *     3. Specify Date Range
+   *        1. add date(s) inputted values to search string
+   *        2. add index to elastic for dates so elastic can take the dates part of string in as input and actually
+   *           search within the specified date range
+   * 
+   *     4. Specify Recipients
+   *        1. fix styling
+   *        2. essentially repeat steps 1 & 2 of the previous two to-do items for recipients
+   * 
+   */
+  
+   //  running list of questions below
+
   /*
    *    1. is elastic expecting currently only search strings like "<feildName>-<fieldValue>_<fieldName><fieldVal...>_ 
    *         where field name is either "docBody," "sourceNote," or "footnotes," or can i go ahead & start making it function w/ all applicable field names?
@@ -40,11 +82,9 @@ export class AdvancedSearchComponent {
    *    2. the images are in album collection, is the search currently only looking through the letters collection? If so, how do I add onto it to where it searches albums when
    *       "Image Caption & Metadata" field is selected?... and what in an album object even is the caption? It appears to be at least within the Metadata object
    *        of each album object... if this is the case, shouldn't we just search the metadata object or are they expecting it to just search the caption?
-   * 
-   *    3. worried about the size of file, how would i seperate the component into two, one for the search and one for search results (like basic search's componenets)?
-   *
-   *    4. how would i make the checkbox html more concise by using *ngFor and one-way property binding?
    */
+
+
   CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
   
   CONST_LETTERBODY = "docBody";
@@ -52,8 +92,12 @@ export class AdvancedSearchComponent {
   CONST_FOOTNOTES = "footnotes";
 
   CONST_AUTHORS = "docAuthor";
+
   CONST_TC = "Thomas Carlyle";
-  CONST_JC = "Jane Carylyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
+  CONST_TWC = "Thomas Welsh Carlyle"
+  // most letters from him have "Thomas Carlyle" as sender BUT others have "Thomas Welsh Carlyle" as sender
+
+  CONST_JWC = "Jane Welsh Carlyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
   CONST_MW = "Margaret Welsh"; 
   CONST_TCJC = "Thomas Carlyle Jane Welsh Carlyle";
 
@@ -64,11 +108,19 @@ export class AdvancedSearchComponent {
   footnotesStr = "Footnotes";
 
   allAuthorsStr = "Select/ Unselect All Senders";
-  tcStr = "Thomas Carlyle";
-  jcStr =  "Jane Carlyle";
+  tcStr = "Thomas Carlyle"; 
+  /*
+   * to index "Thomas Carlyle" & "Thomas Welsh Carlyle" signed documents...
+   * ... it'd be frivolous and awkard to use 2 distinct checkbox items...
+   * ... so we'll just append the 2 different constants to the OR string...
+   * ... if the one item is selected
+   */
+
+  jwcStr =  "Jane Welsh Carlyle";
   tccdjfStr = "Thomas Carlyle, CD & JF";
   mwStr = "Margaret Welsch";
-  tcjcStr = "Thomas & Jane Carylyle" // corresponds to db value: "Thomas Carlyle Jane Welsch Carlyle"
+  tcjcStr = "Thomas & Jane Carlyle" // corresponds to db value: "Thomas Carlyle Jane Welsch Carlyle"
+
   //  the following bools are associated w/ checkbox items
   boolAllFields = true;
   boolLetterBody = true;
@@ -76,7 +128,7 @@ export class AdvancedSearchComponent {
   boolFootnotes = true;
 
   boolTC = true;
-  boolJC = true;
+  boolJWC = true;
   boolTCJC = true;
   boolMW = true;
   searchAllAuthors = true;
@@ -87,14 +139,14 @@ export class AdvancedSearchComponent {
  *        "<attrName>Str" : arrays used to leverage property binding to display checkbox items in HTML
 */
   
-  docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jcStr, this.mwStr, this.tcjcStr];
+  docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jwcStr, this.mwStr, this.tcjcStr];
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
-  authors = [this.searchAllAuthors, this.boolTC, this.boolJC, this.boolMW, this.boolTCJC];
+  authors = [this.searchAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
  
   queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
-  queryAuthorsStr = ["", this.CONST_TC, this.CONST_JC, this.CONST_MW, this.CONST_TCJC];
+  queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
  
 
 
@@ -158,6 +210,18 @@ export class AdvancedSearchComponent {
     } 
   }
 
+  //  TODO: consolidate the following two methods
+  checkUncheckAllAuthors(event: any) {
+    //  if this method was called, change authors[0] to the opposite of what it currently is
+    this.authors[0] = !this.authors[0];
+    for (let i=0; i < this.authors.length; i++)
+      this.authors[i] = this.authors[0];
+  }
+  checkUncheckAllFields(event: any) {
+    this.fields[0] = !this.fields[0];
+    for (let i=0; i < this.fields.length; i++)
+      this.fields[i] = this.fields[0];
+  }
   //  true/false indicates if user wants to search all of the fields
   searchAllFields() {
     return this.fields[0];
@@ -166,6 +230,10 @@ export class AdvancedSearchComponent {
   searchAll(aBoolArray) 
   {
     return aBoolArray[0];
+  }
+  searchThomasCarlyle(aBoolArray)
+  {
+    return aBoolArray[1];
   }
   /*
    *  the following helper methods help us determine strings have fields and values in them, indicating which sentences we need make for html display
@@ -310,7 +378,7 @@ export class AdvancedSearchComponent {
   }
 
   //  return search string of authors
-  appendAuthorsToSearchString()
+  appendAuthorsToSearchString(boolString)
   {
       /*
        * remember, string format must be <fieldName1>-<fieldValue1>_<fieldName2>-<fieldValue2>_ ... ... <fieldNameN>-<fieldValueN>_
@@ -321,7 +389,11 @@ export class AdvancedSearchComponent {
     {
       for (let i = 0; i < this.authors.length; i++)
       {
-        retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
+        if((i = 1)
+             &&  (boolString.includes("AND") || boolString.includes("NOT"))) // user wants to search thomas carlyle but we need to index *both* Thomas Carlyles by appending the two *different* senders to OR string (already did so before calling this method)
+          continue;
+        else
+          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
       } 
     }
     else
@@ -330,7 +402,11 @@ export class AdvancedSearchComponent {
       {
         if (!this.authors[i])
           continue;
-        retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
+        if((i = 1)
+             &&  (boolString.includes("AND") || boolString.includes("NOT")))
+          continue;
+        else
+          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
       }
     }
     return retString;
@@ -339,7 +415,7 @@ export class AdvancedSearchComponent {
   {
     // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
     var retString = "";
-    retString += this.appendAuthorsToSearchString();
+    retString += this.appendAuthorsToSearchString(boolString);
     if (this.searchAllFields())
     {
       for (let k = 0; k < this.queryFieldsStr.length; k++)
@@ -415,12 +491,20 @@ export class AdvancedSearchComponent {
       {
       switch(boolOp) {
         case "AND":
+          if (this.searchThomasCarlyle(this.authors)) {
+            ORString += this.CONST_AUTHORS + "-" + this.CONST_TC + "_";
+            ORString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_";
+          }
+          // TODO: fix issue - if a user selects thomas carlyle AND another sender/ more senders, page becomes unresponsive
           ANDString += this.makeSearchString(ANDString, result[i][1][j]);
           break;
         case "OR":
           ORString += this.makeSearchString(ORString, result[i][1][j]);
           break;
         case "NOT":
+          if (this.searchThomasCarlyle(this.authors)) {
+            NOTString += this.CONST_AUTHORS + "-" + this.CONST_TC + "_"; ORString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_";
+          }
           NOTString += this.makeSearchString(NOTString, result[i][1][j]);
           break;
         default:
