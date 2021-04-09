@@ -56,6 +56,8 @@ exports.advancedSearch = async function(query) {
   var andArray = [];
   var orArray = [];
   var notArray = [];
+  var minYear = gte;
+  var maxYear = lte;
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
   console.log(result);
@@ -76,12 +78,12 @@ exports.advancedSearch = async function(query) {
 
     var info = result[i].split("-");
     var fieldName = "letters." + info[0];
-    if(mode[0]) {
+    if(mode[0] && (!info[0].includes("docDate"))) {
       var match_phrase = {};
       match_phrase[fieldName] = info[1];
       andArray.push({
         match_phrase
-      });
+     });
     } else if(mode[1]) {
       var match_phrase = {};
       match_phrase[fieldName] = info[1];
@@ -96,8 +98,28 @@ exports.advancedSearch = async function(query) {
       });      
     }
   }
+
+  fieldNameDate = "docDate";
+  var range = {fieldNameDate: 
+                    {gte: string, lte: string} };
+  //range = {fieldNameDate: {minYear, maxYear}};
+  for (let i = 0; i < 2; i++)
+  {
+    if (result[i].info[0].includes(fieldNameDate)) {
+      if (result[i].info[0].includes("MIN")) {
+        range[minYear] = result[i].info[0];
+      }
+      else if (result[i].info[0].includes("MAX")) {
+        range[maxYear] = resul[i].info[0];
+      }
+    }
+  }
+  range.push({minYear});
+  range.push({maxYear});
+ 
+
   var rawQueryObject = {
-      must: andArray,
+      must: andArray, range,
       should: orArray,
       must_not: notArray
     };
@@ -112,7 +134,7 @@ exports.advancedSearch = async function(query) {
         nested: {
           path: "letters",
           query: {
-            bool: rawQueryObject
+            bool: rawQueryObject,
           },
           inner_hits : {
             size: 10

@@ -108,9 +108,13 @@
         <div class="narrow-by-dates">
           <p class="time-period-heading"><strong> Time Period </strong></p>
               <label for="start-date"> dated between... </label>
-              <input type="search" name="start-date" id="dates-input-box" placeholder="1837">  <br>
+              <input type="search" 
+                [ngModel] ="dateRange[0]"
+                  id="dates-input-box" name="start-date" placeholder="1825">  <br>
               <label for="end-date"> and... </label>
-              <input type="search" id="dates-input-box" name="end-date" placeholder="1901"> 
+              <input type="search" 
+                [ngModel] = "dateRange[1]"
+                  id="dates-input-box" name="end-date" placeholder="1869"> 
           </div>
 
       </div>

@@ -92,6 +92,7 @@ export class AdvancedSearchComponent {
   CONST_FOOTNOTES = "footnotes";
 
   CONST_AUTHORS = "docAuthor";
+  CONST_DATE = "docDate";
 
   CONST_TC = "Thomas Carlyle";
   CONST_TWC = "Thomas Welsh Carlyle"
@@ -100,6 +101,9 @@ export class AdvancedSearchComponent {
   CONST_JWC = "Jane Welsh Carlyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
   CONST_MW = "Margaret Welsh"; 
   CONST_TCJC = "Thomas Carlyle Jane Welsh Carlyle";
+
+  CONST_MINYEAR = "1825"; 
+  CONST_MAXYEAR = "1869";
 
   //  the following strings are for html checkbox items
   allFieldsStr = "Select/ Unselect All Fields"
@@ -132,9 +136,14 @@ export class AdvancedSearchComponent {
   boolTCJC = true;
   boolMW = true;
   searchAllAuthors = true;
-    //  Array naming convention noted below...
 
-/*
+  dateRange = [this.CONST_MINYEAR, this.CONST_MAXYEAR];
+  // the query is expecting a date range, so if user doesn't specify one, we'll use these years
+
+
+  //  Array naming convention noted below...
+
+    /*
  *   "query<attrName>Str" :  arrays used to map attribute booleans (represent checkbox is/ is not selected) to corresponding string elastic is expecting
  *        "<attrName>Str" : arrays used to leverage property binding to display checkbox items in HTML
 */
@@ -222,6 +231,22 @@ export class AdvancedSearchComponent {
     for (let i=0; i < this.fields.length; i++)
       this.fields[i] = this.fields[0];
   }
+
+  /*
+  changeDateRange(event: any) {
+    let val = event.srcElement.value;
+    let name = event.srcElementName;
+    if (name.includes("start-date")) {
+    this.dateRange.splice(0, 0);
+    this.dateRange.push()
+    }
+    else if (name.includes("end-date")) {
+
+    }
+
+  }
+  */
+
   //  true/false indicates if user wants to search all of the fields
   searchAllFields() {
     return this.fields[0];
@@ -411,6 +436,13 @@ export class AdvancedSearchComponent {
     }
     return retString;
   }
+
+  appendDateRangeToSearchString() {
+    var retString = "";
+    retString += "gte:" + "-" + this.dateRange[0] + "_" + "lte:" + "-" + this.dateRange[1] + "_";
+    return retString;
+  }
+
   makeSearchString(boolString, currTermOfQuery)
   {
     // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
@@ -435,6 +467,7 @@ export class AdvancedSearchComponent {
       }
     }
     //  console.log("Should append:\t" + retString + "\n...to " + boolString + "string");
+    retString += this.appendDateRangeToSearchString();
     return retString;
   }
 
@@ -455,17 +488,13 @@ export class AdvancedSearchComponent {
 
   startSearch() {
     
+    console.log("Min Date Specified: " + this.dateRange[0]);
+    console.log("Max Date Specified: " + this.dateRange[1]);
     var result = [];
     var aQueryID = "";
     var aQueryName = "";
     var aQueryValue = "";
-
-    console.log("Recipients chosen...");
-    for (let i=0; i < this.recipients.length; i++) {
-      console.log(this.recipients[0][i]);
-    }
-    debugger;
-
+   
     for(var i = 0; i < this.queryNumber; i++) {
       aQueryID = "searchTerm".concat((i+1).toString());
       aQueryName = (<HTMLInputElement>document.getElementById(aQueryID)).name;
