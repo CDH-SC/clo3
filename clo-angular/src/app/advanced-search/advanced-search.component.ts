@@ -439,7 +439,7 @@ export class AdvancedSearchComponent {
 
   appendDateRangeToSearchString() {
     var retString = "";
-    retString += "gte:" + "-" + this.dateRange[0] + "_" + "lte:" + "-" + this.dateRange[1] + "_";
+    retString += this.CONST_DATE + "MIN" + "-" + this.dateRange[0] + "_" + this.CONST_DATE + "MAX" + "-" + this.dateRange[1] + "_";
     return retString;
   }
 
@@ -447,6 +447,7 @@ export class AdvancedSearchComponent {
   {
     // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
     var retString = "";
+    retString += this.appendDateRangeToSearchString();
     retString += this.appendAuthorsToSearchString(boolString);
     if (this.searchAllFields())
     {
@@ -467,7 +468,6 @@ export class AdvancedSearchComponent {
       }
     }
     //  console.log("Should append:\t" + retString + "\n...to " + boolString + "string");
-    retString += this.appendDateRangeToSearchString();
     return retString;
   }
 

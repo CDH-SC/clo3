@@ -60,7 +60,11 @@ exports.advancedSearch = async function(query) {
   var maxYear = lte;
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
+  var range = {"letters.docDate": 
+                {gte: 1825, lte: 1869} };
+
   console.log(result);
+
   for(var i = 0; i < result.length; i++) {
     if(result[i] == '') {
       continue;
@@ -78,8 +82,17 @@ exports.advancedSearch = async function(query) {
 
     var info = result[i].split("-");
     var fieldName = "letters." + info[0];
-    if(mode[0] && (!info[0].includes("docDate"))) {
-      var match_phrase = {};
+
+    if(mode[0]) {
+      var match_phrase = {};/*
+      if (fieldName.includes("MIN")) {
+        range[gte] = info[0];
+        continue;
+      }
+      else if (fieldName.includes("MAX")) {
+        range[lte] = info[0];
+        continue;
+      }*/
       match_phrase[fieldName] = info[1];
       andArray.push({
         match_phrase
@@ -99,23 +112,6 @@ exports.advancedSearch = async function(query) {
     }
   }
 
-  fieldNameDate = "docDate";
-  var range = {fieldNameDate: 
-                    {gte: string, lte: string} };
-  //range = {fieldNameDate: {minYear, maxYear}};
-  for (let i = 0; i < 2; i++)
-  {
-    if (result[i].info[0].includes(fieldNameDate)) {
-      if (result[i].info[0].includes("MIN")) {
-        range[minYear] = result[i].info[0];
-      }
-      else if (result[i].info[0].includes("MAX")) {
-        range[maxYear] = resul[i].info[0];
-      }
-    }
-  }
-  range.push({minYear});
-  range.push({maxYear});
  
 
   var rawQueryObject = {
