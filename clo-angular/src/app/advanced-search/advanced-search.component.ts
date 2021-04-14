@@ -95,15 +95,15 @@ export class AdvancedSearchComponent {
   CONST_DATE = "docDate";
 
   CONST_TC = "Thomas Carlyle";
-  CONST_TWC = "Thomas Welsh Carlyle"
+  // CONST_TWC = "Thomas Welsh Carlyle"
   // most letters from him have "Thomas Carlyle" as sender BUT others have "Thomas Welsh Carlyle" as sender
 
   CONST_JWC = "Jane Welsh Carlyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
   CONST_MW = "Margaret Welsh"; 
   CONST_TCJC = "Thomas Carlyle Jane Welsh Carlyle";
 
-  CONST_MINYEAR = "1825"; 
-  CONST_MAXYEAR = "1869";
+  // CONST_MINYEAR = "1825"; 
+  // CONST_MAXYEAR = "1869";
 
   //  the following strings are for html checkbox items
   allFieldsStr = "Select/ Unselect All Fields"
@@ -135,9 +135,9 @@ export class AdvancedSearchComponent {
   boolJWC = true;
   boolTCJC = true;
   boolMW = true;
-  searchAllAuthors = true;
+  boolAllAuthors = true;
 
-  dateRange = [this.CONST_MINYEAR, this.CONST_MAXYEAR];
+  // dateRange = [this.CONST_MINYEAR, this.CONST_MAXYEAR];
   // the query is expecting a date range, so if user doesn't specify one, we'll use these years
 
 
@@ -152,7 +152,7 @@ export class AdvancedSearchComponent {
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
-  authors = [this.searchAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
+  authors = [this.boolAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
  
   queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
@@ -251,7 +251,24 @@ export class AdvancedSearchComponent {
   searchAllFields() {
     return this.fields[0];
   }
-
+  searchAllAuthors() {
+    return this.authors[0];
+  }
+  searchMultipleAuthors() {
+    var amountOfAuthorsSelected = 0;
+    for (var i = 0; i < this.fields.length; i++) {
+      if (this.searchAllAuthors()) {
+        amountOfAuthorsSelected = 4;
+        break;
+      }
+      else {
+        if (this.authors[i+1]) {
+          ++amountOfAuthorsSelected;
+        }
+      }
+    }
+    if (amountOfAuthorsSelected > 1) return true;
+  }
   searchAll(aBoolArray) 
   {
     return aBoolArray[0];
@@ -401,6 +418,19 @@ export class AdvancedSearchComponent {
     ORSentence = ORSentence.replace(new RegExp(',' + '$'), '.');
     this.displayQuery[1] = ORSentence;
   }
+/*
+  addTermsWhenThomasWasSelected(currTermOfQuery) 
+  {
+    var retString = "";
+    for (var k = 0; k < this.fields.length; k++)
+    {
+      if (this.fields[k+1]) {
+        retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
+      }
+    }
+    return retString;
+  }
+*/
 
   //  return search string of authors
   appendAuthorsToSearchString(boolString)
@@ -410,44 +440,48 @@ export class AdvancedSearchComponent {
        * in db, fieldName = docAuthor for the senders
        */
     var retString = "";
+    if (this.searchMultipleAuthors() && boolString.includes("AND")) {
+      retString += "multipleAuthorsANDString-";
+      return retString;
+    }
     if (this.searchAll(this.authors))
     {
       for (let i = 0; i < this.authors.length; i++)
       {
-        if((i = 1)
+        /* if((i = 1)
              &&  (boolString.includes("AND") || boolString.includes("NOT"))) // user wants to search thomas carlyle but we need to index *both* Thomas Carlyles by appending the two *different* senders to OR string (already did so before calling this method)
           continue;
-        else
+        else */
           retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
       } 
     }
     else
     {
-      for (let i = 1; i <= this.authors.length; i++)
+      for (let i = 0; i < this.authors.length; i++)
       {
-        if (!this.authors[i])
+        if (!this.authors[i+1])
           continue;
-        if((i = 1)
+       /* if((i = 1)
              &&  (boolString.includes("AND") || boolString.includes("NOT")))
           continue;
-        else
-          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
+        else */
+          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
       }
     }
     return retString;
   }
-
+/*
   appendDateRangeToSearchString() {
     var retString = "";
     retString += this.CONST_DATE + "MIN" + "-" + this.dateRange[0] + "_" + this.CONST_DATE + "MAX" + "-" + this.dateRange[1] + "_";
     return retString;
   }
-
+*/
   makeSearchString(boolString, currTermOfQuery)
   {
     // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
     var retString = "";
-    retString += this.appendDateRangeToSearchString();
+    // retString += this.appendDateRangeToSearchString();
     retString += this.appendAuthorsToSearchString(boolString);
     if (this.searchAllFields())
     {
@@ -488,8 +522,8 @@ export class AdvancedSearchComponent {
 
   startSearch() {
     
-    console.log("Min Date Specified: " + this.dateRange[0]);
-    console.log("Max Date Specified: " + this.dateRange[1]);
+    // console.log("Min Date Specified: " + this.dateRange[0]);
+    // console.log("Max Date Specified: " + this.dateRange[1]);
     var result = [];
     var aQueryID = "";
     var aQueryName = "";
@@ -520,20 +554,30 @@ export class AdvancedSearchComponent {
       {
       switch(boolOp) {
         case "AND":
+          /*  ISSUE: can't retrieve all letters from Thomas Carlyle because there are 2 different names (docAuthor's) referring to Thomas in the database
           if (this.searchThomasCarlyle(this.authors)) {
             ORString += this.CONST_AUTHORS + "-" + this.CONST_TC + "_";
+            ORString += this.addTermsWhenThomasWasSelected(result[i][1][j]);
             ORString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_";
+            ORString += this.addTermsWhenThomasWasSelected(result[i][1][j]);
           }
+          */
           // TODO: fix issue - if a user selects thomas carlyle AND another sender/ more senders, page becomes unresponsive
           ANDString += this.makeSearchString(ANDString, result[i][1][j]);
+          if (ANDString.includes("multipleAuthorsANDString-")) { // if this is the case, this phrase is at beginning and this dash is the first dash in string so...
+            console.log(ANDString);
+            console.log(ANDString.substring(ANDString.indexOf("-")+1))
+            ANDString = "$AND:_" + ANDString.substring(ANDString.indexOf("-")+1);
+            ORString += this.appendAuthorsToSearchString(ORString);
+          }
           break;
         case "OR":
           ORString += this.makeSearchString(ORString, result[i][1][j]);
           break;
         case "NOT":
-          if (this.searchThomasCarlyle(this.authors)) {
+         /* if (this.searchThomasCarlyle(this.authors)) {
             NOTString += this.CONST_AUTHORS + "-" + this.CONST_TC + "_"; ORString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_";
-          }
+          } */
           NOTString += this.makeSearchString(NOTString, result[i][1][j]);
           break;
         default:
