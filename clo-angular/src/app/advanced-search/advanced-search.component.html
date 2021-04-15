@@ -14,7 +14,6 @@
                 let first = isFirst; 
                   let last = isLast;'>
               <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
-                <option disabled selected hidden>Logic</option>
                 <option value='AND'>Results must contain</option>
                 <option value='OR'>Results may contain</option>
                 <option value='NOT'>Results must not contain</option>
@@ -61,15 +60,14 @@
           [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
-       <!--  <div *ngFor="let aRecipient of recipient;" class="narrow-by-recipient">   -->
+       <!--  
          <div class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong>  </p>
           <input type="search" style="background-color: transparent; border-radius: 3px; border: 1px solid brown;"
             class="input-box" placeholder="john stuart mill">
           </div>
-        <!-- </div> -->
+         </div> 
    
-        <!--
         <div>
           <button (click)="addRecipient()">Add Recipient</button>
           <button (click)="removeRecipient()">Remove Recipient</button>
@@ -109,11 +107,10 @@
           <p class="time-period-heading"><strong> Time Period </strong></p>
               <label for="start-date"> dated between... </label>
               <input type="search" 
-                  id="dates-input-box" name="start-date" placeholder="1825"/>  <br>
-                  <!-- [ngModel] = "dateRange[0]" -->
+               [(ngModel)] = "dateRange[0]" id="dates-input-box" name="start-date" placeholder="1825"/>  <br>
               <label for="end-date"> and... </label>
               <input type="search" 
-                  id="dates-input-box" name="end-date" placeholder="1869"/> 
+                  [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1869"/> 
                   <!-- [ngModel] = "dateRange[1]" -->
           </div>
 
@@ -121,46 +118,6 @@
 </div>
 
 <!--
-      <div class="container-narrow-results">
-
-        <div class="narrow-by-recipient">
-          <p class="recipient"> <strong> Recipients </strong> </p>
-          <input type="checkbox" value='allRecipients' checked> <strong> Include All </strong> <br>
-          <input type="search" id="input-box" placeholder="john stuart mill">
-        </div>
-        <div class="narrow-by-fields">
-          <p class="fields"> <strong> Fields </strong> </p>
-           <input type="checkbox" value='allFields' checked> <strong> Select/ Unselect All Fields </strong> <br>
-           <input type="checkbox" value='docBody' checked> Letter Body <br>
-           <input type="checkbox" value='sourceNote' checked> Source Notes <br>
-           <input type="checkbox" value='footnotes' checked> Foot Notes <br>
-           <input type="checkbox" value='imageCaptionAndMetadata' checked> Image Caption and Metadata
-        </div>
-          <div class="narrow-by-dates">
-          <p class="time-period-heading"><strong> Time Period </strong></p>
-              <label for="start-date"> dated between... </label>
-              <input type="search" name="start-date" id="dates-input-box" placeholder="1837">  <br>
-              <label for="end-date"> and... </label>
-              <input type="search" id="dates-input-box" name="end-date" placeholder="1901"> 
-          </div>
-      </div>
-
-
-
-   <ul>
-   
-   <li>
-        <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="allFields" (change) = "checkUncheckAll()"/> <strong>Select/ Unselect All</strong>
-     </li>
-   </ul>
-   <ul>
-     li *ngFor="let item of checkList"> 
-     <input type="checkbox" [(ngModel)]="item.checked" name="list_name" value="{{item.id}}" (change)="isAllSelected()"/>
-       {{item.value}}
-     </li> 
-    </ul>
-  </div>
-   <code>{{checkedList}}</code>
 
       {{#if volumes}}
           <hr/>
@@ -177,10 +134,10 @@
           <div>No data to display.</div>
       {{/if}}
 
-     -->
+  -->
  <div
   class="container-fluid"
-  *ngIf="(searchResults | async) as results"
+  *ngIf="(searchResults | async) as results; else loading"
   id="content"
 >
 
@@ -286,3 +243,10 @@
     </div>
   </ng-container>
 </div>
+<ng-template #loading>
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
+      <img class="loading" src="../../assets/loading.gif" />
+    </div>
+  </div>
+</ng-template>

@@ -102,8 +102,6 @@ export class AdvancedSearchComponent {
   CONST_MW = "Margaret Welsh"; 
   CONST_TCJC = "Thomas Carlyle Jane Welsh Carlyle";
 
-  // CONST_MINYEAR = "1825"; 
-  // CONST_MAXYEAR = "1869";
 
   //  the following strings are for html checkbox items
   allFieldsStr = "Select/ Unselect All Fields"
@@ -137,7 +135,7 @@ export class AdvancedSearchComponent {
   boolMW = true;
   boolAllAuthors = true;
 
-  // dateRange = [this.CONST_MINYEAR, this.CONST_MAXYEAR];
+  dateRange = [];
   // the query is expecting a date range, so if user doesn't specify one, we'll use these years
 
 
@@ -266,6 +264,9 @@ export class AdvancedSearchComponent {
   searchThomasCarlyle(aBoolArray)
   {
     return aBoolArray[1];
+  }
+  dateRangeIsSpecified() {
+    return this.dateRange[0] >= 0 || this.dateRange[1] >= 0;
   }
   /*
    *  the following helper methods help us determine strings have fields and values in them, indicating which sentences we need make for html display
@@ -478,7 +479,8 @@ export class AdvancedSearchComponent {
     var aQueryID = "";
     var aQueryName = "";
     var aQueryValue = "";
-   
+
+   // console.log("Date Range Specifications\nMin Date:\t"+this.dateRange[0]+"\nMax Date:\t"+this.dateRange[1]);
     for(var i = 0; i < this.queryNumber; i++) {
       aQueryID = "searchTerm".concat((i+1).toString());
       aQueryName = (<HTMLInputElement>document.getElementById(aQueryID)).name;
@@ -498,6 +500,11 @@ export class AdvancedSearchComponent {
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
     var Authors = this.authors;
+    if (this.dateRange[0])
+      ANDString += this.CONST_DATE + "Min-" + this.dateRange[0] + "_";
+    if (this.dateRange[1])
+      ANDString += this.CONST_DATE + "Max-" + this.dateRange[1] + "_"; 
+
     for(var i = 0; i < result.length; i++) {
       boolOp = result[i][0];
       for (let j = 0; j < result[i][1].length; j++)

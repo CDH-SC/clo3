@@ -60,8 +60,8 @@ exports.advancedSearch = async function(query) {
   // var maxYear = lte;
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
- /*var range = {"letters.docDate": 
-                {gte: 1825, lte: 1869} }; */
+  var range = {"letters.docDate": 
+                {gte: 1825, lte: 1869} }; // default range
 
   console.log(result);
 
@@ -84,16 +84,17 @@ exports.advancedSearch = async function(query) {
     var fieldName = "letters." + info[0];
 
     if(mode[0]) {
-      var match_phrase = {};
-      /*
-      if (fieldName.includes("MIN")) {
-        range[gte] = info[0];
-        continue;
+      if (fieldName.includes("docDate")) {
+        if (fieldName.includes("Min")) {
+          range[gte] = info[0];
+          continue;
+        }
+        else if (fieldName.includes("Max")) {
+          range[lte] = info[0];
+          continue;
+        }
       }
-      else if (fieldName.includes("MAX")) {
-        range[lte] = info[0];
-        continue;
-      }*/
+      var match_phrase = {};
       match_phrase[fieldName] = info[1];
       andArray.push({
         match_phrase
@@ -116,7 +117,7 @@ exports.advancedSearch = async function(query) {
  
 
   var rawQueryObject = {
-      must: andArray, // range,
+      must: andArray, range,
       should: orArray,
       must_not: notArray
     };
