@@ -95,7 +95,7 @@ export class AdvancedSearchComponent {
   CONST_DATE = "docDate";
 
   CONST_TC = "Thomas Carlyle";
-  // CONST_TWC = "Thomas Welsh Carlyle"
+  CONST_TWC = "Thomas Welsh Carlyle"
   // most letters from him have "Thomas Carlyle" as sender BUT others have "Thomas Welsh Carlyle" as sender
 
   CONST_JWC = "Jane Welsh Carlyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
@@ -248,27 +248,17 @@ export class AdvancedSearchComponent {
   */
 
   //  true/false indicates if user wants to search all of the fields
-  searchAllFields() {
-    return this.fields[0];
-  }
-  searchAllAuthors() {
-    return this.authors[0];
-  }
-  searchMultipleAuthors() {
-    var amountOfAuthorsSelected = 0;
-    for (var i = 0; i < this.fields.length; i++) {
-      if (this.searchAllAuthors()) {
-        amountOfAuthorsSelected = 4;
-        break;
-      }
-      else {
-        if (this.authors[i+1]) {
-          ++amountOfAuthorsSelected;
-        }
-      }
+
+  searchMultiple(aBoolArray) {
+    var itemsSelected = 0;
+    for (var i = 0; i < aBoolArray.length; i++) {
+        if (aBoolArray[i+1])
+          ++itemsSelected;
+        if (itemsSelected > 1) return true;
     }
-    if (amountOfAuthorsSelected > 1) return true;
+    return false; // if it gets to this line, the above if-body never executed, indicating the user selected at most 1 item (1 author, 1 field, etc.)
   }
+
   searchAll(aBoolArray) 
   {
     return aBoolArray[0];
@@ -418,58 +408,35 @@ export class AdvancedSearchComponent {
     ORSentence = ORSentence.replace(new RegExp(',' + '$'), '.');
     this.displayQuery[1] = ORSentence;
   }
-/*
-  addTermsWhenThomasWasSelected(currTermOfQuery) 
-  {
-    var retString = "";
-    for (var k = 0; k < this.fields.length; k++)
-    {
-      if (this.fields[k+1]) {
-        retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
-      }
-    }
-    return retString;
-  }
-*/
+
 
   //  return search string of authors
   appendAuthorsToSearchString(boolString)
   {
-      /*
-       * remember, string format must be <fieldName1>-<fieldValue1>_<fieldName2>-<fieldValue2>_ ... ... <fieldNameN>-<fieldValueN>_
-       * in db, fieldName = docAuthor for the senders
-       */
-    var retString = "";
-    if (this.searchMultipleAuthors() && boolString.includes("AND")) {
-      retString += "multipleAuthorsANDString-";
-      return retString;
-    }
-    if (this.searchAll(this.authors))
-    {
-      for (let i = 0; i < this.authors.length; i++)
-      {
-        /* if((i = 1)
-             &&  (boolString.includes("AND") || boolString.includes("NOT"))) // user wants to search thomas carlyle but we need to index *both* Thomas Carlyles by appending the two *different* senders to OR string (already did so before calling this method)
+    /*
+     *  remember, string format must be <fieldName1>-<fieldValue1>_<fieldName2>-<fieldValue2>_ ... ... <fieldNameN>-<fieldValueN>_
+     *  in db, fieldName = docAuthor for the senders
+    */
+    var retString = "";    
+    if (this.searchAll(this.authors)) return retString; // elastic searches all authors by default so no need to append all authors to search string
+    else {
+      for (let i = 1; i <= this.authors.length; i++) {
+        if (!this.authors[i]) 
           continue;
-        else */
-          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
-      } 
-    }
-    else
-    {
-      for (let i = 0; i < this.authors.length; i++)
-      {
-        if (!this.authors[i+1])
-          continue;
-       /* if((i = 1)
-             &&  (boolString.includes("AND") || boolString.includes("NOT")))
-          continue;
-        else */
-          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
+        else {
+          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
+          if (i == 1)
+            retString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_"; // above code added this.CONST_TC, now we have to add the other "Thomas Carlyle"
+        }
       }
     }
     return retString;
-  }
+} 
+//TODO: 
+//   1: figure out how to change values using binding and user text input
+//   2: Uncomment method below, call it in startSearch(), integrating it into existing logic
+
+
 /*
   appendDateRangeToSearchString() {
     var retString = "";
@@ -477,31 +444,14 @@ export class AdvancedSearchComponent {
     return retString;
   }
 */
-  makeSearchString(boolString, currTermOfQuery)
+
+  appendFieldsAndTermsToSearchString(boolString, currTermOfQuery)
   {
-    // [this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES]
     var retString = "";
-    // retString += this.appendDateRangeToSearchString();
-    retString += this.appendAuthorsToSearchString(boolString);
-    if (this.searchAllFields())
-    {
-      for (let k = 0; k < this.queryFieldsStr.length; k++)
-      {
-        //  debugger;
-        retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
-      }
+    for (let i = 0; i < this.queryFieldsStr.length; i++) {
+      if (!this.fields[i+1])  continue;
+      retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
     }
-    else // wants to search all fields but not all of them
-    {
-      for (let k = 0; k < this.queryFieldsStr.length; k++)
-      {
-        if (!this.fields[k+1])
-          continue;
-        else 
-          retString += this.queryFieldsStr[k+1] + "-" + currTermOfQuery + "_";
-      }
-    }
-    //  console.log("Should append:\t" + retString + "\n...to " + boolString + "string");
     return retString;
   }
 
@@ -547,38 +497,28 @@ export class AdvancedSearchComponent {
     var ANDString = "$AND:_"
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
-
+    var Authors = this.authors;
     for(var i = 0; i < result.length; i++) {
       boolOp = result[i][0];
       for (let j = 0; j < result[i][1].length; j++)
       {
       switch(boolOp) {
         case "AND":
-          /*  ISSUE: can't retrieve all letters from Thomas Carlyle because there are 2 different names (docAuthor's) referring to Thomas in the database
-          if (this.searchThomasCarlyle(this.authors)) {
-            ORString += this.CONST_AUTHORS + "-" + this.CONST_TC + "_";
-            ORString += this.addTermsWhenThomasWasSelected(result[i][1][j]);
-            ORString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_";
-            ORString += this.addTermsWhenThomasWasSelected(result[i][1][j]);
-          }
-          */
-          // TODO: fix issue - if a user selects thomas carlyle AND another sender/ more senders, page becomes unresponsive
-          ANDString += this.makeSearchString(ANDString, result[i][1][j]);
-          if (ANDString.includes("multipleAuthorsANDString-")) { // if this is the case, this phrase is at beginning and this dash is the first dash in string so...
-            console.log(ANDString);
-            console.log(ANDString.substring(ANDString.indexOf("-")+1))
-            ANDString = "$AND:_" + ANDString.substring(ANDString.indexOf("-")+1);
+          ANDString += this.appendFieldsAndTermsToSearchString(ANDString, result[i][1][j]);
+          if (!this.searchMultiple(Authors)) 
+           ANDString += this.appendAuthorsToSearchString(ANDString);
+          else  {
+            if (j == 0)
             ORString += this.appendAuthorsToSearchString(ORString);
           }
           break;
         case "OR":
-          ORString += this.makeSearchString(ORString, result[i][1][j]);
+          ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
+          ORString += this.appendAuthorsToSearchString(ORString);
           break;
         case "NOT":
-         /* if (this.searchThomasCarlyle(this.authors)) {
-            NOTString += this.CONST_AUTHORS + "-" + this.CONST_TC + "_"; ORString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_";
-          } */
-          NOTString += this.makeSearchString(NOTString, result[i][1][j]);
+          NOTString += this.appendFieldsAndTermsToSearchString(NOTString, result[i][1][j]);
+          NOTString += this.appendAuthorsToSearchString(NOTString);
           break;
         default:
         }
