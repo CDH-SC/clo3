@@ -10304,16 +10304,16 @@ The Doctor went off Wedn<hi rend="italic">y</hi> Ev<hi rend="italic">g</hi> last
 <docDate value="1866-04-27">27 April 1866</docDate>
 <idno type="firstpage">250</idno>
 <idno type="lastpage">252</idno>
-<person type="sender">HADDINGTON COURIER&apos;S DESCRIPTION</person>
+ <person type="sender">HADDINGTON COURIER&#x02019;S DESCRIPTION</person>
 </bibl>
 <sourceNote/>
 <head>
-<person type="sender">HADDINGTON COURIER&apos;S DESCRIPTION</person>
+ <person type="sender">HADDINGTON COURIER&#x02019;S DESCRIPTION</person>
 </head>
 <docBody>
 <dateline/>
 <p>
-<hi rend="italic">HADDINGTONSHIRE COURIER&apos;S DESCRIPTION OF THE FUNERAL CEREMONY,</hi>
+ <hi rend="italic">HADDINGTONSHIRE COURIER&#x02019;S DESCRIPTION OF THE FUNERAL CEREMONY,</hi>
 <date when="1866-04-27">27 April 1866.</date>
 </p>
 <p>THE LATE MRS CARLYLE</p>
@@ -10538,9 +10538,7 @@ in noticing the death of Mrs Carlyle, says that of few English [<hi rend="italic
 </bibl>
 <sourceNote/>
 <head>
-<person type="sender">
-<pb id="pg-43-249" n="43:249"/>TC</person>
- TO <person type="addressee">JWC</person>
+ <person type="sender"><pb id="pg-43-249" n="43:249"/>TC&#x02019;S JOURNAL ENTRY</person>
 </head>
 <docBody>
 <p>TC&#x02019;S JOURNAL ENTRY ON JWC&#x02019;S DEATH AND FUNERAL.</p>
