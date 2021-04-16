@@ -43,6 +43,8 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
   prevLetterId: string = null;
   nextLetterId: string = null;
 
+  degreesRotated = 0;
+
   constructor(
     private volumeService: VolumeService,
     private route: ActivatedRoute,
@@ -492,6 +494,17 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
   }
 
   rotate() {
-
+    if(this.degreesRotated==0) {
+      this.degreesRotated = 90;
+    }
+    else if(this.degreesRotated==90) {
+      this.degreesRotated = 180;
+    }
+    else if(this.degreesRotated==180) {
+      this.degreesRotated = 270;
+    }
+    else if(this.degreesRotated==270) {
+      this.degreesRotated = 0;
+    }
   }
 }
