@@ -169,6 +169,7 @@ export class AdvancedSearchComponent {
   recipientNumber = 1;
   searchResults: any;
 
+  isSearching = false;
   displayQuery = ["","",""];
 
   page = 1;
@@ -419,40 +420,59 @@ export class AdvancedSearchComponent {
      *  in db, fieldName = docAuthor for the senders
     */
     var retString = "";    
-    if (this.searchAll(this.authors)) return retString; // elastic searches all authors by default so no need to append all authors to search string
+    if (this.searchAll(this.authors)) {
+      return retString; // elastic searches all authors by default so no need to append all authors to search string
+    }
     else {
-      for (let i = 1; i <= this.authors.length; i++) {
-        if (!this.authors[i]) 
+      for (let i = 0; i < this.authors.length; i++) {
+        if (!this.authors[i+1]) 
           continue;
         else {
-          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
-          if (i == 1)
+          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
+         /* if (i+1 == 1)
             retString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_"; // above code added this.CONST_TC, now we have to add the other "Thomas Carlyle"
-        }
+        */
+          }
       }
+      console.log("append authors to "+boolString+"\n"+retString);
+      return retString;
     }
-    return retString;
 } 
 //TODO: 
 //   1: figure out how to change values using binding and user text input
 //   2: Uncomment method below, call it in startSearch(), integrating it into existing logic
 
 
-/*
+bothBoundariesSpecified() {
+    if (this.dateRange[0] && this.dateRange[1])
+      return true;
+    else
+      return false;
+}
   appendDateRangeToSearchString() {
     var retString = "";
-    retString += this.CONST_DATE + "MIN" + "-" + this.dateRange[0] + "_" + this.CONST_DATE + "MAX" + "-" + this.dateRange[1] + "_";
-    return retString;
+    if (this.bothBoundariesSpecified()) {
+      retString += this.CONST_DATE + "Min" + "-" + this.dateRange[0] + "_" + this.CONST_DATE + "Max" + "-" + this.dateRange[1] + "_";
+      return retString;
+    } else if (this.dateRange[0]) {
+      retString += this.CONST_DATE + "Min" + "-" + this.dateRange[0] + "_";
+      return retString;
+    } else if (this.dateRange[1]) {
+      retString += this.CONST_DATE + "Max" + "-" + this.dateRange[1] + "_";
+      return retString;
+    }
   }
-*/
+
 
   appendFieldsAndTermsToSearchString(boolString, currTermOfQuery)
   {
     var retString = "";
     for (let i = 0; i < this.queryFieldsStr.length; i++) {
-      if (!this.fields[i+1])  continue;
-      retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
+      if (this.fields[i+1]) { 
+        retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
+      }
     }
+    console.log("append fields & terms to "+boolString+"\n"+retString);
     return retString;
   }
 
@@ -475,48 +495,51 @@ export class AdvancedSearchComponent {
     
     // console.log("Min Date Specified: " + this.dateRange[0]);
     // console.log("Max Date Specified: " + this.dateRange[1]);
+    this.isSearching = true;
     var result = [];
-    var aQueryID = "";
-    var aQueryName = "";
-    var aQueryValue = "";
 
    // console.log("Date Range Specifications\nMin Date:\t"+this.dateRange[0]+"\nMax Date:\t"+this.dateRange[1]);
     for(var i = 0; i < this.queryNumber; i++) {
-      aQueryID = "searchTerm".concat((i+1).toString());
-      aQueryName = (<HTMLInputElement>document.getElementById(aQueryID)).name;
-      aQueryValue = (<HTMLInputElement>document.getElementById(aQueryID)).value;
-      var check = this.checkQuery(result,aQueryName);
+      var currInputId = "searchTerm".concat((i+1).toString());
+      var currInputeName = (<HTMLInputElement>document.getElementById(currInputId)).name;
+      var currInputValue = (<HTMLInputElement>document.getElementById(currInputId)).value;
+      var check = this.checkQuery(result,currInputeName);
       if(check[0]) {
-        result[check[1]][1].push(aQueryValue);
+        result[check[1]][1].push(currInputValue);
       } else {
-        result.push([aQueryName, [aQueryValue]]);
+        /*
+        console.log("currInputId:\t"+currInputId);
+        console.log("currInputName:\t"+currInputeName);
+        console.log("currInputValue:\t"+currInputValue);
+        */
+        result.push([currInputeName, [currInputValue]]);
       }
     }
 
     console.log(result);
-    var boolOp; // used in loops below to determine which boolean goes with *this* array of terms (second index of result array)
+   // var boolOp; // used in loops below to determine which boolean goes with *this* array of terms (second index of result array)
     var queryString = ""
     var ANDString = "$AND:_"
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
-    var Authors = this.authors;
-    if (this.dateRange[0])
-      ANDString += this.CONST_DATE + "Min-" + this.dateRange[0] + "_";
-    if (this.dateRange[1])
-      ANDString += this.CONST_DATE + "Max-" + this.dateRange[1] + "_"; 
+    if (this.dateRange[0] || this.dateRange[1])
+      ANDString += this.appendDateRangeToSearchString(); 
 
     for(var i = 0; i < result.length; i++) {
-      boolOp = result[i][0];
+      var boolOp = result[i][0];
+      console.log("boolOp:\t"+boolOp);
+      console.log(result[i]);
       for (let j = 0; j < result[i][1].length; j++)
       {
       switch(boolOp) {
         case "AND":
           ANDString += this.appendFieldsAndTermsToSearchString(ANDString, result[i][1][j]);
-          if (!this.searchMultiple(Authors)) 
+          if (!this.searchMultiple(this.authors)) {
            ANDString += this.appendAuthorsToSearchString(ANDString);
+          }
           else  {
             if (j == 0)
-            ORString += this.appendAuthorsToSearchString(ORString);
+              ORString += this.appendAuthorsToSearchString(ORString);
           }
           break;
         case "OR":

@@ -60,8 +60,9 @@ exports.advancedSearch = async function(query) {
   // var maxYear = lte;
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
-  var range = {"letters.docDate": 
-                {gte: 1825, lte: 1869} }; // default range
+  var dateRange =  { range: { "letters.docDate": 
+                  {gte: 1815, lte: 1900} } }; // default range
+
 
   console.log(result);
 
@@ -84,13 +85,15 @@ exports.advancedSearch = async function(query) {
     var fieldName = "letters." + info[0];
 
     if(mode[0]) {
-      if (fieldName.includes("docDate")) {
+     if (fieldName.includes("docDate")) {
         if (fieldName.includes("Min")) {
-          range[gte] = info[0];
+          this.dateRange.gte = 0;
+          this.dateRange.gte = info[1];
           continue;
         }
         else if (fieldName.includes("Max")) {
-          range[lte] = info[0];
+          this.dateRange.lte = 0;
+          this.dateRange.lte = info[1];
           continue;
         }
       }
@@ -114,10 +117,10 @@ exports.advancedSearch = async function(query) {
     }
   }
 
- 
+ andArray.push(dateRange);
 
   var rawQueryObject = {
-      must: andArray, range,
+      must: andArray, 
       should: orArray,
       must_not: notArray
     };
