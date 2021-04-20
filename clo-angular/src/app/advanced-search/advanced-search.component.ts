@@ -434,7 +434,7 @@ export class AdvancedSearchComponent {
         */
           }
       }
-      console.log("append authors to "+boolString+"\n"+retString);
+      //console.log("append authors to "+boolString+"\n"+retString);
       return retString;
     }
 } 
@@ -472,7 +472,7 @@ bothBoundariesSpecified() {
         retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
       }
     }
-    console.log("append fields & terms to "+boolString+"\n"+retString);
+    //console.log("append fields & terms to "+boolString+"\n"+retString);
     return retString;
   }
 

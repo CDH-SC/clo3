@@ -56,12 +56,8 @@ exports.advancedSearch = async function(query) {
   var andArray = [];
   var orArray = [];
   var notArray = [];
-  // var minYear = gte;
-  // var maxYear = lte;
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
-  var dateRange =  { range: { "letters.docDate": 
-                  {gte: 1815, lte: 1900} } }; // default range
 
 
   console.log(result);
@@ -85,18 +81,18 @@ exports.advancedSearch = async function(query) {
     var fieldName = "letters." + info[0];
 
     if(mode[0]) {
+    // these values need to be assigned to an identifier to later be used in the a filter's property, which is declared after the loop
      if (fieldName.includes("docDate")) {
         if (fieldName.includes("Min")) {
-          this.dateRange.gte = 0;
-          this.dateRange.gte = info[1];
+          minYear = info[1];
           continue;
         }
         else if (fieldName.includes("Max")) {
-          this.dateRange.lte = 0;
-          this.dateRange.lte = info[1];
+          maxYear = info[1];
           continue;
         }
       }
+      console.log(fieldName);
       var match_phrase = {};
       match_phrase[fieldName] = info[1];
       andArray.push({
@@ -117,9 +113,15 @@ exports.advancedSearch = async function(query) {
     }
   }
 
- andArray.push(dateRange);
+  var dateFilter = [
+                    {range: 
+                      { "letters.docDate":
+                          {gte: minYear, lte: maxYear}}
+                      }
+                    ];
 
   var rawQueryObject = {
+      filter: dateFilter,
       must: andArray, 
       should: orArray,
       must_not: notArray
