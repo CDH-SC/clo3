@@ -56,6 +56,9 @@ exports.advancedSearch = async function(query) {
   var andArray = [];
   var orArray = [];
   var notArray = [];
+  minYear = 1800;
+  maxYear = 1900;
+  // default values used are the abs. min & max year of letters (in cases where a user does not enter a range explicitly)
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
 

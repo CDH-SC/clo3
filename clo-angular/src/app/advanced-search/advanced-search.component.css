@@ -19,7 +19,7 @@
 }
 
 #dates-input-box {
-  width: 49px !important;
+  width: 51px !important;
   background-color: transparent;
   border-radius: 3px;
   /* border: 1px solid #c17953; */
@@ -33,16 +33,6 @@
   border: 1px solid brown;
 }
 
-/*
-#sender-checkboxes label {
-  display: block;
-  color: #c17953;
-}
-
-#sender-checkboces label:hover {
-  background-color: #f8f1e5;
-}
-*/
 
 
 

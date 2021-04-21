@@ -231,32 +231,7 @@ export class AdvancedSearchComponent {
       this.fields[i] = this.fields[0];
   }
 
-  /*
-  changeDateRange(event: any) {
-    let val = event.srcElement.value;
-    let name = event.srcElementName;
-    if (name.includes("start-date")) {
-    this.dateRange.splice(0, 0);
-    this.dateRange.push()
-    }
-    else if (name.includes("end-date")) {
 
-    }
-
-  }
-  */
-
-  //  true/false indicates if user wants to search all of the fields
-
-  searchMultiple(aBoolArray) {
-    var itemsSelected = 0;
-    for (var i = 0; i < aBoolArray.length; i++) {
-        if (aBoolArray[i+1])
-          ++itemsSelected;
-        if (itemsSelected > 1) return true;
-    }
-    return false; // if it gets to this line, the above if-body never executed, indicating the user selected at most 1 item (1 author, 1 field, etc.)
-  }
 
   searchAll(aBoolArray) 
   {
@@ -266,28 +241,56 @@ export class AdvancedSearchComponent {
   {
     return aBoolArray[1];
   }
+
+  searchMultiple(aBoolArray) {
+    var itemsSelected = 0;
+    if (this.searchAll(aBoolArray))
+      return true;
+    else 
+    {
+    for (var i = 0; i < aBoolArray.length; i++) {
+        if (aBoolArray[i+1])
+          ++itemsSelected;
+        else if (i+1 == 2 && aBoolArray == this.authors && this.searchThomasCarlyle(aBoolArray)) // don't increment another time for the second thomas carlyle bool
+          continue;
+    }
+      if (itemsSelected > 1) 
+        return true;
+      else
+        return false; 
+  }
+}
   dateRangeIsSpecified() {
     return this.dateRange[0] >= 0 || this.dateRange[1] >= 0;
   }
-  /*
-   *  the following helper methods help us determine strings have fields and values in them, indicating which sentences we need make for html display
-   */
 
-  // checks if displayQuery[] index for AND is non-empty
-  isANDSentence(indexOfANDString: string) { if (indexOfANDString != "") return true; }
-
-  // checks if displayQuery[] index for OR is non-empty
-  isORSentence(indexOfORStr: string) { if (indexOfORStr != "") return true; }
-
-  // checks if displayQuery[] index for NOT is non-empty
-  isNOTSentence(indexOfNOTStr: string){ if (indexOfNOTStr != "") return true; }
-
+  specifiesALetterField (segmentOfSearchString) {
+    return segmentOfSearchString.includes(this.CONST_LETTERBODY)
+             || segmentOfSearchString.includes(this.CONST_FOOTNOTES)
+               || segmentOfSearchString.includes(this.CONST_SOURCENOTE); 
+  }
   
-  makeANDSentence(searchString: string)
+  specifiesAnAuthor (segmentOfSearchString) {
+    return segmentOfSearchString.includes(this.CONST_AUTHORS);
+  }
+  
+  specifiesDate (segmentOfSearchString) {
+    return segmentOfSearchString.includes(this.CONST_DATE);
+  }
+  makeSentence(whichSentence, searchString: string)
   {
-    let docBodyPhrase = " in the letter body,";
-    let sourceNotePhrase = " in the source note,";
-    let footnotesPhrase = " in the footnotes,";
+    let somethingSpecified = true;
+    if(searchString == "") {
+      // then they didn't have any and/or/not in their search, so return empty string to display nothing for this irrelevant sentence
+      somethingSpecified = false;
+    }
+    let sentence = "";
+    let fieldsPreposition = " in the";
+    let docBodyPhrase = "letter body";
+    let sourceNotePhrase = "source note";
+    let footnotesPhrase = "footnotes";
+    let prepositionalPhrase = fieldsPreposition + " ";
+    let fieldsPhrasesArray = ["all fields", docBodyPhrase, sourceNotePhrase, footnotesPhrase];
     /* create array splitting indices by the character at end of each search term
      * if user searches for 'oxford liberalism' in letter body and 'emerson' in the footnotes the search string is currently: docBody-oxford liberalism_footnotes-emerson_
      * after splitting the array to partition by each distinct search, the searchArray indices will be as follows...
@@ -296,121 +299,110 @@ export class AdvancedSearchComponent {
      *  searchArray[1]:   "footnotes-emerson"
      *  searchArray[2]:   ""
      */
-
+    let beginningOfSentence = "Results";
+    let termsIncluded = "";
+    let writtenBy= "";
+    let dateRangePhrase = "sent"
     let searchArray = searchString.split('_'); searchArray.pop(); // we split on underscore, the last underscore was after the last letter of last term, so this index containing an empty string will not be needed
+    //console.log(searchArray);
 
-    // for each index, we need to give it a phrase corresponding to the search term so initialize an empty string at first
-    let subStrPhrase = '';
-    /* for each index...
-     * 1) we need to decide which subStrPhrase is associated with it
+        /* for each index...
      * 2) then we need to replace the "<field>-" part and replace it with an opening single quote since we will have chopped of the string to where the first index is the search term
-     * 3) then we need to add the associated phrase after the actual term, which phrase for which index determined in following loop
      * 4) lastly, we need to add an ending single quote around each search term
      */
-     for (let i=0; i < searchArray.length; i++)
-     {
-       // the if-else block executes steps 1-3, after the loop the index will contain the corresponding subStrPhrase so we can just append the particular phrase after the block
-       if (searchArray[i].includes(this.CONST_LETTERBODY))
-       {
-         subStrPhrase = docBodyPhrase;
-         searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
-       }
-       else if (searchArray[i].includes(this.CONST_SOURCENOTE))
-       {
-         subStrPhrase = sourceNotePhrase;
-         searchArray[i] = searchArray[i].replace(this.CONST_SOURCENOTE, " '");
-       }
-       else if (searchArray[i].includes(this.CONST_FOOTNOTES))
-       {
-         subStrPhrase = footnotesPhrase;
-         searchArray[i] = searchArray[i].replace(this.CONST_FOOTNOTES, " '");
-       }
-       searchArray[i] += subStrPhrase;
-       /* step 4 also done for each index, regardless of the phrase since each phrase has the word "in,"... " '<term1> in " (and so on till termN) where we need a closing single quote nearby:
-       *   " '<term1> in "    ->    "'<term1>' in "
-       *   " '<term2> in "    ->    "'<term2>' in "
-       *   " '<term3> in "    ->    "'<term3>' in "
-       *   ...
-       *   " '<termN> in "    ->    "'<termN>' in "
-       */
-      searchArray[i] = searchArray[i].replace(" in", "' in");
-     }
-
-    let ANDSentence = "Results that contain";
-
-    // append indices of searchArray to the sentence
     for (let i=0; i < searchArray.length; i++)
     {
-      ANDSentence += searchArray[i];
-    }
-    ANDSentence = ANDSentence.replace(new RegExp(',' + '$'), '.'); // last index has a comma at the end, change the last occurence of a comma to a period
+      let searchField = searchArray[i].substr(0, searchArray[i].indexOf("-"));
+      // the if-else block executes steps 1-3, after the loop the index will contain the corresponding subStrPhrase so we can just append the particular phrase after the block
+      if (this.specifiesALetterField(searchField)) {
+        searchArray[i] = searchArray[i].replace(searchField + "-", " '");
+        searchArray[i] = searchArray[i] + ",'";
+        termsIncluded += searchArray[i];
+       }
+       else if (this.specifiesAnAuthor(searchField)) {
+         searchArray[i] = searchArray[i].replace(searchField + "-","");
+         if (writtenBy !== "") {
+           if (writtenBy.includes("Thomas") && searchArray[i].includes("Thomas")) {
+             continue; // already specified him once, no need to do it again for the second field that contains thomas carlyle in database
+           }
+          writtenBy += ", or " + searchArray[i];   
+         }
+         else {
+           // first author specified, no need to prepend a comma
+           writtenBy += searchArray[i];
+         }
+       }
+       else if (this.specifiesDate(searchField)) {
+         if (searchField.includes("Min")) {
+          searchArray[i] = searchArray[i].replace(searchField + "-", "");
+          dateRangePhrase += " between " + searchArray[i];
+         }
+         else if (searchField.includes("Max")) {
+           searchArray[i] = searchArray[i].replace(searchField + "-", "");
+           dateRangePhrase += " and " + searchArray[i] + ".";
+         }
+        }
+       }
+
+
+
+   // ANDSentence = ANDSentence.replace(new RegExp(',' + '$'), ''); 
 
     // need to put an "and" after the last occurence of comma now
-    let firstTermToPenultimateTerm = ANDSentence.substring(0, ANDSentence.lastIndexOf(',')+1);
-    let subStrAND = " and";
-    let lastTerm = ANDSentence.substring(ANDSentence.lastIndexOf(',')+1, ANDSentence.length);
-    if (ANDSentence.includes(","))
+    let firstTermToPenultimateTerm = termsIncluded.substring(0, termsIncluded.lastIndexOf("\' ")+1);
+    let lastTerm = termsIncluded.substring(termsIncluded.lastIndexOf("\' ")+2)
+    let subStrAND = " and ";
+    //let lastTerm = ANDSentence.substring(ANDSentence.lastIndexOf(",'")+1, ANDSentence.length);
+    for (let i = 0; i < this.fields.length; i++)
     {
-      ANDSentence = firstTermToPenultimateTerm + subStrAND + lastTerm;
+      if (this.fields[i+1]) {
+        prepositionalPhrase += fieldsPhrasesArray[i+1];
+      }
     }
-    this.displayQuery[0] = ANDSentence;
-}
+    if (dateRangePhrase === "sent")
+      // user didn't enter date, so the default values were used in the filter of query
+      dateRangePhrase += " between 1812 and 1870."
+ 
 
-  makeORSentence(searchString: string) {
-    let docBodyPhrase = " in the letter body,";
-    let sourceNotePhrase = " in the source note,";
-    let footnotesPhrase = " in the footnotes,";
+    if (whichSentence.includes("AND"))
+        beginningOfSentence += " must contain ";
+    else if (whichSentence.includes("OR"))
+        beginningOfSentence += " may contain ";
+    else if (whichSentence.includes("NOT"))
+        beginningOfSentence += " must not contain ";
 
-    let searchArray = searchString.split('_');
-    searchArray.pop();
-
-    let subStrPhrase = '';
-     for (let i=0; i < searchArray.length; i++)
-     {
-       if (searchArray[i].includes(this.CONST_LETTERBODY))
-       {
-         subStrPhrase = docBodyPhrase;
-         //if it is the first search term, don't add "or" in front of it
-         if(i===0) {
-           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
-         }
-         else {
-           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " or '");
-         }
-       }
-       else if (searchArray[i].includes(this.CONST_SOURCENOTE))
-       {
-         subStrPhrase = sourceNotePhrase;
-         if(i===0) {
-           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
-         }
-         else {
-           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " or '");
-         }
-       }
-       else if (searchArray[i].includes(this.CONST_FOOTNOTES))
-       {
-         subStrPhrase = footnotesPhrase;
-         if(i===0) {
-           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " '");
-         }
-         else {
-           searchArray[i] = searchArray[i].replace(this.CONST_LETTERBODY, " or '");
-         }
-       }
-       searchArray[i] += subStrPhrase;
-       searchArray[i] = searchArray[i].replace(" in", "' in");
-     }
-
-    let ORSentence = "Results that contain";
-    for (let i=0; i < searchArray.length; i++)
-    {
-      ORSentence += searchArray[i];
+    sentence += beginningOfSentence + firstTermToPenultimateTerm + subStrAND + lastTerm + prepositionalPhrase + "; ";
+    if (whichSentence.includes("AND")) {
+        sentence += writtenBy + " wrote and sent these letters " + dateRangePhrase; 
     }
-    ORSentence = ORSentence.replace(new RegExp(',' + '$'), '.');
-    this.displayQuery[1] = ORSentence;
+    else if (whichSentence.includes("OR") && this.displayQuery[0].includes("or")) {
+      sentence += ". These letters were sent " + dateRangePhrase;
+    }
+    else if (whichSentence.includes("NOT")) {
+      sentence += " letters" + dateRangePhrase + " that were written by " + writtenBy + " are not included.";
+    }
+
+  if (somethingSpecified) {
+  switch(whichSentence) {
+    case "AND":
+      this.displayQuery[0] = sentence;
+    case "OR":
+      this.displayQuery[1] = sentence;
+    case "NOT":
+      this.displayQuery[2] = sentence;
   }
-
+}
+else if (!somethingSpecified) {
+  switch(whichSentence) {
+    case "AND":
+      this.displayQuery[0] = "";
+    case "OR":
+      this.displayQuery[1] = "";
+    case "NOT":
+      this.displayQuery[2] = "";
+  }
+}
+}
 
   //  return search string of authors
   appendAuthorsToSearchString(boolString)
@@ -472,7 +464,6 @@ bothBoundariesSpecified() {
         retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
       }
     }
-    //console.log("append fields & terms to "+boolString+"\n"+retString);
     return retString;
   }
 
@@ -492,13 +483,10 @@ bothBoundariesSpecified() {
   }
 
   startSearch() {
-    
-    // console.log("Min Date Specified: " + this.dateRange[0]);
-    // console.log("Max Date Specified: " + this.dateRange[1]);
+
     this.isSearching = true;
     var result = [];
 
-   // console.log("Date Range Specifications\nMin Date:\t"+this.dateRange[0]+"\nMax Date:\t"+this.dateRange[1]);
     for(var i = 0; i < this.queryNumber; i++) {
       var currInputId = "searchTerm".concat((i+1).toString());
       var currInputeName = (<HTMLInputElement>document.getElementById(currInputId)).name;
@@ -507,11 +495,6 @@ bothBoundariesSpecified() {
       if(check[0]) {
         result[check[1]][1].push(currInputValue);
       } else {
-        /*
-        console.log("currInputId:\t"+currInputId);
-        console.log("currInputName:\t"+currInputeName);
-        console.log("currInputValue:\t"+currInputValue);
-        */
         result.push([currInputeName, [currInputValue]]);
       }
     }
@@ -527,8 +510,6 @@ bothBoundariesSpecified() {
 
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];
-      console.log("boolOp:\t"+boolOp);
-      console.log(result[i]);
       for (let j = 0; j < result[i][1].length; j++)
       {
       switch(boolOp) {
@@ -555,7 +536,8 @@ bothBoundariesSpecified() {
     }
     continue;
   }
-    
+  
+
     queryString = ANDString + ORString + NOTString
     this.displayQuery[0] =  ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);
@@ -565,25 +547,13 @@ bothBoundariesSpecified() {
     let ANDIndex = this.displayQuery[0];
     let ORIndex = this.displayQuery[1];
     let NOTIndex = this.displayQuery[2];
-    /*
-     * if the only index in displayQuery that's non-empty is AND index
-     *      make AND sentence
-     * else if the only index in displayQuery that's non-empty is OR index
-     *      make OR sentence
-     
-
-    if (this.isANDSentence(ANDIndex) && (!(this.isORSentence(ORIndex)) && !(this.isNOTSentence(NOTIndex))))
-    {
-        this.makeANDSentence(ANDIndex);
-    }
-    else if (this.isORSentence(ORIndex) && (!(this.isANDSentence(ANDIndex)) && !(this.isNOTSentence(NOTIndex))))
-    {
-      this.makeORSentence(ORIndex); // 
-    }
-*/
+    let whichSentence = "";
+    this.makeSentence("AND",ANDIndex);
+    this.makeSentence("OR", ORIndex);
+    this.makeSentence("NOT", NOTIndex);
   
 
-  // console.log("Query String sent to elastic search: " + queryString);
+  console.log("Query String sent to elastic search: " + queryString);
 
     this.searchResults = this.searchService.advancedSearch(queryString);
     this.searchService.advancedSearch(queryString).subscribe(data => {
