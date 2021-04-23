@@ -547,11 +547,12 @@ bothBoundariesSpecified() {
     let ANDIndex = this.displayQuery[0];
     let ORIndex = this.displayQuery[1];
     let NOTIndex = this.displayQuery[2];
+    /*
     let whichSentence = "";
     this.makeSentence("AND",ANDIndex);
     this.makeSentence("OR", ORIndex);
     this.makeSentence("NOT", NOTIndex);
-  
+     */
 
   console.log("Query String sent to elastic search: " + queryString);
 

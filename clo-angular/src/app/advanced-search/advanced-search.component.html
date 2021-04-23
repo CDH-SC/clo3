@@ -32,7 +32,7 @@
              class="search-box" type='string' size=80 
                 [attr.id]="query[1][i]" 
                   name='AND'
-                    placeholder="oxford liberalism"/> 
+                    placeholder="the best of times"/> 
       </div> <!-- close ngFor's div -->
     </form>
 
@@ -142,9 +142,9 @@
 
   <div class="row justify-content-start orange-border-bottom">
     <ul style="list-style-type: none;">
-      <li><strong>{{ displayQuery[0] }}</strong></li>
-      <li><strong>{{ displayQuery[1] }}</strong></li>
-      <li><strong>{{ displayQuery[2] }}</strong></li>
+      <li><strong> AND: {{ displayQuery[0] }}</strong></li>
+      <li><strong> OR:  {{ displayQuery[1] }}</strong></li>
+      <li><strong> NOT: {{ displayQuery[2] }}</strong></li>
     </ul>
   </div>
   <ng-container *ngIf="results.data.length == 0">
