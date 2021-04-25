@@ -1,9 +1,41 @@
-#content {
+.container {
   margin: auto;
   padding-top: 25px;
   width: 90%;
   max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
 }
+
+.container-narrow-results {
+  padding-top: 25px;
+  display: flex;
+  flex-direction: row;
+  align-content: flex-end;
+  justify-content: space-between;
+  align-items: flex-start;
+  justify-items: center;
+}
+
+#dates-input-box {
+  width: 51px !important;
+  background-color: transparent;
+  border-radius: 3px;
+  /* border: 1px solid #c17953; */
+  border: 1px solid brown;
+}
+
+#input-box {
+  background-color: transparent;
+  border-radius: 3px;
+  /* border: 1px solid #c17953; */
+  border: 1px solid brown;
+}
+
+
+
+
 
 .loading {
   width: 200px;
@@ -20,6 +52,7 @@
   margin-right: 10px;
 }
 
+
 .viewer-box {
   display: flex;
   flex-direction: column;
@@ -34,6 +67,7 @@
   border-radius: 5px;
   background: #f5ebdc;
 }
+
 
 span {
   font-size: 14px;
