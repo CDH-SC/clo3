@@ -477,7 +477,7 @@ Please note that changes to the DNS can take up to 5 minutes to propogate. Also,
 <summary> Production Nginx/SSL </summary>
 
 <br>
-The production CLO VM has a special requirement - it must support two domains: [clo.cdhsc.org](https://clo.cdhsc.org), and [carlyleletters.dukeupress.edu](https://carlyleletters.dukeupress.edu). In order for this to work, the Nginx config file in /etc/nginx/sites-enabled must have them both listed in the 'server' direcive. Once they are both in the config file, use certbot twice to get SSL support for both domains.  
+The production CLO VM has a special requirement - it must support two domains: https://clo.cdhsc.org, and https://carlyleletters.dukeupress.edu. In order for this to work, the Nginx config file in /etc/nginx/sites-enabled must have them both listed in the 'server' direcive. Once they are both in the config file, use certbot twice to get SSL support for both domains.  
 
 </details>
 
