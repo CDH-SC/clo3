@@ -5,15 +5,10 @@
   max-width: 1200px;
 }
 
-.about-image {
-  width: 25%;
-  display: flex;
-  align-self: flex-end;
-  align-items: flex-end;
-  float: right;
-  padding-right: 1rem;
-  margin-top: 80px;
-  margin-left: 80px;
+.image-row {
+  display: inline-block;
+  justify-content: space-between;
+
 }
 
 #about-image {
