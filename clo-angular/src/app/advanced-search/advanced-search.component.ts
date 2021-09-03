@@ -9,6 +9,7 @@ import { ElasticSearchService } from '../_shared/_services/elastic-search.servic
 import { ElasticSearch } from '../_shared/models/elastic-search';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { identifierModuleUrl } from '@angular/compiler';
+import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 // import {MatCheckboxModule} from '@angular/material';
 
 @Component({
@@ -33,59 +34,8 @@ export class AdvancedSearchComponent {
     // this.router.navigate(['search-results/', route]);
   }
 
-// Accomplished this week:
 
-/*
- * 1.  resolved issue preventing user from searching multiple terms
- * 2.  added sender searches - issue when user selects Thomas Carlyle AND another sender/more sender(s)
- * 3.  Added functionality for select/ unselect all checkbox items
- * 4.  changed display for booleans to RESULTS MUST CONTAIN/ RESULTS MAY CONTAIN/ RESULTS MUST NOT CONTAIN
- * 5.  cleaned up the code a bit to make it easier to read
- */
-
-//  TODO: fix issue - if a user selects thomas carlyle AND another sender/ more senders, page becomes unresponsive
-//  TODO: consolidate the checkUncheckAll... methods
-
-  /*
-   *  TODO: Enhance Advanced Search features  
-   *     
-   *     1. Specify Fields
-   *        1. checkbox/options? 
-   *           ... wondering if Brent's feedback about him expecting the type options to be "in-line" means we should go back to 
-   *               having the fields specified per search term and add an "All Fields" option or did he mean that he likes the checkbox
-   *               and how one selection of fields applies to all terms but he just wants one checkbox item for "All Fields" in line?
-   *            
-   *            - add "Albums" collection to elastic search so that our "Image Caption & Metadata" checkbox item works
-   * 
-   *     2. Specify Senders
-   *        1. add sender(s) selections to search string (DONE)
-   *        2. add index to elastic search for senders so elastic can take the senders part of string in as input and actually 
-   *           search for the specified senders
-   * 
-   *     3. Specify Date Range
-   *        1. add date(s) inputted values to search string
-   *        2. add index to elastic for dates so elastic can take the dates part of string in as input and actually
-   *           search within the specified date range
-   * 
-   *     4. Specify Recipients
-   *        1. fix styling
-   *        2. essentially repeat steps 1 & 2 of the previous two to-do items for recipients
-   * 
-   */
-  
-   //  running list of questions below
-
-  /*
-   *    1. is elastic expecting currently only search strings like "<feildName>-<fieldValue>_<fieldName><fieldVal...>_ 
-   *         where field name is either "docBody," "sourceNote," or "footnotes," or can i go ahead & start making it function w/ all applicable field names?
-   *
-   *    2. the images are in album collection, is the search currently only looking through the letters collection? If so, how do I add onto it to where it searches albums when
-   *       "Image Caption & Metadata" field is selected?... and what in an album object even is the caption? It appears to be at least within the Metadata object
-   *        of each album object... if this is the case, shouldn't we just search the metadata object or are they expecting it to just search the caption?
-   */
-
-
-  CONST_RETRIEVING_RESULTS = "Retrieving results... "   // to be used later to display message that assures user, after clicking search, that the search function is working
+  CONST_RETRIEVING_RESULTS = "Retrieving results... "; 
   
   CONST_LETTERBODY = "docBody";
   CONST_SOURCENOTE = "sourceNote";
@@ -120,7 +70,7 @@ export class AdvancedSearchComponent {
 
   jwcStr =  "Jane Welsh Carlyle";
   tccdjfStr = "Thomas Carlyle, CD & JF";
-  mwStr = "Margaret Welsch";
+  mwStr = "Margaret Welsh";
   tcjcStr = "Thomas & Jane Carlyle" // corresponds to db value: "Thomas Carlyle Jane Welsch Carlyle"
 
   //  the following bools are associated w/ checkbox items
@@ -136,21 +86,22 @@ export class AdvancedSearchComponent {
   boolAllAuthors = true;
 
   dateRange = [];
-  // the query is expecting a date range, so if user doesn't specify one, we'll use these years
 
-
-  //  Array naming convention noted below...
-
-    /*
- *   "query<attrName>Str" :  arrays used to map attribute booleans (represent checkbox is/ is not selected) to corresponding string elastic is expecting
- *        "<attrName>Str" : arrays used to leverage property binding to display checkbox items in HTML
-*/
-  
   docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jwcStr, this.mwStr, this.tcjcStr];
-  fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
-  
-  fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
   authors = [this.boolAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
+
+  fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
+  fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
+
+  recipientsStr = ["Thomas Carlyle","Jane Welsh Carlyle","Margaret Welsh","Goethe","Ralph Waldo Emerson","John Stuart Mill"];
+
+  // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
+
+  correspondenceMap = [["Jane Welsh Carlyle", "Margaret Welsh", "Goethe"],  // recipients to whom Thomas Carlyle wrote
+                        ["John A. Carlyle", "Margaret Welsh", "Thomas Carlyle"], // recipients to whom Jane Carlyle wrote
+                          ["Jane Welsh Carlyle", "Thomas A. Carlyle", "John A. Carlyle"], // recipients to whom Margaret Carlyle wrote
+                            ["Jane Welsh Carlyle", "Margaret Welsh", "John A. Carlyle"]]; // recipients to whom TC + JC wrote
+  
  
   queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
