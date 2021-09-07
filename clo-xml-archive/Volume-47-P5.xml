@@ -2249,8 +2249,7 @@ this letter has been assigned a document date of <date when="1870-06-30">30 June
 <person type="sender">TC</person> TO <person type="addressee">WILLIAM DOUGAL CHRISTIE</person>
 </head>
 <docBody>
-<dateline>[<date when="1870-06">June 1870</date>] [In order to maintain the order established by the editors,
-this letter has been assigned a document date of <date when="1870-06-30">30 June 1870</date>]</dateline>
+<dateline>[<date when="1870-06">June 1870</date>]</dateline>
 <p><salute>Dear Christie,&#x02014;</salute>My hand is very unwilling, mutinous even, but I compel it to act,&#x02014;in pencil. I have lately read a life of Dryden which seemed to me done with rigorous fidelity.<note n="1" noteref="210">W. D. Christie, &#x0201C;Memoir of Dryden,&#x0201D; <hi rend="italic">The Poetical Works of Dryden</hi>, ed. W. D. Christie (London, <date when="1870">1870</date>) xv&#x02014;lxxxvii. Christie had been working on the book for some years (see <ref target="volume-43/lt-18660312-TC-WDC-01"><sic>43:130</sic><corr>TC to WDC, [<date when="1866-03-12">12 March 1866</date>]</corr></ref>); presumably he sent TC a copy.</note>
  <closer><salute>Yours always,</salute> <signed><name>T.C.</name></signed></closer></p>
 </docBody>
@@ -3123,8 +3122,7 @@ this letter has been assigned a document date of <date when="1870-06-30">30 June
 <person type="sender">TC</person> TO <person type="addressee">[THOMAS WILSON]</person>
 </head>
 <docBody>
-<dateline>[early <date when="1870-10">Oct. 1870</date>] [In order to maintain the order established by the editors,
-this letter has been assigned a document date of <date when="1870-06-30">30 June 1870</date>]</dateline>
+<dateline>[early <date when="1870-10">Oct. 1870</date>]</dateline>
 <p>Your anxieties about the war must have been of short duration; in fact, they must after the first few days&#x2019; practical experience have been changed into <pb id="pg-47-74" n="47:74"/>bright hope, into a hope increasing in rapid geometrical progression till it obtained its present dimensions. So far as my reading goes there never was such a war, never such a collapse of shameless human vanity, of menacing, long-continued arrogance, into contemptible nothingness. Blow has followed blow as if from the hammer of Thor,<note n="1" noteref="397">The symbolic hammer of the Norse god Thor came from his association with thunder.</note> till it lies like a shapeless heap of ruins, whining to itself, &#x2018;In the name of all the gods and all the devils, what is to become of us?&#x2019; &#x02026;</p>
 <p>All Germany may now look forward to happier days in a political sense than it has seen since the Emperor Barbarossa<note n="2" noteref="398">Frederick I (<date when="1122">1122</date>&#x02013;<date when="1190">90</date>), Holy Roman Emperor, <date when="1155">1155</date>&#x02013;<date when="1190">90</date>, known as Frederick Barbarossa, one of the greatest of medieval rulers.</note> left it. My individual satisfaction in all this is great, and all England, I can say all the intelligent in Eng-land, heartily wish good fortune to brave old Germany in what it has accomplished&#x02014;a real transformation into one nation, no longer the chaotic jumble which invited the intrusion of every ill-disposed neighbour, especially of that ill-disposed France which has inflicted on it such interminable mischief during the last 400 years&#x02014;wars heaped upon wars without real cause except insatiable French ambition. All that, through God&#x2019;s grace, is now at an end. I have, in my time, seen nothing in Europe which has so much delighted me. &#x02026; &#x2018;A brave people,&#x2019; as your Goethe calls them, and as I believe a peaceful and a virtuous one. I only hope that Heaven will send them the wisdom, patience, and pious discretion to turn to a right use all that has been achieved.</p>
 </docBody>
@@ -4374,8 +4372,7 @@ me from &#x0201C;Le Vert Galant,&#x0201D;<note n="3" noteref="648">Le Vert Galan
 <person type="sender">MARY AITKEN</person> TO <person type="addressee">MARTIN TUPPER</person>
 </head>
 <docBody>
-<dateline>[mid-<date when="1871-01">January 1871 [In order to maintain the order established by the editors,
-this letter has been assigned a document date of [<date when="1870-06-30">30 June 1870</date>]</date>]</dateline>
+<dateline>[mid-<date when="1871-01">January 1871</date></dateline>
 <salute>Dear Sir,</salute>
 <p>Mr Carlyle, my uncle, bids me send you this; and say he has read your Letter and Verses with much pleasure. He does not know what the Newspapers have been saying lately about him and his hatred of <hi rend="italic">Verse</hi>; he has read none of their Leading articles and has heard it is all about some forgotten Note he sent long ago to a foolish intrusive fellow, Bennet,<note n="1" noteref="692">William Cox Bennett.</note>
  who used to plague him dreadfully with his stupid Poems.</p>
