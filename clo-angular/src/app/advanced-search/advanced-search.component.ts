@@ -356,31 +356,14 @@ else if (!somethingSpecified) {
 }
 
   //  return search string of authors
-  appendAuthorsToSearchString(boolString)
-  {
-    /*
-     *  remember, string format must be <fieldName1>-<fieldValue1>_<fieldName2>-<fieldValue2>_ ... ... <fieldNameN>-<fieldValueN>_
-     *  in db, fieldName = docAuthor for the senders
-    */
-    var retString = "";    
-    if (this.searchAll(this.authors)) {
-      return retString; // elastic searches all authors by default so no need to append all authors to search string
+  appendAuthorsToSearchString()
+  { 
+    var retString = "";
+    for (let i = 1; i < this.authors.length; i++) {
+      if (!this.authors[i])
+        retString += this.CONST_AUTHORS + this.docAuthorsStr[i] + "_";
     }
-    else {
-      for (let i = 0; i < this.authors.length; i++) {
-        if (!this.authors[i+1]) 
-          continue;
-        else {
-          retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i+1] + "_";
-         /* if (i+1 == 1)
-            retString += this.CONST_AUTHORS + "-" + this.CONST_TWC + "_"; // above code added this.CONST_TC, now we have to add the other "Thomas Carlyle"
-        */
-          }
-      }
-      //console.log("append authors to "+boolString+"\n"+retString);
-      return retString;
-    }
-} 
+  } 
 //TODO: 
 //   1: figure out how to change values using binding and user text input
 //   2: Uncomment method below, call it in startSearch(), integrating it into existing logic
@@ -456,6 +439,7 @@ bothBoundariesSpecified() {
     var ANDString = "$AND:_"
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
+    NOTString += this.appendAuthorsToSearchString();
     if (this.dateRange[0] || this.dateRange[1])
       ANDString += this.appendDateRangeToSearchString(); 
 
@@ -466,21 +450,17 @@ bothBoundariesSpecified() {
       switch(boolOp) {
         case "AND":
           ANDString += this.appendFieldsAndTermsToSearchString(ANDString, result[i][1][j]);
-          if (!this.searchMultiple(this.authors)) {
-           ANDString += this.appendAuthorsToSearchString(ANDString);
+       /*    if (!this.searchMultiple(this.authors)) {
+          ANDString += this.appendAuthorsToSearchString(ANDString);
           }
           else  {
             if (j == 0)
               ORString += this.appendAuthorsToSearchString(ORString);
           }
+      */
           break;
         case "OR":
           ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
-          ORString += this.appendAuthorsToSearchString(ORString);
-          break;
-        case "NOT":
-          NOTString += this.appendFieldsAndTermsToSearchString(NOTString, result[i][1][j]);
-          NOTString += this.appendAuthorsToSearchString(NOTString);
           break;
         default:
         }
