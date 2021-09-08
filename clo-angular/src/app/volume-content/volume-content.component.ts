@@ -14,7 +14,7 @@ import Mark from 'mark.js';
 })
 export class VolumeContentComponent implements OnInit, AfterViewChecked {
 
-  private TOTAL_VOLUMES = 47;
+  private TOTAL_VOLUMES = 48;
 
   objectKeys = Object.keys;
   searchTerm: string;
