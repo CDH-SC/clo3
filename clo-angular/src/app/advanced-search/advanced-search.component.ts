@@ -93,11 +93,11 @@ export class AdvancedSearchComponent {
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
 
-  recipientsStr = ["Thomas Carlyle","Jane Welsh Carlyle","Margaret Welsh","Goethe","Ralph Waldo Emerson","John Stuart Mill",
+  recipientStr = ["Thomas Carlyle","Jane Welsh Carlyle","Margaret Welsh","Goethe","Ralph Waldo Emerson","John Stuart Mill",
                      "Lady Airlie", "Lady Ashburton", "Anne Gilchrist", "Kate Stanley", "Eliza Forster", "Ann Chamberlayne", 
                        "Mary Carlyle Austin", "J. George Cooke"];
 
-  recipients: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+  recipient = [false, false, false, false, false, false, false, false, false, false, false, false, false, false];
   // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
 
 
@@ -108,8 +108,8 @@ export class AdvancedSearchComponent {
  
 
 
-  recipient = ["recipient1"];
-  //recipients = [this.recipient];
+  //recipient = ["recipient1"];
+  recipients = [this.recipient];
 
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
@@ -145,8 +145,8 @@ export class AdvancedSearchComponent {
       this.queries.splice(this.queryNumber);
     }
   }
-
-  addRecipient() {
+/*
+ addRecipient() {
     this.recipientNumber++;
     this.recipient.push("recipient" + this.recipientNumber);
     let newRecipient = [this.recipient]
@@ -158,6 +158,7 @@ export class AdvancedSearchComponent {
       this.recipientNumber--;
     }
   }
+  */
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
