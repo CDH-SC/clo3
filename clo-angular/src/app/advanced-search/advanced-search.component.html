@@ -45,7 +45,7 @@
 
 
         <div class="narrow-by-author">
-          <p><strong>Senders</strong></p>
+          <p><strong>Authors</strong></p>
           
           
           <input type="checkbox" 
@@ -60,19 +60,31 @@
           [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
-       <!--  
+       
          <div class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong>  </p>
-          <input type="search" style="background-color: transparent; border-radius: 3px; border: 1px solid brown;"
-            class="input-box" placeholder="john stuart mill">
+          <input list="list-of-recipients">
+            <datalist id="list-of-recipients">
+              <option value="recipients[0]"> {{ recipientsStr[0] }} </option>
+              <option value="recipient[1]"> {{ recipientStr[1] }} </option>
+              <option value="recipient[2]"> {{ recipientStr[2] }} </option>
+              <option value="recipient[3]"> {{ recipientStr[3] }} </option>
+              <option value="recipient[4]"> {{ recipientStr[4] }} </option>
+              <option value="recipient[5]"> {{ recipientStr[5] }} </option>
+              <option value="recipient[6]"> {{ recipientStr[6] }} </option>
+              <option value="recipient[7]"> {{ recipientStr[7] }} </option>
+              <option value="recipient[8]"> {{ recipientStr[8] }} </option>
+              <option value="recipient[9]"> {{ recipientStr[9] }} </option>
+              <option value="recipient[10]"> {{ recipientStr[10] }} </option>
+              <option value="recipient[11]"> {{ recipientStr[11] }} </option>
+              <option value="recipient[12]"> {{ recipientStr[12] }} </option>
+              <option value="recipient[13]"> {{ recipientStr[13] }} </option>
+            </datalist>
           </div>
-         </div> 
+
    
-        <div>
-          <button (click)="addRecipient()">Add Recipient</button>
-          <button (click)="removeRecipient()">Remove Recipient</button>
-        </div>
-        -->
+
+        
 
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
@@ -90,17 +102,6 @@
               [(ngModel)] = "fields[3]" checked> 
                  {{ fieldsStr[3] }} <br>
     
-
-     <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images  -->
-               
-      <!--              
-        <label>
-          <input type="checkbox" 
-            value='imageCaptionAndMetadata' 
-              checked> 
-                 Image Caption & Metadata   <br>
-        </label>  
-      -->  
         </div>
 
         <div class="narrow-by-dates">

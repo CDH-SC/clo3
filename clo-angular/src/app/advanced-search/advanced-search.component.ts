@@ -93,14 +93,14 @@ export class AdvancedSearchComponent {
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
 
-  recipientsStr = ["Thomas Carlyle","Jane Welsh Carlyle","Margaret Welsh","Goethe","Ralph Waldo Emerson","John Stuart Mill"];
+  recipientsStr = ["Thomas Carlyle","Jane Welsh Carlyle","Margaret Welsh","Goethe","Ralph Waldo Emerson","John Stuart Mill",
+                     "Lady Airlie", "Lady Ashburton", "Anne Gilchrist", "Kate Stanley", "Eliza Forster", "Ann Chamberlayne", 
+                       "Mary Carlyle Austin", "J. George Cooke"];
 
+  recipients: boolean[] = [false, false, false, false, false, false, false, false, false, false, false, false, false, false];
   // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
 
-  correspondenceMap = [["Jane Welsh Carlyle", "Margaret Welsh", "Goethe"],  // recipients to whom Thomas Carlyle wrote
-                        ["John A. Carlyle", "Margaret Welsh", "Thomas Carlyle"], // recipients to whom Jane Carlyle wrote
-                          ["Jane Welsh Carlyle", "Thomas A. Carlyle", "John A. Carlyle"], // recipients to whom Margaret Carlyle wrote
-                            ["Jane Welsh Carlyle", "Margaret Welsh", "John A. Carlyle"]]; // recipients to whom TC + JC wrote
+
   
  
   queryFieldsStr = ["", this.CONST_LETTERBODY, this.CONST_SOURCENOTE, this.CONST_FOOTNOTES];
@@ -109,7 +109,7 @@ export class AdvancedSearchComponent {
 
 
   recipient = ["recipient1"];
-  recipients = [this.recipient];
+  //recipients = [this.recipient];
 
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
