@@ -19,6 +19,10 @@
   border: 2px solid black;
 }
 
+.pic {
+  max-height: 200;
+}
+
 .about-text {
   width: 75%;
 }
