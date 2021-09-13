@@ -97,7 +97,6 @@ export class AdvancedSearchComponent {
                      "Lady Airlie", "Lady Ashburton", "Anne Gilchrist", "Kate Stanley", "Eliza Forster", "Ann Chamberlayne", 
                        "Mary Carlyle Austin", "J. George Cooke"];
 
-  recipient = [false, false, false, false, false, false, false, false, false, false, false, false, false, false];
   // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
 
 
@@ -108,7 +107,7 @@ export class AdvancedSearchComponent {
  
 
 
-  //recipient = ["recipient1"];
+  recipient = ["recipient1"];
   recipients = [this.recipient];
 
   boolOps = ["searchTerm1boolOp"];
@@ -145,11 +144,12 @@ export class AdvancedSearchComponent {
       this.queries.splice(this.queryNumber);
     }
   }
-/*
+
  addRecipient() {
     this.recipientNumber++;
     this.recipient.push("recipient" + this.recipientNumber);
-    let newRecipient = [this.recipient]
+    let newRecipient = this.recipient;
+    this.recipients.push(this.recipient);
   }
 
   removeRecipient() {
@@ -158,7 +158,7 @@ export class AdvancedSearchComponent {
       this.recipientNumber--;
     }
   }
-  */
+  
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;

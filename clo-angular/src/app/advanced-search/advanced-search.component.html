@@ -61,33 +61,30 @@
         </div>
 
        
-         <div class="narrow-by-recipient">
+         <div *ngFor='let recipient of recipients' class="narrow-by-recipient">
           <p class="recipient"> <strong> Recipients </strong>  </p>
-          <input list="list-of-recipients">
+          <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
+            list="list-of-recipients" placeholder="Lady Airlie"/>
             <datalist id="list-of-recipients">
-              <option value="recipient[0]"> {{ recipientStr[0] }}
-              <option value="recipient[1]"> {{ recipientStr[1] }}
-              <option value="recipient[2]"> {{ recipientStr[2] }}
-              <option value="recipient[3]"> {{ recipientStr[3] }}
-              <option value="recipient[4]"> {{ recipientStr[4] }} 
-              <option value="recipient[5]"> {{ recipientStr[5] }} 
-              <option value="recipient[6]"> {{ recipientStr[6] }} 
-              <option value="recipient[7]"> {{ recipientStr[7] }} 
-              <option value="recipient[8]"> {{ recipientStr[8] }} 
-              <option value="recipient[9]"> {{ recipientStr[9] }} 
-              <option value="recipient[10]"> {{ recipientStr[10] }} 
-              <option value="recipient[11]"> {{ recipientStr[11] }}
-              <option value="recipient[12]"> {{ recipientStr[12] }} 
-              <option value="recipient[13]"> {{ recipientStr[13] }} 
+              <option value="Thomas Carlyle">
+              <option value="Jane Welsh Carlyle">
+              <option value="Margaret Welsh"> 
+              <option value="Goethe"> 
+              <option value="Ralph Waldo Emerson"> 
+              <option value="John Stuart Mill"> 
+              <option value="Lady Airlie"> 
+              <option value="Lady Ashburton"> 
+              <option value="Anne Gilchrist">
+              <option value="Kate Stanley"> 
+              <option value="Eliza Forster">
+              <option value="Ann Chamberlayne"> 
+              <option value="Mary Carlyle Austin"> 
+              <option value="J. George Cooke"> 
             </datalist>
-          </div>
-          <!--
-        <div>
-          <button (click)="addRecipient()">Add Recipient</button>
-          <button (click)="removeRecipient()">Remove Recipient</button>
-        </div>
-      -->
-
+      </div>
+          <button (click)="addRecipient()">Add</button>
+          <button (click)="removeRecipient()">Remove</button>
+        
         <div class="narrow-by-fields">
           <p class="fields"> <strong> Fields </strong>  </p>
 
