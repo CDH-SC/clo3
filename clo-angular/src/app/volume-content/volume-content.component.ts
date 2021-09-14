@@ -240,7 +240,6 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
         for (let i = 0; i < letter.manuscript.length; i++) {
           this.manuscriptUrl[i] = `assets/manuscripts/${letter.manuscript[i]}`;
         }
-        console.log(this.manuscriptUrl);
       } else {
         this.hasManuscript = false;
       }
@@ -478,6 +477,13 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
               index: 19,
               key: k,
               title: 'Appendix Two'
+            });
+            break;
+          case 'will_of_TC':
+            this.volumeKeys.push({
+              index: 20,
+              key: k,
+              title: 'Will of TC'
             });
             break;
           default:
