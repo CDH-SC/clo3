@@ -483,7 +483,7 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
             this.volumeKeys.push({
               index: 20,
               key: k,
-              title: 'Will of TC'
+              title: "Thomas Carlyle's 1871 Will"
             });
             break;
           default:
