@@ -49,6 +49,7 @@ import { Injectable } from '@angular/core';
     appendix: string;
     JWCbyTait: string;
     TCbyTait: string;
+    will_of_TC: string;
     letters: [{
       _id: string;
       docDate: string;

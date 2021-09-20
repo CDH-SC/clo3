@@ -49,6 +49,7 @@ var volumeSchema = new Schema({
   appendix: String,
   JWCbyTait: String,
   TCbyTait: String,
+  will_of_TC: String,
   letters: [{
     _id: String,
     docDate: String,
