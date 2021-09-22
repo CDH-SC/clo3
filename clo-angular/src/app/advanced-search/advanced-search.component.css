@@ -18,6 +18,9 @@
   justify-items: center;
 }
 
+.authors-list input {
+  opacity: 0;
+}
 #dates-input-box {
   width: 51px !important;
   background-color: transparent;

@@ -65,7 +65,15 @@
           <p class="recipient"> <strong> Recipients </strong>  </p>
           <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
             list="list-of-recipients" placeholder="Lady Airlie"/>
-            <datalist id="list-of-recipients">
+            <!-- listen for event emitted from child component -->
+
+            <!-- 
+
+              <app-correspondents-index (recipientSelectedFromIndex) = changeDropDown(newRecipient)>
+                </app-correspondents-index> 
+
+            -->
+            <datalist id="list-of-recipients" (change)=changeDropDown($event) (click)>
               <option value="Thomas Carlyle">
               <option value="Jane Welsh Carlyle">
               <option value="Margaret Welsh"> 
