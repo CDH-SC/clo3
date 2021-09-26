@@ -18,14 +18,14 @@
   justify-items: center;
 }
 
-.authors-list input {
-  opacity: 0;
+strong#title{
+  color: #c17953;
 }
 #dates-input-box {
   width: 51px !important;
   background-color: transparent;
   border-radius: 3px;
-  /* border: 1px solid #c17953; */
+  /* border: 1px solid ; */
   border: 1px solid brown;
 }
 

@@ -45,19 +45,17 @@
 
 
         <div class="narrow-by-author">
-          <p><strong>Authors</strong></p>
+          <p><strong id="sub-category-title">Authors</strong></p>
           
-          
-          <input type="checkbox" 
-          (change) = "checkUncheckAllAuthors($event)" checked/><strong> {{ docAuthorsStr[0] }} </strong>  <br>
-          <input type="checkbox" 
-          [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }}  <br>
-          <input type="checkbox" 
-          [(ngModel)] = "authors[2]" checked/> {{ docAuthorsStr[2] }}  <br>
-          <input type="checkbox" 
-          [(ngModel)] = "authors[3]" checked/>{{ docAuthorsStr[3] }}  <br>  
-          <input type="checkbox" 
-          [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
+            <input id="all-authors-checkbox" type="checkbox" (change) = "checkUncheckAllAuthors($event)" checked/> <strong> {{ docAuthorsStr[0] }} </strong> <br>
+
+            <input id="thomas-carlyle-checkbox" type="checkbox" [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }} <br>
+            
+            <input id="jane-carlyle-checkbox" type="checkbox" [(ngModel)] = "authors[2]" checked/> {{ docAuthorsStr[2] }}  <br>
+
+            <input id="margaret-carlyle-checkbox" type="checkbox" [(ngModel)] = "authors[3]" checked/> {{ docAuthorsStr[3] }}  <br>
+
+            <input id="thomas-and-jane-checkbox" type="checkbox" [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
        
@@ -73,7 +71,7 @@
                 </app-correspondents-index> 
 
             -->
-            <datalist id="list-of-recipients" (change)=changeDropDown($event) (click)>
+            <datalist id="list-of-recipients">
               <option value="Thomas Carlyle">
               <option value="Jane Welsh Carlyle">
               <option value="Margaret Welsh"> 
@@ -89,30 +87,25 @@
               <option value="Mary Carlyle Austin"> 
               <option value="J. George Cooke"> 
             </datalist>
-      </div>
+            <br>
           <button (click)="addRecipient()">Add</button>
           <button (click)="removeRecipient()">Remove</button>
-        
+         <a>    Index of Recipients</a>
+        </div>
         <div class="narrow-by-fields">
-          <p class="fields"> <strong> Fields </strong>  </p>
+          <p> <strong class="sub-category-title"> Fields </strong>  </p>
 
-            <input type="checkbox"
-                (change) = "checkUncheckAllFields($event)" checked/>
-                <strong> {{ fieldsStr[0] }} </strong>  <br>
-            <input type="checkbox" 
-                [(ngModel)] = "fields[1]" checked/>
-                 {{ fieldsStr[1] }} <br>          
-            <input type="checkbox"
-              [(ngModel)] = "fields[2]" checked/>
-                 {{ fieldsStr[2] }}  <br>          
-            <input type="checkbox"
-              [(ngModel)] = "fields[3]" checked> 
-                 {{ fieldsStr[3] }} <br>
-    
+            <input id="all-fields-checkbox" type="checkbox" (change)="checkUncheckAllFields($event)" checked/>  <strong> {{ fieldsStr[0] }} </strong>  <br>
+          
+            <input id="letter-body-checkbox" type="checkbox" [(ngModel)] = "fields[1]" checked/> {{ fieldsStr[1] }} <br>
+            
+            <input id="source-note-checkbox" type="checkbox" [(ngModel)] = "fields[2]" checked/> {{ fieldsStr[2] }} <br>
+
+            <input id="footnotes-checkbox" type="checkbox" [(ngModel)] = "fields[3]" checked/> {{ fieldsStr[3] }} <br>
         </div>
 
         <div class="narrow-by-dates">
-          <p class="time-period-heading"><strong> Time Period </strong></p>
+          <p><strong id="sub-category-title"> Time Period </strong></p>
               <label for="start-date"> dated between... </label>
               <input type="search" 
                [(ngModel)] = "dateRange[0]" id="dates-input-box" name="start-date" placeholder="1812"/>  <br>

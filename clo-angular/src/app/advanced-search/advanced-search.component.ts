@@ -357,13 +357,14 @@ else if (!somethingSpecified) {
 }
 
   //  return search string of authors
-  appendAuthorsToSearchString()
+  appendAuthorsToSearchString(boolString)
   { 
     var retString = "";
     for (let i = 1; i < this.authors.length; i++) {
       if (!this.authors[i])
         retString += this.CONST_AUTHORS + this.docAuthorsStr[i] + "_";
     }
+    return retString;
   } 
 //TODO: 
 //   1: figure out how to change values using binding and user text input
@@ -440,7 +441,7 @@ bothBoundariesSpecified() {
     var ANDString = "$AND:_"
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
-    NOTString += this.appendAuthorsToSearchString();
+
     if (this.dateRange[0] || this.dateRange[1])
       ANDString += this.appendDateRangeToSearchString(); 
 
@@ -459,9 +460,11 @@ bothBoundariesSpecified() {
               ORString += this.appendAuthorsToSearchString(ORString);
           }
       */
+        ANDString += this.appendAuthorsToSearchString(ANDString);
           break;
         case "OR":
           ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
+          ORString += this.appendAuthorsToSearchString(ORString);
           break;
         default:
         }
