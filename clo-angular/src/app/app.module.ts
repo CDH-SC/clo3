@@ -27,6 +27,14 @@ import { AboutSupportersComponent } from './about/about-supporters/about-support
 import { VolumeContentComponent } from './volume-content/volume-content.component';
 import { AlbumViewerComponent } from './album-viewer/album-viewer.component';
 import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
+import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
+import { VolumeTocComponent } from './volume-toc/volume-toc.component';
+import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { SubjectTermsComponent } from './subject-terms/subject-terms.component';
+import { SubjectLettersComponent } from './subject-letters/subject-letters.component';
+import { RubensteinComponent } from './rubenstein/rubenstein.component';
+import { IndexOfCorrespondentsComponent } from './index-of-correspondents/index-of-correspondents.component';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -38,13 +46,6 @@ import { SubjectTermService } from './_shared/_services/subject-terms.service';
 import { SortByPipe } from './_shared/pipes/sortBy.pipe';
 // import { NgxViewerModule } from 'ngx-viewer';
 
-import { PhotoViewerComponent } from './photo-viewer/photo-viewer.component';
-import { VolumeTocComponent } from './volume-toc/volume-toc.component';
-import { VolumeViewerComponent } from './volume-viewer/volume-viewer.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { SubjectTermsComponent } from './subject-terms/subject-terms.component';
-import { SubjectLettersComponent } from './subject-letters/subject-letters.component';
-import { RubensteinComponent } from './rubenstein/rubenstein.component';
 
 const appRoutes: Routes = [
   {
@@ -71,7 +72,8 @@ const appRoutes: Routes = [
   { path: 'subject-terms', component: SubjectTermsComponent },
   { path: 'subject-letters/:subjectSearch', component: SubjectLettersComponent },
   { path: 'advanced-search', component: AdvancedSearchComponent },
-  { path: 'rubenstein', component: RubensteinComponent }
+  { path: 'rubenstein', component: RubensteinComponent },
+  { path: 'index-of-correspondents', component: IndexOfCorrespondentsComponent}
 ];
 
 @NgModule({
@@ -105,6 +107,7 @@ const appRoutes: Routes = [
     AboutTechnicalComponent,
     AboutSupportersComponent,
     RubensteinComponent,
+    IndexOfCorrespondentsComponent,
   ],
   imports: [
     BrowserModule,

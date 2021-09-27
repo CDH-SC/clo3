@@ -1,0 +1,10 @@
+<div class="container" id="content">
+<h1>Index Of Correspondents</h1>
+<details *ngFor="let letter of letters; let i = lastNameKey;">
+    <summary>{{ letters[lastNameKey] }} </summary>
+    <ul>
+        <li *ngFor="let correspondent of correspondents;">
+            {{ correspondentsMap[lastNameKey][i] }}
+        </li>
+    </ul>
+</details>

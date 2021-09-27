@@ -464,7 +464,7 @@ bothBoundariesSpecified() {
           break;
         case "OR":
           ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
-          ORString += this.appendAuthorsToSearchString(ORString);
+         // ORString += this.appendAuthorsToSearchString(ORString);
           break;
         default:
         }
