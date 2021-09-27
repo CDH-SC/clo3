@@ -60,7 +60,7 @@
 
        
          <div *ngFor='let recipient of recipients' class="narrow-by-recipient">
-          <p class="recipient"> <strong> Recipients </strong>  </p>
+          <p> <strong id="sub-category-title"> Recipients </strong>  </p>
           <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
             list="list-of-recipients" placeholder="Lady Airlie"/>
 
@@ -83,10 +83,10 @@
             <br>
           <button (click)="addRecipient()">Add</button>
           <button (click)="removeRecipient()">Remove</button>
-         <a href="/index-of-correspondents">    Index of Correspondents</a>
+         <a id="link-to-index" href="/index-of-correspondents">    Index of Correspondents</a>
         </div>
         <div class="narrow-by-fields">
-          <p> <strong class="sub-category-title"> Fields </strong>  </p>
+          <p> <strong id="sub-category-title"> Fields </strong>  </p>
 
             <input id="all-fields-checkbox" type="checkbox" (change)="checkUncheckAllFields($event)" checked/>  <strong> {{ fieldsStr[0] }} </strong>  <br>
           

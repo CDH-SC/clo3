@@ -18,8 +18,12 @@
   justify-items: center;
 }
 
-strong#title{
+strong#sub-category-title{
   color: #c17953;
+}
+
+a{
+  color: #21596f;
 }
 #dates-input-box {
   width: 51px !important;

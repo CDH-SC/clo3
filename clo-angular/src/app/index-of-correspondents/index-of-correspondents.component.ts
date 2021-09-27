@@ -1,6 +1,6 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-index-of-correspondents',
   templateUrl: './index-of-correspondents.component.html',
@@ -12,12 +12,41 @@ export class IndexOfCorrespondentsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-letters = ['A','B','C','D','E','F','G','H','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
 
-correspondentsMap = 
-                                                 [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+//letters = ['A','B','C','D','E','F','G','H','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
+
+generateLetters() {
+  var lengthOfAlphabet = 26;
+  var letters = new Array<String>(lengthOfAlphabet);
+  var charCode = 0;
+  for (let i=0; i < lengthOfAlphabet; i++) {
+    charCode
+    letters[i] = String.fromCharCode(i + 65);
+  }
+  return letters;
+}
+
+
+
+letterToNumber(aLetter) {
+  let thisLettersCode = aLetter.charCodeAt('90');
+  let key = thisLettersCode - 65;  // A's code is 65, Z is 90, offset key to use values in hashmap 
+  return key;
+}
+
+letters = this.generateLetters();
+correspondentsMap = new Map([
+  [ this.letters[0], [ ["Alex"], ["Albert"], ["Adriiene"] ] ],
+  [ this.letters[1], [ ["Blane"], ["Borat"] ] ],
+  [ this.letters[2], [ ["Charly"]           ] ],
+  [ this.letters[3], [ ["De"]           ] ],
+  [ this.letters[4], [ ["Ed"]           ] ],
+]);
+
 // index of correspondent whose name starts w/...  a, b, c,...              ...                          ...z
+
 
 
 /* loading xml file data
@@ -27,11 +56,7 @@ correspondentsMap =
  * 4. define event listener
  * 5. send request
   */
- letterToNumber(aLetter) {
-   let thisLettersCode = aLetter.charCodeAt('0');
-   let key = thisLettersCode - 65;  // A's code is 65, Z is 90, offset key to use values in hashmap 
-   return key;
- }
+
 
   xmlFile = "$CLO_ROOT/*.xml"
   loadXMLFile(path, callback) {
@@ -45,7 +70,7 @@ correspondentsMap =
     }
     request.send();
   }
-
+/*
 makeCorrespondentMap() {
   // httprequest returns a huge xml string, need to parse it into an XML tree
   let parser = new DOMParser();
@@ -60,6 +85,8 @@ makeCorrespondentMap() {
     this.correspondentsMap[numberKey].push(aCorrespondent);
   }
 }
+*/
 
 // loadXMLFile(xmlFile, makeCorrespondentMap);
+
 }
