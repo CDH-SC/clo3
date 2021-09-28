@@ -361,8 +361,8 @@ else if (!somethingSpecified) {
   { 
     var retString = "";
     for (let i = 1; i < this.authors.length; i++) {
-      if (!this.authors[i])
-        retString += this.CONST_AUTHORS + this.docAuthorsStr[i] + "_";
+      if (this.authors[i])
+        retString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
     }
     return retString;
   } 
@@ -405,7 +405,7 @@ bothBoundariesSpecified() {
 
 
   //  checks if a boolean-searchfield combination has been added already
-  checkQuery(resultArray,inputName) {
+  checkQuery(resultArray, inputName) {
     if(resultArray.length < 1) {
       return [false,0];
     } else {
@@ -452,27 +452,44 @@ bothBoundariesSpecified() {
       switch(boolOp) {
         case "AND":
           ANDString += this.appendFieldsAndTermsToSearchString(ANDString, result[i][1][j]);
-       /*    if (!this.searchMultiple(this.authors)) {
+         if (!this.searchMultiple(this.authors)) {
           ANDString += this.appendAuthorsToSearchString(ANDString);
           }
           else  {
             if (j == 0)
               ORString += this.appendAuthorsToSearchString(ORString);
-          }
-      */
-        ANDString += this.appendAuthorsToSearchString(ANDString);
+        }
           break;
         case "OR":
           ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
-         // ORString += this.appendAuthorsToSearchString(ORString);
+        if (!this.searchMultiple(this.authors))
+          {
+            if (j==0)
+            ANDString += this.appendAuthorsToSearchString(ANDString);
+          }
+          else {
+            ORString += this.appendAuthorsToSearchString(ORString);
+          }
+          
           break;
+          case "NOT":
+            NOTString += this.appendFieldsAndTermsToSearchString(NOTString,result[i][1][j]);
         default:
         }
     }
     continue;
   }
   
+  /*
+    if (!(this.searchAll(this.authors)) && !(this.searchMultiple(this.authors))) {
+      ANDString += this.appendAuthorsToSearchString(ANDString);
+    }
+    else if (!(this.searchAll(this.authors)) && this.searchMultiple(this.authors)) {
+      ORString += this.appendAuthorsToSearchString(ORString);
+    }
+    */
 
+    // ... else -> search all authors, no need to add anything to search string (default behavior searches all)
     queryString = ANDString + ORString + NOTString
     this.displayQuery[0] =  ANDString.substring(6);
     this.displayQuery[1] = ORString.substring(5);

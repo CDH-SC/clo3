@@ -123,8 +123,9 @@ exports.advancedSearch = async function(query) {
                       }
                     ];
 
+
   var rawQueryObject = {
-      filter: dateFilter,
+      filter: dateFilter, 
       must: andArray, 
       should: orArray,
       must_not: notArray
