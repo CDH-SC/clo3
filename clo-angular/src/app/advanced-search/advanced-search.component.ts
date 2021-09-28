@@ -48,8 +48,9 @@ export class AdvancedSearchComponent {
   CONST_TWC = "Thomas Welsh Carlyle"
   // most letters from him have "Thomas Carlyle" as sender BUT others have "Thomas Welsh Carlyle" as sender
 
-  CONST_JWC = "Jane Welsh Carlyle";  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
-  CONST_MW = "Margaret Welsh"; 
+  // NEED this field value to retrieve both "Jane Welsch Carlyle" & "Jane Bailee Carlyle" 
+  CONST_JWC = "Jane Welsh Carlyle"
+  CONST_MW = "Margaret Welsh"
   CONST_TCJC = "Thomas Carlyle Jane Welsh Carlyle";
 
 
@@ -479,7 +480,13 @@ bothBoundariesSpecified() {
     }
     continue;
   }
-  
+  // NOTString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[1] + "_"; 
+  // need to do above for all authors who aren't selected
+
+  for (let i = 1; i < this.authors.length; ++i) {
+    if (!this.authors[i])
+    NOTString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
+  }
   /*
     if (!(this.searchAll(this.authors)) && !(this.searchMultiple(this.authors))) {
       ANDString += this.appendAuthorsToSearchString(ANDString);
