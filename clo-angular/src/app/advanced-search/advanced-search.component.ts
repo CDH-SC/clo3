@@ -94,9 +94,6 @@ export class AdvancedSearchComponent {
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
 
-  recipientStr = ["Thomas Carlyle","Jane Welsh Carlyle","Margaret Welsh","Goethe","Ralph Waldo Emerson","John Stuart Mill",
-                     "Lady Airlie", "Lady Ashburton", "Anne Gilchrist", "Kate Stanley", "Eliza Forster", "Ann Chamberlayne", 
-                       "Mary Carlyle Austin", "J. George Cooke"];
 
   // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
 
@@ -108,7 +105,7 @@ export class AdvancedSearchComponent {
  
 
 
-  recipient = ["recipient1"];
+  recipient = [""];
   recipients = [this.recipient];
 
   boolOps = ["searchTerm1boolOp"];
@@ -455,10 +452,12 @@ bothBoundariesSpecified() {
           ANDString += this.appendFieldsAndTermsToSearchString(ANDString, result[i][1][j]);
          if (!this.searchMultiple(this.authors)) {
           ANDString += this.appendAuthorsToSearchString(ANDString);
+        //  ANDSTRING += this.appendRecipientsToSearchString(ANDString);
           }
           else  {
             if (j == 0)
               ORString += this.appendAuthorsToSearchString(ORString);
+          //    ORString += this.appendRecipientsToORString(ORString);
         }
           break;
         case "OR":
@@ -467,9 +466,12 @@ bothBoundariesSpecified() {
           {
             if (j==0)
             ANDString += this.appendAuthorsToSearchString(ANDString);
+         //   ANDString += this.appendRecipientssToSearchString(ANDString);
           }
           else {
             ORString += this.appendAuthorsToSearchString(ORString);
+           // ORString += this.appendRecipientsToSearchString(ORString);
+            
           }
           
           break;
@@ -482,11 +484,12 @@ bothBoundariesSpecified() {
   }
   // NOTString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[1] + "_"; 
   // need to do above for all authors who aren't selected
-
+/*
   for (let i = 1; i < this.authors.length; ++i) {
-    if (!this.authors[i])
+    if (!this.authors[i] && !(i == 4))
     NOTString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
   }
+  */
   /*
     if (!(this.searchAll(this.authors)) && !(this.searchMultiple(this.authors))) {
       ANDString += this.appendAuthorsToSearchString(ANDString);
