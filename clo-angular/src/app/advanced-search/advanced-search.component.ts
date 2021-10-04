@@ -443,6 +443,12 @@ bothBoundariesSpecified() {
     if (this.dateRange[0] || this.dateRange[1])
       ANDString += this.appendDateRangeToSearchString(); 
 
+    if (!this.searchMultiple(this.authors))
+        ANDString += this.appendAuthorsToSearchString(ANDString);
+    else
+       ORString += this.appendAuthorsToSearchString(ORString);
+
+
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];
       for (let j = 0; j < result[i][1].length; j++)
@@ -450,30 +456,9 @@ bothBoundariesSpecified() {
       switch(boolOp) {
         case "AND":
           ANDString += this.appendFieldsAndTermsToSearchString(ANDString, result[i][1][j]);
-         if (!this.searchMultiple(this.authors)) {
-          ANDString += this.appendAuthorsToSearchString(ANDString);
-        //  ANDSTRING += this.appendRecipientsToSearchString(ANDString);
-          }
-          else  {
-            if (j == 0)
-              ORString += this.appendAuthorsToSearchString(ORString);
-          //    ORString += this.appendRecipientsToORString(ORString);
-        }
           break;
         case "OR":
-          ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
-        if (!this.searchMultiple(this.authors))
-          {
-            if (j==0)
-            ANDString += this.appendAuthorsToSearchString(ANDString);
-         //   ANDString += this.appendRecipientssToSearchString(ANDString);
-          }
-          else {
-            ORString += this.appendAuthorsToSearchString(ORString);
-           // ORString += this.appendRecipientsToSearchString(ORString);
-            
-          }
-          
+           ORString += this.appendFieldsAndTermsToSearchString(ORString, result[i][1][j]);
           break;
           case "NOT":
             NOTString += this.appendFieldsAndTermsToSearchString(NOTString,result[i][1][j]);
@@ -482,22 +467,6 @@ bothBoundariesSpecified() {
     }
     continue;
   }
-  // NOTString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[1] + "_"; 
-  // need to do above for all authors who aren't selected
-/*
-  for (let i = 1; i < this.authors.length; ++i) {
-    if (!this.authors[i] && !(i == 4))
-    NOTString += this.CONST_AUTHORS + "-" + this.queryAuthorsStr[i] + "_";
-  }
-  */
-  /*
-    if (!(this.searchAll(this.authors)) && !(this.searchMultiple(this.authors))) {
-      ANDString += this.appendAuthorsToSearchString(ANDString);
-    }
-    else if (!(this.searchAll(this.authors)) && this.searchMultiple(this.authors)) {
-      ORString += this.appendAuthorsToSearchString(ORString);
-    }
-    */
 
     // ... else -> search all authors, no need to add anything to search string (default behavior searches all)
     queryString = ANDString + ORString + NOTString
@@ -508,7 +477,7 @@ bothBoundariesSpecified() {
 
     let ANDIndex = this.displayQuery[0];
     let ORIndex = this.displayQuery[1];
-    let NOTIndex = this.displayQuery[2];
+    let NOTIndex = this.displayQuery[2]; 
     /*
     let whichSentence = "";
     this.makeSentence("AND",ANDIndex);
