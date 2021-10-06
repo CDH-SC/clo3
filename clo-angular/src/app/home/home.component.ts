@@ -20,4 +20,12 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     // this.footer.positionFooter();
   }
+
+  getRandomQuoteIndex(upperBound) {
+    return Math.floor(Math.random() * upperBound);
+  }
+  quotes = ["quote 1", "quote 2", "quote 3",
+              "quote 4", "quote 5", "quote 6"];
+  amountOfQuotes = this.quotes.length;
+  thisQuote = this.getRandomQuoteIndex(this.amountOfQuotes);
 }
