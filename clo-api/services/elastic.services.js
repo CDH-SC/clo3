@@ -7,7 +7,7 @@ _this = this;
 
 exports.basicSearch = async function(search) {
   const query = {
-    size: 46,
+    size: 47,
     index: 'volumes',
     body: {
       query: {
@@ -56,9 +56,15 @@ exports.advancedSearch = async function(query) {
   var andArray = [];
   var orArray = [];
   var notArray = [];
+  minYear = 1800;
+  maxYear = 1900;
+  // default values used are the abs. min & max year of letters (in cases where a user does not enter a range explicitly)
   var result = query.split("_");
   var mode = [false,false,false]; //andMode, orMode, notMode
+
+
   console.log(result);
+
   for(var i = 0; i < result.length; i++) {
     if(result[i] == '') {
       continue;
@@ -76,12 +82,25 @@ exports.advancedSearch = async function(query) {
 
     var info = result[i].split("-");
     var fieldName = "letters." + info[0];
+
     if(mode[0]) {
+    // these values need to be assigned to an identifier to later be used in the a filter's property, which is declared after the loop
+     if (fieldName.includes("docDate")) {
+        if (fieldName.includes("Min")) {
+          minYear = info[1];
+          continue;
+        }
+        else if (fieldName.includes("Max")) {
+          maxYear = info[1];
+          continue;
+        }
+      }
+      console.log(fieldName);
       var match_phrase = {};
       match_phrase[fieldName] = info[1];
       andArray.push({
         match_phrase
-      });
+     });
     } else if(mode[1]) {
       var match_phrase = {};
       match_phrase[fieldName] = info[1];
@@ -96,8 +115,17 @@ exports.advancedSearch = async function(query) {
       });      
     }
   }
+
+  var dateFilter = [
+                    {range: 
+                      { "letters.docDate":
+                          {gte: minYear, lte: maxYear}}
+                      }
+                    ];
+
   var rawQueryObject = {
-      must: andArray,
+      filter: dateFilter,
+      must: andArray, 
       should: orArray,
       must_not: notArray
     };
@@ -105,14 +133,14 @@ exports.advancedSearch = async function(query) {
   // console.log("or",orArray);
   // console.log("not",notArray);
   var queryObject = {
-    size: 46,
+    size: 47,
     index: 'volumes',
     body: {
       query: {
         nested: {
           path: "letters",
           query: {
-            bool: rawQueryObject
+            bool: rawQueryObject,
           },
           inner_hits : {
             size: 10

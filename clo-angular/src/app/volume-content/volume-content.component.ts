@@ -14,7 +14,7 @@ import Mark from 'mark.js';
 })
 export class VolumeContentComponent implements OnInit, AfterViewChecked {
 
-  private TOTAL_VOLUMES = 46;
+  private TOTAL_VOLUMES = 48;
 
   objectKeys = Object.keys;
   searchTerm: string;
@@ -240,7 +240,6 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
         for (let i = 0; i < letter.manuscript.length; i++) {
           this.manuscriptUrl[i] = `assets/manuscripts/${letter.manuscript[i]}`;
         }
-        console.log(this.manuscriptUrl);
       } else {
         this.hasManuscript = false;
       }
@@ -478,6 +477,13 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
               index: 19,
               key: k,
               title: 'Appendix Two'
+            });
+            break;
+          case 'will_of_TC':
+            this.volumeKeys.push({
+              index: 20,
+              key: k,
+              title: "Thomas Carlyle's 1871 Will"
             });
             break;
           default:

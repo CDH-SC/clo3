@@ -1,30 +1,124 @@
 
 <div class="container" id="content">
-  <div class="row justify-content-start">
-    <div class="col-12">
+
+<!--   <div class="col-12">   -->
+    <div>
       <H3>Advanced Search</H3>
-      <form id="searchTerms">
-          <label for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label><br/>
-          <div *ngFor='let query of queries; let i = index'>
-             <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
-                <option value='AND'>AND</option>
-                <option value='OR-'>OR</option>
-                <option value='NOT'>NOT</option>
-            </select>
-            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
-                <option value='docBody'>Letter Body</option>
-                <option value='sourceNote'>Source Notes</option>
-                <option value='footnotes'>Foot Notes</option>
-            </select>
-            <input type='string' size=80 [attr.id]="query[2][i]" name='ANDdocBody'/><br/>
-         </div> 
-      </form>
-      <button (click)="addField()">Add Field</button>
-      <button (click)="removeField()">Remove Field</button>
     </div>
-  </div>
+ <!--   </div>   --> 
+
+    <form id="searchTerms">
+      <label id="search-button" for="terms"><INPUT type="submit" value="Search" (click)="startSearch()"></label>
+      <div *ngFor='let query of queries; 
+              let i = index; 
+                let first = isFirst; 
+                  let last = isLast;'>
+              <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+                <option value='AND'>Results must contain</option>
+                <option value='OR'>Results may contain</option>
+                <option value='NOT'>Results must not contain</option>
+            </select>
+            <!--
+            <select [attr.id]="query[1][i]" (change)='changeDropDown($event)'>
+               <option disabled selected hidden>Fields</option> 
+              <option value='docBody'>Letter Body</option>
+              <option value='sourceNote'>Source Notes</option>
+              <option value='footnotes'>Foot Notes</option>
+              <option value='imageCaptionAndMetadata'>Image Caption and Metadata</option>
+              <option value='allFields'>All Fields</option>
+            </select>
+          -->
+            <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;"
+             class="search-box" type='string' size=80 
+                [attr.id]="query[1][i]" 
+                  name='AND'
+                    placeholder="the best of times"/> 
+      </div> <!-- close ngFor's div -->
+    </form>
+
+    <div>
+      <button (click)="addField()">Add Term</button>
+      <button (click)="removeField()">Remove Term</button>
+    </div>
+
+      <div class="container-narrow-results">
+
+
+        <div class="narrow-by-author">
+          <p><strong>Senders</strong></p>
+          
+          
+          <input type="checkbox" 
+          (change) = "checkUncheckAllAuthors($event)" checked/><strong> {{ docAuthorsStr[0] }} </strong>  <br>
+          <input type="checkbox" 
+          [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }}  <br>
+          <input type="checkbox" 
+          [(ngModel)] = "authors[2]" checked/> {{ docAuthorsStr[2] }}  <br>
+          <input type="checkbox" 
+          [(ngModel)] = "authors[3]" checked/>{{ docAuthorsStr[3] }}  <br>  
+          <input type="checkbox" 
+          [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
+        </div>
+
+       <!--  
+         <div class="narrow-by-recipient">
+          <p class="recipient"> <strong> Recipients </strong>  </p>
+          <input type="search" style="background-color: transparent; border-radius: 3px; border: 1px solid brown;"
+            class="input-box" placeholder="john stuart mill">
+          </div>
+         </div> 
+   
+        <div>
+          <button (click)="addRecipient()">Add Recipient</button>
+          <button (click)="removeRecipient()">Remove Recipient</button>
+        </div>
+        -->
+
+        <div class="narrow-by-fields">
+          <p class="fields"> <strong> Fields </strong>  </p>
+
+            <input type="checkbox"
+                (change) = "checkUncheckAllFields($event)" checked/>
+                <strong> {{ fieldsStr[0] }} </strong>  <br>
+            <input type="checkbox" 
+                [(ngModel)] = "fields[1]" checked/>
+                 {{ fieldsStr[1] }} <br>          
+            <input type="checkbox"
+              [(ngModel)] = "fields[2]" checked/>
+                 {{ fieldsStr[2] }}  <br>          
+            <input type="checkbox"
+              [(ngModel)] = "fields[3]" checked> 
+                 {{ fieldsStr[3] }} <br>
+    
+
+     <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images  -->
+               
+      <!--              
+        <label>
+          <input type="checkbox" 
+            value='imageCaptionAndMetadata' 
+              checked> 
+                 Image Caption & Metadata   <br>
+        </label>  
+      -->  
+        </div>
+
+        <div class="narrow-by-dates">
+          <p class="time-period-heading"><strong> Time Period </strong></p>
+              <label for="start-date"> dated between... </label>
+              <input type="search" 
+               [(ngModel)] = "dateRange[0]" id="dates-input-box" name="start-date" placeholder="1812"/>  <br>
+              <label for="end-date"> and... </label>
+              <input type="search" 
+                  [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1870"/> 
+          </div>
+
+      </div>
 </div>
-      <!-- {{#if volumes}}
+
+<!--
+
+      {{#if volumes}}
           <hr/>
           {{#each volumes}}
               <div class="volume">
@@ -39,18 +133,18 @@
           <div>No data to display.</div>
       {{/if}}
 
-       -->
+  -->
  <div
   class="container-fluid"
-  *ngIf="(searchResults | async) as results"
+  *ngIf="(searchResults | async) as results; else loading"
   id="content"
 >
+
   <div class="row justify-content-start orange-border-bottom">
-    <h4>Search Results for: <!-- "{{ searchQuery }}" --></h4>
     <ul style="list-style-type: none;">
-      <li><h4>AND: {{ displayQuery[0] }}</h4></li>
-      <li><h4>OR: {{ displayQuery[1] }}</h4></li>
-      <li><h4>NOT: {{ displayQuery[2] }}</h4></li>
+      <li><strong> AND: {{ displayQuery[0] }}</strong></li>
+      <li><strong> OR:  {{ displayQuery[1] }}</strong></li>
+      <li><strong> NOT: {{ displayQuery[2] }}</strong></li>
     </ul>
   </div>
   <ng-container *ngIf="results.data.length == 0">
@@ -148,3 +242,14 @@
     </div>
   </ng-container>
 </div>
+<ng-template #loading>
+  <div
+  *ngIf = "isSearching"
+  >
+  <div class="container-fluid">
+    <div class="row align-items-center justify-content-center">
+      <img class="loading" src="../../assets/loading.gif" />
+    </div>
+  </div>
+</div> 
+</ng-template>

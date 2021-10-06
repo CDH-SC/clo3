@@ -42,6 +42,9 @@ export class VolumeService {
    * @param letters
    */
   public sortLetters(letters) {
+    if(letters.length===1) {
+      return;
+    }
     // Sort by month
     letters.sort((a, b) => {
       const x = a.docDate;
@@ -76,12 +79,12 @@ export class VolumeService {
       if (i > 0 && i < letters.length - 1) {
         letters[i].prevLetter = letters[i - 1].xml_id;
         letters[i].nextLetter = letters[i + 1].xml_id;
-      } else if (i === 0) {
-        letters[i].prevLetter = null;
-        letters[i].nextLetter = letters[i + 1].xml_id;
       } else if (i === letters.length - 1) {
         letters[i].prevLetter = letters[i - 1].xml_id;
         letters[i].nextLetter = null;
+      } else if (i === 0) {
+        letters[i].nextLetter = letters[i + 1].xml_id;
+        letters[i].prevLetter = null;
       }
 
       if (reformattedLetters[month + ' ' + year] == null) {
