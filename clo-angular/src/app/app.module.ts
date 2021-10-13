@@ -44,6 +44,7 @@ import { AlbumService } from './_shared/_services/album.service';
 import { VolumeService } from './_shared/_services/volumes.service';
 import { SubjectTermService } from './_shared/_services/subject-terms.service';
 import { SortByPipe } from './_shared/pipes/sortBy.pipe';
+import { NgxImageZoomModule } from 'ngx-image-zoom';
 // import { NgxViewerModule } from 'ngx-viewer';
 
 
@@ -118,6 +119,7 @@ const appRoutes: Routes = [
     ),
     NgbModule,
     FontAwesomeModule,
+    NgxImageZoomModule
     // NgxViewerModule,
   ],
   providers: [

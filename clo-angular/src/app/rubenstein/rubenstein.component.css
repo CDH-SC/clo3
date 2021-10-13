@@ -1,7 +1,30 @@
 #content {
   margin: auto;
   padding-top: 25px;
-  width: 80%;
+  width: 95%;
+  max-width: 1200px;
+}
+
+.image-row {
+  display: inline-block;
+  justify-content: space-between;
+
+}
+
+#about-image {
+  height: auto;
+  width: 100%;
+  max-width: 200px;
+  margin-bottom:18px;
+  border: 2px solid black;
+}
+
+.pic {
+  max-height: 200;
+}
+
+.about-text {
+  width: 75%;
 }
 
 .volumeButton, .volumeLink {
@@ -45,4 +68,23 @@ p {
   margin-right: 5px;
   margin-bottom: 0px;
   color: #000000;
+}
+
+.links {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.sidelinks {
+  font-size:14px;
+}
+
+.sidedescription {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h4 {
+  margin-bottom: 20px;
 }

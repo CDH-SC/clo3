@@ -10,7 +10,6 @@ export class RubensteinComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log("initializing rubenstein")
   }
 
 }

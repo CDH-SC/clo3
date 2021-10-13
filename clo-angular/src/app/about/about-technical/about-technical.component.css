@@ -1,0 +1,61 @@
+#content {
+	margin: auto;
+	padding-top: 25px;
+	width: 95%;
+	max-width: 1200px;
+}
+
+.about-header {
+	padding-top: 10px;
+}
+  
+.about-text {
+	width: 60%;
+}
+  
+.about-image {
+	width: 40%;
+	display: flex;
+	align-items: flex-start;
+	padding-left: 3rem;
+}
+
+.flex-row {
+	flex-wrap: wrap;
+}
+
+h6 {
+	color: #517b89 !important;
+}
+  
+#about-image {
+	height: auto;
+	width: 100%;
+	max-width: 600px;
+	border: 2px solid black;
+}
+
+#about-logo {
+	width: 100px;
+}
+
+#portrait {
+	height: auto;
+	width: auto;
+	max-width: 160px;
+	max-height: 160px;
+	border: 2px solid black;
+}
+
+#team-members {
+	padding-right: 3rem;
+}
+  
+@media (max-width: 800px) {
+	.flex-container {
+	  flex-direction: column-reverse;
+	}
+	.flex-column {
+	  width: 100%;
+	}
+}

@@ -91,6 +91,8 @@ def linkFix(m):
 		newLink = '%s%s/appendix\">%s</a>' % (prefix, vol_id, body)
 	elif 'letters-to' in ref:
 		newLink = '%s%s/letters-to-the-carlyles\">%s</a>' % (prefix, vol_id, body)
+	elif 'will-of-TC' in ref:
+		newLink = '%s%s/will_of_TC\">%s</a>' % (prefix, vol_id, body)
 	elif re.match('[\\d]{8}[^)]*?', ref):
 		newLink = re.sub(
 			'(<ref target=\"volume-\\d{2}\\/)([\\d]{8}[^)]*?)(?:\">|\\)\">)', '\\1lt-\\2\">', m.group(0))
@@ -131,6 +133,8 @@ def nameFix(name):
 		name = 'athanaeumAdvertisements'
 	elif 'aurora-leigh' in name:
 		name = 'auroraComments'
+	elif 'will-of-TC' in name:
+		name = 'will_of_TC'
 	return name
 
 

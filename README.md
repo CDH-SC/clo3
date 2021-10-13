@@ -474,10 +474,10 @@ Please note that changes to the DNS can take up to 5 minutes to propogate. Also,
 
 <details>
 
-<summary> Webserver Configuration </summary>
+<summary> Production Nginx/SSL </summary>
 
 <br>
-This section is mainly used by the DevOps team.
+The production CLO VM has a special requirement - it must support two domains: https://clo.cdhsc.org, and https://carlyleletters.dukeupress.edu. In order for this to work, the Nginx config file in /etc/nginx/sites-enabled must have them both listed in the 'server' direcive. Once they are both in the config file, use certbot twice to get SSL support for both domains.  
 
 </details>
 

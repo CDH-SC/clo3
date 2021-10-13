@@ -20,7 +20,7 @@
   width: 40%;
   display: flex;
   align-items: flex-start;
-  padding-right: 1rem;
+  padding-left: 3rem;
 }
 
 #about-image {
@@ -32,7 +32,7 @@
 
 @media (max-width: 800px) {
   .flex-container {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
   .flex-column {
     width: 100%;

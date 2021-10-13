@@ -14,7 +14,7 @@ import Mark from 'mark.js';
 })
 export class VolumeContentComponent implements OnInit, AfterViewChecked {
 
-  private TOTAL_VOLUMES = 46;
+  private TOTAL_VOLUMES = 48;
 
   objectKeys = Object.keys;
   searchTerm: string;
@@ -42,6 +42,8 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
 
   prevLetterId: string = null;
   nextLetterId: string = null;
+
+  degreesRotated = 0;
 
   constructor(
     private volumeService: VolumeService,
@@ -238,7 +240,6 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
         for (let i = 0; i < letter.manuscript.length; i++) {
           this.manuscriptUrl[i] = `assets/manuscripts/${letter.manuscript[i]}`;
         }
-        console.log(this.manuscriptUrl);
       } else {
         this.hasManuscript = false;
       }
@@ -478,6 +479,13 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
               title: 'Appendix Two'
             });
             break;
+          case 'will_of_TC':
+            this.volumeKeys.push({
+              index: 20,
+              key: k,
+              title: "Thomas Carlyle's 1871 Will"
+            });
+            break;
           default:
             this.volumeKeys.push({
               index: 99,
@@ -489,5 +497,20 @@ export class VolumeContentComponent implements OnInit, AfterViewChecked {
       }
     }
     this.volumeKeys = this.volumeKeys.sort((a, b) => a.index - b.index)
+  }
+
+  rotate() {
+    if(this.degreesRotated==0) {
+      this.degreesRotated = 90;
+    }
+    else if(this.degreesRotated==90) {
+      this.degreesRotated = 180;
+    }
+    else if(this.degreesRotated==180) {
+      this.degreesRotated = 270;
+    }
+    else if(this.degreesRotated==270) {
+      this.degreesRotated = 0;
+    }
   }
 }

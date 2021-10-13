@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"1ca4209edecb42808a99445a8285c4b0","collectionName":"volumes"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"_fts":"text","_ftsx":{"$numberInt":"1"}},"name":"$**_text","background":true,"weights":{"$**":{"$numberInt":"1"}},"default_language":"english","language_override":"language","textIndexVersion":{"$numberInt":"3"}}],"uuid":"f7a4f32a344c4b5a9046ff377b3edde5","collectionName":"volumes","type":"collection"}
