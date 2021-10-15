@@ -84,6 +84,18 @@ ul {
   width: 100% !important;
 }
 
+.rotated90 > ::ng-deep .ngxImageZoomContainer{
+  transform: rotate(90deg);
+}
+
+.rotated180 > ::ng-deep .ngxImageZoomContainer{
+  transform: rotate(180deg);
+}
+
+.rotated270 > ::ng-deep .ngxImageZoomContainer{
+  transform: rotate(270deg);
+}
+
 p {
   font-style: italic;
 }

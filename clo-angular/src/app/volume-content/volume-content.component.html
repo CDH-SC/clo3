@@ -27,16 +27,19 @@
             <ul>
               <li *ngFor="let url of manuscriptUrl">
                 <img src="../../assets/rotate.png" id="rotateButton" (click)="rotate()">
-                <lib-ngx-image-zoom *ngIf="degreesRotated==0" id="manuscriptImage" style="color:black" [thumbImage]="url" [zoomMode]="'click'" [enableLens]="true" [lensWidth]="200" [lensHeight]="200" [circularLens]="true">
+                <lib-ngx-image-zoom 
+                [ngClass]="{'rotated90': degreesRotated==90,
+                 'rotated180': degreesRotated==180, 
+                 'rotated270': degreesRotated==270}"
+                id="manuscriptImage" style="color:black" [thumbImage]="url" 
+                [zoomMode]="'click'" [enableLens]="true" [lensWidth]="200" [lensHeight]="200" 
+                [circularLens]="true">
                 </lib-ngx-image-zoom>
-                <img *ngIf="degreesRotated==90" id="rotated90" src="{{ url }}">
-                <img *ngIf="degreesRotated==180" id="rotated180" src="{{ url }}">
-                <img *ngIf="degreesRotated==270" id="rotated270" src="{{ url }}">
               </li>
             </ul>
           </div>
           <div id="imageButtons">
-          <p *ngIf="degreesRotated==0">Click to zoom</p>
+          <p>Click to zoom</p>
           </div>
           </div>
 
