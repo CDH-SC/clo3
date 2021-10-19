@@ -13,7 +13,7 @@
               let i = index; 
                 let first = isFirst; 
                   let last = isLast;'>
-              <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
+            <select [attr.id]="query[0][i]" (change)='changeDropDown($event)'>
                 <option value='AND'>Results must contain</option>
                 <option value='OR'>Results may contain</option>
                 <option value='NOT'>Results must not contain</option>
@@ -45,72 +45,68 @@
 
 
         <div class="narrow-by-author">
-          <p><strong>Senders</strong></p>
+          <p><strong id="sub-category-title">Authors</strong></p>
           
-          
-          <input type="checkbox" 
-          (change) = "checkUncheckAllAuthors($event)" checked/><strong> {{ docAuthorsStr[0] }} </strong>  <br>
-          <input type="checkbox" 
-          [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }}  <br>
-          <input type="checkbox" 
-          [(ngModel)] = "authors[2]" checked/> {{ docAuthorsStr[2] }}  <br>
-          <input type="checkbox" 
-          [(ngModel)] = "authors[3]" checked/>{{ docAuthorsStr[3] }}  <br>  
-          <input type="checkbox" 
-          [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
+            <input id="all-authors-checkbox" type="checkbox" (change) = "checkUncheckAllAuthors($event)" checked/> <strong> {{ docAuthorsStr[0] }} </strong> <br>
+
+            <input id="thomas-carlyle-checkbox" type="checkbox" [(ngModel)] = "authors[1]" checked/> {{ docAuthorsStr[1] }} <br>
+            
+            <input id="jane-carlyle-checkbox" type="checkbox" [(ngModel)] = "authors[2]" checked/> {{ docAuthorsStr[2] }}  <br>
+
+            <input id="margaret-carlyle-checkbox" type="checkbox" [(ngModel)] = "authors[3]" checked/> {{ docAuthorsStr[3] }}  <br>
+
+            <input id="thomas-and-jane-checkbox" type="checkbox" [(ngModel)] = "authors[4]" checked/> {{ docAuthorsStr[4] }} 
         </div>
 
-       <!--  
-         <div class="narrow-by-recipient">
-          <p class="recipient"> <strong> Recipients </strong>  </p>
-          <input type="search" style="background-color: transparent; border-radius: 3px; border: 1px solid brown;"
-            class="input-box" placeholder="john stuart mill">
+       
+        <div class="narrow-by-recipient">
+          <p> <strong id="sub-category-title"> Recipients </strong>  </p>
+          <div *ngFor='let recipient of recipients'>
+            <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
+              list="list-of-recipients" placeholder="Lady Airlie"/>
+
+              <datalist id="list-of-recipients">
+                <option value="Thomas Carlyle">
+                <option value="Jane Welsh Carlyle">
+                <option value="Margaret Welsh"> 
+                <option value="Goethe"> 
+                <option value="Ralph Waldo Emerson"> 
+                <option value="John Stuart Mill"> 
+                <option value="Lady Airlie"> 
+                <option value="Lady Ashburton"> 
+                <option value="Anne Gilchrist">
+                <option value="Kate Stanley"> 
+                <option value="Eliza Forster">
+                <option value="Ann Chamberlayne"> 
+                <option value="Mary Carlyle Austin"> 
+                <option value="J. George Cooke"> 
+              </datalist>
+              <br>
+            <button (click)="addRecipient()">Add</button>
+            <button (click)="removeRecipient()">Remove</button>
+          <a href="/index-of-correspondents">    Index of Correspondents</a>
           </div>
-         </div> 
-   
-        <div>
-          <button (click)="addRecipient()">Add Recipient</button>
-          <button (click)="removeRecipient()">Remove Recipient</button>
         </div>
-        -->
-
         <div class="narrow-by-fields">
-          <p class="fields"> <strong> Fields </strong>  </p>
+          <p> <strong id="sub-category-title"> Fields </strong>  </p>
 
-            <input type="checkbox"
-                (change) = "checkUncheckAllFields($event)" checked/>
-                <strong> {{ fieldsStr[0] }} </strong>  <br>
-            <input type="checkbox" 
-                [(ngModel)] = "fields[1]" checked/>
-                 {{ fieldsStr[1] }} <br>          
-            <input type="checkbox"
-              [(ngModel)] = "fields[2]" checked/>
-                 {{ fieldsStr[2] }}  <br>          
-            <input type="checkbox"
-              [(ngModel)] = "fields[3]" checked> 
-                 {{ fieldsStr[3] }} <br>
-    
+            <input id="all-fields-checkbox" type="checkbox" (change)="checkUncheckAllFields($event)" checked/>  <strong> {{ fieldsStr[0] }} </strong>  <br>
+          
+            <input id="letter-body-checkbox" type="checkbox" [(ngModel)] = "fields[1]" checked/> {{ fieldsStr[1] }} <br>
+            
+            <input id="source-note-checkbox" type="checkbox" [(ngModel)] = "fields[2]" checked/> {{ fieldsStr[2] }} <br>
 
-     <!-- need to change value of following item to correspond w/ image caption's & metadata's id in whatever particular Mongo collection for the images  -->
-               
-      <!--              
-        <label>
-          <input type="checkbox" 
-            value='imageCaptionAndMetadata' 
-              checked> 
-                 Image Caption & Metadata   <br>
-        </label>  
-      -->  
+            <input id="footnotes-checkbox" type="checkbox" [(ngModel)] = "fields[3]" checked/> {{ fieldsStr[3] }} <br>
         </div>
 
         <div class="narrow-by-dates">
-          <p class="time-period-heading"><strong> Time Period </strong></p>
+          <p><strong id="sub-category-title"> Time Period </strong></p>
               <label for="start-date"> dated between... </label>
               <input type="search" 
                [(ngModel)] = "dateRange[0]" id="dates-input-box" name="start-date" placeholder="1812"/>  <br>
               <label for="end-date"> and... </label>
               <input type="search" 
-                  [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1870"/> 
+                  [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1881"/> 
           </div>
 
       </div>

@@ -7,7 +7,7 @@ _this = this;
 
 exports.basicSearch = async function(search) {
   const query = {
-    size: 47,
+    size: 48,
     index: 'volumes',
     body: {
       query: {
@@ -123,8 +123,9 @@ exports.advancedSearch = async function(query) {
                       }
                     ];
 
+
   var rawQueryObject = {
-      filter: dateFilter,
+      filter: dateFilter, 
       must: andArray, 
       should: orArray,
       must_not: notArray
@@ -133,7 +134,7 @@ exports.advancedSearch = async function(query) {
   // console.log("or",orArray);
   // console.log("not",notArray);
   var queryObject = {
-    size: 47,
+    size: 48,
     index: 'volumes',
     body: {
       query: {

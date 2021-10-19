@@ -1,0 +1,15 @@
+<div class="container" id="content">
+<h1>Index of Correspondents</h1>
+<!-- ents() method returns key value pairs -->
+<details *ngFor="let correspondent of correspondentsMap.entries(); index as i;">
+    <summary> <h2>{{ correspondent[0] }} </h2> </summary>
+    <ul>
+        <!-- get() returns the value associated with particular key, which are arrays here -->
+        <li *ngFor="let aCorrespondent of correspondent[1]; index as j">
+            <p>
+            {{ aCorrespondent[j] }}
+            </p>
+        </li>
+    </ul>
+</details>
+

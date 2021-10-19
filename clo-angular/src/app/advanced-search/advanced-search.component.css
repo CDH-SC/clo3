@@ -18,11 +18,17 @@
   justify-items: center;
 }
 
+strong#sub-category-title{
+  color: #c17953;
+}
+
+a{
+  color: #21596f;
+}
 #dates-input-box {
   width: 51px !important;
   background-color: transparent;
   border-radius: 3px;
-  /* border: 1px solid #c17953; */
   border: 1px solid brown;
 }
 
