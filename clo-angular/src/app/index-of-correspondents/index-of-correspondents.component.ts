@@ -1,8 +1,8 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import xml2js from 'xml2js';  
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+// import xml2js from 'xml2js';  
+// import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 
 @Component({
   selector: 'app-index-of-correspondents',
@@ -13,6 +13,7 @@ export class IndexOfCorrespondentsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  /*
   public xmlItems: any;  
   constructor(private _http: HttpClient) { this.loadXML(); }  
   loadXML() {  
@@ -58,7 +59,7 @@ export class IndexOfCorrespondentsComponent implements OnInit {
       });
     });  
   }  
-
+*/
   generateLetters() {
     var lengthOfAlphabet = 26;
     var letters = new Array<String>(lengthOfAlphabet);
