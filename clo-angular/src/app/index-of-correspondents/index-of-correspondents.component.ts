@@ -11,12 +11,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class IndexOfCorrespondentsComponent {
 
-  //ngOnInit(){};
-   // title = 'read-xml-angular8';  
+    ngOnInit(){}
     public xmlItems: any;  
     constructor(private _http: HttpClient) { this.loadXML(); }  
+
+    /*
+     * send HTTP get request to load xml file into memory
+     */
     loadXML() {  
-      this._http.get('../../../../volume-46-correspondent-index.xml',  
+      this._http.get('$CLO_ROOT/clo-xml-archive/volume-46-correspondent-index.xml',  
         {  
           headers: new HttpHeaders()  
             .set('Content-Type', 'text/xml')  
@@ -32,6 +35,31 @@ export class IndexOfCorrespondentsComponent {
             });  
         });  
     }  
+    /*
+     * parse the xml...
+     * At this point, "data" is a string containing the file's contents, need to put names in some sort of list, using array for now.
+     */
+
+    /* the xml file looks like this:
+     * 
+     * <Correspondent>
+     *   <ixe>
+     *      <entry(1)> Aitken James Jr. </entry>
+     *        <pgref(1)><xref ="volume-n" from="..."</xref></pgref>
+     *                .
+     *                .
+     *                .
+     *        <pgref(n)><xref=".." from="..."</xref></pgref>
+     *     </entry(1)>
+     *              .
+     *              .
+     *              .
+     *       <entry(n)> Woolner Thomas</entry>
+     *         <pgref> ... </pgref> 
+     * </Correspondent>
+     * 
+     */
+
     parseXML(data) {  
       return new Promise(resolve => {  
         var k: string | number,  
@@ -39,11 +67,11 @@ export class IndexOfCorrespondentsComponent {
           parser = new xml2js.Parser(  
             {  
               trim: true,  
-              explicitArray: true 
+              explicitArray: true // arrange child nodes into arrays (Parent - Correspondent; Children - ixe)
             });  
         parser.parseString(data, function (err, result) {  
-         var obj = result.Correspondent;
-         for (k in obj.ixe) {  
+         var obj = result.Correspondent; // define variable constituting Correspondent node and all its children
+         for (k in obj.ixe) {  // iterate through <ixe></ixe> children, push name (entry tag values) to array
             var item = obj.ixe[k]; 
             arr.push({  
               entry: item.entry[0]
@@ -54,6 +82,7 @@ export class IndexOfCorrespondentsComponent {
       });  
     }
   }
+  
   /*
   generateLetters() {
     var lengthOfAlphabet = 26;
