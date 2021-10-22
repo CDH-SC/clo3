@@ -16,7 +16,7 @@ export class IndexOfCorrespondentsComponent {
     public xmlItems: any;  
     constructor(private _http: HttpClient) { this.loadXML(); }  
     loadXML() {  
-      this._http.get('./volume-46-correspondent-index.xml',  
+      this._http.get('../../../../volume-46-correspondent-index.xml',  
         {  
           headers: new HttpHeaders()  
             .set('Content-Type', 'text/xml')  
