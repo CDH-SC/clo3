@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<div1 type="section" id="ed-46-index-of-correspondents">
-<head>
-<title><pb id="pg-46-243" n="46:243"/>INDEX OF CORRESPONDENTS</title>
-</head>
-<div2>
+
+<Correspondent>
 <ixe>
 <entry>Aitken James Jr.</entry>
 <pgref><xref doc="volume-46" from="lt-18690316-TC-JAJR-01">28</xref></pgref>
@@ -439,5 +436,5 @@
 <pgref><xref doc="volume-46" from="lt-18691020-TC-TWO-01">92</xref></pgref>
 <pgref><xref doc="volume-35" from="lt-18591001-JWC-TWO-01">227</xref></pgref>
 </ixe>
-</div2>
-</div1>
+
+</Correspondent>
