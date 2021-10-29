@@ -10,7 +10,7 @@ import { ElasticSearch } from '../_shared/models/elastic-search';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-// import {MatCheckboxModule} from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
 
 @Component({
   selector: 'app-advanced-search',
@@ -87,13 +87,14 @@ export class AdvancedSearchComponent {
   boolAllAuthors = true;
 
   dateRange = [];
-
+  sortingOrder: string;
+  sortingOrders: ["asc","desc"]
+  querySortingOrder
   docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jwcStr, this.mwStr, this.tcjcStr];
   authors = [this.boolAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
 
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
-
 
   // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
 

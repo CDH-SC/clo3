@@ -34,13 +34,13 @@
                   name='AND'
                     placeholder="the best of times"/> 
       </div> <!-- close ngFor's div -->
-    </form>
+  
 
     <div>
       <button (click)="addField()">Add Term</button>
       <button (click)="removeField()">Remove Term</button>
     </div>
-
+  </form> 
       <div class="container-narrow-results">
 
 
@@ -63,28 +63,11 @@
           <p> <strong id="sub-category-title"> Recipients </strong>  </p>
           <div *ngFor='let recipient of recipients'>
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
-              list="list-of-recipients" placeholder="Lady Airlie"/>
-
-              <datalist id="list-of-recipients">
-                <option value="Thomas Carlyle">
-                <option value="Jane Welsh Carlyle">
-                <option value="Margaret Welsh"> 
-                <option value="Goethe"> 
-                <option value="Ralph Waldo Emerson"> 
-                <option value="John Stuart Mill"> 
-                <option value="Lady Airlie"> 
-                <option value="Lady Ashburton"> 
-                <option value="Anne Gilchrist">
-                <option value="Kate Stanley"> 
-                <option value="Eliza Forster">
-                <option value="Ann Chamberlayne"> 
-                <option value="Mary Carlyle Austin"> 
-                <option value="J. George Cooke"> 
-              </datalist>
+                 placeholder="Lady Airlie"/>
               <br>
             <button (click)="addRecipient()">Add</button>
             <button (click)="removeRecipient()">Remove</button>
-          <a href="/index-of-correspondents">    Index of Correspondents</a>
+          <a href="/index-of-correspondents">    Index of Recipients </a>
           </div>
         </div>
         <div class="narrow-by-fields">
@@ -107,7 +90,14 @@
               <label for="end-date"> and... </label>
               <input type="search" 
                   [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1881"/> 
-          </div>
+                 <br>
+                  <label id="sorting-toggle-label" for="sort-order"> sorted in... </label>
+                  <mat-radio-group [(ngModel)="sortingOrder"
+                  aria-labelledby="sorting-toggle-label">
+                  <mat-radio-button *ngFor="let sortingOrder of sortingOrders" [value]="sortingOrder"> {{sortingOrder}}</mat-radio-button>
+                </mat-radio-group>
+                  
+                </div>
 
       </div>
 </div>
