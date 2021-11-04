@@ -10,7 +10,8 @@ import { ElasticSearch } from '../_shared/models/elastic-search';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-import { MatRadioModule } from '@angular/material/radio';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 
 @Component({
   selector: 'app-advanced-search',
@@ -42,6 +43,7 @@ export class AdvancedSearchComponent {
   CONST_FOOTNOTES = "footnotes";
 
   CONST_AUTHORS = "docAuthor";
+  CONST_RECIPIENTS = "recipient"
   CONST_DATE = "docDate";
 
   CONST_TC = "Thomas Carlyle";
@@ -86,10 +88,12 @@ export class AdvancedSearchComponent {
   boolMW = true;
   boolAllAuthors = true;
 
+  recipient = "Lady Airlie";
   dateRange = [];
-  sortingOrder: string;
-  sortingOrders: ["asc","desc"]
-  querySortingOrder
+  asc = "ascending"
+  desc = "descending"
+
+  sortingOrderSelected = "";
   docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jwcStr, this.mwStr, this.tcjcStr];
   authors = [this.boolAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
 
@@ -105,17 +109,16 @@ export class AdvancedSearchComponent {
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
  
 
-
-  recipient = [""];
   recipients = [this.recipient];
-
+  recipientNumber = 1;
+  recipientElmName = "recipient" + this.recipientNumber;
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
   
   query = [this.boolOps, this.inputs];
   queries = [this.query];
   queryNumber = 1;
-  recipientNumber = 1;
+  
   searchResults: any;
 
   isSearching = false;
@@ -145,10 +148,10 @@ export class AdvancedSearchComponent {
   }
 
  addRecipient() {
-    this.recipientNumber++;
-    this.recipient.push("recipient" + this.recipientNumber);
-    let newRecipient = this.recipient;
-    this.recipients.push(this.recipient);
+   this.recipients.push(this.recipient);
+   //this.recipientNumber++;
+   //let recipient = "Lady Airlie";
+   //this.recipients.push(recipient);
   }
 
   removeRecipient() {
@@ -355,6 +358,14 @@ else if (!somethingSpecified) {
 }
 }
 
+appendRecipientsToSearchString(boolString) 
+{
+  var retString = "";
+  for (let i = 1; i < this.recipientNumber; i++) {
+    retString += this.CONST_RECIPIENTS + "-" + this.recipients[i] + "_";
+  }
+  return retString;
+}
   //  return search string of authors
   appendAuthorsToSearchString(boolString)
   { 
@@ -421,7 +432,9 @@ bothBoundariesSpecified() {
 
     this.isSearching = true;
     var result = [];
-
+    for (var i = 0; i < this.recipientNumber; i++) {
+     console.log(this.recipients[i]);
+    }
     for(var i = 0; i < this.queryNumber; i++) {
       var currInputId = "searchTerm".concat((i+1).toString());
       var currInputeName = (<HTMLInputElement>document.getElementById(currInputId)).name;
@@ -449,6 +462,7 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
+    ANDString += this.appendRecipientsToSearchString(ANDString);
 
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];

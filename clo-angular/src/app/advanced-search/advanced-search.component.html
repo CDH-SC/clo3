@@ -63,7 +63,9 @@
           <p> <strong id="sub-category-title"> Recipients </strong>  </p>
           <div *ngFor='let recipient of recipients'>
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
-                 placeholder="Lady Airlie"/>
+                 placeholder="Lady Airlie"
+                 [attr.id]="recipient[i]"
+                />
               <br>
             <button (click)="addRecipient()">Add</button>
             <button (click)="removeRecipient()">Remove</button>
@@ -91,13 +93,13 @@
               <input type="search" 
                   [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1881"/> 
                  <br>
+  
                   <label id="sorting-toggle-label" for="sort-order"> sorted in... </label>
-                  <mat-radio-group [(ngModel)="sortingOrder"
-                  aria-labelledby="sorting-toggle-label">
-                  <mat-radio-button *ngFor="let sortingOrder of sortingOrders" [value]="sortingOrder"> {{sortingOrder}}</mat-radio-button>
-                </mat-radio-group>
                   
+                 <br> <input type="radio"  name=[sortingOrderSelected]/> {{asc}}
+                 <br> <input type="radio" name=[sortingOrderSelected]/> {{desc}}
                 </div>
+
 
       </div>
 </div>

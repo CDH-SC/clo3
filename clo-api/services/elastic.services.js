@@ -121,14 +121,14 @@ exports.advancedSearch = async function(query) {
                       { "letters.docDate":
                           {gte: minYear, lte: maxYear}}
                       }
-                    ];
+                    ]
 
-
+ //var sort = [{"letters.docDate":  {order: desc} }];
   var rawQueryObject = {
       filter: dateFilter, 
       must: andArray, 
       should: orArray,
-      must_not: notArray
+      must_not: notArray,
     };
   // console.log("and",andArray);
   // console.log("or",orArray);
@@ -143,6 +143,8 @@ exports.advancedSearch = async function(query) {
           query: {
             bool: rawQueryObject,
           },
+        //  sort: [ {"letters.docDate": {order: desc}} ]
+         // },
           inner_hits : {
             size: 10
           }
