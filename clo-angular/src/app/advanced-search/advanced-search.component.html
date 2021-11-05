@@ -60,7 +60,8 @@
 
        
         <div class="narrow-by-recipient">
-          <p> <strong id="sub-category-title"> Recipients </strong>  </p>
+          <p class="mb-0"> <strong id="sub-category-title"> Recipients </strong>  </p>
+          <a href="/index-of-correspondents">    Index of Recipients </a>
           <div *ngFor='let recipient of recipients'>
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
                  placeholder="Lady Airlie"
@@ -69,7 +70,6 @@
               <br>
             <button (click)="addRecipient()">Add</button>
             <button (click)="removeRecipient()">Remove</button>
-          <a href="/index-of-correspondents">    Index of Recipients </a>
           </div>
         </div>
         <div class="narrow-by-fields">
@@ -85,16 +85,16 @@
         </div>
 
         <div class="narrow-by-dates">
-          <p><strong id="sub-category-title"> Time Period </strong></p>
-              <label for="start-date"> dated between... </label>
+          <p class="mb-1"><strong id="sub-category-title"> Time Period </strong></p>
+              <label for="start-date"> dated between... </label> <br>
               <input type="search" 
                [(ngModel)] = "dateRange[0]" id="dates-input-box" name="start-date" placeholder="1812"/>  <br>
-              <label for="end-date"> and... </label>
+              <label class="mt-1" for="end-date"> and... </label> <br>
               <input type="search" 
                   [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1881"/> 
                  <br>
   
-                  <label id="sorting-toggle-label" for="sort-order"> sorted in... </label>
+                  <label class="mt-1" id="sorting-toggle-label" for="sort-order"> sorted in... </label>
                   
                  <br> <input type="radio"  name=[sortingOrderSelected]/> {{asc}}
                  <br> <input type="radio" name=[sortingOrderSelected]/> {{desc}}
