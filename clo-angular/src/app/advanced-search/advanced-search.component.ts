@@ -157,7 +157,7 @@ export class AdvancedSearchComponent {
    //this.recipients.push(recipient);
   }
 
-  onValueUpdate($event: any, i:any) {
+  onValueChange($event: any, i:any) {
     console.log($event.target.value);
     console.log(i);
     this.recipients[i] = $event.target.value;
@@ -372,7 +372,7 @@ else if (!somethingSpecified) {
 appendRecipientsToSearchString(boolString) 
 {
   var retString = "";
-  for (let i = 1; i < this.recipientNumber; i++) {
+  for (let i = 0; i < this.recipients.length; i++) {
     retString += this.CONST_RECIPIENTS + "-" + this.recipients[i] + "_";
   }
   return retString;
@@ -473,8 +473,13 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-    ANDString += this.appendRecipientsToSearchString(ANDString);
-
+    if (!(this.recipients.length > 1)) {
+      ANDString += this.appendRecipientsToSearchString(ANDString);
+    }
+    else {
+      ORString += this.appendRecipientsToSearchString(ORString);
+    }
+    console.log("ANDString: " + ANDString);
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];
       for (let j = 0; j < result[i][1].length; j++)

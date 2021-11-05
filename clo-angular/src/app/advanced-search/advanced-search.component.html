@@ -61,17 +61,17 @@
        
         <div class="narrow-by-recipient">
           <p class="mb-0"> <strong id="sub-category-title"> Recipients </strong>  </p>
-          <a href="/index-of-correspondents">    Index of Recipients </a>
           <div *ngFor="let recipient of recipients; let i = index">
-            <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
+            <input type="search" style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
                  placeholder="Lady Airlie"
                  [ngModel]="recipients[i]" 
-                 (change)="onValueUpdate($event, i)"
+                 (change)="onValueChange($event, i)"
                 />
               <br>
+            </div>
             <button (click)="addRecipient()">Add</button>
             <button (click)="removeRecipient()">Remove</button>
-          </div>
+            <a href="/index-of-correspondents">Index of Recipients </a>
         </div>
         <div class="narrow-by-fields">
           <p> <strong id="sub-category-title"> Fields </strong>  </p>
