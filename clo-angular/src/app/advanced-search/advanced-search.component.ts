@@ -88,7 +88,7 @@ export class AdvancedSearchComponent {
   boolMW = true;
   boolAllAuthors = true;
 
-  recipient = "Lady Airlie";
+  currentRecipient = "";
   dateRange = [];
   asc = "ascending"
   desc = "descending"
@@ -109,7 +109,7 @@ export class AdvancedSearchComponent {
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
  
 
-  recipients = [this.recipient];
+  recipients = [""];
   recipientNumber = 1;
   recipientElmName = "recipient" + this.recipientNumber;
   boolOps = ["searchTerm1boolOp"];
@@ -148,17 +148,28 @@ export class AdvancedSearchComponent {
   }
 
  addRecipient() {
-   this.recipients.push(this.recipient);
+   console.log("ADD RECIPIENT");
+   this.recipients.push("");
+   this.recipientNumber++;
+   console.log(this.recipients);
    //this.recipientNumber++;
    //let recipient = "Lady Airlie";
    //this.recipients.push(recipient);
   }
 
+  onValueUpdate($event: any, i:any) {
+    console.log($event.target.value);
+    console.log(i);
+    this.recipients[i] = $event.target.value;
+  }
+
   removeRecipient() {
+    console.log("REMOVE RECIPIENT");
     if (this.recipients.length > 1) {
       this.recipients.splice(this.recipientNumber);
       this.recipientNumber--;
     }
+    console.log(this.recipients);
   }
   
   changeDropDown(event: any) {

@@ -62,10 +62,11 @@
         <div class="narrow-by-recipient">
           <p class="mb-0"> <strong id="sub-category-title"> Recipients </strong>  </p>
           <a href="/index-of-correspondents">    Index of Recipients </a>
-          <div *ngFor='let recipient of recipients'>
+          <div *ngFor="let recipient of recipients; let i = index">
             <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
                  placeholder="Lady Airlie"
-                 [attr.id]="recipient[i]"
+                 [ngModel]="recipients[i]" 
+                 (change)="onValueUpdate($event, i)"
                 />
               <br>
             <button (click)="addRecipient()">Add</button>
