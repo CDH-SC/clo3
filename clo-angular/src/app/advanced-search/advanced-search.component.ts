@@ -11,6 +11,7 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { data } from 'jquery';
 
 
 @Component({
@@ -371,8 +372,19 @@ else if (!somethingSpecified) {
 
 appendRecipientsToSearchString(boolString) 
 {
+  // if (no recipients were specified)
+  //    return
+
+  /*
+   * in most circumstances, if recipients.length is 2 or more, there's at least one recipient but
+   *   recipients starts w/ length 1, so if it's 1, need to ensure it's not the empty string
+   */
+  if (this.recipients.length == 1 && this.recipients[0] == "")
+       return;
+
+       
   var retString = "";
-  for (let i = 0; i < this.recipients.length; i++) {
+  for (var i = 0; i < this.recipients.length; i++) {
     retString += this.CONST_RECIPIENTS + "-" + this.recipients[i] + "_";
   }
   return retString;
@@ -441,6 +453,8 @@ bothBoundariesSpecified() {
 
   startSearch() {
 
+    console.log(this.sortingOrderSelected);
+    console.log(this.recipients.length);
     this.isSearching = true;
     var result = [];
     for (var i = 0; i < this.recipientNumber; i++) {
@@ -519,10 +533,21 @@ bothBoundariesSpecified() {
   console.log("Query String sent to elastic search: " + queryString);
 
     this.searchResults = this.searchService.advancedSearch(queryString);
+
+    
+    for (var i = 0; i < this.searchResults.length; i++) {
+      console.log("Result 1 has DATE " + this.searchResults[i].letter.docDate);
+    }
+
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
     })
+    
+    for (var i = 0; i <this.searchResults.length; i++) {
+      console.log("Result " + i + " has DATE: " + this.searchResults[i].letter.docDate);
+    }
     this.searchQuery = queryString;
+
 
   }
 
