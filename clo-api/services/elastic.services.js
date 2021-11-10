@@ -123,7 +123,7 @@ exports.advancedSearch = async function(query) {
                       }
                     ]
 
- //var sort = [{"letters.docDate":  {order: desc} }];
+ 
   var rawQueryObject = {
       filter: dateFilter, 
       must: andArray, 
@@ -143,14 +143,26 @@ exports.advancedSearch = async function(query) {
           query: {
             bool: rawQueryObject,
           },
-        //  sort: [ {"letters.docDate": {order: desc}} ]
-         // },
           inner_hits : {
             size: 10
           }
         }
       }
-    }
+    //   ,sort:[
+    //     {
+    //       "volumes.letters.docDate": {
+    //         mode: "max",
+    //         order: "desc",
+    //         nested: {
+    //           path: "volumes.letters",
+    //           filter: {
+    //             dateFilter
+    //           }
+    //         }
+    //       }
+    //     }
+    //   ]
+   }
   };
   try {
     console.log("qObject",JSON.stringify(queryObject));
