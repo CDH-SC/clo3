@@ -168,12 +168,29 @@ def xsltFormat(inputString):
 
 	return formattedDoc
 
+def xsltFormatFootnotes(inputString):
+	""" Apply XSLT stylesheet to input XML """
+
+	# convert html entities to their hex codes
+	inputString = re.sub('&.{1,6}?;', htmlHexConverter, inputString)
+	# converts loose "&" into the hex entity for "&"
+	# with open('log.xml', 'a') as f:
+	# 	f.write(inputString)
+	inputString = re.sub('&\\s|&(?=\\w?[^#])', '&#38; ', inputString)
+	# fix any broken links
+	inputString = re.sub("<ref target=\"volume-(\\d{2})\\/([^lt\"]{2}.*?)>(.*?)</ref>", linkFix, inputString)
+
+	sourceDoc = etree.fromstring('<div>%s</div>' % inputString)
+	formattedDoc = str(xsltTransformer(sourceDoc))
+
+	return formattedDoc
+
 
 def footnoteFormat(footnotesArray):
 	""" Apply XSLT to each footnote in given array """
 	footnotes = []
 	for f in footnotesArray:
-		footnote = xsltFormat(''.join(map(str, f.contents)))
+		footnote = xsltFormatFootnotes(''.join(map(str, f.contents)))
 		footnotes.append(footnote)
 	return footnotes
 
