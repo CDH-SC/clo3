@@ -379,7 +379,7 @@ appendRecipientsToSearchString(boolString)
    * in most circumstances, if recipients.length is 2 or more, there's at least one recipient but
    *   recipients starts w/ length 1, so if it's 1, need to ensure it's not the empty string
    */
-  if (this.recipients.length == 1 && this.recipients[0] == "")
+  if (this.recipients.length == 1 || this.recipients[0] == "")
        return;
 
        
@@ -431,6 +431,7 @@ bothBoundariesSpecified() {
     for (let i = 0; i < this.queryFieldsStr.length; i++) {
       if (this.fields[i+1]) { 
         retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
+        console.log(retString);
       }
     }
     return retString;
@@ -453,8 +454,9 @@ bothBoundariesSpecified() {
 
   startSearch() {
 
-    console.log(this.sortingOrderSelected);
-    console.log(this.recipients.length);
+    for (let i = 0; i < this.queryFieldsStr.length; ++i) {
+      console.log(this.queryFieldsStr[i]);
+    }
     this.isSearching = true;
     var result = [];
     for (var i = 0; i < this.recipientNumber; i++) {
@@ -532,20 +534,21 @@ bothBoundariesSpecified() {
 
   console.log("Query String sent to elastic search: " + queryString);
 
-    this.searchResults = this.searchService.advancedSearch(queryString);
+  this.searchResults = this.searchService.advancedSearch(queryString);
 
-    
+    /*
     for (var i = 0; i < this.searchResults.length; i++) {
       console.log("Result 1 has DATE " + this.searchResults[i].letter.docDate);
     }
-
+    */
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
     })
-    
+    /*
     for (var i = 0; i <this.searchResults.length; i++) {
       console.log("Result " + i + " has DATE: " + this.searchResults[i].letter.docDate);
     }
+    */
     this.searchQuery = queryString;
 
 

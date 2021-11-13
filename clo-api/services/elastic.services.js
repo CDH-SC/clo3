@@ -148,20 +148,6 @@ exports.advancedSearch = async function(query) {
           }
         }
       }
-    //   ,sort:[
-    //     {
-    //       "volumes.letters.docDate": {
-    //         mode: "max",
-    //         order: "desc",
-    //         nested: {
-    //           path: "volumes.letters",
-    //           filter: {
-    //             dateFilter
-    //           }
-    //         }
-    //       }
-    //     }
-    //   ]
    }
   };
   try {
