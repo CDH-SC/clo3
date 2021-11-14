@@ -63,7 +63,7 @@
           <p class="mb-0"> <strong id="sub-category-title"> Recipients </strong>  </p>
           <div *ngFor="let recipient of recipients; let i = index">
             <input type="search" style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
-                 placeholder="Lady Airlie"
+                 placeholder="Susan Stirling"
                  [ngModel]="recipients[i]" 
                  (change)="onValueChange($event, i)"
                 />
@@ -97,12 +97,26 @@
   
                   <label class="mt-1" id="sorting-toggle-label" for="sort-order"> sorted in... </label>
                   
-                 <br> <input type="radio"  name=[sortingOrderSelected]/> {{asc}}
                  <br> <input type="radio" name=[sortingOrderSelected]/> {{desc}}
-                </div>
-
-
+          </div>
       </div>
+      <div class="how-the-search-works">
+        <details>  <summary><p> <strong>Example Search</strong></p> </summary>
+          <p><strong>Term/Phrase:</strong> 'the best of times' <br>
+            <strong>Authors:</strong> Thomas Carlyle, Jane Welsh Carlyle <br>
+            <strong>Date Range:</strong> 'dated between <em>1866</em> and <em>1873</em>' <br>
+            <strong>Results:</strong> This search would match a document which contains 'the best of times,' and is written by either Jane Welsh Carlyle or Thomas Carlyle. Any matched documents written before 1866 or after 1872 will be discarded. <br> </p>
+        </details>
+      </div>
+      <div>
+        <details>  <summary> <p><strong>Guide</strong> </p>  </summary>
+           <p><strong>Authors & Recipients: </strong>For each phrase, all the authors & recipients chosen are applied to it. If you're searching multiple authors/recipients and multiple terms, the term(s) must be in a document but that document may be written by any of the authors/recipients chosen. Solely selecting 'Thomas & Jane Carlyle,' just returns letters they wrote together. <br>
+           <strong>Date Range:</strong> The date range is inclusive, constraining by the year in which a letter was sent. <br>
+           <strong>Results:</strong> If your search contains a date range then the results will be displayed in ascending order by default. </p>
+        </details>
+      </div>
+
+
 </div>
 
 <!--

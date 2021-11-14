@@ -379,9 +379,12 @@ appendRecipientsToSearchString(boolString)
    * in most circumstances, if recipients.length is 2 or more, there's at least one recipient but
    *   recipients starts w/ length 1, so if it's 1, need to ensure it's not the empty string
    */
-  if (this.recipients.length == 1 || this.recipients[0] == "")
+  /*if (this.recipients[0] == "")
        return;
-
+*/
+if (this.recipients.length == 1 && this.recipients[0] == "") {
+  return;
+}
        
   var retString = "";
   for (var i = 0; i < this.recipients.length; i++) {
