@@ -10,7 +10,9 @@ import { ElasticSearch } from '../_shared/models/elastic-search';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-// import {MatCheckboxModule} from '@angular/material';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { data } from 'jquery';
+
 
 @Component({
   selector: 'app-advanced-search',
@@ -42,6 +44,7 @@ export class AdvancedSearchComponent {
   CONST_FOOTNOTES = "footnotes";
 
   CONST_AUTHORS = "docAuthor";
+  CONST_RECIPIENTS = "recipient"
   CONST_DATE = "docDate";
 
   CONST_TC = "Thomas Carlyle";
@@ -86,14 +89,17 @@ export class AdvancedSearchComponent {
   boolMW = true;
   boolAllAuthors = true;
 
+  currentRecipient = "";
   dateRange = [];
+  asc = "ascending"
+  desc = "descending"
 
+  sortingOrderSelected = "";
   docAuthorsStr = [this.allAuthorsStr, this.tcStr, this.jwcStr, this.mwStr, this.tcjcStr];
   authors = [this.boolAllAuthors, this.boolTC, this.boolJWC, this.boolMW, this.boolTCJC];
 
   fieldsStr = [this.allFieldsStr, this.letterBodyStr, this.sourceNoteStr, this.footnotesStr];
   fields = [this.boolAllFields, this.boolLetterBody, this.boolSourceNote, this.boolFootnotes];
-
 
   // the index, i, of this array corresponds to the index i+1 in docAuthorsStr array
 
@@ -104,17 +110,16 @@ export class AdvancedSearchComponent {
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
  
 
-
-  recipient = [""];
-  recipients = [this.recipient];
-
+  recipients = [""];
+  recipientNumber = 1;
+  recipientElmName = "recipient" + this.recipientNumber;
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
   
   query = [this.boolOps, this.inputs];
   queries = [this.query];
   queryNumber = 1;
-  recipientNumber = 1;
+  
   searchResults: any;
 
   isSearching = false;
@@ -144,17 +149,28 @@ export class AdvancedSearchComponent {
   }
 
  addRecipient() {
-    this.recipientNumber++;
-    this.recipient.push("recipient" + this.recipientNumber);
-    let newRecipient = this.recipient;
-    this.recipients.push(this.recipient);
+   console.log("ADD RECIPIENT");
+   this.recipients.push("");
+   this.recipientNumber++;
+   console.log(this.recipients);
+   //this.recipientNumber++;
+   //let recipient = "Lady Airlie";
+   //this.recipients.push(recipient);
+  }
+
+  onValueChange($event: any, i:any) {
+    console.log($event.target.value);
+    console.log(i);
+    this.recipients[i] = $event.target.value;
   }
 
   removeRecipient() {
+    console.log("REMOVE RECIPIENT");
     if (this.recipients.length > 1) {
       this.recipients.splice(this.recipientNumber);
       this.recipientNumber--;
     }
+    console.log(this.recipients);
   }
   
   changeDropDown(event: any) {
@@ -354,6 +370,28 @@ else if (!somethingSpecified) {
 }
 }
 
+appendRecipientsToSearchString(boolString) 
+{
+  // if (no recipients were specified)
+  //    return
+
+  /*
+   * in most circumstances, if recipients.length is 2 or more, there's at least one recipient but
+   *   recipients starts w/ length 1, so if it's 1, need to ensure it's not the empty string
+   */
+  /*if (this.recipients[0] == "")
+       return;
+*/
+if (this.recipients.length == 1 && this.recipients[0] == "") {
+  return;
+}
+       
+  var retString = "";
+  for (var i = 0; i < this.recipients.length; i++) {
+    retString += this.CONST_RECIPIENTS + "-" + this.recipients[i] + "_";
+  }
+  return retString;
+}
   //  return search string of authors
   appendAuthorsToSearchString(boolString)
   { 
@@ -396,6 +434,7 @@ bothBoundariesSpecified() {
     for (let i = 0; i < this.queryFieldsStr.length; i++) {
       if (this.fields[i+1]) { 
         retString += this.queryFieldsStr[i+1] + "-" + currTermOfQuery + "_";
+        console.log(retString);
       }
     }
     return retString;
@@ -418,9 +457,14 @@ bothBoundariesSpecified() {
 
   startSearch() {
 
+    for (let i = 0; i < this.queryFieldsStr.length; ++i) {
+      console.log(this.queryFieldsStr[i]);
+    }
     this.isSearching = true;
     var result = [];
-
+    for (var i = 0; i < this.recipientNumber; i++) {
+     console.log(this.recipients[i]);
+    }
     for(var i = 0; i < this.queryNumber; i++) {
       var currInputId = "searchTerm".concat((i+1).toString());
       var currInputeName = (<HTMLInputElement>document.getElementById(currInputId)).name;
@@ -448,7 +492,13 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-
+    if (!(this.recipients.length > 1)) {
+      ANDString += this.appendRecipientsToSearchString(ANDString);
+    }
+    else {
+      ORString += this.appendRecipientsToSearchString(ORString);
+    }
+    console.log("ANDString: " + ANDString);
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];
       for (let j = 0; j < result[i][1].length; j++)
@@ -487,11 +537,23 @@ bothBoundariesSpecified() {
 
   console.log("Query String sent to elastic search: " + queryString);
 
-    this.searchResults = this.searchService.advancedSearch(queryString);
+  this.searchResults = this.searchService.advancedSearch(queryString);
+
+    /*
+    for (var i = 0; i < this.searchResults.length; i++) {
+      console.log("Result 1 has DATE " + this.searchResults[i].letter.docDate);
+    }
+    */
     this.searchService.advancedSearch(queryString).subscribe(data => {
       console.log("data",data['data']);
     })
+    /*
+    for (var i = 0; i <this.searchResults.length; i++) {
+      console.log("Result " + i + " has DATE: " + this.searchResults[i].letter.docDate);
+    }
+    */
     this.searchQuery = queryString;
+
 
   }
 
