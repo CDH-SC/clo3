@@ -1,7 +1,7 @@
 <div class="container" id="content">
   <div class="row justify-content-start">
-    <div class="col-lg-8 col-sm pr-4">
-      <div class="row orange-border-bottom">
+    <div class="col-lg-7 col-sm pr-4">
+      <!-- <div class="row orange-border-bottom">
         <h4>A Database for an Epoch</h4>
         <div class="thomas-carlye-quote-container">
           <p id="quote"> {{quotes[index_of_quote_to_display] }} </p>
@@ -13,8 +13,8 @@
           volume. We invite you to experience a correspondence that features
           some of the most influential writers and thinkers of the day.
         </p>
-      </div>
-      <div class="row pt-2">
+      </div> -->
+      <div class="row pt-2 pr-2 orange-border-side">
         <h4>Welcome to the Carlyle Letters Online</h4>
         <p>
           Duke University Press is proud to present this digital archive based
@@ -26,6 +26,14 @@
             href="https://www.dukeupress.edu/the-collected-letters-of-thomas-and-jane-welsh-carlyle"
             >The Printed Edition</a
           >.
+        </p>
+        <h4>A Database for an Epoch</h4>
+        <p>
+          Here you will find a perspective on the 19th century like no other,
+          through the words of Thomas and Jane Welsh Carlyle. Browse thousands
+          of their collected letters by date, by recipient, by subject, and by
+          volume. We invite you to experience a correspondence that features
+          some of the most influential writers and thinkers of the day.
         </p>
         <h4>CLO News</h4>
         <p>
@@ -40,11 +48,18 @@
         </p>
       </div>
     </div>
-    <div class="col-lg-4 col-sm">
+    <div class="col-lg-5 col-sm">
       <div
         class="d-flex flex-column flex-grow-1 justify-content-start align-items-center"
       >
-        <app-search></app-search>
+      <div class="row mt-3 mb-3">
+        <img class="portrait pr-3" src="../../assets/jane.png">
+        <img class="portrait pl-3" src="../../assets/thomas.png">
+      </div>
+      <div class="thomas-carlyle-quote-container mt-3">
+        <p id="quote"> &#8220;{{quotes[index_of_quote_to_display] }}&#8221; </p>
+      </div>
+        <!-- <app-search></app-search> -->
        <!-- <app-twitter></app-twitter> -->
       </div>
     </div>

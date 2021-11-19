@@ -46,6 +46,10 @@ a:hover, a:active, a:focus {
   border-bottom: 2px dotted #c17953;
 }
 
+.orange-border-side {
+  border-right: 2px dotted #c17953;
+}
+
 h1, h2, h3, h4, h5, h6 {
   color: #5c8c48 !important;
   font-weight: bold !important;
