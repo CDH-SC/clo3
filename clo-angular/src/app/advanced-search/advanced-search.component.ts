@@ -480,7 +480,7 @@ bothBoundariesSpecified() {
     console.log(result);
    // var boolOp; // used in loops below to determine which boolean goes with *this* array of terms (second index of result array)
     var queryString = ""
-    var ANDString = "$AND:_"
+    var ANDString = "$AND:_";
     var ORString = "$OR:_"
     var NOTString = "$NOT:_"
 
@@ -492,7 +492,7 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-    if (!(this.recipients.length > 1)) {
+    if (this.recipients.length > 1 || !(this.recipients[0] == "")) {
       ANDString += this.appendRecipientsToSearchString(ANDString);
     }
     else {
