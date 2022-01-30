@@ -7,14 +7,14 @@
 .letterButton::before {
     font-family: FontAwesome;
     content: '\f0da';
-    font-size: 16px;
+    font-size: 24px;
     margin-right: 5px;
 }
-  
-.letterButton:link, .volumeButton:visited {
-    color: #c17953 !important;
+
+.letterButton:link {
+    font-size: 24px;
 }
   
-.letterButton:hover, .volumeButton:active, .volumeButton:focus {
+.letterButton:hover {
     color: #a59657 !important;
 }  
