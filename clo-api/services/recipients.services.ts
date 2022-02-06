@@ -12,5 +12,5 @@ export class RecipientsServices {
             this.intermediaryService.next(aRecipient);
         }
     }
-}
+
 
