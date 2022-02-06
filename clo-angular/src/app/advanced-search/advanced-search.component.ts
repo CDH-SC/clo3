@@ -382,7 +382,7 @@ appendRecipientsToSearchString(boolString)
   /*if (this.recipients[0] == "")
        return;
 */
-if (this.recipients.length == 1 && this.recipients[0] == "") {
+if (this.recipients[0] == "") {
   return;
 }
        
@@ -492,12 +492,11 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-    if (this.recipients.length > 1 || !(this.recipients[0] == "")) {
+    if (!this.searchMultiple(this.recipients))
       ANDString += this.appendRecipientsToSearchString(ANDString);
-    }
-    else {
+    else
       ORString += this.appendRecipientsToSearchString(ORString);
-    }
+      
     console.log("ANDString: " + ANDString);
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];
