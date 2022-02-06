@@ -12,10 +12,10 @@ import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { data } from 'jquery';
-
+/*
 import { RecipientsServices } from '../../../../clo-api/services/recipients.services'
 import { Subscription } from 'rxjs';
-
+*/
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -26,14 +26,14 @@ export class AdvancedSearchComponent {
   route = '';
   searchQuery: string;
   faPlusSquare = faPlusSquare;
-  aRecipient: string
-  subscription: Subscription
+ /* aRecipient: string
+  subscription: Subscription */
 
   constructor(
     @Inject(DOCUMENT) document,
     private searchService: ElasticSearchService,
     private sanitizer: DomSanitizer,
-    private recipientsService: RecipientsServices
+  //  private recipientsService: RecipientsServices
     ) { }
 
   // Goes to search results page when enter is pressed
