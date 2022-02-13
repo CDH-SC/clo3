@@ -12,8 +12,10 @@ import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { data } from 'jquery';
-
-
+/*
+import { RecipientsServices } from '../../../../clo-api/services/recipients.services'
+import { Subscription } from 'rxjs';
+*/
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -24,11 +26,15 @@ export class AdvancedSearchComponent {
   route = '';
   searchQuery: string;
   faPlusSquare = faPlusSquare;
+ /* aRecipient: string
+  subscription: Subscription */
 
   constructor(
     @Inject(DOCUMENT) document,
     private searchService: ElasticSearchService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+  //  private recipientsService: RecipientsServices
+    ) { }
 
   // Goes to search results page when enter is pressed
   onEnter(route) {
@@ -89,7 +95,7 @@ export class AdvancedSearchComponent {
   boolMW = true;
   boolAllAuthors = true;
 
-  currentRecipient = "";
+
   dateRange = [];
   asc = "ascending"
   desc = "descending"
@@ -110,6 +116,7 @@ export class AdvancedSearchComponent {
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
  
 
+  currentRecipient = "";
   recipients = [""];
   recipientNumber = 1;
   recipientElmName = "recipient" + this.recipientNumber;
@@ -172,7 +179,9 @@ export class AdvancedSearchComponent {
     }
     console.log(this.recipients);
   }
-  
+  subscribeToIndex() {
+   //  this.subscription = this.recipientsService.currRecipient.subscribe(aRecipient => this.aRecipient = aRecipient);
+  }
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
@@ -382,7 +391,7 @@ appendRecipientsToSearchString(boolString)
   /*if (this.recipients[0] == "")
        return;
 */
-if (this.recipients.length == 1 && this.recipients[0] == "") {
+if (this.recipients[0] == "") {
   return;
 }
        
@@ -492,12 +501,11 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-    if (this.recipients.length > 1 || !(this.recipients[0] == "")) {
+    if (!this.searchMultiple(this.recipients))
       ANDString += this.appendRecipientsToSearchString(ANDString);
-    }
-    else {
+    else
       ORString += this.appendRecipientsToSearchString(ORString);
-    }
+      
     console.log("ANDString: " + ANDString);
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];
