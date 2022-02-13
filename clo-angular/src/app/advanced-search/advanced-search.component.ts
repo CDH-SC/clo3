@@ -167,7 +167,7 @@ export class AdvancedSearchComponent {
    //this.recipientNumber++;
    //let recipient = "Lady Airlie";
    //this.recipients.push(recipient);
-   this.recipientFromIndex$ = this.recipientsService.getRecipient();
+   //this.recipientFromIndex$ = this.recipientsService.getRecipient();
    console.log("RECIPIENT FROM INDEX: " + this.recipientsService.getRecipient());
   }
 
