@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
+@Injectable()
+export class SampleService {
 
-export class RecipientsServices {
-    private intermediaryService = new BehaviorSubject('a recipient');
-    currRecipient = this.intermediaryService.asObservable();
+  private title: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-    constructor() { }
-    /* Index Component will need to call this method, passing in string of recipient selected, which will get relayed to AdvSearch */
-        addNewRecipient(aRecipient: string) {
-            this.intermediaryService.next(aRecipient);
-        }
-    }
+  constructor() { }
 
+  setTitle(value: string) {
+    this.title.next(value);
+  }
 
+  getTitle(): Observable<string> {
+    return this.title.asObservable();
+  }
+
+}

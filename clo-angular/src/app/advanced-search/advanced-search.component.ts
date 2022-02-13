@@ -12,10 +12,11 @@ import { identifierModuleUrl } from '@angular/compiler';
 import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { data } from 'jquery';
-/*
-import { RecipientsServices } from '../../../../clo-api/services/recipients.services'
+
+import { RecipientsService } from '../../../../clo-api/services/recipients.service'
+import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
-*/
+
 @Component({
   selector: 'app-advanced-search',
   templateUrl: './advanced-search.component.html',
@@ -26,14 +27,13 @@ export class AdvancedSearchComponent {
   route = '';
   searchQuery: string;
   faPlusSquare = faPlusSquare;
- /* aRecipient: string
-  subscription: Subscription */
 
   constructor(
+
     @Inject(DOCUMENT) document,
     private searchService: ElasticSearchService,
     private sanitizer: DomSanitizer,
-  //  private recipientsService: RecipientsServices
+    private recipientsService: RecipientsService
     ) { }
 
   // Goes to search results page when enter is pressed
@@ -120,6 +120,10 @@ export class AdvancedSearchComponent {
   recipients = [""];
   recipientNumber = 1;
   recipientElmName = "recipient" + this.recipientNumber;
+  recipientFromIndex$: Observable<string>;
+  recipientFromIndex: string;
+
+
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
   
@@ -163,6 +167,8 @@ export class AdvancedSearchComponent {
    //this.recipientNumber++;
    //let recipient = "Lady Airlie";
    //this.recipients.push(recipient);
+   this.recipientFromIndex$ = this.recipientsService.getRecipient();
+   console.log("RECIPIENT FROM INDEX: " + this.recipientsService.getRecipient());
   }
 
   onValueChange($event: any, i:any) {
