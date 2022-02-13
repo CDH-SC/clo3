@@ -492,7 +492,7 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-    if (this.recipients.length > 1 || !(this.recipients[0] == "")) {
+    if (this.recipients.length == 1 && !(this.recipients[0] == "")) {
       ANDString += this.appendRecipientsToSearchString(ANDString);
     }
     else {
