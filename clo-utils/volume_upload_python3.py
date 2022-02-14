@@ -61,6 +61,7 @@ def linkFix(m):
 
 	if 'biographical' in ref:
 		newLink = '%s%s/biographicalNotes\">%s</a>' % (prefix, vol_id, body)
+		# print(newLink)
 	elif re.match('pg-\\d+:\\d+?', ref):
 		newLink = '%s%s/biographicalNotes\">%s</a>' % (prefix, vol_id, body)
 	elif 'introduction' in ref:
@@ -72,6 +73,7 @@ def linkFix(m):
 	elif 'geraldine' in ref:
 		newLink = '%s%s/geraldineJewsbury\">%s</a>' % (prefix, vol_id, body)
 	elif 'in_memoriam' in ref:
+		print(ref)
 		newLink = '%s%s/inMemoriam\">%s</a>' % (prefix, vol_id, body)
 	elif 'athanaeum' in ref:
 		newLink = '%s%s/athanaeumAdvertisements\">%s</a>' % (prefix, vol_id, body)
@@ -139,6 +141,8 @@ def nameFix(name):
 
 
 def sluglineGen(xml_id, humanDate, sender, recipient):
+	if humanDate=="1 January 1872":
+		print("FOUND IT*******************")
 	""" Generate the slugline to attach to the front of each letter
 
 	ex: TC TO FREDERIC CHAPMAN; july 2d, 1866; DOI 10.1215/lt-18660702-TC-FC-01.
@@ -146,8 +150,15 @@ def sluglineGen(xml_id, humanDate, sender, recipient):
 
 	if recipient:
 		slugline = '%s TO %s; %s; DOI 10.1215/%s' % (sender, recipient, humanDate, xml_id)
+		if humanDate=="1 January 1872":
+			print("RECIPIENT")
+			print(slugline)
 	else:
 		slugline = '%s; %s; DOI 10.1215/%s' % (sender, humanDate, xml_id)
+		if humanDate=="1 January 1872":
+			print("NO RECIPIENT")
+			print(slugline)
+		
 	return slugline
 
 
@@ -235,12 +246,21 @@ def letterUpload(array, letterType, volumeID):
 		docBody = xsltFormat(str(l.docBody))
 
 		slugline = sluglineGen(xml_id, humanDate, sender, recipient)
+		if humanDate=="1 January 1872":
+			print(slugline)
+			print("*******")
 
 		if recipient:
 			header = "<p>%s</p><p><strong>%s TO %s</strong></p>" % (slugline, sender, recipient)
+			if humanDate=="1 January 1872":
+				print(header)
+				print("*******")
 		else:
 			header = "<p>%s</p><p><strong>%s</strong></p>" % (slugline, sender)
 		docBody = header + docBody
+		if humanDate=="1 January 1872":
+			print(docBody)
+			print("*******")
 
 
 		letter = {
@@ -255,6 +275,9 @@ def letterUpload(array, letterType, volumeID):
 			'docBody': docBody,
 			'footnotes': footnotes,
 		}
+
+		if humanDate=="1 January 1872":
+			print(letter)
 
 		if manuscripts.get(xml_id):
 			letter['manuscript'] = manuscripts.get(xml_id)
@@ -281,10 +304,11 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('.xml'):
+		if filename.endswith('P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
+			# print(bs_content)
 			
 			volume = {}
 
@@ -292,6 +316,7 @@ def main():
 			volumeID = re.search(r'\d{2}', filename).group(0)
 
 			# get volume dates from header
+			
 			dates = bs_content.biblFull.find_all('date')
 			if int(dates[1]['when'][:4]) < 1900:
 				volumeDates = str.join('', (dates[0].string + ' - ' + dates[1].string).splitlines())
