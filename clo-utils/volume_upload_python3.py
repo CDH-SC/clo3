@@ -141,8 +141,6 @@ def nameFix(name):
 
 
 def sluglineGen(xml_id, humanDate, sender, recipient):
-	if humanDate=="1 January 1872":
-		print("FOUND IT*******************")
 	""" Generate the slugline to attach to the front of each letter
 
 	ex: TC TO FREDERIC CHAPMAN; july 2d, 1866; DOI 10.1215/lt-18660702-TC-FC-01.
@@ -150,14 +148,9 @@ def sluglineGen(xml_id, humanDate, sender, recipient):
 
 	if recipient:
 		slugline = '%s TO %s; %s; DOI 10.1215/%s' % (sender, recipient, humanDate, xml_id)
-		if humanDate=="1 January 1872":
-			print("RECIPIENT")
-			print(slugline)
+
 	else:
 		slugline = '%s; %s; DOI 10.1215/%s' % (sender, humanDate, xml_id)
-		if humanDate=="1 January 1872":
-			print("NO RECIPIENT")
-			print(slugline)
 		
 	return slugline
 
@@ -218,6 +211,8 @@ def letterUpload(array, letterType, volumeID):
 	for l in array:
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
+		if docDate=="1872":
+			print(l.docDate['value'])
 		humanDate = ''.join(l.docDate.strings)
 
 		firstPage = l.select('idno[type="firstpage"]')[0].string
@@ -246,21 +241,14 @@ def letterUpload(array, letterType, volumeID):
 		docBody = xsltFormat(str(l.docBody))
 
 		slugline = sluglineGen(xml_id, humanDate, sender, recipient)
-		if humanDate=="1 January 1872":
-			print(slugline)
-			print("*******")
 
 		if recipient:
 			header = "<p>%s</p><p><strong>%s TO %s</strong></p>" % (slugline, sender, recipient)
-			if humanDate=="1 January 1872":
-				print(header)
-				print("*******")
 		else:
 			header = "<p>%s</p><p><strong>%s</strong></p>" % (slugline, sender)
 		docBody = header + docBody
-		if humanDate=="1 January 1872":
-			print(docBody)
-			print("*******")
+		if xml_id == "lt-18720912-TC-LLA-01":
+			print(docDate)
 
 
 		letter = {
@@ -275,9 +263,6 @@ def letterUpload(array, letterType, volumeID):
 			'docBody': docBody,
 			'footnotes': footnotes,
 		}
-
-		if humanDate=="1 January 1872":
-			print(letter)
 
 		if manuscripts.get(xml_id):
 			letter['manuscript'] = manuscripts.get(xml_id)
