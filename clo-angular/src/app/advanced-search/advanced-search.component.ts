@@ -13,6 +13,9 @@ import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { data } from 'jquery';
 
+import { RecipientsService } from '../../../../clo-api/services/recipients.service'
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-advanced-search',
@@ -26,9 +29,12 @@ export class AdvancedSearchComponent {
   faPlusSquare = faPlusSquare;
 
   constructor(
+
     @Inject(DOCUMENT) document,
     private searchService: ElasticSearchService,
-    private sanitizer: DomSanitizer) { }
+    private sanitizer: DomSanitizer,
+    private recipientsService: RecipientsService
+    ) { }
 
   // Goes to search results page when enter is pressed
   onEnter(route) {
@@ -89,7 +95,7 @@ export class AdvancedSearchComponent {
   boolMW = true;
   boolAllAuthors = true;
 
-  currentRecipient = "";
+
   dateRange = [];
   asc = "ascending"
   desc = "descending"
@@ -110,9 +116,14 @@ export class AdvancedSearchComponent {
   queryAuthorsStr = ["", this.CONST_TC, this.CONST_JWC, this.CONST_MW, this.CONST_TCJC];
  
 
+  currentRecipient = "";
   recipients = [""];
   recipientNumber = 1;
   recipientElmName = "recipient" + this.recipientNumber;
+  recipientFromIndex$: Observable<string>;
+  recipientFromIndex: string;
+
+
   boolOps = ["searchTerm1boolOp"];
   inputs = ["searchTerm1"];
   
@@ -156,6 +167,8 @@ export class AdvancedSearchComponent {
    //this.recipientNumber++;
    //let recipient = "Lady Airlie";
    //this.recipients.push(recipient);
+   //this.recipientFromIndex$ = this.recipientsService.getRecipient();
+   console.log("RECIPIENT FROM INDEX: " + this.recipientsService.getRecipient());
   }
 
   onValueChange($event: any, i:any) {
@@ -172,7 +185,9 @@ export class AdvancedSearchComponent {
     }
     console.log(this.recipients);
   }
-  
+  subscribeToIndex() {
+   //  this.subscription = this.recipientsService.currRecipient.subscribe(aRecipient => this.aRecipient = aRecipient);
+  }
   changeDropDown(event: any) {
     let val = event.srcElement.value;
     let id = event.srcElement.id;
@@ -382,7 +397,7 @@ appendRecipientsToSearchString(boolString)
   /*if (this.recipients[0] == "")
        return;
 */
-if (this.recipients.length == 1 && this.recipients[0] == "") {
+if (this.recipients[0] == "") {
   return;
 }
        
@@ -492,12 +507,11 @@ bothBoundariesSpecified() {
     else
        ORString += this.appendAuthorsToSearchString(ORString);
 
-    if (this.recipients.length > 1 || !(this.recipients[0] == "")) {
+    if (!this.searchMultiple(this.recipients))
       ANDString += this.appendRecipientsToSearchString(ANDString);
-    }
-    else {
+    else
       ORString += this.appendRecipientsToSearchString(ORString);
-    }
+      
     console.log("ANDString: " + ANDString);
     for(var i = 0; i < result.length; i++) {
       var boolOp = result[i][0];

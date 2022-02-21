@@ -14,7 +14,7 @@
     "@angular/common": "^9.0.4",
     "@angular/compiler": "^9.0.4",
     "@angular/compiler-cli": "^9.0.4",
-    "@angular/core": "^9.0.4",
+    "@angular/core": "^9.1.13",
     "@angular/forms": "^9.0.4",
     "@angular/localize": "^9.0.4",
     "@angular/platform-browser": "^9.0.4",

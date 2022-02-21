@@ -1,0 +1,20 @@
+.letterButton, .volumeLink {
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+.letterButton::before {
+    font-family: FontAwesome;
+    content: '\f0da';
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.letterButton:link {
+    font-size: 24px;
+}
+  
+.letterButton:hover {
+    color: #a59657 !important;
+}  
