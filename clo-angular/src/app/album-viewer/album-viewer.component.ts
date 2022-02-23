@@ -31,7 +31,9 @@ export class AlbumViewerComponent implements OnInit {
 
         for (let i = 0; i < this.album.images.length; i++) {
           const src = this.album.imagesFolder + this.album.images[i].imageUrl;
-          const album = { src: src, num: i };
+          const title = this.album.images[i].metadata.title.substring(27);
+          console.log(title);
+          const album = { src: src, num: i,title:title };
           this._albums.push(album);
         }
       });

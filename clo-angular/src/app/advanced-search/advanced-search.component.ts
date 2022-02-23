@@ -13,7 +13,7 @@ import { mapToMapExpression } from '@angular/compiler/src/render3/util';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { data } from 'jquery';
 
-import { RecipientsService } from '../../../../clo-api/services/recipients.service'
+// import { RecipientsService } from '../../../../clo-api/services/recipients.service'
 import { Observable } from 'rxjs';
 import { Subscription } from 'rxjs';
 
@@ -33,7 +33,7 @@ export class AdvancedSearchComponent {
     @Inject(DOCUMENT) document,
     private searchService: ElasticSearchService,
     private sanitizer: DomSanitizer,
-    private recipientsService: RecipientsService
+    // private recipientsService: RecipientsService
     ) { }
 
   // Goes to search results page when enter is pressed
@@ -168,7 +168,7 @@ export class AdvancedSearchComponent {
    //let recipient = "Lady Airlie";
    //this.recipients.push(recipient);
    //this.recipientFromIndex$ = this.recipientsService.getRecipient();
-   console.log("RECIPIENT FROM INDEX: " + this.recipientsService.getRecipient());
+  //  console.log("RECIPIENT FROM INDEX: " + this.recipientsService.getRecipient());
   }
 
   onValueChange($event: any, i:any) {
