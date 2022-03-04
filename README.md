@@ -354,7 +354,7 @@ Let's check to see if Mongo is running.
 
 I am <a href="bin/B2-install_elastic.sh">here</a>.
 
-For Mac users, rather than executing the build script you'll need to download with brew or from <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html"> archive </a>. Assuming you don't execute the build script, you'll also need to remember to start the elasticsearch process as a service before proceeding, using brew or elastic search's executable file (elasticsearch-$VERSION_NUMBER/bin/elasticsearch).
+For Mac users, rather than executing the build script you'll need to download with <a href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/brew.html">Homebrew</a> or from <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/targz.html"> archive </a>. Assuming you don't execute the build script, you'll also need to remember to start the elasticsearch process as a service before proceeding, using brew or elastic search's executable file (elasticsearch-$VERSION_NUMBER/bin/elasticsearch).
 
 This script installs elasticsearch to the the API's bin directory ($CLO_ROOT/clo-api/bin directory).
 </br>ElasticSearch is a database used with MongoDB because of its phenomenal ability to search through files.
