@@ -18,6 +18,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    let index_of_pic = Math.floor((Math.random() * 47))+1;
+    let pic_to_display = "../../assets/frontice_images/volume"+index_of_pic+".gif"
+    document.getElementById('image').setAttribute('src',pic_to_display);
+    let index_of_pic2 = Math.floor((Math.random() * 47))+1;
+    while(index_of_pic==index_of_pic2) {
+      index_of_pic2 = Math.floor((Math.random() * 47))+1;
+    }
+    let pic_to_display2 = "../../assets/frontice_images/volume"+index_of_pic2+".gif"
+    document.getElementById('image2').setAttribute('src',pic_to_display2);
     // this.footer.positionFooter();
   }
   quotes = ["What we become depends on what we read after all of the professors are done with us. The greatest university of all is a collection of books.",

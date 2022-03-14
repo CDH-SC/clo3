@@ -20,3 +20,8 @@ p#quote {
   color:  #6e6e6e;
 }
 
+.portrait {
+  max-width: 200px;
+  max-height: 200px;
+}
+
