@@ -21,6 +21,7 @@ import { AboutCarlylesComponent } from './about/about-carlyles/about-carlyles.co
 import { AboutProjectComponent } from './about/about-project/about-project.component';
 import { AboutPrintedComponent } from './about/about-printed/about-printed.component';
 import { AboutCitingComponent } from './about/about-citing/about-citing.component';
+import { AboutCopyrightComponent } from './about/about-copyright/about-copyright.component';
 import { AboutEditorsComponent } from './about/about-editors/about-editors.component';
 import { AboutTechnicalComponent } from './about/about-technical/about-technical.component';
 import { AboutSupportersComponent } from './about/about-supporters/about-supporters.component';
@@ -63,6 +64,7 @@ const appRoutes: Routes = [
   { path: 'about-project', component: AboutProjectComponent },
   { path: 'about-printedEdition', component: AboutPrintedComponent },
   { path: 'about-citing', component: AboutCitingComponent },
+  { path: 'about-copyright', component: AboutCopyrightComponent},
   { path: 'about-editors', component: AboutEditorsComponent },
   { path: 'about-supporters', component: AboutSupportersComponent },
   { path: 'about-technical', component: AboutTechnicalComponent },
@@ -94,6 +96,7 @@ const appRoutes: Routes = [
     AboutProjectComponent,
     AboutPrintedComponent,
     AboutCitingComponent,
+    AboutCopyrightComponent,
     AboutEditorsComponent,
     VolumeContentComponent,
     AlbumViewerComponent,

@@ -12,7 +12,15 @@
   <div class="box flex">
     <div class="row imageGrid">
       <div *ngFor="let image of _albums; let i=index" class="grid">
-        <img [src]="image.src" routerLink="/photo-viewer/{{album._id}}/{{i}}">
+        <div class="imagebox">
+          <div class="innerimagebox">
+            <div *ngIf="album._id > 0" class="tooltiptext">{{image.title}}</div>
+            <div *ngIf="album._id === 0 && i>=9" routerLink="/volume/{{i+1}}/frontispiece" class="tooltiptext">Frontispieces, Volume {{i+1}}</div>
+            <div *ngIf="album._id === 0 && i<9" routerLink="/volume/0{{i+1}}/frontispiece" class="tooltiptext">Frontispieces, Volume {{i+1}}</div>
+              <img [src]="image.src" routerLink="/photo-viewer/{{album._id}}/{{i}}">
+              
+          </div>
+        </div>
       </div>
     </div>
   </div>

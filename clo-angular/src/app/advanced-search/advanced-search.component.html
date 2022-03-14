@@ -34,13 +34,13 @@
                   name='AND'
                     placeholder="the best of times"/> 
       </div> <!-- close ngFor's div -->
-    </form>
+  
 
     <div>
       <button (click)="addField()">Add Term</button>
       <button (click)="removeField()">Remove Term</button>
     </div>
-
+  </form> 
       <div class="container-narrow-results">
 
 
@@ -60,33 +60,21 @@
 
        
         <div class="narrow-by-recipient">
-          <p> <strong id="sub-category-title"> Recipients </strong>  </p>
-          <div *ngFor='let recipient of recipients'>
-            <input style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
-              list="list-of-recipients" placeholder="Lady Airlie"/>
-
-              <datalist id="list-of-recipients">
-                <option value="Thomas Carlyle">
-                <option value="Jane Welsh Carlyle">
-                <option value="Margaret Welsh"> 
-                <option value="Goethe"> 
-                <option value="Ralph Waldo Emerson"> 
-                <option value="John Stuart Mill"> 
-                <option value="Lady Airlie"> 
-                <option value="Lady Ashburton"> 
-                <option value="Anne Gilchrist">
-                <option value="Kate Stanley"> 
-                <option value="Eliza Forster">
-                <option value="Ann Chamberlayne"> 
-                <option value="Mary Carlyle Austin"> 
-                <option value="J. George Cooke"> 
-              </datalist>
+          <p class="mb-0"> <strong id="sub-category-title"> Recipients </strong>  </p>
+          <div *ngFor="let recipient of recipients; let i = index">
+            <input type="search" style="width: 245px; background-color: transparent; border-radius: 3px; border: 1px solid brown;" 
+                 placeholder="Susan Stirling"
+                 [ngModel]="recipients[i]" 
+                 (change)="onValueChange($event, i)"
+                />
               <br>
-            <button (click)="addRecipient()">Add</button>
+            </div>
+        <button (click)="addRecipient()">Add</button>
             <button (click)="removeRecipient()">Remove</button>
-          <a href="/index-of-correspondents">    Index of Correspondents</a>
-          </div>
-        </div>
+    
+            <a href="/index-of-correspondents"  target="_blank">Index of Recipients </a>
+<!-- (click)="subscribeToIndex()" -->
+	    </div>
         <div class="narrow-by-fields">
           <p> <strong id="sub-category-title"> Fields </strong>  </p>
 
@@ -100,16 +88,42 @@
         </div>
 
         <div class="narrow-by-dates">
-          <p><strong id="sub-category-title"> Time Period </strong></p>
-              <label for="start-date"> dated between... </label>
+          <p class="mb-1"><strong id="sub-category-title"> Time Period </strong></p>
+              <label for="start-date"> dated between... </label> <br>
               <input type="search" 
                [(ngModel)] = "dateRange[0]" id="dates-input-box" name="start-date" placeholder="1812"/>  <br>
-              <label for="end-date"> and... </label>
+              <label class="mt-1" for="end-date"> and... </label> <br>
               <input type="search" 
                   [(ngModel)] = "dateRange[1]" id="dates-input-box" name="end-date" placeholder="1881"/> 
+          <!--      
+                   <br>
+                     <label class="mt-1" id="sorting-toggle-label" for="sort-order"> sorted in... </label>
+                   <br> 
+                    <input type="radio" name=[sortingOrderSelected]/> {{desc}} 
+          -->
           </div>
-
       </div>
+      <div class="how-the-search-works">
+        <details>  <summary><p> <strong>Example Search</strong></p> </summary>
+          <p><strong>Term/Phrase:</strong> Input: the best of times <br>
+            <strong>Authors Selected:</strong>Thomas Carlyle, Jane Welsh Carlyle <br>
+            <strong>Fields Selected: </strong>
+            <strong>Date Range Specified:</strong> 'dated between <em>1862</em> and <em>1873</em>' <br>
+            <strong>Letters Retrieved:</strong> This search will retrieve three documents, all of which contain 'the best of times,' in the letter body. You'll see one letter written by Thomas, two by Jane.<br> </p>
+        </details>
+      </div>
+      <div>
+        <details>  <summary> <p><strong>Important Hints</strong> </p>  </summary>
+           <p><strong>Authors & Recipients: </strong>For each phrase all the authors & recipients chosen are applied to it. If you're searching multiple authors/recipients and multiple terms, the term(s) must be in a document but that document may be written by any of the authors/recipients chosen. Solely selecting 'Thomas & Jane Carlyle,' just returns letters they wrote together. Also, you don't have to search the recipient's full name - typing in 'Thomas' or even 'TC' will return the same results as would be had you written his full name.<br><br>
+            <strong>Fields:</strong> As with authors/recipients, each field is applied per search phrase. So if you search a phrase that you know would only show up in a letter's body then, since by default all fields are selected, remember to unselect all others but Letter Body or your search may not return any results. <br><br>
+            <strong>Date Range:</strong> The date range is inclusive, constraining by the year during which the letter was sent. <br><br>
+           <strong>Results:</strong> If your search contains a date range then the results will be displayed in ascending order by default. <br><br>
+            <strong>Isolated Searches:</strong> If you only want to see documents from TC but don't care what the other fields contain then unselect all Field checkboxes. Want only letters recieved by Jane and don't care who sent it? Type in her as recipient, unselect all Authors (doing so will be temporarily necessary as the list of authors is not yet an exhaustive list of all authors in the corpus of letters). <br><br>
+            <strong>General Pointers: </strong> As expected, you could either press the Search button or press Enter on your keyboard for the search to work. However, if you've retrieved results from one search and want to search something else, be sure to press Search button this time if you change any selections other than the search phrase(s).</p>
+        </details>
+      </div>
+
+
 </div>
 
 <!--

@@ -20,7 +20,7 @@
 
   <xsl:template match="div3">
     <slugline><xsl:value-of select="head"/>
-      <xsl:text>; </xsl:text>
+      <xsl:text> </xsl:text>
 
       <xsl:apply-templates select="bibl"/>
       DOI: 10.1215/%s

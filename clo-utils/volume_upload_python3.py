@@ -61,6 +61,7 @@ def linkFix(m):
 
 	if 'biographical' in ref:
 		newLink = '%s%s/biographicalNotes\">%s</a>' % (prefix, vol_id, body)
+		# print(newLink)
 	elif re.match('pg-\\d+:\\d+?', ref):
 		newLink = '%s%s/biographicalNotes\">%s</a>' % (prefix, vol_id, body)
 	elif 'introduction' in ref:
@@ -72,6 +73,7 @@ def linkFix(m):
 	elif 'geraldine' in ref:
 		newLink = '%s%s/geraldineJewsbury\">%s</a>' % (prefix, vol_id, body)
 	elif 'in_memoriam' in ref:
+		print(ref)
 		newLink = '%s%s/inMemoriam\">%s</a>' % (prefix, vol_id, body)
 	elif 'athanaeum' in ref:
 		newLink = '%s%s/athanaeumAdvertisements\">%s</a>' % (prefix, vol_id, body)
@@ -146,8 +148,10 @@ def sluglineGen(xml_id, humanDate, sender, recipient):
 
 	if recipient:
 		slugline = '%s TO %s; %s; DOI 10.1215/%s' % (sender, recipient, humanDate, xml_id)
+
 	else:
 		slugline = '%s; %s; DOI 10.1215/%s' % (sender, humanDate, xml_id)
+		
 	return slugline
 
 
@@ -168,12 +172,29 @@ def xsltFormat(inputString):
 
 	return formattedDoc
 
+def xsltFormatFootnotes(inputString):
+	""" Apply XSLT stylesheet to input XML """
+
+	# convert html entities to their hex codes
+	inputString = re.sub('&.{1,6}?;', htmlHexConverter, inputString)
+	# converts loose "&" into the hex entity for "&"
+	# with open('log.xml', 'a') as f:
+	# 	f.write(inputString)
+	inputString = re.sub('&\\s|&(?=\\w?[^#])', '&#38; ', inputString)
+	# fix any broken links
+	inputString = re.sub("<ref target=\"volume-(\\d{2})\\/([^lt\"]{2}.*?)>(.*?)</ref>", linkFix, inputString)
+
+	sourceDoc = etree.fromstring('<div>%s</div>' % inputString)
+	formattedDoc = str(xsltTransformer(sourceDoc))
+
+	return formattedDoc
+
 
 def footnoteFormat(footnotesArray):
 	""" Apply XSLT to each footnote in given array """
 	footnotes = []
 	for f in footnotesArray:
-		footnote = xsltFormat(''.join(map(str, f.contents)))
+		footnote = xsltFormatFootnotes(''.join(map(str, f.contents)))
 		footnotes.append(footnote)
 	return footnotes
 
@@ -190,6 +211,8 @@ def letterUpload(array, letterType, volumeID):
 	for l in array:
 		xml_id = l.bibl['xml:id']
 		docDate = l.docDate['value']
+		if docDate=="1872":
+			print(l.docDate['value'])
 		humanDate = ''.join(l.docDate.strings)
 
 		firstPage = l.select('idno[type="firstpage"]')[0].string
@@ -224,6 +247,8 @@ def letterUpload(array, letterType, volumeID):
 		else:
 			header = "<p>%s</p><p><strong>%s</strong></p>" % (slugline, sender)
 		docBody = header + docBody
+		if xml_id == "lt-18720912-TC-LLA-01":
+			print(docDate)
 
 
 		letter = {
@@ -264,10 +289,11 @@ def main():
 	dirList = os.listdir(directory)
 	dirList.sort()
 	for i, filename in enumerate(dirList, start=1):
-		if filename.endswith('.xml'):
+		if filename.endswith('P5.xml'):
 			file = open(os.path.join(directory, filename), 'r')
 			content = file.read()
 			bs_content = bs(content, 'xml')
+			# print(bs_content)
 			
 			volume = {}
 
@@ -275,6 +301,7 @@ def main():
 			volumeID = re.search(r'\d{2}', filename).group(0)
 
 			# get volume dates from header
+			
 			dates = bs_content.biblFull.find_all('date')
 			if int(dates[1]['when'][:4]) < 1900:
 				volumeDates = str.join('', (dates[0].string + ' - ' + dates[1].string).splitlines())

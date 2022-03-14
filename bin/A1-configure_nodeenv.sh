@@ -38,8 +38,8 @@ sudo pip3 install nodeenv
 cd $CLO_ROOT
 
 echo "[CLO3] Setting up nodeenv..."
-echo "....using --node=12.18.3"
-nodeenv --node=12.18.3 env
+echo "....using --node=16.13.0"
+nodeenv --node=16.13.0 env
 
 echo
 echo "....finished setting up nodeenv."

@@ -19,7 +19,7 @@ export class IndexOfCorrespondentsComponent {
      * send HTTP get request to load xml file into memory
      */
     loadXML() {  
-      this._http.get('../../../../clo-xml-archive/volume-46-correspondent-index.xml',  
+      this._http.get('../assets/volume-46-correspondent-index.xml',  
         {  
           headers: new HttpHeaders()  
             .set('Content-Type', 'text/xml')  
@@ -60,7 +60,7 @@ export class IndexOfCorrespondentsComponent {
      * 
      */
 
-    parseXML(data) {  
+    parseXML(data) {
       return new Promise(resolve => {  
         var k: string | number,  
           arr = [],  
@@ -81,6 +81,8 @@ export class IndexOfCorrespondentsComponent {
         });  
       });  
     }
+
+    
   }
   
   /*

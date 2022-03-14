@@ -121,14 +121,14 @@ exports.advancedSearch = async function(query) {
                       { "letters.docDate":
                           {gte: minYear, lte: maxYear}}
                       }
-                    ];
+                    ]
 
-
+ 
   var rawQueryObject = {
       filter: dateFilter, 
       must: andArray, 
       should: orArray,
-      must_not: notArray
+      must_not: notArray,
     };
   // console.log("and",andArray);
   // console.log("or",orArray);
@@ -148,7 +148,7 @@ exports.advancedSearch = async function(query) {
           }
         }
       }
-    }
+   }
   };
   try {
     console.log("qObject",JSON.stringify(queryObject));
