@@ -398,7 +398,7 @@ appendRecipientsToSearchString(boolString)
        return;
 */
 if (this.recipients[0] == "") {
-  return;
+  return "";
 }
        
   var retString = "";
