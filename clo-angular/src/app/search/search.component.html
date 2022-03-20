@@ -1,28 +1,28 @@
 <div class="p-2" id="searchWrap">
-  <div id="searchButton">
+  <!-- <div id="searchButton">
     <img src="../../assets/magnifying-glass.png" alt="Go"
     name="formButton" id="formButton">
-  </div>
+  </div> -->
   <div id="searchInput">
     <div id="formField">
-      <input
-        type="text"
-        class="formsA"
-        aria-label="Search"
-        (keyup.enter)="onEnter(route)"
-        [(ngModel)]="route"
+      <input type="text" class="formsA" aria-label="Search" (keyup.enter)="onEnter(route)" [(ngModel)]="route"
         size="27">
+      <div id="searchButton">
+        <img src="../../assets/magnifying-glass.png" alt="Go" name="formButton" id="formButton">
+      </div>
     </div>
-    <br>
+    <!-- <br>
     <br>
     <div class="d-flex flex-row justify-content-start">
-      <a href="/advanced-search">Advanced Search</a>
+  
       <div class="d-flex flex-row align-items-start ml-2">
         <input type="checkbox" name="wholeWord" id="wholeWord" checked/>
         <label for="wholeWord" id="wholeWordLabel">
           <span>Whole-word</span>
         </label>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
+
+<!-- <a href="/advanced-search">Advanced Search</a> -->
